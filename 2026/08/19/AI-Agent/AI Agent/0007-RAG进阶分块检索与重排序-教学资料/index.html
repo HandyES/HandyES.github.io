@@ -1,0 +1,724 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第07课：RAG进阶——分块、检索与重排序 | HandyEs的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第07课：RAG进阶——分块、检索与重排序 单元：第二单元 RAG检索增强与Agent记忆（第6-10课）前置：第06课（RAG基础架构与完整流水线——InfoNCE、HNSW、向量数据库选型）时间分配：理论推导15min + 工程实践20min + 评估方法10min + 习题10min（共55min核心内容，代码实践建议额外30-60min自习）  课程信息   项目 内容    课号 000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第07课：RAG进阶——分块、检索与重排序">
+<meta property="og:url" content="https://handyes.github.io/2026/08/19/AI-Agent/AI%20Agent/0007-RAG%E8%BF%9B%E9%98%B6%E5%88%86%E5%9D%97%E6%A3%80%E7%B4%A2%E4%B8%8E%E9%87%8D%E6%8E%92%E5%BA%8F-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html">
+<meta property="og:site_name" content="HandyEs的博客">
+<meta property="og:description" content="第07课：RAG进阶——分块、检索与重排序 单元：第二单元 RAG检索增强与Agent记忆（第6-10课）前置：第06课（RAG基础架构与完整流水线——InfoNCE、HNSW、向量数据库选型）时间分配：理论推导15min + 工程实践20min + 评估方法10min + 习题10min（共55min核心内容，代码实践建议额外30-60min自习）  课程信息   项目 内容    课号 000">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-08-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-13T14:58:49.624Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第07课：RAG进阶——分块、检索与重排序",
+  "url": "https://handyes.github.io/2026/08/19/AI-Agent/AI%20Agent/0007-RAG%E8%BF%9B%E9%98%B6%E5%88%86%E5%9D%97%E6%A3%80%E7%B4%A2%E4%B8%8E%E9%87%8D%E6%8E%92%E5%BA%8F-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-08-18T16:00:00.000Z",
+  "dateModified": "2026-09-13T14:58:49.624Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/08/19/AI-Agent/AI%20Agent/0007-RAG%E8%BF%9B%E9%98%B6%E5%88%86%E5%9D%97%E6%A3%80%E7%B4%A2%E4%B8%8E%E9%87%8D%E6%8E%92%E5%BA%8F-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第07课：RAG进阶——分块、检索与重排序',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyEs的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">第07课：RAG进阶——分块、检索与重排序</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第07课：RAG进阶——分块、检索与重排序</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-18T16:00:00.000Z" title="发表于 2026-08-19 00:00:00">2026-08-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T14:58:49.624Z" title="更新于 2026-09-13 22:58:49">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第07课：RAG进阶——分块、检索与重排序"><a href="#第07课：RAG进阶——分块、检索与重排序" class="headerlink" title="第07课：RAG进阶——分块、检索与重排序"></a>第07课：RAG进阶——分块、检索与重排序</h1><blockquote>
+<p><strong>单元</strong>：第二单元 RAG检索增强与Agent记忆（第6-10课）<br><strong>前置</strong>：第06课（RAG基础架构与完整流水线——InfoNCE、HNSW、向量数据库选型）<br><strong>时间分配</strong>：理论推导15min + 工程实践20min + 评估方法10min + 习题10min（共55min核心内容，代码实践建议额外30-60min自习）</p>
+</blockquote>
+<h2 id="课程信息"><a href="#课程信息" class="headerlink" title="课程信息"></a>课程信息</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课号</td>
+<td>0007</td>
+</tr>
+<tr>
+<td>课程标题</td>
+<td>RAG进阶——分块、检索与重排序</td>
+</tr>
+<tr>
+<td>核心主题</td>
+<td>分块策略、混合检索（BM25+RRF）、Cross-Encoder重排序、RAGAS评估</td>
+</tr>
+<tr>
+<td>深度边界</td>
+<td>必须掌握：RRF公式推导与分数归一化、Cross-Encoder的O(n×L²)复杂度分析、RAGAS三维度计算方法<br>应当理解：四种分块策略的工程实现、Reranker集成调用、混合检索代码<br>知晓即可：Late Chunking、ColBERT late-interaction、RAGAS合成测试集生成</td>
+</tr>
+<tr>
+<td>前置知识</td>
+<td>第06课（InfoNCE、向量相似度、HNSW）；第02课（Attention复杂度O(n²d)）</td>
+</tr>
+</tbody></table>
+<h2 id="本课对项目的贡献：「企业级智能研究助手Agent系统」"><a href="#本课对项目的贡献：「企业级智能研究助手Agent系统」" class="headerlink" title="本课对项目的贡献：「企业级智能研究助手Agent系统」"></a>本课对项目的贡献：「企业级智能研究助手Agent系统」</h2><p>第06课构建的知识库实现了”<strong>能检索到</strong>“（单路稠密向量检索）。本课为其添加<strong>精度层</strong>，实现”<strong>检索得准</strong>“：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第06课状态：Query ──► [Dense向量检索] ──► Top-K结果 ──► LLM生成</span><br><span class="line">                                        ↑ 单路检索，排序仅靠单一相似度</span><br><span class="line"></span><br><span class="line">第07课目标：Query ──► [BM25稀疏检索] ─┐</span><br><span class="line">                     [Dense稠密检索] ─┼─► RRF融合 ──► Top-N候选 ──► Cross-Encoder重排 ──► Top-K ──► LLM生成</span><br><span class="line">                                        ↑ 两路召回                  ↑ 精排层</span><br></pre></td></tr></table></figure>
+
+<p>完成后，研究助手的 <code>search_papers</code> 工具将从”单路检索”升级为”混合检索+重排序”两阶段流水线，并配套RAGAS评估闭环——这是第10课Agentic RAG的检索质量基石。分块策略的升级将直接改造第06课知识库的索引构建模块。</p>
+<hr>
+<h2 id="一、为什么需要进阶：单路稠密检索的三个失败模式"><a href="#一、为什么需要进阶：单路稠密检索的三个失败模式" class="headerlink" title="一、为什么需要进阶：单路稠密检索的三个失败模式"></a>一、为什么需要进阶：单路稠密检索的三个失败模式</h2><p>第06课的流水线在真实语料上会遇到三类典型失败，本课的每个技术都是针对其中一类：</p>
+<p><strong>失败模式1：词汇精确匹配失败</strong></p>
+<blockquote>
+<p>用户查询”GRPO算法的公式（4.3）”，目标文档写的是”公式(4.3)给出了GRPO的优势函数估计”。稠密向量擅长语义匹配，但对<strong>精确符号</strong>（公式编号、专有名词、代码函数名、法条编号）的区分能力弱——大量语义相近的段落会把真正包含该符号的段落挤出Top-K。</p>
+</blockquote>
+<p><strong>失败模式2：分块割裂语义</strong></p>
+<blockquote>
+<p>一个块以”该方法的显著优势在于……”开头，但”该方法”指代的前文被切到上一个块。Embedding模型只能看到残缺文本，生成的向量偏离真实语义。</p>
+</blockquote>
+<p><strong>失败模式3：排序信号单一</strong></p>
+<blockquote>
+<p>Bi-Encoder把query和文档各自压缩成一个向量再算相似度——这种”先压缩后比较”丢失了词级交互细节。两个相似度0.82和0.84的文档，真实相关性可能天差地别。</p>
+</blockquote>
+<p>对应的解法：<strong>失败模式1 → 混合检索（第三节）；失败模式2 → 分块策略（第二节）；失败模式3 → 重排序（第四节）</strong>。第五节的RAGAS则回答”改进了多少”。</p>
+<hr>
+<h2 id="二、文档分块策略（工程实践，应当理解）"><a href="#二、文档分块策略（工程实践，应当理解）" class="headerlink" title="二、文档分块策略（工程实践，应当理解）"></a>二、文档分块策略（工程实践，应当理解）</h2><h3 id="2-1-分块是RAG质量的第一决定因素"><a href="#2-1-分块是RAG质量的第一决定因素" class="headerlink" title="2.1 分块是RAG质量的第一决定因素"></a>2.1 分块是RAG质量的第一决定因素</h3><p>分块决定了<strong>检索单元的粒度</strong>，存在根本性权衡：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">块太大：噪声稀释语义                          块太小：上下文割裂</span><br><span class="line">┌────────────────────────┐                  ┌──────┐</span><br><span class="line">│ ★核心相关段落（占10%） │                  │ ★核心 │ ← 向量纯净但缺上下文</span><br><span class="line">│ 大量无关内容（90%）    │                  └──────┘   &quot;该方法&quot;无所指</span><br><span class="line">│ → 向量被拉向&quot;平均语义&quot; │                  ┌──────┐</span><br><span class="line">└────────────────────────┘                  │ 无关块 │</span><br><span class="line">                                           └──────┘</span><br><span class="line">   Recall↓（排不上名）                        生成质量↓（LLM拿到碎片）</span><br></pre></td></tr></table></figure>
+
+<p>经验规律（以512 token为基准，语料相关）：块过大时相关段落被稀释、排序下降；块过小时单块信息不足以支撑生成。<strong>最优块大小是语料相关的，必须靠评估实验确定</strong>——这正是第五节RAGAS的用武之地。</p>
+<h3 id="2-2-固定窗口分块（Fixed-Size-Chunking）"><a href="#2-2-固定窗口分块（Fixed-Size-Chunking）" class="headerlink" title="2.2 固定窗口分块（Fixed-Size Chunking）"></a>2.2 固定窗口分块（Fixed-Size Chunking）</h3><p>按固定token&#x2F;字符数切窗，加滑动重叠（overlap）缓解边界截断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">块数 = ⌈(N - overlap) / (chunk_size - overlap)⌉</span><br><span class="line"></span><br><span class="line">例：N=1000, chunk_size=300, overlap=50</span><br><span class="line">  块1: [0, 300)      块2: [250, 550)    块3: [500, 800)   块4: [750, 1000)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>优点</strong>：实现极简、块大小完全可控、吞吐可预测</li>
+<li><strong>缺点</strong>：句子被硬切断，语义边界被无视</li>
+<li><strong>适用</strong>：格式规整的日志、源代码（按行切）、预格式化文本</li>
+<li><strong>工程参数</strong>：典型 <code>chunk_size=256~1024</code>，<code>overlap=10%~20%</code></li>
+</ul>
+<h3 id="2-3-递归分块（Recursive-Chunking）——工业界默认起点"><a href="#2-3-递归分块（Recursive-Chunking）——工业界默认起点" class="headerlink" title="2.3 递归分块（Recursive Chunking）——工业界默认起点"></a>2.3 递归分块（Recursive Chunking）——工业界默认起点</h3><p>不直接按长度切，而是<strong>按分隔符优先级递归尝试</strong>，只在无法再分时才硬切：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">分隔符层级（从粗到细）：</span><br><span class="line">  &quot;\n\n&quot;（段落） → &quot;\n&quot;（行） → &quot;。&quot;（句） → &quot; &quot;（词） → 硬切字符</span><br><span class="line"></span><br><span class="line">算法：split_by_separator(text, sep)</span><br><span class="line">      if 所有片段 ≤ chunk_size: 返回</span><br><span class="line">      else: 对超长片段用下一级分隔符再切，直到满足</span><br></pre></td></tr></table></figure>
+
+<p>LangChain的 <code>RecursiveCharacterTextSplitter</code> 即此实现（中文需自行加入”。””；”等分隔符）。它<strong>尽量保住段落和句子的完整性</strong>，是绝大多数RAG系统的默认选择。</p>
+<h3 id="2-4-语义分块（Semantic-Chunking）——质量上限更高"><a href="#2-4-语义分块（Semantic-Chunking）——质量上限更高" class="headerlink" title="2.4 语义分块（Semantic Chunking）——质量上限更高"></a>2.4 语义分块（Semantic Chunking）——质量上限更高</h3><p>不用规则，用<strong>相邻句向量的相似度突变</strong>检测主题切换点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 文本按句切分：s₁, s₂, ..., sₙ</span><br><span class="line">2. 计算相邻句对相似度：sim(sᵢ, sᵢ₊₁)  （每句先做Embedding）</span><br><span class="line">3. 相似度显著下降处 = 主题边界</span><br><span class="line">   判定方法：sim &lt; percentile(sim_array, 90) 即断开</span><br><span class="line">   （即：把最&quot;冷&quot;的10%句子边界当作分块点）</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>优点</strong>：块内语义同质，向量表示精准；块大小自适应内容</li>
+<li><strong>缺点</strong>：索引期需逐句Embedding（成本×N倍）、阈值需调参、短文档不稳定</li>
+<li><strong>适用</strong>：长篇论述型文本（论文正文、政策文档、教程）</li>
+</ul>
+<h3 id="2-5-父子分块（Parent-Child-Chunking）——检索精度与生成上下文兼得"><a href="#2-5-父子分块（Parent-Child-Chunking）——检索精度与生成上下文兼得" class="headerlink" title="2.5 父子分块（Parent-Child Chunking）——检索精度与生成上下文兼得"></a>2.5 父子分块（Parent-Child Chunking）——检索精度与生成上下文兼得</h3><p>核心思想：<strong>用小块检索（向量纯净），返回大块生成（上下文完整）</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">索引结构（两层）：</span><br><span class="line">  父块（1024 token）            ← 生成时返回</span><br><span class="line">    ├── 子块1（256 token）      ← 参与向量索引</span><br><span class="line">    ├── 子块2（256 token）</span><br><span class="line">    └── 子块3（256 token）</span><br><span class="line"></span><br><span class="line">检索流程：</span><br><span class="line">  query → 子块向量检索Top-K → 映射到父块（去重）→ 返回父块给LLM</span><br></pre></td></tr></table></figure>
+
+<p>这是2026年生产系统中最主流的分块架构（也称small-to-big &#x2F; hierarchical chunking）。它把”检索粒度”和”生成粒度”解耦——子块解决失败模式2的稀释问题，父块解决上下文割裂问题。代价是需要维护父子映射关系，向量数据库中存储量增加约3-4倍。</p>
+<h3 id="2-6-Late-Chunking（2026新策略，知晓即可）"><a href="#2-6-Late-Chunking（2026新策略，知晓即可）" class="headerlink" title="2.6 Late Chunking（2026新策略，知晓即可）"></a>2.6 Late Chunking（2026新策略，知晓即可）</h3><p>传统流程是”先分块、后Embedding”——每个块独立编码，指代词（”该方法””该模型”）在块内无所指。Late Chunking反转顺序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">传统：文档 → 分块 → 逐块Embedding（每块独立，&quot;该方法&quot;失去指代）</span><br><span class="line">Late：文档 → 整文过Transformer → 每个token携带全文上下文</span><br><span class="line">     → 按块边界对token做mean pooling → 得到块向量（&quot;该方法&quot;已吸收指代语义）</span><br></pre></td></tr></table></figure>
+
+<p>实测对长文档（接近8K token）相对朴素分块有约3.6%的检索提升，短文档无收益。<strong>限制条件</strong>：需要支持长上下文的Embedding模型（如Jina embeddings-v3的8192 token窗口），索引期计算成本更高。架构师决策要点：语料以长技术文档（跨节引用多）为主时值得启用，短文档语料不必。</p>
+<h3 id="2-7-分块策略决策矩阵"><a href="#2-7-分块策略决策矩阵" class="headerlink" title="2.7 分块策略决策矩阵"></a>2.7 分块策略决策矩阵</h3><table>
+<thead>
+<tr>
+<th>策略</th>
+<th>索引成本</th>
+<th>质量上限</th>
+<th>实现复杂度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>固定窗口</td>
+<td>极低</td>
+<td>低</td>
+<td>极低</td>
+<td>日志、代码、格式规整文本</td>
+</tr>
+<tr>
+<td>递归分块</td>
+<td>低</td>
+<td>中</td>
+<td>低</td>
+<td><strong>通用默认起点</strong>，混合语料</td>
+</tr>
+<tr>
+<td>语义分块</td>
+<td>高（逐句Embedding）</td>
+<td>中高</td>
+<td>中</td>
+<td>论文正文、论述型长文</td>
+</tr>
+<tr>
+<td>父子分块</td>
+<td>中（存储×3-4）</td>
+<td>高</td>
+<td>中</td>
+<td><strong>生产系统主流</strong>，精度敏感场景</td>
+</tr>
+<tr>
+<td>Late Chunking</td>
+<td>高（长上下文编码）</td>
+<td>高（长文档）</td>
+<td>中</td>
+<td>长技术文档、跨节引用密集</td>
+</tr>
+</tbody></table>
+<p>工程实践：<strong>从递归分块起步建立baseline → 用RAGAS评估 → 按失败模式升级到父子分块&#x2F;语义分块</strong>。不要一开始就上最复杂的策略。</p>
+<hr>
+<h2 id="三、混合检索与RRF公式推导（必须掌握）"><a href="#三、混合检索与RRF公式推导（必须掌握）" class="headerlink" title="三、混合检索与RRF公式推导（必须掌握）"></a>三、混合检索与RRF公式推导（必须掌握）</h2><h3 id="3-1-BM25：稀疏检索的工业标准"><a href="#3-1-BM25：稀疏检索的工业标准" class="headerlink" title="3.1 BM25：稀疏检索的工业标准"></a>3.1 BM25：稀疏检索的工业标准</h3><p>BM25（Okapi BM25）是TF-IDF的改进版，至今仍是关键词检索的基线与生产标配（Elasticsearch默认相关度算法）。文档D对查询Q的得分：</p>
+<p>$$\text{BM25}(D, Q) &#x3D; \sum_{t \in Q} \text{IDF}(t) \cdot \frac{f(t, D) \cdot (k_1 + 1)}{f(t, D) + k_1 \cdot \left(1 - b + b \cdot \frac{|D|}{\text{avgdl}}\right)}$$</p>
+<p>其中：</p>
+<p>$$\text{IDF}(t) &#x3D; \ln\left(\frac{N - n(t) + 0.5}{n(t) + 0.5} + 1\right)$$</p>
+<p><strong>逐项拆解</strong>（每个参数都是架构师调优对象）：</p>
+<ol>
+<li><p><strong>IDF项</strong>：$N$为文档总数，$n(t)$为包含词$t$的文档数。词越稀有，命中权重越大——与TF-IDF思想一致。</p>
+</li>
+<li><p><strong>TF饱和项</strong> $\frac{f \cdot (k_1+1)}{f + k_1 \cdot (\cdots)}$：词频$f$的增益<strong>边际递减</strong>。当$f \to \infty$时该项趋于上界$(k_1+1)$——修复了TF-IDF中”词频无限放大得分”的缺陷。$k_1$控制饱和速度：</p>
+<ul>
+<li>$k_1 &#x3D; 0$：完全不看重词频（二元命中）</li>
+<li>$k_1$ 越大：饱和越慢，词频影响越持续（典型值 $k_1 &#x3D; 1.2 \sim 2.0$）</li>
+</ul>
+</li>
+<li><p><strong>长度归一化项</strong> $\left(1 - b + b \cdot \frac{|D|}{\text{avgdl}}\right)$：长文档天然容易堆词频，该项对其进行惩罚。$b \in [0,1]$（典型0.75）：</p>
+<ul>
+<li>$b &#x3D; 0$：不惩罚长文档</li>
+<li>$b &#x3D; 1$：完全按长度比例归一化</li>
+<li><strong>注意中文场景</strong>：分块后若文档长度方差大（论文摘要vs正文块），$b$偏大时长块被系统性压制，需检查</li>
+</ul>
+</li>
+</ol>
+<p><strong>为什么BM25能补稠密检索的短板</strong>：BM25基于精确词项匹配，”公式(4.3)”、”GRPO”、”<code>build_context</code>“这类符号串是硬命中，不受语义平滑影响。</p>
+<h3 id="3-2-融合的第一难题：分数不可比"><a href="#3-2-融合的第一难题：分数不可比" class="headerlink" title="3.2 融合的第一难题：分数不可比"></a>3.2 融合的第一难题：分数不可比</h3><p>两路检索的分数<strong>量纲完全不同</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>检索器</th>
+<th>分数范围</th>
+<th>分布特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BM25</td>
+<td>$[0, +\infty)$ 无界</td>
+<td>依赖语料统计，同一query不同语料分数不可比</td>
+</tr>
+<tr>
+<td>余弦相似度</td>
+<td>$[-1, 1]$（归一化后通常[0.3, 0.9]）</td>
+<td>大量挤在高区间，区分度低</td>
+</tr>
+</tbody></table>
+<p><strong>朴素方案：归一化后加权求和</strong> $S &#x3D; \alpha \cdot \hat{S}<em>{BM25} + (1-\alpha) \cdot \hat{S}</em>{dense}$ 的问题：</p>
+<ul>
+<li>min-max归一化对<strong>离群值极度脆弱</strong>：BM25最大分20.7、次大3.2时，min-max后次大文档得分趋近0，被完全淹没</li>
+<li>权重$\alpha$需按语料调参，语料更新后失效</li>
+<li>每新增一路检索器（如第08课的多路查询），归一化空间重新洗牌</li>
+</ul>
+<h3 id="3-3-RRF：只用排名，不用分数"><a href="#3-3-RRF：只用排名，不用分数" class="headerlink" title="3.3 RRF：只用排名，不用分数"></a>3.3 RRF：只用排名，不用分数</h3><p>Reciprocal Rank Fusion（RRF）的洞察：<strong>排名比分数稳健</strong>。它完全丢弃分数，只使用每路检索的排名：</p>
+<p>$$\boxed{\text{RRF}(d) &#x3D; \sum_{i&#x3D;1}^{m} \frac{1}{k + r_i(d)}}$$</p>
+<p>其中 $m$ 为检索路数，$r_i(d)$ 为文档$d$在第$i$路的排名（从1开始），$k$为平滑常数（<strong>默认60</strong>）。</p>
+<p><strong>性质分析（推导级要求）</strong>：</p>
+<ol>
+<li><p><strong>有界</strong>：$\text{RRF}(d) \le \frac{m}{k+1}$（每路都排第1时取最大值），分数空间天然归一，无需任何预处理。</p>
+</li>
+<li><p><strong>单调</strong>：$r_i$ 越小（排名越靠前），$\frac{1}{k+r_i}$ 越大。排名1、2、3的贡献分别是 $\frac{1}{61}, \frac{1}{62}, \frac{1}{63}$——递减极其平缓。</p>
+</li>
+<li><p><strong>k的作用——压制头部垄断</strong>：若 $k&#x3D;0$，排名第1的文档得分是第2名的<strong>2倍</strong>（1 vs 0.5），单路冠军几乎独裁融合结果；$k&#x3D;60$ 时两者比为 $61&#x2F;62 \approx 0.984$，头部优势被抹平，<strong>每一路的”共识”而非单路的”高分”决定排序</strong>。k越大越接近”平均排名”，k越小越接近”奖励冠军”。</p>
+</li>
+<li><p><strong>对分数分布完全不敏感</strong>：BM25分数爆炸（离群值）不影响RRF——因为只用排名。这是它对加权求和的决定性优势。</p>
+</li>
+</ol>
+<p><strong>数值示例（务必亲手验算）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>文档</th>
+<th>BM25排名</th>
+<th>Dense排名</th>
+<th>RRF得分（k&#x3D;60）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>1</td>
+<td>5</td>
+<td>1&#x2F;61 + 1&#x2F;64 &#x3D; <strong>0.03205</strong></td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>1</td>
+<td>1&#x2F;63 + 1&#x2F;61 &#x3D; <strong>0.03227</strong></td>
+</tr>
+<tr>
+<td>C</td>
+<td>2</td>
+<td>8</td>
+<td>1&#x2F;62 + 1&#x2F;68 &#x3D; 0.03095</td>
+</tr>
+<tr>
+<td>D</td>
+<td>10</td>
+<td>2</td>
+<td>1&#x2F;70 + 1&#x2F;62 &#x3D; 0.03039</td>
+</tr>
+</tbody></table>
+<p>B &gt; A &gt; C &gt; D：<strong>两路都进前几名的文档（A、B）胜过单路冠军</strong>（D在Dense排第2但BM25排第10）。这正是混合检索的初衷——共识文档优先。</p>
+<p><strong>加权RRF变体</strong>（生产常用）：</p>
+<p>$$\text{wRRF}(d) &#x3D; \sum_{i&#x3D;1}^{m} \frac{w_i}{k + r_i(d)}$$</p>
+<p>$w_i$ 为路权重。相比分数加权，排名加权更稳定（权重作用于有界的排名贡献上）。法律&#x2F;医疗等精确性优先场景可设 $w_{BM25} &#x3D; 1.5$。</p>
+<h3 id="3-4-工程实现要点：BGE-M3的一体化输出"><a href="#3-4-工程实现要点：BGE-M3的一体化输出" class="headerlink" title="3.4 工程实现要点：BGE-M3的一体化输出"></a>3.4 工程实现要点：BGE-M3的一体化输出</h3><p>第06课提过BGE-M3的Dense+Sparse+Multi-vec三合一能力——它在<strong>一次前向传播</strong>中同时输出稠密向量和稀疏词权重，混合检索无需维护两套索引管线。工程对比：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">方案A（两套独立系统）：Elasticsearch(BM25) + 向量数据库     → 运维两套，延迟两次</span><br><span class="line">方案B（一体化）：BGE-M3单模型 → 向量库同时存dense+sparse列  → 单管线，Milvus/Chroma原生支持</span><br></pre></td></tr></table></figure>
+
+<p>方案B是2026年新系统的主流选择；方案A适合已有ES存量设施的企业渐进改造。</p>
+<hr>
+<h2 id="四、重排序模型（必须掌握复杂度分析）"><a href="#四、重排序模型（必须掌握复杂度分析）" class="headerlink" title="四、重排序模型（必须掌握复杂度分析）"></a>四、重排序模型（必须掌握复杂度分析）</h2><h3 id="4-1-两阶段检索：漏斗架构"><a href="#4-1-两阶段检索：漏斗架构" class="headerlink" title="4.1 两阶段检索：漏斗架构"></a>4.1 两阶段检索：漏斗架构</h3><p>召回阶段（第一档）追求<strong>高召回率、低延迟</strong>，用便宜的模型扫大批量；精排阶段（第二档）用昂贵的模型精筛小批量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">语料库 1,000,000 块</span><br><span class="line">    │  BM25 + Dense 并行召回（&lt; 50ms，ANN索引）</span><br><span class="line">    ▼</span><br><span class="line">候选 100 块（RRF融合后）</span><br><span class="line">    │  Cross-Encoder 重排序（100~300ms，GPU批量）</span><br><span class="line">    ▼</span><br><span class="line">Top-10 块 → 拼入LLM上下文生成答案</span><br></pre></td></tr></table></figure>
+
+<p>为什么不让重排模型直接扫全库？——复杂度分析见下。</p>
+<h3 id="4-2-Bi-Encoder-vs-Cross-Encoder：架构差异决定复杂度"><a href="#4-2-Bi-Encoder-vs-Cross-Encoder：架构差异决定复杂度" class="headerlink" title="4.2 Bi-Encoder vs Cross-Encoder：架构差异决定复杂度"></a>4.2 Bi-Encoder vs Cross-Encoder：架构差异决定复杂度</h3><p><strong>Bi-Encoder（双塔，用于召回）</strong>：query和文档<strong>分别独立</strong>编码，只在向量层面交互：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">query  → Encoder → q ∈ ℝᵈ ─┐</span><br><span class="line">                           ├─► score = cos(q, d)</span><br><span class="line">doc    → Encoder → d ∈ ℝᵈ ─┘</span><br><span class="line">     ↑ 文档向量可离线预计算并建ANN索引！</span><br></pre></td></tr></table></figure>
+
+<p>在线复杂度：文档向量全部预计算，查询时只需<strong>1次query编码 O(L_q·d)</strong> + ANN检索（近似O(log n)次点积）。</p>
+<p><strong>Cross-Encoder（交叉编码，用于重排）</strong>：query和文档<strong>拼接后联合</strong>编码，在Attention层内做词级交互：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[CLS] query tokens [SEP] doc tokens [SEP]</span><br><span class="line">            │</span><br><span class="line">      单个Transformer前向</span><br><span class="line">      （query词与doc词做完整O(L²)交叉注意力）</span><br><span class="line">            │</span><br><span class="line">            ▼</span><br><span class="line">      score = MLP(CLS表示)   ← 直接输出相关性分数，无向量中间层</span><br></pre></td></tr></table></figure>
+
+<p>在线复杂度推导（<strong>必须掌握</strong>）：</p>
+<ul>
+<li>每个候选文档需执行一次完整前向：拼接长度 $L &#x3D; L_q + L_d$</li>
+<li>Transformer单层Attention计算量为 $O(L^2 \cdot d)$（第02课结论）</li>
+<li>对 $n$ 个候选重排：总复杂度 $O(n \cdot L^2 \cdot d)$</li>
+</ul>
+<p><strong>数量级对比</strong>（设 $L_q&#x3D;32, L_d&#x3D;512$，则$L&#x3D;544$，$d&#x3D;1024$）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Bi-Encoder（召回100万块）</th>
+<th>Cross-Encoder（重排100块）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>每文档计算</td>
+<td>向量已预计算，0</td>
+<td>$544^2 \times 1024 \approx 3.0 \times 10^8$ FLOPs&#x2F;层</td>
+</tr>
+<tr>
+<td>在线前向次数</td>
+<td>1次（仅query）</td>
+<td><strong>100次</strong></td>
+</tr>
+<tr>
+<td>典型延迟</td>
+<td>10~50ms（含ANN）</td>
+<td>100~300ms（GPU批量）</td>
+</tr>
+</tbody></table>
+<p>结论：Cross-Encoder的 $n \cdot L^2$ 复杂度使其<strong>只能用于小候选集</strong>——这就是两阶段漏斗存在的根本原因。<strong>Cross-Encoder无法预计算文档向量</strong>（文档表示依赖具体query，换一个query整个前向要重算），这既是它的精度来源（词级交互），也是它的成本来源。</p>
+<h3 id="4-3-ColBERT-late-interaction（知晓即可）"><a href="#4-3-ColBERT-late-interaction（知晓即可）" class="headerlink" title="4.3 ColBERT late-interaction（知晓即可）"></a>4.3 ColBERT late-interaction（知晓即可）</h3><p>Bi与Cross之间的折中：文档预计算<strong>token级向量组</strong>（非单一向量），查询时对query每个token与doc所有token做MaxSim求和。精度接近Cross-Encoder、延迟更低，但<strong>向量存储膨胀数十倍</strong>（每块存~500个向量而非1个）。Jina ColBERT v2是2026年的代表模型。架构师只需知道：存储预算充足且延迟苛刻时它是一个中间选项。</p>
+<h3 id="4-4-2026年Reranker选型矩阵"><a href="#4-4-2026年Reranker选型矩阵" class="headerlink" title="4.4 2026年Reranker选型矩阵"></a>4.4 2026年Reranker选型矩阵</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>参数量</th>
+<th>MTEB Rerank</th>
+<th>许可证</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BGE-Reranker-v2-m3</td>
+<td>568M</td>
+<td>60.4</td>
+<td>MIT</td>
+<td><strong>默认选择</strong>：多语言、CPU勉强可跑、与BGE-M3配套</td>
+</tr>
+<tr>
+<td>BGE-Reranker-v2-MiniCPM</td>
+<td>2.7B</td>
+<td>62.3</td>
+<td>Apache 2.0</td>
+<td>质量-速度平衡档</td>
+</tr>
+<tr>
+<td>BGE-Reranker-v2-Gemma</td>
+<td>9B</td>
+<td>64.5</td>
+<td>Apache 2.0</td>
+<td>最高质量档（GPU必须）</td>
+</tr>
+<tr>
+<td>Qwen3-Reranker-4B&#x2F;8B</td>
+<td>4B&#x2F;8B</td>
+<td>—</td>
+<td>Apache 2.0</td>
+<td>2026新选项，与Qwen生态配套</td>
+</tr>
+<tr>
+<td>Jina ColBERT v2</td>
+<td>137M</td>
+<td>—</td>
+<td>CC-BY-NC</td>
+<td>late-interaction代表（存储×2-3）</td>
+</tr>
+<tr>
+<td>Cohere Rerank 3.5</td>
+<td>API</td>
+<td>—</td>
+<td>商用API</td>
+<td>免运维，按调用计费，数据出域</td>
+</tr>
+</tbody></table>
+<p><strong>选型决策要点</strong>：</p>
+<ol>
+<li><strong>吞吐估算</strong>：568M模型单张A10&#x2F;T4 GPU批量重排100条×512token约100~200ms；9B模型需A100级别，延迟×3</li>
+<li><strong>数据合规</strong>： Cohere API意味着查询与文档出域——研究助手处理未发表论文时不可接受，只能选开源本地部署</li>
+<li><strong>延迟预算反推</strong>：若端到端预算500ms（LLM生成另算），重排预算约200ms → 候选数压到50~100、模型≤2.7B档</li>
+</ol>
+<h3 id="4-5-重排序器的输出与截断"><a href="#4-5-重排序器的输出与截断" class="headerlink" title="4.5 重排序器的输出与截断"></a>4.5 重排序器的输出与截断</h3><p>重排后按分数降序取Top-K。工程细节：Cross-Encoder输出是<strong>无标定分数</strong>（logit），不同模型间不可比，只用于<strong>同一候选集内部排序</strong>。可设绝对阈值过滤（如score &lt; 0 的块直接丢弃），但阈值需按模型标定。</p>
+<hr>
+<h2 id="五、检索质量评估：RAGAS框架（必须掌握三维度计算）"><a href="#五、检索质量评估：RAGAS框架（必须掌握三维度计算）" class="headerlink" title="五、检索质量评估：RAGAS框架（必须掌握三维度计算）"></a>五、检索质量评估：RAGAS框架（必须掌握三维度计算）</h2><p>改进分块&#x2F;检索&#x2F;重排后，如何知道”变好了”？不能靠肉眼抽查——需要可复现的量化评估。RAGAS（RAG Assessment）是事实标准框架，其核心创新是<strong>无参考评估</strong>（reference-free）：不需要人工标注的标准答案，用LLM本身作为评估器。</p>
+<h3 id="5-1-RAG评估的三维度"><a href="#5-1-RAG评估的三维度" class="headerlink" title="5.1 RAG评估的三维度"></a>5.1 RAG评估的三维度</h3><p>RAG输出质量可分解为三个独立环节，各用一个指标衡量（<strong>每个指标的计算方法必须掌握</strong>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐</span><br><span class="line">   │ Context      │   │ Faithfulness │   │ Answer       │</span><br><span class="line">   │ Relevance    │   │ (忠实度)      │   │ Relevance    │</span><br><span class="line">   │ (上下文相关性)│   │              │   │ (答案相关性)  │</span><br><span class="line">   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘</span><br><span class="line">          │                  │                  │</span><br><span class="line">检索质量 ↓         生成是否忠于上下文 ↓      答案是否切题 ↓</span><br><span class="line">(二三节改进)         (Prompt/模型问题)       (Prompt/模型问题)</span><br></pre></td></tr></table></figure>
+
+<p><strong>① Faithfulness（忠实度）——幻觉率的核心指标</strong></p>
+<p>计算流程（LLM-as-a-Judge两步法）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Step 1 断言分解：LLM把答案拆成原子断言列表</span><br><span class="line">  答案：&quot;GRPO由DeepSeek提出，采用分组相对优势估计，无需价值网络。&quot;</span><br><span class="line">  → 断言：[C1: GRPO由DeepSeek提出] [C2: 采用分组相对优势估计] [C3: 无需价值网络]</span><br><span class="line"></span><br><span class="line">Step 2 逐条验证：对每条断言，LLM判断能否由检索上下文推出</span><br><span class="line">  → C1: ✓上下文有  C2: ✓  C3: ✗上下文未提及</span><br><span class="line"></span><br><span class="line">  Faithfulness = 可推出的断言数 / 总断言数 = 2/3 ≈ 0.67</span><br></pre></td></tr></table></figure>
+
+<p><strong>② Answer Relevance（答案相关性）——是否答非所问</strong></p>
+<p>反向生成法：让LLM从答案<strong>反向生成K个候选问题</strong>，计算它们与原问题的余弦相似度均值：</p>
+<p>$$\text{AnswerRel} &#x3D; \frac{1}{K}\sum_{i&#x3D;1}^{K} \cos(\mathbf{q}, \mathbf{q}_i^{gen})$$</p>
+<p>答案跑题时，反向生成的问题与原问题相似度低——分数自然下降。</p>
+<p><strong>③ Context Relevance &#x2F; Precision（上下文相关性）</strong></p>
+<p>衡量检索回来的块里有多少真正相关：LLM逐块判断与问题的相关性，输出相关块占比。<strong>这是分块策略与混合检索优化的直接观测指标</strong>——本课所有改进最终都落在这个数上。</p>
+<h3 id="5-2-RAGAS-v0-2的API变更（2026，工程注意）"><a href="#5-2-RAGAS-v0-2的API变更（2026，工程注意）" class="headerlink" title="5.2 RAGAS v0.2的API变更（2026，工程注意）"></a>5.2 RAGAS v0.2的API变更（2026，工程注意）</h3><p>RAGAS v0.2完成了从”RAG评估库”到”通用LLM应用评估框架”的架构转型，带来breaking change：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># v0.1 旧写法（已失效，会抛TypeError）</span></span><br><span class="line"><span class="keyword">from</span> ragas.metrics <span class="keyword">import</span> faithfulness</span><br><span class="line">evaluate(dataset, metrics=[faithfulness])</span><br><span class="line"></span><br><span class="line"><span class="comment"># v0.2 新写法：metric必须先实例化，显式注入评估LLM与Embedding</span></span><br><span class="line"><span class="keyword">from</span> ragas <span class="keyword">import</span> evaluate</span><br><span class="line"><span class="keyword">from</span> ragas.metrics <span class="keyword">import</span> Faithfulness, AnswerRelevancy, ContextPrecision</span><br><span class="line"></span><br><span class="line">metric_faith = Faithfulness(llm=judge_llm, embeddings=embeddings)</span><br><span class="line">result = evaluate(dataset, metrics=[metric_faith, ...])</span><br></pre></td></tr></table></figure>
+
+<p>另注意：<strong>faithfulness 0.19+ 评分逻辑更严格</strong>（要求更高的token重叠度证据），新旧版本的分数<strong>不可直接对比</strong>——做A&#x2F;B实验时两臂必须用同一RAGAS版本。</p>
+<h3 id="5-3-评估驱动的迭代闭环"><a href="#5-3-评估驱动的迭代闭环" class="headerlink" title="5.3 评估驱动的迭代闭环"></a>5.3 评估驱动的迭代闭环</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">构建测试集（50~200条真实query + 知识库快照）</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">基线评估：递归分块 + 单路Dense ──► ContextRel = 0.61, Faithfulness = 0.82</span><br><span class="line">        │</span><br><span class="line">   逐项改进（一次只改一个变量！）</span><br><span class="line">        │</span><br><span class="line">        ├─ 改分块：父子分块      ──► ContextRel = 0.68（+0.07）</span><br><span class="line">        ├─ 改检索：+BM25混合RRF  ──► ContextRel = 0.74（+0.06）</span><br><span class="line">        └─ 加重排：+Cross-Encoder──► ContextRel = 0.79（+0.05）</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">监控延迟与成本：每步收益 vs 延迟增量 → 停止在ROI拐点</span><br></pre></td></tr></table></figure>
+
+<p><strong>架构师原则：一次只改一个变量，用同一测试集量化增量收益，警惕延迟成本吞噬精度收益。</strong></p>
+<hr>
+<h2 id="六、引导式代码实践"><a href="#六、引导式代码实践" class="headerlink" title="六、引导式代码实践"></a>六、引导式代码实践</h2><blockquote>
+<p>环境降级方案（本课默认<strong>最小版</strong>路径）：</p>
+<ul>
+<li><strong>完整版</strong>（可选拓展）：GPU + <code>bge-reranker-v2-m3</code> 真实重排 + RAGAS真实评估</li>
+<li><strong>降级版</strong>：CPU + <code>rank_bm25</code> + 真实向量检索（sentence-transformers，CPU约30s安装）</li>
+<li><strong>最小版</strong>（默认）：纯Python标准库，手写BM25与Mock重排，<strong>零依赖零网络</strong>，运行&lt;1s，聚焦算法逻辑理解</li>
+</ul>
+</blockquote>
+<h3 id="6-1-第一层：完整可运行代码（最小版）"><a href="#6-1-第一层：完整可运行代码（最小版）" class="headerlink" title="6.1 第一层：完整可运行代码（最小版）"></a>6.1 第一层：完整可运行代码（最小版）</h3><p>以下代码实现完整的两阶段流水线：手写BM25 + 模拟Dense检索 + RRF融合 + Mock Cross-Encoder重排 + RAGAS风格忠实度计算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">第07课实战：混合检索 + RRF融合 + 重排序 两阶段流水线（最小版，零依赖）</span></span><br><span class="line"><span class="string">运行：python lesson07_hybrid_rerank.py</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass, field</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 数据集：研究助手知识库的3篇论文分块（沿用第06课语料）</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line">CHUNKS = [</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c01&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;Scaled Dot-Product Attention将查询与键做点积后除以根号dk，再经softmax归一化得到注意力权重。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c02&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;Multi-Head Attention将Q、K、V分别投影到h个子空间并行计算注意力，再拼接输出。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c03&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;公式(4.3)给出了GRPO的优势函数估计：同一prompt的分组内奖励减去组均值。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c04&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;GRPO算法由DeepSeek提出，去掉了价值网络，用分组相对比较降低方差。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c05&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;BERT采用双向Transformer编码器，通过掩码语言任务预训练。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c06&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;GPT系列采用自回归解码器，从左到右逐token生成文本。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c07&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;ReAct模式交替执行推理与行动，形成Thought-Action-Observation三元组。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c08&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;ReAct在HotpotQA上相比纯CoT将任务完成率提升约6个百分点。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c09&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;RRF融合算法将各路排名的倒数求和，常数k默认取60。&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;c10&quot;</span>, <span class="string">&quot;text&quot;</span>: <span class="string">&quot;本文提出的方法在长文档检索任务上显著优于基线。&quot;</span>&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 组件1：BM25稀疏检索（手写实现）</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tokenize</span>(<span class="params">text: <span class="built_in">str</span></span>) -&gt; <span class="built_in">list</span>:</span><br><span class="line">    <span class="comment"># 中文按单字+英文小写词混合切分（演示用；生产用jieba/分词器）</span></span><br><span class="line">    tokens = re.findall(<span class="string">r&quot;[a-zA-Z0-9]+|[\u4e00-\u9fa5]&quot;</span>, text.lower())</span><br><span class="line">    <span class="keyword">return</span> tokens</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BM25</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, docs: <span class="built_in">list</span>, k1: <span class="built_in">float</span> = <span class="number">1.5</span>, b: <span class="built_in">float</span> = <span class="number">0.75</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.k1, <span class="variable language_">self</span>.b = k1, b</span><br><span class="line">        <span class="variable language_">self</span>.doc_tokens = [tokenize(d[<span class="string">&quot;text&quot;</span>]) <span class="keyword">for</span> d <span class="keyword">in</span> docs]</span><br><span class="line">        <span class="variable language_">self</span>.doc_len = [<span class="built_in">len</span>(t) <span class="keyword">for</span> t <span class="keyword">in</span> <span class="variable language_">self</span>.doc_tokens]</span><br><span class="line">        <span class="variable language_">self</span>.avgdl = <span class="built_in">sum</span>(<span class="variable language_">self</span>.doc_len) / <span class="built_in">len</span>(<span class="variable language_">self</span>.doc_len)</span><br><span class="line">        <span class="variable language_">self</span>.N = <span class="built_in">len</span>(docs)</span><br><span class="line">        <span class="variable language_">self</span>.tf = [Counter(t) <span class="keyword">for</span> t <span class="keyword">in</span> <span class="variable language_">self</span>.doc_tokens]</span><br><span class="line">        df = Counter()</span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> <span class="variable language_">self</span>.doc_tokens:</span><br><span class="line">            df.update(<span class="built_in">set</span>(t))</span><br><span class="line">        <span class="variable language_">self</span>.idf = &#123;w: math.log((<span class="variable language_">self</span>.N - n + <span class="number">0.5</span>) / (n + <span class="number">0.5</span>) + <span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">for</span> w, n <span class="keyword">in</span> df.items()&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">search</span>(<span class="params">self, query: <span class="built_in">str</span>, top_k: <span class="built_in">int</span> = <span class="number">10</span></span>) -&gt; <span class="built_in">list</span>:</span><br><span class="line">        q_tokens = tokenize(query)</span><br><span class="line">        scores = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="variable language_">self</span>.N):</span><br><span class="line">            s = <span class="number">0.0</span></span><br><span class="line">            <span class="keyword">for</span> w <span class="keyword">in</span> q_tokens:</span><br><span class="line">                <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> <span class="variable language_">self</span>.tf[i]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                f = <span class="variable language_">self</span>.tf[i][w]</span><br><span class="line">                norm = <span class="number">1</span> - <span class="variable language_">self</span>.b + <span class="variable language_">self</span>.b * <span class="variable language_">self</span>.doc_len[i] / <span class="variable language_">self</span>.avgdl</span><br><span class="line">                s += <span class="variable language_">self</span>.idf[w] * f * (<span class="variable language_">self</span>.k1 + <span class="number">1</span>) / (f + <span class="variable language_">self</span>.k1 * norm)</span><br><span class="line">            scores.append((CHUNKS[i][<span class="string">&quot;id&quot;</span>], s))</span><br><span class="line">        scores.sort(key=<span class="keyword">lambda</span> x: -x[<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> scores[:top_k]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 组件2：模拟Dense检索（用字符重叠模拟语义相似度，仅演示排序行为）</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dense_search</span>(<span class="params">query: <span class="built_in">str</span>, top_k: <span class="built_in">int</span> = <span class="number">10</span></span>) -&gt; <span class="built_in">list</span>:</span><br><span class="line">    q_set = <span class="built_in">set</span>(tokenize(query))</span><br><span class="line">    scores = []</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> CHUNKS:</span><br><span class="line">        d_set = <span class="built_in">set</span>(tokenize(c[<span class="string">&quot;text&quot;</span>]))</span><br><span class="line">        jaccard = <span class="built_in">len</span>(q_set &amp; d_set) / <span class="built_in">len</span>(q_set | d_set)</span><br><span class="line">        scores.append((c[<span class="string">&quot;id&quot;</span>], jaccard))</span><br><span class="line">    scores.sort(key=<span class="keyword">lambda</span> x: -x[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> scores[:top_k]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 组件3：RRF融合（本课核心公式）</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rrf_fusion</span>(<span class="params">rankings: <span class="built_in">list</span>, k: <span class="built_in">int</span> = <span class="number">60</span>, weights: <span class="built_in">list</span> = <span class="literal">None</span></span>) -&gt; <span class="built_in">list</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;rankings: 多路检索结果，每路为[(doc_id, score), ...]按名次排列&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> weights <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        weights = [<span class="number">1.0</span>] * <span class="built_in">len</span>(rankings)</span><br><span class="line">    scores = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ranking, w <span class="keyword">in</span> <span class="built_in">zip</span>(rankings, weights):</span><br><span class="line">        <span class="keyword">for</span> rank, (doc_id, _) <span class="keyword">in</span> <span class="built_in">enumerate</span>(ranking, start=<span class="number">1</span>):</span><br><span class="line">            scores[doc_id] = scores.get(doc_id, <span class="number">0.0</span>) + w / (k + rank)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sorted</span>(scores.items(), key=<span class="keyword">lambda</span> x: -x[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 组件4：Mock Cross-Encoder重排序（模拟词级交互增益）</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mock_cross_encoder</span>(<span class="params">query: <span class="built_in">str</span>, doc_text: <span class="built_in">str</span></span>) -&gt; <span class="built_in">float</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;模拟：对query每个token与doc的交互打分，返回无标定logit&quot;&quot;&quot;</span></span><br><span class="line">    q_tokens = tokenize(query)</span><br><span class="line">    d_tokens = tokenize(doc_text)</span><br><span class="line">    d_set = <span class="built_in">set</span>(d_tokens)</span><br><span class="line">    score = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> qt <span class="keyword">in</span> q_tokens:</span><br><span class="line">        <span class="keyword">if</span> qt <span class="keyword">in</span> d_set:</span><br><span class="line">            score += <span class="number">2.0</span>                      <span class="comment"># 精确命中</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">any</span>(qt <span class="keyword">in</span> dt <span class="keyword">or</span> dt <span class="keyword">in</span> qt <span class="keyword">for</span> dt <span class="keyword">in</span> d_set <span class="keyword">if</span> <span class="built_in">len</span>(dt) &gt; <span class="number">1</span>):</span><br><span class="line">            score += <span class="number">0.8</span>                      <span class="comment"># 部分匹配（模拟词级交互）</span></span><br><span class="line">    <span class="keyword">return</span> score - <span class="number">0.5</span> * (<span class="built_in">len</span>(d_tokens) / <span class="number">50</span>)  <span class="comment"># 轻微长度惩罚</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rerank</span>(<span class="params">query: <span class="built_in">str</span>, candidates: <span class="built_in">list</span>, top_k: <span class="built_in">int</span> = <span class="number">3</span></span>) -&gt; <span class="built_in">list</span>:</span><br><span class="line">    chunk_map = &#123;c[<span class="string">&quot;id&quot;</span>]: c[<span class="string">&quot;text&quot;</span>] <span class="keyword">for</span> c <span class="keyword">in</span> CHUNKS&#125;</span><br><span class="line">    scored = [(cid, mock_cross_encoder(query, chunk_map[cid]))</span><br><span class="line">              <span class="keyword">for</span> cid, _ <span class="keyword">in</span> candidates]</span><br><span class="line">    scored.sort(key=<span class="keyword">lambda</span> x: -x[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> scored[:top_k]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 组件5：RAGAS风格忠实度计算（断言分解 + 逐条验证）</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">faithfulness_mock</span>(<span class="params">answer_claims: <span class="built_in">list</span>, context_supports: <span class="built_in">list</span></span>) -&gt; <span class="built_in">float</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;演示Faithfulness计算逻辑；生产环境由LLM完成分解与验证&quot;&quot;&quot;</span></span><br><span class="line">    supported = <span class="built_in">sum</span>(<span class="number">1</span> <span class="keyword">for</span> s <span class="keyword">in</span> context_supports <span class="keyword">if</span> s)</span><br><span class="line">    <span class="keyword">return</span> supported / <span class="built_in">len</span>(answer_claims) <span class="keyword">if</span> answer_claims <span class="keyword">else</span> <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="comment"># 主流程：两阶段检索流水线</span></span><br><span class="line"><span class="comment"># ============================================================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hybrid_pipeline</span>(<span class="params">query: <span class="built_in">str</span>, recall_k: <span class="built_in">int</span> = <span class="number">5</span>, final_k: <span class="built_in">int</span> = <span class="number">3</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Query: <span class="subst">&#123;query&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">56</span>)</span><br><span class="line"></span><br><span class="line">    bm25_rank = BM25(CHUNKS).search(query, top_k=recall_k)</span><br><span class="line">    dense_rank = dense_search(query, top_k=recall_k)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;BM25 Top-<span class="subst">&#123;recall_k&#125;</span>:  <span class="subst">&#123;[(i, <span class="built_in">round</span>(s,<span class="number">3</span>)) <span class="keyword">for</span> i,s <span class="keyword">in</span> bm25_rank]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Dense Top-<span class="subst">&#123;recall_k&#125;</span>: <span class="subst">&#123;[(i, <span class="built_in">round</span>(s,<span class="number">3</span>)) <span class="keyword">for</span> i,s <span class="keyword">in</span> dense_rank]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    fused = rrf_fusion([bm25_rank, dense_rank], k=<span class="number">60</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;RRF融合: <span class="subst">&#123;[(i, <span class="built_in">round</span>(s,<span class="number">5</span>)) <span class="keyword">for</span> i,s <span class="keyword">in</span> fused[:recall_k]]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    final = rerank(query, fused[:recall_k], top_k=final_k)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;重排Top-<span class="subst">&#123;final_k&#125;</span>: <span class="subst">&#123;[(i, <span class="built_in">round</span>(s,<span class="number">2</span>)) <span class="keyword">for</span> i,s <span class="keyword">in</span> final]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> final</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># 测试1：精确符号查询（BM25应显著救回精确命中块）</span></span><br><span class="line">    hybrid_pipeline(<span class="string">&quot;GRPO 公式(4.3) 优势函数&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="comment"># 测试2：语义泛化查询</span></span><br><span class="line">    hybrid_pipeline(<span class="string">&quot;注意力机制是怎么计算的&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="comment"># 忠实度演示：答案3条断言，上下文只支撑2条</span></span><br><span class="line">    f = faithfulness_mock(</span><br><span class="line">        answer_claims=[<span class="string">&quot;GRPO由DeepSeek提出&quot;</span>, <span class="string">&quot;公式(4.3)定义优势函数&quot;</span>, <span class="string">&quot;GRPO使用价值网络&quot;</span>],</span><br><span class="line">        context_supports=[<span class="literal">True</span>, <span class="literal">True</span>, <span class="literal">False</span>],</span><br><span class="line">    )</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Faithfulness = 2/3 = <span class="subst">&#123;f:<span class="number">.3</span>f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>预期输出</strong>（关键行为，非精确数值）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Query: GRPO 公式(4.3) 优势函数</span><br><span class="line">========================================================</span><br><span class="line">BM25 Top-5:  [(&#x27;c03&#x27;, 3.2), (&#x27;c04&#x27;, 2.1), ...]   ← c03精确命中公式编号，得分显著</span><br><span class="line">Dense Top-5: [(&#x27;c04&#x27;, 0.12), (&#x27;c03&#x27;, 0.10), ...] ← 语义相似块挤占前列</span><br><span class="line">RRF融合:     [(&#x27;c03&#x27;, 0.0322), (&#x27;c04&#x27;, 0.0318), ...] ← 两路共识的c03/c04登顶</span><br><span class="line">重排Top-3:   [(&#x27;c03&#x27;, 6.4), (&#x27;c04&#x27;, 4.1), ...]</span><br><span class="line"></span><br><span class="line">Query: 注意力机制是怎么计算的</span><br><span class="line">========================================================</span><br><span class="line">BM25 Top-5:  [...c01名次靠前...]                   ← 中文单字命中</span><br><span class="line">Dense Top-5: [...c01/c02靠前...]</span><br><span class="line">RRF融合:     [c01, c02, ...]                       ← 语义相关块胜出</span><br><span class="line"></span><br><span class="line">Faithfulness = 2/3 = 0.667</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键观察</strong>：</p>
+<ol>
+<li>查询1中Dense检索把”公式(4.3)”这类精确符号排后，BM25硬命中救回——两路互补的价值</li>
+<li>RRF融合后<strong>两路共识文档</strong>（c03、c04）排到最前，符合3.3节性质分析</li>
+<li>重排后精确包含查询要素的块登顶——模拟了Cross-Encoder的词级交互收益</li>
+</ol>
+<h3 id="6-2-第二层：关键修改引导"><a href="#6-2-第二层：关键修改引导" class="headerlink" title="6.2 第二层：关键修改引导"></a>6.2 第二层：关键修改引导</h3><p>以下修改点请逐一实验并记录观察（配合6.1代码）：</p>
+<p><strong>修改点1：RRF常数k对头部权重的影响</strong><br>将 <code>rrf_fusion</code> 的 <code>k=60</code> 改为 <code>k=0</code> 和 <code>k=1000</code>，观察查询1的融合排序变化。<br>预期：k&#x3D;0时单路冠军（BM25第1名c03）贡献独大；k&#x3D;1000时排名贡献几乎均等，融合结果接近”两路平均名次”。</p>
+<p><strong>修改点2：BM25参数b的长度惩罚效应</strong><br>构造一个超长块（把c10复制拼接10倍），<code>BM25</code> 的 <code>b</code> 从0.75改为0，观察长块得分变化。<br>预期：b&#x3D;0时长块不再受惩罚，即使相关度一般也可能靠堆词频上位——理解为什么生产中b不宜为0。</p>
+<p><strong>修改点3：召回宽度recall_k与重排成本的权衡</strong><br>将 <code>recall_k</code> 从5逐步增大到50（可扩充CHUNKS语料），思考：真实Cross-Encoder下，recall_k&#x3D;50意味着什么？<br>提示：对照4.2节复杂度表——候选数线性放大重排延迟，收益却边际递减。画出”recall_k → 预期ContextRel”的收益曲线草图。</p>
+<p><strong>修改点4：加权RRF偏置精确场景</strong><br>调用 <code>rrf_fusion([bm25_rank, dense_rank], weights=[1.5, 1.0])</code>，观察精确符号查询的排序变化，思考什么业务场景应该这样配（提示：法条检索、零件编号查询）。</p>
+<h3 id="6-3-第三层：架构决策练习"><a href="#6-3-第三层：架构决策练习" class="headerlink" title="6.3 第三层：架构决策练习"></a>6.3 第三层：架构决策练习</h3><p><strong>场景</strong>：你是研究助手Agent的架构师，接到新需求——支持法律领域的子公司检索。约束：</p>
+<ul>
+<li>语料：50万条法条+判例块，平均块长300 token，含大量<strong>法条编号</strong>（如”《民法典》第1043条”）与专业术语</li>
+<li>用户查询：70%含明确法条编号或术语，30%为口语化描述（”离婚后孩子归谁”）</li>
+<li>延迟预算：检索端到端 ≤ 400ms（P95），重排序预算 ≤ 150ms</li>
+<li>硬件：单张A10（24GB）GPU，Embedding与Reranker共存</li>
+<li>数据合规：判例数据不得出域</li>
+</ul>
+<p><strong>决策任务</strong>（先自行作答，再对照习题Q5参考答案）：</p>
+<ol>
+<li>分块策略选什么？法条天然结构（条-款-项）如何映射到父子分块？</li>
+<li>检索采用方案A（ES+向量库双系统）还是方案B（BGE-M3一体化）？说明理由</li>
+<li>Reranker选哪个模型档位？候选数设多少？150ms预算如何分配给Embedding与Rerank？</li>
+<li>设计一个3条query的最小评估集，用哪三个RAGAS指标分别验证什么？</li>
+</ol>
+<hr>
+<h2 id="七、课后习题"><a href="#七、课后习题" class="headerlink" title="七、课后习题"></a>七、课后习题</h2><blockquote>
+<p>建议先完整作答再看参考答案。设计题无唯一解，重点论证过程。</p>
+</blockquote>
+<h3 id="Q1（基础·计算）"><a href="#Q1（基础·计算）" class="headerlink" title="Q1（基础·计算）"></a>Q1（基础·计算）</h3><p>两路检索对5个文档的排名如下（BM25: A&gt;C&gt;B&gt;D&gt;E；Dense: B&gt;E&gt;A&gt;C&gt;D）。手工计算k&#x3D;60时每个文档的RRF得分，给出融合排序，并说明E的最终名次为什么与两路排名都不同。</p>
+<h3 id="Q2（基础·概念）"><a href="#Q2（基础·概念）" class="headerlink" title="Q2（基础·概念）"></a>Q2（基础·概念）</h3><p>解释BM25中参数 $k_1$ 和 $b$ 各自的语义与取值影响。若你的语料块长度方差极大（100~2000 token混杂），$b$ 应该调大还是调小？为什么？</p>
+<h3 id="Q3（分析）"><a href="#Q3（分析）" class="headerlink" title="Q3（分析）"></a>Q3（分析）</h3><p>某团队在召回后直接用Cross-Encoder对<strong>全库100万块</strong>重排。请计算此举的在线计算量相对”召回100块再重排”放大了多少倍，并从”文档向量能否预计算”的角度解释Cross-Encoder为什么注定只能用于第二阶段。</p>
+<h3 id="Q4（分析）"><a href="#Q4（分析）" class="headerlink" title="Q4（分析）"></a>Q4（分析）</h3><p>对比”min-max归一化后加权求和”与”RRF”两种融合方案：BM25某文档得分20.7（离群，次高3.2）时，两种方案分别会发生什么？为什么RRF对此免疫？</p>
+<h3 id="Q5（系统设计）"><a href="#Q5（系统设计）" class="headerlink" title="Q5（系统设计）"></a>Q5（系统设计）</h3><p>完成6.3节的架构决策练习：给出分块方案、检索方案、Reranker选型与预算分配、评估集设计四个决策的完整方案与理由。</p>
+<h3 id="Q6（系统设计·代码）"><a href="#Q6（系统设计·代码）" class="headerlink" title="Q6（系统设计·代码）"></a>Q6（系统设计·代码）</h3><p>为研究助手的 <code>search_papers</code> 工具升级设计”降级策略”：当重排序服务超时（&gt;300ms）或宕机时，工具应如何响应？设计状态机（参照第05课错误处理FSM），说明哪些状态可自动降级、哪些必须报错，并给出降级时的检索质量补偿措施（提示：考虑评估指标如何监控降级期间的质量损失）。</p>
+<hr>
+<h2 id="八、参考答案"><a href="#八、参考答案" class="headerlink" title="八、参考答案"></a>八、参考答案</h2><h3 id="Q1-参考答案"><a href="#Q1-参考答案" class="headerlink" title="Q1 参考答案"></a>Q1 参考答案</h3><p>排名→RRF贡献表（k&#x3D;60，贡献&#x3D;1&#x2F;(60+rank)）：</p>
+<table>
+<thead>
+<tr>
+<th>文档</th>
+<th>BM25排名</th>
+<th>Dense排名</th>
+<th>RRF得分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>1</td>
+<td>3</td>
+<td>1&#x2F;61 + 1&#x2F;63 &#x3D; 0.03227</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>1</td>
+<td>1&#x2F;63 + 1&#x2F;61 &#x3D; 0.03227</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2</td>
+<td>4</td>
+<td>1&#x2F;62 + 1&#x2F;64 &#x3D; 0.03175</td>
+</tr>
+<tr>
+<td>D</td>
+<td>4</td>
+<td>5</td>
+<td>1&#x2F;64 + 1&#x2F;65 &#x3D; 0.03123</td>
+</tr>
+<tr>
+<td>E</td>
+<td>5</td>
+<td>2</td>
+<td>1&#x2F;65 + 1&#x2F;62 &#x3D; 0.03175</td>
+</tr>
+</tbody></table>
+<p>融合排序：A &#x3D; B &gt; C &#x3D; E &gt; D（A与B并列、C与E并列）。</p>
+<p>E的解释：E在BM25仅第5（贡献1&#x2F;65），但Dense第2（贡献1&#x2F;62），合计追平了”BM25第2+Dense第4”的C。RRF按<strong>排名贡献之和</strong>而非任何单路表现定位文档——两路中都”不垫底”的文档可以超越单路亚军。这正是共识机制：单路排名不传递绝对权威，多路意见的几何级（倒数级）叠加决定最终位置。</p>
+<h3 id="Q2-参考答案"><a href="#Q2-参考答案" class="headerlink" title="Q2 参考答案"></a>Q2 参考答案</h3><ul>
+<li>$k_1$（TF饱和，典型1.2~2.0）：控制词频增益的饱和速度。$k_1$越大，高词频文档得分越接近线性增长；$k_1\to0$退化为二元命中（只看有没有，不看几次）。</li>
+<li>$b$（长度归一化，典型0.75）：控制对长文档的惩罚强度。$b&#x3D;0$不惩罚，$b&#x3D;1$完全按 $|D|&#x2F;\text{avgdl}$ 比例惩罚。</li>
+</ul>
+<p>长度方差极大时应<strong>维持较大b（如0.75~0.9）</strong>：avgdl被长块拉高后，若b过小，长块凭堆砌词频系统性上位，而长块向量语义本就被稀释（2.1节），两重劣化叠加。同时应从<strong>分块侧根治</strong>（父子分块统一子块粒度，2.5节），让长度方差在索引期就收敛，而非靠检索期参数硬扛。</p>
+<h3 id="Q3-参考答案"><a href="#Q3-参考答案" class="headerlink" title="Q3 参考答案"></a>Q3 参考答案</h3><p>放大倍数 &#x3D; 100万 &#x2F; 100 &#x3D; <strong>10,000倍</strong>。按4.2节数量级，100块重排约100<del>300ms，100万块同引擎需约1000万</del>3000万ms（数小时级），完全不可行。</p>
+<p>根本原因：Cross-Encoder把query和文档<strong>拼接后联合编码</strong>，文档的内部表示依赖于具体query（词级交叉注意力），因此<strong>文档表示无法离线预计算</strong>——每个(query, doc)对都必须在线跑一次完整前向。而Bi-Encoder的文档向量与query无关，可预计算+ANN索引。所以Cross-Encoder只能放在漏斗末端精筛小候选集，Bi-Encoder（+BM25）承担大规模召回。</p>
+<h3 id="Q4-参考答案"><a href="#Q4-参考答案" class="headerlink" title="Q4 参考答案"></a>Q4 参考答案</h3><p><strong>min-max加权方案</strong>：该查询路内归一化后，除离群文档得1.0外，其余文档全部被压到 (0, 0.1] 区间（如次高3.2归一化为3.2&#x2F;20.7≈0.15）——<strong>排序信息被离群值摧毁</strong>，BM25路实质退化为”一票否决式”的单文档推荐，融合失败。且语料更新导致分数分布漂移时，归一化权重持续失效。</p>
+<p><strong>RRF方案</strong>：完全不受影响。因为RRF只读取<strong>排名</strong>——离群文档只是”第1名”，贡献固定为1&#x2F;61；次高文档是”第2名”，贡献1&#x2F;62，与两者分数差17.5毫无关系。分数的绝对值、分布、量纲被整体丢弃，因此对任何分数畸变（离群、尺度变化、分布漂移）天然免疫。代价是信息利用率低于分数（排名丢弃了分差信息），但换来跨系统、跨语料的稳定性——这正是工程上”稳健性优先于最优性”的典型案例。</p>
+<h3 id="Q5-参考答案（参考方案）"><a href="#Q5-参考答案（参考方案）" class="headerlink" title="Q5 参考答案（参考方案）"></a>Q5 参考答案（参考方案）</h3><p><strong>决策1——分块</strong>：采用父子分块，映射法条天然层级：父块&#x3D;完整法条（”条”级，300<del>500 token），子块&#x3D;”款&#x2F;项”级（100</del>200 token）参与向量索引。检索子块（编号&#x2F;术语在款级命中更纯净），返回父块（完整法条上下文供LLM引用）。判例文书按”争议焦点-裁判要旨-说理段”结构递归分块后再套父子关系。</p>
+<p><strong>决策2——检索方案</strong>：选<strong>方案B（BGE-M3一体化）</strong>。理由：①70%查询含法条编号——稀疏命中是刚需，BGE-M3单模型一次前向同时输出Dense+Sparse，单管线满足双路需求；②数据合规要求判例不出域，方案A的ES与向量库双系统运维成本高且一致性难保证；③50万块规模单库无压力。</p>
+<p><strong>决策3——Reranker与预算</strong>：选<strong>BGE-Reranker-v2-m3（568M）</strong>。理由：24GB单卡需与Embedding模型共存，9B档（Gemma）显存与延迟都不允许；A10上568M批量重排50条×(32+300)token约80~120ms，留出Embedding约30ms、RRF+网络开销约50ms，总预算严格控制在400ms内。候选数定<strong>50</strong>（非100）：法条查询的正确答案通常在两路召回前20内，50已覆盖，重排延迟近似减半。</p>
+<p><strong>决策4——评估集</strong>：3条query各验证一个维度：</p>
+<ol>
+<li><code>&quot;《民法典》第1043条内容&quot;</code> → 验证<strong>Context Relevance</strong>（精确编号命中能力，BM25路有效性）</li>
+<li><code>&quot;离婚后孩子抚养权怎么判&quot;</code> → 验证<strong>Context Relevance + Answer Relevance</strong>（口语→法言法语语义桥接，Dense路有效性）</li>
+<li>对query 2的生成答案 → 验证<strong>Faithfulness</strong>（LLM是否编造不存在的法条&#x2F;款号——法律场景零容忍幻觉）</li>
+</ol>
+<p>上线后按第5.3节闭环持续监控，且新旧检索配置A&#x2F;B必须锁定同一RAGAS版本（5.2节）。</p>
+<h3 id="Q6-参考答案（参考方案）"><a href="#Q6-参考答案（参考方案）" class="headerlink" title="Q6 参考答案（参考方案）"></a>Q6 参考答案（参考方案）</h3><p><strong>降级状态机</strong>（扩展第05课FSM）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[RERANK_NORMAL] ──超时&gt;300ms──► [RERANK_DEGRADED]（自动降级，告警）</span><br><span class="line">       │                              │</span><br><span class="line">       │ 健康探测连续失败×3            │ 恢复探测成功×5</span><br><span class="line">       ▼                              ▼</span><br><span class="line">[RERANK_DOWN] ────探测恢复────────► [RERANK_NORMAL]</span><br><span class="line">       │</span><br><span class="line">       │ 重排序不可用 且 RRF融合服务也不可用</span><br><span class="line">       ▼</span><br><span class="line">[SEARCH_FAIL]（唯一报错路径：返回tool_error，触发上层Agent重试/换策略）</span><br></pre></td></tr></table></figure>
+
+<p><strong>可自动降级</strong>：重排序超时&#x2F;宕机（RRF融合结果已可用，质量降但功能在）。<br><strong>必须报错</strong>：检索两路全挂（无候选可返回，返回伪造结果是安全事故级错误）。</p>
+<p><strong>降级补偿措施</strong>：</p>
+<ol>
+<li>降级期间直接返回RRF Top-K，并把 <code>rerank_degraded=true</code> 写入工具返回的metadata——上层Agent与日志可感知</li>
+<li><strong>收缩top_k</strong>（如10→15）：无重排时排序精度下降，多给LLM几块靠生成端兜底</li>
+<li>质量监控：降级期间持续采样跑RAGAS Context Relevance，与正常期基线（如0.79）对比，若跌幅&gt;0.05触发升级告警——用评估指标量化降级损失，而非等用户投诉</li>
+<li>恢复后自动回归正常路径，降级事件全量入审计日志（第05课执行安全层要求）</li>
+</ol>
+<hr>
+<h2 id="九、延伸阅读"><a href="#九、延伸阅读" class="headerlink" title="九、延伸阅读"></a>九、延伸阅读</h2><h3 id="核心论文"><a href="#核心论文" class="headerlink" title="核心论文"></a>核心论文</h3><ul>
+<li><strong>BM25</strong>：Robertson &amp; Zaragoza, “The Probabilistic Relevance Framework: BM25 and Beyond” (2009) — BM25权威综述</li>
+<li><strong>RRF</strong>：Cormack et al., “Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods” (SIGIR 2009) — RRF原始论文，k&#x3D;60的实验依据</li>
+<li><strong>ColBERT</strong>：Khattab &amp; Zaharia, “ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction” (SIGIR 2020) — late-interaction开山之作</li>
+<li><strong>Late Chunking</strong>：Günther et al., “Late Chunking: Contextual Chunk Embeddings for Long Documents” (2024) — 先编码后分块的原始论文</li>
+<li><strong>RAGAS</strong>：Es et al., “RAGAS: Automated Evaluation of Retrieval Augmented Generation” (2023) — 无参考评估框架</li>
+</ul>
+<h3 id="2026年最新资源"><a href="#2026年最新资源" class="headerlink" title="2026年最新资源"></a>2026年最新资源</h3><ul>
+<li><strong>BGE-Reranker-v2系列</strong>：BAAI开源，v2-m3&#x2F;v2-MiniCPM&#x2F;v2-Gemma三档覆盖速度-质量权衡</li>
+<li><strong>Qwen3-Reranker</strong>：Qwen生态新发布的重排序模型（4B&#x2F;8B）</li>
+<li><strong>Jina embeddings-v3</strong>：支持8192 token长上下文，Late Chunking的配套模型</li>
+<li><strong>RAGAS v0.2</strong>：<a target="_blank" rel="noopener" href="https://docs.ragas.io/">docs.ragas.io</a> — 新API的metric实例化用法与迁移指南</li>
+</ul>
+<h3 id="工具文档"><a href="#工具文档" class="headerlink" title="工具文档"></a>工具文档</h3><ul>
+<li><strong>rank_bm25</strong>：纯Python BM25实现，pip install rank_bm25</li>
+<li><strong>LangChain Text Splitters</strong>：RecursiveCharacterTextSplitter等分块实现</li>
+<li><strong>Milvus混合检索</strong>：BGE-M3 Dense+Sparse单Collection双路查询文档</li>
+</ul>
+<hr>
+<h2 id="十、下一课预告"><a href="#十、下一课预告" class="headerlink" title="十、下一课预告"></a>十、下一课预告</h2><p><strong>第08课《RAG进阶——查询优化与高级架构》</strong>，我们把优化视角从”检索侧”转向”查询侧”：</p>
+<ul>
+<li><strong>查询改写</strong>：Query Rewriting、HyDE（Hypothetical Document Embedding）——为什么”先生成假想答案再检索”能缩小向量空间偏移？数学分析见</li>
+<li><strong>自查询</strong>：LLM把自然语言转成结构化metadata过滤条件（”2024年之后的综述论文”→ filter: year&gt;2024）</li>
+<li><strong>多路检索</strong>：Multi-Query、RAG-Fusion的并行查询与结果合并——本课RRF的又一次出场</li>
+<li><strong>GraphRAG</strong>：知识图谱增强检索，实体关系抽取与图遍历排序，Long Context时代RAG的进化方向</li>
+</ul>
+<p>项目线方面，研究助手的检索模块将获得”查询理解”能力——用户随口一句”最近Agent评估有什么新方法”，Agent自动改写、拆解、多路检索。本课的两阶段流水线是这一切的地基。</p>
+<hr>
+<p><em>本教学资料为AI Agent系统架构设计课程第07课，对应教学大纲第二单元第7课。</em><br><em>技术栈版本快照（2026-08-17）：BGE-Reranker-v2-m3（568M）&#x2F; BGE-M3 &#x2F; RAGAS v0.2 &#x2F; rank_bm25 0.2.2 &#x2F; LangChain Text Splitters</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/08/19/AI-Agent/AI%20Agent/0007-RAG%E8%BF%9B%E9%98%B6%E5%88%86%E5%9D%97%E6%A3%80%E7%B4%A2%E4%B8%8E%E9%87%8D%E6%8E%92%E5%BA%8F-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/">https://handyes.github.io/2026/08/19/AI-Agent/AI%20Agent/0007-RAG%E8%BF%9B%E9%98%B6%E5%88%86%E5%9D%97%E6%A3%80%E7%B4%A2%E4%B8%8E%E9%87%8D%E6%8E%92%E5%BA%8F-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyEs的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/08/20/AI-Agent/AI%20Agent/0008-RAG%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E4%B8%8E%E9%AB%98%E7%BA%A7%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第08课：RAG进阶——查询优化与高级架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第08课：RAG进阶——查询优化与高级架构</div></div><div class="info-2"><div class="info-item-1">第08课：RAG进阶——查询优化与高级架构 单元：第二单元 RAG检索增强与Agent记忆（第6-10课）前置：第07课（分块策略、混合检索BM25+RRF、Cross-Encoder重排序、RAGAS评估）时间分配：理论推导20min（第二&#x2F;四&#x2F;五节数学部分）+ 工程实践15min（第三&#x2F;六节）+ 项目关联10min（项目贡献+6.4架构决策）+ 习题10min（共55min核心内容，代码实践建议额外30-60min自习）  课程信息   项目 内容    课号 0008   课程标题 RAG进阶——查询优化与高级架构   核心主题 查询改写与HyDE、自查询metadata过滤、Multi-Query&#x2F;RAG-Fusion、GraphRAG   深度边界 必须掌握：HyDE向量空间偏移数学分析、GraphRAG实体关系图构建与PageRank式排序、多路检索的分数归一化策略应当理解：查询改写工程实现、Self-Query的预&#x2F;后过滤执行、GraphRAG索引流水线与查询模式、查询理解层代码知晓即可：DRIFT Search、L...</div></div></div></a><a class="pagination-related" href="/2026/08/18/AI-Agent/AI%20Agent/0006-RAG%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%B5%81%E6%B0%B4%E7%BA%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第06课：RAG基础架构与完整流水线"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第06课：RAG基础架构与完整流水线</div></div><div class="info-2"><div class="info-item-1">第06课：RAG基础架构与完整流水线 所属单元：第二单元 RAG检索增强与Agent记忆（第6-10课）时间分配：理论推导 20min + 工程实践 15min + 项目关联 10min + 习题 10min知识深度：InfoNCE损失函数推导 &#x2F; HNSW索引算法 &#x2F; 向量数据库选型矩阵 &#x3D; 必须掌握；Embedding模型选型 &#x2F; 向量相似度计算 &#x3D; 应当理解项目贡献：知识层——为”企业级智能研究助手Agent系统”构建RAG知识库基础设施（论文PDF的索引构建→语义检索完整流水线），第05课的 search_papers 工具从Mock数据升级为真实向量检索后端先修要求：第01课（Harness工程五功能、PDA循环）、第02课（KV Cache与上下文窗口约束）、第05课（Function Calling、JSON Schema工具描述、search_papers工具实现）   课程导入第05课我们完成了Agent的工具调用骨架——search_papers、get_paper_detail、analyze_citatio...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/29/AI-Agent/AI%20Agent/0017-%E6%A8%A1%E5%9E%8B%E5%90%8E%E8%AE%AD%E7%BB%83%E4%BB%8ESFT%E5%88%B0AgenticRL-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第17课：模型后训练——从SFT到Agentic RL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-29</div><div class="info-item-2">第17课：模型后训练——从SFT到Agentic RL</div></div><div class="info-2"><div class="info-item-1">第17课：模型后训练——从SFT到Agentic RL一、课程信息   项目 内容    课号 第17课（第四单元：模型优化、生产部署与持续进化）   课程标题 模型后训练——从SFT到Agentic RL   前置课程 第16课（PyTorch模型操作 &#x2F; transformers &#x2F; PEFT与TRL生态认知）、第05课（Function Calling工具调用格式）、第10课（评估闭环与LLM-as-a-Judge）   课程定位 从”模型操作者”到”模型训练者”：掌握后训练的数学原理、工程配置与选型决策   时间分配 原理推导20min + Agentic RL 10min + 决策分析10min + 脚本调优10min + 习题10min（合计60min）   知识深度边界（本课三级分类）：    层级 本课对应知识点    必须掌握 LoRA的 W&#x3D;W₀+BA 推导与rank选择、全参微调vs PEFT显存决策矩阵、SFT记忆与RL泛化的定位区分、GRPO组相对优势计算与算法流程、”SFT&#x2F;RL&#x2F;API+Prompt”...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/AI%20Agent/S0010-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告2：第二单元阶段总结（第6-10课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">总结报告2：第二单元阶段总结（第6-10课）</div></div><div class="info-2"><div class="info-item-1">总结报告2：第二单元阶段总结（第6-10课） 生成时间：2026-08-20（第10课完成触发） | 覆盖范围：RAG检索增强与Agent记忆（知识层） | 项目进度：10&#x2F;22课   一、阶段知识脉络梳理1.1 知识图谱12345678910111213141516171819                ┌─────────────────────────────────────┐                │   第10课：Agentic RAG（本单元合龙）     │                │  决策树D0-D4 + CRAG三级纠正 +         │                │  Self-RAG反思token + 评估体系全景     │                └──────────────┬──────────────────────┘         ┌─────────────────────┼─────────────────────┐         ▼                     ▼        ...</div></div></div></a><a class="pagination-related" href="/2026/08/23/AI-Agent/AI%20Agent/0011-MCP%E5%8D%8F%E8%AE%AE%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第11课：MCP协议深度解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-23</div><div class="info-item-2">第11课：MCP协议深度解析</div></div><div class="info-2"><div class="info-item-1">第11课：MCP协议深度解析课程信息   项目 内容    课程定位 协议层第一课——工具服务化，单体Agent走向服务化架构的第一步   前置依赖 第05课（Function Calling与工具调用）、第10课（完整架构图与Agentic RAG）   时间分配 协议原理20min + Server开发20min + 项目关联5min + 习题10min（合计约55min）   知识深度 无状态核心与状态管理迁移&#x2F;三大原语JSON-RPC契约 &#x3D; 必须掌握；MRTR&#x2F;Header路由&#x2F;CAP分析&#x2F;SDK开发流程 &#x3D; 应当理解；Tasks扩展&#x2F;EMA授权&#x2F;CIMD&#x2F;Serverless生态 &#x3D; 知晓即可   规范版本 MCP 2026-07-28（v2.0）+ Python SDK v2稳定版【联网更新v5.6】    本课对项目的贡献：「企业级智能研究助手Agent系统」第10课的架构图已经把九个模块串成了完整蓝图，但其中有一个角落我们一直没动：工具调用层。search_pap...</div></div></div></a><a class="pagination-related" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-13</div><div class="info-item-2">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</div></div><div class="info-2"><div class="info-item-1">毕业答卷：AI Agent系统架构设计（第1-22课全课程） 考试时间：建议180分钟 | 满分：100分 | 覆盖范围：全部22课（第1-5课架构与上下文层、第6-10课知识层、第11-15课协议与框架层、第16-18课模型层、第19-20课部署层、第21课进化层、第22课应用前沿层）考试形式：第一部分闭卷，第二、三部分开卷（可查阅课程资料）配套文件：99-毕业参考答案.md（含参考架构方案、6维评分标准与常见错误模式）毕业主题：完成**”企业级智能研究助手Agent系统”的完整架构设计方案**——这是你22课项目线的终点交付物   第一部分：基础原理（30分，闭卷，有标准答案）Q1. Attention复杂度与KV Cache容量计算（8分）研究助手的Worker模型为7B参数（32层，注意力头32个，GQA架构下KV头8个，head_dim&#x3D;128，hidden_size&#x3D;4096），KV Cache使用FP16精度，权重经AWQ-Int4量化后约4GB，部署在一张L40S 48GB上（可用显存利用率按90%计，固定开销按权重的12%计）。 （1） 写出...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第15课：A2A协议与Agent互操作性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">第15课：A2A协议与Agent互操作性</div></div><div class="info-2"><div class="info-item-1">第15课：A2A协议与Agent互操作性课程信息   项目 内容    课程定位 协议互操作课（第三单元收官）——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻   前置依赖 第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动&#x2F;异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）   时间分配 协议原理20min（第一五节）+ 工程实现15min（第六七节）+ 习题20min（合计约55min）   知识深度 Task状态机完整转换图 &#x2F; Agent Card语义模型 &#x2F; 能力协商纳什均衡分析 &#x2F; 三协议（MCP&#x2F;A2A&#x2F;ANP）定位对比 &#x3D; 必须掌握；协议操作与安全配置 &#x2F; mini-A2A代码实...</div></div></div></a><a class="pagination-related" href="/2026/08/15/AI-Agent/AI%20Agent/0003-Agent%E6%8E%A8%E7%90%86%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-15</div><div class="info-item-2">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion</div></div><div class="info-2"><div class="info-item-1">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion 课程信息  课程名称：AI Agent系统架构设计 本课序号：03&#x2F;22 预计学习时间：约55分钟（理论推导20min + 工程实现15min + 评估方法5min + 习题15min） 项目贡献：基础架构层——为”企业级智能研究助手Agent系统”设计推理循环架构，确立PDA循环的状态机模型与终止条件 先修要求：第01课（PDA循环定义）、第02课（Attention复杂度、KV Cache、上下文窗口约束）    本课导读第02课我们分析了LLM的”单次推理”机制——Attention的 $O(n^2d)$ 复杂度、KV Cache的显存占用、上下文窗口的Token预算。但Agent不是”问一次答一次”的聊天机器人，它的核心能力是循环推理：感知任务→推理决策→执行行动→观察结果→继续推理，直到任务完成。 这个循环就是第01课定义的PDA（Perceive-Decide-Act）循环。本课要解决的核心问题是：如何设计这个循环的控制结构，使Agent在有限Token预算内高...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC07%E8%AF%BE%EF%BC%9ARAG%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E5%88%86%E5%9D%97%E3%80%81%E6%A3%80%E7%B4%A2%E4%B8%8E%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">第07课：RAG进阶——分块、检索与重排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">课程信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AF%BE%E5%AF%B9%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%B4%A1%E7%8C%AE%EF%BC%9A%E3%80%8C%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8BAgent%E7%B3%BB%E7%BB%9F%E3%80%8D"><span class="toc-number">1.2.</span> <span class="toc-text">本课对项目的贡献：「企业级智能研究助手Agent系统」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%8D%95%E8%B7%AF%E7%A8%A0%E5%AF%86%E6%A3%80%E7%B4%A2%E7%9A%84%E4%B8%89%E4%B8%AA%E5%A4%B1%E8%B4%A5%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">一、为什么需要进阶：单路稠密检索的三个失败模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%96%87%E6%A1%A3%E5%88%86%E5%9D%97%E7%AD%96%E7%95%A5%EF%BC%88%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%EF%BC%8C%E5%BA%94%E5%BD%93%E7%90%86%E8%A7%A3%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">二、文档分块策略（工程实践，应当理解）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%88%86%E5%9D%97%E6%98%AFRAG%E8%B4%A8%E9%87%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E5%86%B3%E5%AE%9A%E5%9B%A0%E7%B4%A0"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.1 分块是RAG质量的第一决定因素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%9B%BA%E5%AE%9A%E7%AA%97%E5%8F%A3%E5%88%86%E5%9D%97%EF%BC%88Fixed-Size-Chunking%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.2 固定窗口分块（Fixed-Size Chunking）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%80%92%E5%BD%92%E5%88%86%E5%9D%97%EF%BC%88Recursive-Chunking%EF%BC%89%E2%80%94%E2%80%94%E5%B7%A5%E4%B8%9A%E7%95%8C%E9%BB%98%E8%AE%A4%E8%B5%B7%E7%82%B9"><span class="toc-number">1.4.3.</span> <span class="toc-text">2.3 递归分块（Recursive Chunking）——工业界默认起点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E8%AF%AD%E4%B9%89%E5%88%86%E5%9D%97%EF%BC%88Semantic-Chunking%EF%BC%89%E2%80%94%E2%80%94%E8%B4%A8%E9%87%8F%E4%B8%8A%E9%99%90%E6%9B%B4%E9%AB%98"><span class="toc-number">1.4.4.</span> <span class="toc-text">2.4 语义分块（Semantic Chunking）——质量上限更高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E7%88%B6%E5%AD%90%E5%88%86%E5%9D%97%EF%BC%88Parent-Child-Chunking%EF%BC%89%E2%80%94%E2%80%94%E6%A3%80%E7%B4%A2%E7%B2%BE%E5%BA%A6%E4%B8%8E%E7%94%9F%E6%88%90%E4%B8%8A%E4%B8%8B%E6%96%87%E5%85%BC%E5%BE%97"><span class="toc-number">1.4.5.</span> <span class="toc-text">2.5 父子分块（Parent-Child Chunking）——检索精度与生成上下文兼得</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-Late-Chunking%EF%BC%882026%E6%96%B0%E7%AD%96%E7%95%A5%EF%BC%8C%E7%9F%A5%E6%99%93%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">2.6 Late Chunking（2026新策略，知晓即可）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E5%88%86%E5%9D%97%E7%AD%96%E7%95%A5%E5%86%B3%E7%AD%96%E7%9F%A9%E9%98%B5"><span class="toc-number">1.4.7.</span> <span class="toc-text">2.7 分块策略决策矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8ERRF%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">三、混合检索与RRF公式推导（必须掌握）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-BM25%EF%BC%9A%E7%A8%80%E7%96%8F%E6%A3%80%E7%B4%A2%E7%9A%84%E5%B7%A5%E4%B8%9A%E6%A0%87%E5%87%86"><span class="toc-number">1.5.1.</span> <span class="toc-text">3.1 BM25：稀疏检索的工业标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%9E%8D%E5%90%88%E7%9A%84%E7%AC%AC%E4%B8%80%E9%9A%BE%E9%A2%98%EF%BC%9A%E5%88%86%E6%95%B0%E4%B8%8D%E5%8F%AF%E6%AF%94"><span class="toc-number">1.5.2.</span> <span class="toc-text">3.2 融合的第一难题：分数不可比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-RRF%EF%BC%9A%E5%8F%AA%E7%94%A8%E6%8E%92%E5%90%8D%EF%BC%8C%E4%B8%8D%E7%94%A8%E5%88%86%E6%95%B0"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.3 RRF：只用排名，不用分数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%B7%A5%E7%A8%8B%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9%EF%BC%9ABGE-M3%E7%9A%84%E4%B8%80%E4%BD%93%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">1.5.4.</span> <span class="toc-text">3.4 工程实现要点：BGE-M3的一体化输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%87%8D%E6%8E%92%E5%BA%8F%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">四、重排序模型（必须掌握复杂度分析）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%A3%80%E7%B4%A2%EF%BC%9A%E6%BC%8F%E6%96%97%E6%9E%B6%E6%9E%84"><span class="toc-number">1.6.1.</span> <span class="toc-text">4.1 两阶段检索：漏斗架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Bi-Encoder-vs-Cross-Encoder%EF%BC%9A%E6%9E%B6%E6%9E%84%E5%B7%AE%E5%BC%82%E5%86%B3%E5%AE%9A%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.6.2.</span> <span class="toc-text">4.2 Bi-Encoder vs Cross-Encoder：架构差异决定复杂度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-ColBERT-late-interaction%EF%BC%88%E7%9F%A5%E6%99%93%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-number">1.6.3.</span> <span class="toc-text">4.3 ColBERT late-interaction（知晓即可）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-2026%E5%B9%B4Reranker%E9%80%89%E5%9E%8B%E7%9F%A9%E9%98%B5"><span class="toc-number">1.6.4.</span> <span class="toc-text">4.4 2026年Reranker选型矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E9%87%8D%E6%8E%92%E5%BA%8F%E5%99%A8%E7%9A%84%E8%BE%93%E5%87%BA%E4%B8%8E%E6%88%AA%E6%96%AD"><span class="toc-number">1.6.5.</span> <span class="toc-text">4.5 重排序器的输出与截断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A3%80%E7%B4%A2%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%EF%BC%9ARAGAS%E6%A1%86%E6%9E%B6%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E4%B8%89%E7%BB%B4%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">五、检索质量评估：RAGAS框架（必须掌握三维度计算）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-RAG%E8%AF%84%E4%BC%B0%E7%9A%84%E4%B8%89%E7%BB%B4%E5%BA%A6"><span class="toc-number">1.7.1.</span> <span class="toc-text">5.1 RAG评估的三维度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-RAGAS-v0-2%E7%9A%84API%E5%8F%98%E6%9B%B4%EF%BC%882026%EF%BC%8C%E5%B7%A5%E7%A8%8B%E6%B3%A8%E6%84%8F%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">5.2 RAGAS v0.2的API变更（2026，工程注意）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E8%AF%84%E4%BC%B0%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%BF%AD%E4%BB%A3%E9%97%AD%E7%8E%AF"><span class="toc-number">1.7.3.</span> <span class="toc-text">5.3 评估驱动的迭代闭环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%BC%95%E5%AF%BC%E5%BC%8F%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.8.</span> <span class="toc-text">六、引导式代码实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%AE%8C%E6%95%B4%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81%EF%BC%88%E6%9C%80%E5%B0%8F%E7%89%88%EF%BC%89"><span class="toc-number">1.8.1.</span> <span class="toc-text">6.1 第一层：完整可运行代码（最小版）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E5%85%B3%E9%94%AE%E4%BF%AE%E6%94%B9%E5%BC%95%E5%AF%BC"><span class="toc-number">1.8.2.</span> <span class="toc-text">6.2 第二层：关键修改引导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E6%9E%B6%E6%9E%84%E5%86%B3%E7%AD%96%E7%BB%83%E4%B9%A0"><span class="toc-number">1.8.3.</span> <span class="toc-text">6.3 第三层：架构决策练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">七、课后习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1%EF%BC%88%E5%9F%BA%E7%A1%80%C2%B7%E8%AE%A1%E7%AE%97%EF%BC%89"><span class="toc-number">1.9.1.</span> <span class="toc-text">Q1（基础·计算）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2%EF%BC%88%E5%9F%BA%E7%A1%80%C2%B7%E6%A6%82%E5%BF%B5%EF%BC%89"><span class="toc-number">1.9.2.</span> <span class="toc-text">Q2（基础·概念）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3%EF%BC%88%E5%88%86%E6%9E%90%EF%BC%89"><span class="toc-number">1.9.3.</span> <span class="toc-text">Q3（分析）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4%EF%BC%88%E5%88%86%E6%9E%90%EF%BC%89"><span class="toc-number">1.9.4.</span> <span class="toc-text">Q4（分析）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5%EF%BC%88%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%EF%BC%89"><span class="toc-number">1.9.5.</span> <span class="toc-text">Q5（系统设计）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6%EF%BC%88%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%C2%B7%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">1.9.6.</span> <span class="toc-text">Q6（系统设计·代码）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.10.</span> <span class="toc-text">八、参考答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.10.1.</span> <span class="toc-text">Q1 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.10.2.</span> <span class="toc-text">Q2 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.10.3.</span> <span class="toc-text">Q3 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.10.4.</span> <span class="toc-text">Q4 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.10.5.</span> <span class="toc-text">Q5 参考答案（参考方案）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.10.6.</span> <span class="toc-text">Q6 参考答案（参考方案）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-number">1.11.</span> <span class="toc-text">九、延伸阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%AE%BA%E6%96%87"><span class="toc-number">1.11.1.</span> <span class="toc-text">核心论文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2026%E5%B9%B4%E6%9C%80%E6%96%B0%E8%B5%84%E6%BA%90"><span class="toc-number">1.11.2.</span> <span class="toc-text">2026年最新资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E6%96%87%E6%A1%A3"><span class="toc-number">1.11.3.</span> <span class="toc-text">工具文档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E4%B8%8B%E4%B8%80%E8%AF%BE%E9%A2%84%E5%91%8A"><span class="toc-number">1.12.</span> <span class="toc-text">十、下一课预告</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

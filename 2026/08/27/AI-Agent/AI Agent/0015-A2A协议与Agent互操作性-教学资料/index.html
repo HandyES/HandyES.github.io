@@ -1,0 +1,844 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第15课：A2A协议与Agent互操作性 | HandyEs的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第15课：A2A协议与Agent互操作性课程信息   项目 内容    课程定位 协议互操作课（第三单元收官）——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第15课：A2A协议与Agent互操作性">
+<meta property="og:url" content="https://handyes.github.io/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html">
+<meta property="og:site_name" content="HandyEs的博客">
+<meta property="og:description" content="第15课：A2A协议与Agent互操作性课程信息   项目 内容    课程定位 协议互操作课（第三单元收官）——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HT">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-08-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-13T14:58:49.652Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第15课：A2A协议与Agent互操作性",
+  "url": "https://handyes.github.io/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-08-26T16:00:00.000Z",
+  "dateModified": "2026-09-13T14:58:49.652Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第15课：A2A协议与Agent互操作性',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyEs的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">第15课：A2A协议与Agent互操作性</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第15课：A2A协议与Agent互操作性</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-26T16:00:00.000Z" title="发表于 2026-08-27 00:00:00">2026-08-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T14:58:49.652Z" title="更新于 2026-09-13 22:58:49">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第15课：A2A协议与Agent互操作性"><a href="#第15课：A2A协议与Agent互操作性" class="headerlink" title="第15课：A2A协议与Agent互操作性"></a>第15课：A2A协议与Agent互操作性</h1><h2 id="课程信息"><a href="#课程信息" class="headerlink" title="课程信息"></a>课程信息</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课程定位</td>
+<td><strong>协议互操作课（第三单元收官）</strong>——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻</td>
+</tr>
+<tr>
+<td>前置依赖</td>
+<td>第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动&#x2F;异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>协议原理20min（第一<del>五节）+ 工程实现15min（第六</del>七节）+ 习题20min（合计约55min）</td>
+</tr>
+<tr>
+<td>知识深度</td>
+<td>Task状态机完整转换图 &#x2F; Agent Card语义模型 &#x2F; 能力协商纳什均衡分析 &#x2F; 三协议（MCP&#x2F;A2A&#x2F;ANP）定位对比 &#x3D; <strong>必须掌握</strong>；协议操作与安全配置 &#x2F; mini-A2A代码实现 &#x2F; Task不可变性设计权衡 &#x3D; <strong>应当理解</strong>；ANP技术细节 &#x2F; AP2支付协议 &#x2F; 各框架A2A集成差异 &#x3D; <strong>知晓即可</strong></td>
+</tr>
+<tr>
+<td>协议版本快照</td>
+<td>A2A v1.0（2026年初稳定版，Linux基金会治理）&#x2F; MCP v2.0（第11课）&#x2F; ANP v1.1协议族 &#x2F; AP2（Agent Payments Protocol）【截至2026-08，联网更新v6.0】</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="本课对项目的贡献：「企业级智能研究助手Agent系统」"><a href="#本课对项目的贡献：「企业级智能研究助手Agent系统」" class="headerlink" title="本课对项目的贡献：「企业级智能研究助手Agent系统」"></a>本课对项目的贡献：「企业级智能研究助手Agent系统」</h2><p>第14课结束时，研究助手的多Agent架构已定案：<strong>混合方案</strong>——LangGraph图内编排为核心，检索层升级为Supervisor瞬态形态（并行多源检索）。但这套方案有一个隐含假设：<strong>所有Agent都由你部署、活在你的进程里、共享你的信任域</strong>。</p>
+<p>第14课预告已点破悬案：当专利库Agent是<strong>外部供应商的付费服务</strong>、arXiv检索源是<strong>另一家公司的A2A端点</strong>时，架构怎么办？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">本课对项目的三项贡献：</span><br><span class="line"></span><br><span class="line">① 互操作层（第14课协作层的开放边界扩展）</span><br><span class="line">   Agent Card发布 + 外部Agent发现 + 任务委派 + 信任边界</span><br><span class="line">   → 研究助手从&quot;封闭系统&quot;升级为&quot;可接入外部Agent网络的系统&quot;</span><br><span class="line">   → 落点：检索层的A2A客户端适配器（第七节实战）</span><br><span class="line"></span><br><span class="line">② 信任与安全边界设计</span><br><span class="line">   Signed Agent Cards + OAuth 2.0 + 租户隔离</span><br><span class="line">   → 外部Agent协作的准入检查单（不可信边界的信任建立）</span><br><span class="line">   → 落点：研究助手与外部检索供应商的对接规范</span><br><span class="line"></span><br><span class="line">③ 第三单元（协议层）收官</span><br><span class="line">   MCP（Agent↔工具）+ LangGraph（图内编排）+ OpenManus（参考实现）</span><br><span class="line">   + 多Agent模式（图间协作）+ A2A（跨组织互操作）→ 协议层五件套集齐</span><br><span class="line">   → 下节课进入第四单元（模型层）</span><br><span class="line"></span><br><span class="line">项目线全景（截至本课开始）：</span><br><span class="line">  编排层：LangGraph StateGraph + Checkpoint ✅（第12课）</span><br><span class="line">  工具层：ToolCollection + MCP动态注入 ✅（第11/13课）</span><br><span class="line">  知识层：RAG流水线 + CRAG决策器 ✅（第6-10课）</span><br><span class="line">  记忆层：分层记忆系统 ✅（第09课）</span><br><span class="line">  安全线：输入消毒 + 执行分级 + 容器轨道 ✅（第04/05/13课）</span><br><span class="line">  协作层：多Agent终局决策 + Handoff协议 + 死锁检测 ✅（第14课）</span><br><span class="line">  互操作层：本课新建——发现 / 委派 / 信任 ⬅ 本课</span><br></pre></td></tr></table></figure>
+
+<p><strong>本课产出</strong>：mini-A2A可运行实现（Agent Card发现 + SendMessage委派 + Task状态机 + INPUT_REQUIRED处理四合一）+ 研究助手外部检索源A2A接入决策矩阵。</p>
+<hr>
+<h2 id="一、从框架内到跨组织：为什么需要A2A（协议原理-Part-1）"><a href="#一、从框架内到跨组织：为什么需要A2A（协议原理-Part-1）" class="headerlink" title="一、从框架内到跨组织：为什么需要A2A（协议原理 Part 1）"></a>一、从框架内到跨组织：为什么需要A2A（协议原理 Part 1）</h2><h3 id="1-1-第14课的边界：三重假设失效"><a href="#1-1-第14课的边界：三重假设失效" class="headerlink" title="1.1 第14课的边界：三重假设失效"></a>1.1 第14课的边界：三重假设失效</h3><p>回看第14课的Supervisor模式——Orchestrator调用<code>w.execute(text, artifact)</code>，Retriever&#x2F;Analyst&#x2F;Reviewer是<strong>同一个Python进程里的对象</strong>。这带来了三个免费赠送的奢侈假设：</p>
+<table>
+<thead>
+<tr>
+<th>进程内假设</th>
+<th>跨组织现实</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>共享内存</strong>：工件<code>artifact</code>是一张字典，谁都能读写</td>
+<td>网络分隔，各有各的上下文与数据</td>
+<td>需要消息协议+状态同步机制（第14课的共享黑板失效）</td>
+</tr>
+<tr>
+<td><strong>统一时钟</strong>：调用是同步阻塞的，<code>execute</code>返回即完成</td>
+<td>网络分区、部分失败、延迟不可控</td>
+<td>需要异步任务模型+状态轮询&#x2F;推送</td>
+</tr>
+<tr>
+<td><strong>天然信任</strong>：所有代码都是你写或你审计过的</td>
+<td>对端是第三方黑盒（”opaque”）</td>
+<td>需要身份认证+能力验证+授权</td>
+</tr>
+</tbody></table>
+<p>第14课预告的原话：”分布式系统的全部经典难题（部分失败、身份、不可信协作），将在Agent互操作的名义下重新登场。”——A2A协议正是对这三重失效的系统性回答。</p>
+<h3 id="1-2-A2A是什么：定位与分层"><a href="#1-2-A2A是什么：定位与分层" class="headerlink" title="1.2 A2A是什么：定位与分层"></a>1.2 A2A是什么：定位与分层</h3><p><strong>A2A（Agent2Agent）协议</strong>是一个开放标准，由Google于2025年4月发起、后捐赠给Linux基金会治理，目标是让<strong>不同框架、不同厂商、不同组织构建的Agent</strong>能够相互发现能力、协商交互模式、安全协作完成任务——<strong>而不暴露内部状态</strong>（这一点与MCP的”工具封装”哲学一脉相承：协作靠消息，不靠共享内存）。</p>
+<p>用一张分层图定位它与已学协议的关系：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    你的Agent应用（研究助手）                    │</span><br><span class="line">├──────────────────────┬──────────────────────────────────────┤</span><br><span class="line">│   图内编排            │   跨Agent协作（跨框架/跨组织）           │</span><br><span class="line">│   LangGraph StateGraph│   A2A：Agent ↔ Agent                  │</span><br><span class="line">│   （第12课）          │   发现（Agent Card）/委派（Task）        │</span><br><span class="line">│                      │        /信任（Signed Card+OAuth）       │</span><br><span class="line">├──────────────────────┴──────────────────────────────────────┤</span><br><span class="line">│   工具接入：MCP（第11课）—— Agent ↔ 工具/数据服务               │</span><br><span class="line">├─────────────────────────────────────────────────────────────┤</span><br><span class="line">│   Web基础设施：HTTP/JSON-RPC/gRPC + TLS + OAuth 2.0           │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>**行业共识的分工口诀：MCP连接Agent与工具，A2A连接Agent与Agent。**两者不是竞争而是互补——研究助手会用MCP调用文献检索工具（第11课已实现），同时用A2A把”专利深度调研”这类任务委派给外部专业Agent。</p>
+<p>一个自然的问题：**Agent和工具的边界在哪？**判据是自主性：工具是无状态的函数调用（输入→输出，立即返回），Agent是有状态的推理循环（接收任务→规划→执行→可能要求补充信息→交付）。当外部服务开始”需要多轮交互才能完成你的请求”时，它就该用A2A而不是MCP来暴露。</p>
+<h3 id="1-3-协议演进史：从0-1-0到v1-0"><a href="#1-3-协议演进史：从0-1-0到v1-0" class="headerlink" title="1.3 协议演进史：从0.1.0到v1.0"></a>1.3 协议演进史：从0.1.0到v1.0</h3><table>
+<thead>
+<tr>
+<th>版本</th>
+<th>时间</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.1.0</td>
+<td>2025-04</td>
+<td>Google随A2A发布初始规范，50+组织联合声明支持</td>
+</tr>
+<tr>
+<td>0.2.x</td>
+<td>2025年中</td>
+<td>迭代修正（Agent Card格式、推送通知配置等）</td>
+</tr>
+<tr>
+<td>0.3.0</td>
+<td>2025年末</td>
+<td>候选发布版，早期采用者的主要实现目标</td>
+</tr>
+<tr>
+<td><strong>1.0.0</strong></td>
+<td><strong>2026年初</strong></td>
+<td><strong>Linux基金会治理下首个稳定生产就绪版本</strong></td>
+</tr>
+</tbody></table>
+<p>2026年4月Linux基金会公告的生态数据：<strong>150+组织</strong>（AWS、Cisco、Google、IBM、Microsoft、Salesforce、SAP、ServiceNow）、<strong>22,000+ GitHub stars</strong>、SDK从单一Python扩展到<strong>五种生产语言</strong>（Python&#x2F;JavaScript&#x2F;Java&#x2F;Go&#x2F;.NET），并已进入Microsoft Copilot Studio、Azure AI Foundry、Amazon Bedrock的GA支持。</p>
+<p>v1.0相对v0.3.0的变化归纳为四大主题（对架构师最重要的是知道<strong>哪些东西变了</strong>，因为你读到的旧博客&#x2F;旧代码可能是0.x风格）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">① 协议成熟度：a2a.proto从gRPC实现文件升格为&quot;普适规范唯一事实源&quot;；</span><br><span class="line">   REST/gRPC/JSON-RPC三种绑定正式形式化规范（等价保证）</span><br><span class="line">② 类型安全：移除kind判别字段→JSON成员多态；枚举值从kebab-case改为</span><br><span class="line">   SCREAMING_SNAKE_CASE（合规ProtoJSON）——大量breaking change</span><br><span class="line">③ 开发者体验：八组操作重命名（message/send→SendMessage等）；</span><br><span class="line">   复合ID（tasks/&#123;id&#125;）简化为简单UUID；HTTP路径移除/v1前缀</span><br><span class="line">④ 企业就绪：Signed Agent Cards、多租户原生支持、</span><br><span class="line">   OAuth 2.0现代化（新增Device Code流/PKCE）、ListTasks游标分页</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>架构师视角</strong>：0.x→1.0的重命名潮（<code>&quot;completed&quot;</code>→<code>&quot;TASK_STATE_COMPLETED&quot;</code>）不是形式主义——SCREAMING_SNAKE_CASE前缀让枚举值在grep、日志检索、跨语言常量映射时<strong>无歧义</strong>。这是从”JSON文档”走向”跨语言规范”（ProtoJSON合规）的必经之路。你将在本课代码中直接使用v1.0风格。</p>
+</blockquote>
+<hr>
+<h2 id="二、Agent-Card：能力的机器可读描述（协议原理-Part-2）"><a href="#二、Agent-Card：能力的机器可读描述（协议原理-Part-2）" class="headerlink" title="二、Agent Card：能力的机器可读描述（协议原理 Part 2）"></a>二、Agent Card：能力的机器可读描述（协议原理 Part 2）</h2><h3 id="2-1-发现机制：well-known-URI"><a href="#2-1-发现机制：well-known-URI" class="headerlink" title="2.1 发现机制：well-known URI"></a>2.1 发现机制：well-known URI</h3><p>跨组织协作的第一步是”找到对方并知道它能干什么”。A2A沿用Web的成熟惯例——<strong>well-known URI</strong>（与MCP的<code>/.well-known/mcp</code>、HTTPS证书的<code>/.well-known/acme-challenge</code>同族）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://patent-agent.vendor.example.com/.well-known/agent-card.json</span><br></pre></td></tr></table></figure>
+
+<p>Agent把自己的能力描述（Agent Card）挂在这个约定路径上，任何客户端无需注册、无需账号即可读取——这就是”<strong>路由知识分布在描述里</strong>“（第14课Swarm路由思想）的跨组织标准化版。</p>
+<h3 id="2-2-JSON-LD语义模型：为什么不只是JSON【必须掌握】"><a href="#2-2-JSON-LD语义模型：为什么不只是JSON【必须掌握】" class="headerlink" title="2.2 JSON-LD语义模型：为什么不只是JSON【必须掌握】"></a>2.2 JSON-LD语义模型：为什么不只是JSON【必须掌握】</h3><p>Agent Card的设计渊源是<strong>JSON-LD</strong>（JSON Linked Data）——W3C的语义网标准。理解这个渊源，才能理解Agent Card为什么长这样：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;@context&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://a2a-protocol.org/context.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;PatentResearchAgent&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;专利深度检索与分析服务&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;skills&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>...<span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>JSON-LD的三个核心思想及其对Agent互操作的意义：</p>
+<table>
+<thead>
+<tr>
+<th>JSON-LD机制</th>
+<th>含义</th>
+<th>对Agent互操作的意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@context</code></td>
+<td>把短键名（如<code>skills</code>）锚定到全局唯一URI词汇表</td>
+<td>不同厂商的Agent对”skill”一词有<strong>同一机器可读定义</strong>——语义对齐的基础设施</td>
+</tr>
+<tr>
+<td>RDF三元组</td>
+<td>一切数据都是（主体，谓词，客体），如<code>(PatentAgent, hasSkill, patent-search)</code></td>
+<td>Agent能力可被推理引擎做<strong>逻辑查询</strong>：”找所有具备patent-search技能且支持流式的Agent”</td>
+</tr>
+<tr>
+<td>Linked Data</td>
+<td>值可以是外部URL，顺着链接可获取更多语义</td>
+<td>Agent Card中的<code>securitySchemes</code>可引用组织级安全策略文档，形成<strong>信任链</strong></td>
+</tr>
+</tbody></table>
+<p><strong>v1.0的实践立场</strong>：随着a2a.proto升格为规范唯一事实源，Agent Card的主体结构以proto映射的纯JSON（camelCase字段）为准；JSON-LD作为语义模型的设计思想保留在<code>@context</code>扩展能力与skills标签体系中。架构师需要记住的结论：<strong>Agent Card的本质是一份机器可读的能力契约</strong>——它让”找一个会做X的Agent”从搜索引擎问题（不可靠）变成结构化查询问题（可验证）。</p>
+<h3 id="2-3-Agent-Card-v1-0结构解析【必须掌握】"><a href="#2-3-Agent-Card-v1-0结构解析【必须掌握】" class="headerlink" title="2.3 Agent Card v1.0结构解析【必须掌握】"></a>2.3 Agent Card v1.0结构解析【必须掌握】</h3><p>一份v1.0风格的Agent Card（注释标注关键设计）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;PatentResearchAgent&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;面向企业的专利检索与深度分析服务，覆盖中/美/欧三局&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;protocolVersion注意点&quot;</span><span class="punctuation">:</span> <span class="string">&quot;↓ v1.0：版本随接口而非卡顶声明&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;supportedInterfaces&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://patent.vendor.example.com/a2a&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocolBinding&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JSONRPC&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocolVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://patent.vendor.example.com/a2a/grpc&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocolBinding&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GRPC&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocolVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;capabilities&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;streaming&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pushNotifications&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;extendedAgentCard&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;defaultInputModes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;text/plain&quot;</span><span class="punctuation">,</span> <span class="string">&quot;application/json&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;defaultOutputModes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;text/plain&quot;</span><span class="punctuation">,</span> <span class="string">&quot;application/pdf&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;skills&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;patent-search&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;专利检索&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;按技术领域/专利分类号/申请人检索专利，返回结构化结果&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;patent&quot;</span><span class="punctuation">,</span> <span class="string">&quot;search&quot;</span><span class="punctuation">,</span> <span class="string">&quot;IPC&quot;</span><span class="punctuation">,</span> <span class="string">&quot;research&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;examples&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;检索G06N20/00分类下2025年授权的发明专利&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;securitySchemes&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;oauth2&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;oauth2&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;flows&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;authorizationCode&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;authorizationUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://auth.vendor.example.com/authorize&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;tokenUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://auth.vendor.example.com/token&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;pkceRequired&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;scopes&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;tasks:write&quot;</span><span class="punctuation">:</span> <span class="string">&quot;创建并跟踪任务&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;security&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;oauth2&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;tasks:write&quot;</span><span class="punctuation">]</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;signatures&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>五个v1.0关键变化（相对0.x，全部影响你的实现）：</p>
+<ol>
+<li><strong><code>supportedInterfaces[]</code>取代<code>url</code>+<code>preferredTransport</code>+<code>additionalInterfaces</code></strong>：每个接口独立声明<code>url</code>&#x2F;<code>protocolBinding</code>&#x2F;<code>protocolVersion</code>三要素——同一Agent可以同时暴露JSON-RPC和gRPC两种绑定，客户端按自己的技术栈选择。</li>
+<li><strong><code>protocolVersion</code>从卡顶层下沉到每个接口</strong>：支持平滑升级——一个端点可以先升级到1.1，另一个仍停留1.0。</li>
+<li><strong><code>capabilities.extendedAgentCard</code>取代顶层<code>supportsAuthenticatedExtendedCard</code></strong>：认证后可获取的”扩展卡”（含非公开技能）声明归入能力对象。</li>
+<li><strong><code>skills[].tags</code>成为必填</strong>：tags驱动<strong>skill级匹配</strong>——路由器（客户端的委派决策）把任务特征与skills的tags做匹配，”范围每个skill到单一任务边界”是官方最佳实践。</li>
+<li><strong><code>signatures[]</code>数组</strong>：Signed Agent Cards的载体（下节）。</li>
+</ol>
+<blockquote>
+<p><strong>skill划分的工程直觉</strong>：skill是发现的单元，粒度&#x3D;任务边界。研究助手检索层的三个子技能（文献检索&#x2F;专利检索&#x2F;内网库检索）应声明为三个skill，而不是一个”检索”大杂烩——粒度过粗导致误匹配，过细导致发现效率下降。</p>
+</blockquote>
+<h3 id="2-4-Signed-Agent-Cards：防篡改的信任锚【应当理解】"><a href="#2-4-Signed-Agent-Cards：防篡改的信任锚【应当理解】" class="headerlink" title="2.4 Signed Agent Cards：防篡改的信任锚【应当理解】"></a>2.4 Signed Agent Cards：防篡改的信任锚【应当理解】</h3><p><strong>威胁场景</strong>：Agent Card挂在公开URL上，任何客户端可读——同样意味着<strong>中间人可以篡改它</strong>。攻击者把Card里的接口地址替换为自己的服务器、把安全要求从OAuth降级为明文、把能力声明夸大——客户端的委派请求就被引向恶意Agent（典型的<strong>降级攻击+请求劫持</strong>）。</p>
+<p>v1.0的解法是<strong>Signed Agent Cards</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">签名（Card发布方）：</span><br><span class="line">  ① 用JSON规范化算法（RFC 8785）把Card转成字节级唯一的规范形式</span><br><span class="line">     ——解决&quot;JSON有多种等价序列化&quot;导致的签名歧义</span><br><span class="line">  ② 用发布方私钥对规范形式做JWS签名（RFC 7515）</span><br><span class="line">  ③ 签名放入Card的signatures[]数组</span><br><span class="line">验证（客户端）：</span><br><span class="line">  ① 取得发布方公钥（证书链/PKI，带外分发）</span><br><span class="line">  ② 对Card重新做RFC 8785规范化</span><br><span class="line">  ③ 验证JWS签名 → 完整性（未被篡改）+ 来源（确为该供应商）</span><br></pre></td></tr></table></figure>
+
+<p><strong>架构师要点</strong>：签名验证在<strong>交互之前</strong>完成——这是”组织边界外的信任建立”（trust before interaction across organizational boundaries）。第04课的Prompt注入防御（输入消毒）防的是<strong>内容层攻击</strong>；Signed Card防的是<strong>元数据层攻击</strong>（能力声明本身的伪造）——两道防线缺一不可：Card是真的，不代表它返回的内容是无害的。</p>
+<hr>
+<h2 id="三、Task生命周期：跨组织的任务状态机（协议原理-Part-3）"><a href="#三、Task生命周期：跨组织的任务状态机（协议原理-Part-3）" class="headerlink" title="三、Task生命周期：跨组织的任务状态机（协议原理 Part 3）"></a>三、Task生命周期：跨组织的任务状态机（协议原理 Part 3）</h2><h3 id="3-1-Message-vs-Task：两种响应模式"><a href="#3-1-Message-vs-Task：两种响应模式" class="headerlink" title="3.1 Message vs Task：两种响应模式"></a>3.1 Message vs Task：两种响应模式</h3><p>客户端发消息给Agent后，Agent有两种根本不同的响应方式：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>无状态<code>Message</code></th>
+<th>有状态<code>Task</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>适用</td>
+<td>琐碎交互、能力&#x2F;范围协商（”你能处理X吗？”）</td>
+<td>长时间、需跟踪、可能中断的工作</td>
+</tr>
+<tr>
+<td>返回</td>
+<td>立即的Message</td>
+<td>Task对象（随后演进）</td>
+</tr>
+<tr>
+<td>典型</td>
+<td>直接包装LLM调用的简单问答</td>
+<td>“调研某领域专利全景”（分钟级+多轮补充）</td>
+</tr>
+</tbody></table>
+<p>按两种模式的使用比例，Agent分三种形态：<strong>Message-only</strong>（永远返回Message）、<strong>Task-generating</strong>（一切皆Task，简单回答也建模为completed任务）、<strong>Hybrid</strong>（先用Message协商范围，确认后转Task跟踪执行——官方推荐的复杂Agent形态）。</p>
+<h3 id="3-2-Task状态机：完整状态转换图【必须掌握】"><a href="#3-2-Task状态机：完整状态转换图【必须掌握】" class="headerlink" title="3.2 Task状态机：完整状态转换图【必须掌握】"></a>3.2 Task状态机：完整状态转换图【必须掌握】</h3><p>v1.0的八个状态（SCREAMING_SNAKE_CASE）与转换关系：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">                       ┌──────────────────────────────────┐</span><br><span class="line">                       │  终态区（不可逆，Task不可变性）      │</span><br><span class="line">                       └──────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">┌─────────────┐   ┌─────────────┐</span><br><span class="line">│  SUBMITTED  │──▶│   WORKING   │──────────────┬─────────────┐</span><br><span class="line">│ （已受理）    │   │ （执行中）    │              │             │</span><br><span class="line">└──────┬──────┘   └──────┬──────┘              ▼             ▼</span><br><span class="line">       │                 │              ┌────────────┐ ┌────────────┐</span><br><span class="line">       │                 │              │ COMPLETED  │ │   FAILED   │</span><br><span class="line">       │                 │              │ （已完成）✓终│ │ （失败）✓终 │</span><br><span class="line">       │                 │              └────────────┘ └────────────┘</span><br><span class="line">       │        ┌────────┤</span><br><span class="line">       │        ▼        ▼</span><br><span class="line">       │  ┌───────────┐ ┌───────────┐</span><br><span class="line">       │  │  INPUT_   │ │   AUTH_   │    【中断态：可恢复】</span><br><span class="line">       │  │ REQUIRED  │ │ REQUIRED  │◀── 用户提供补充信息/完成认证后</span><br><span class="line">       │  │ （需补充） │ │ （需认证） │    任务回到WORKING继续</span><br><span class="line">       │  └───────────┘ └───────────┘</span><br><span class="line">       ▼</span><br><span class="line">┌────────────┐      ┌────────────┐</span><br><span class="line">│  REJECTED  │      │  CANCELED  │</span><br><span class="line">│ （拒绝）✓终 │      │ （取消）✓终 │</span><br><span class="line">└────────────┘      └────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>状态语义与转换规则（协议规定，考试级掌握）：</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>语义</th>
+<th>谁触发</th>
+<th>出口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SUBMITTED</code></td>
+<td>任务已被受理，尚未开始执行</td>
+<td>服务端创建</td>
+<td>→WORKING &#x2F; →REJECTED &#x2F; →FAILED</td>
+</tr>
+<tr>
+<td><code>WORKING</code></td>
+<td>执行中</td>
+<td>服务端</td>
+<td>→COMPLETED &#x2F; →FAILED &#x2F; →INPUT_REQUIRED &#x2F; →AUTH_REQUIRED &#x2F; →CANCELED</td>
+</tr>
+<tr>
+<td><code>INPUT_REQUIRED</code></td>
+<td><strong>中断态</strong>：信息不足，等待客户端补充（如缺专利分类号）</td>
+<td>服务端</td>
+<td>客户端在同一taskId上追加Message → WORKING</td>
+</tr>
+<tr>
+<td><code>AUTH_REQUIRED</code></td>
+<td><strong>中断态</strong>：需要完成认证&#x2F;授权（如token过期）</td>
+<td>服务端</td>
+<td>认证后重试 → WORKING</td>
+</tr>
+<tr>
+<td><code>COMPLETED</code></td>
+<td>终态：成功，artifacts已就绪</td>
+<td>服务端</td>
+<td>无（不可重启）</td>
+</tr>
+<tr>
+<td><code>FAILED</code></td>
+<td>终态：执行失败（错误信息在Task的message里）</td>
+<td>服务端</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>CANCELED</code></td>
+<td>终态：客户端CancelTask成功</td>
+<td>客户端请求</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>REJECTED</code></td>
+<td>终态：服务端受理后拒绝（能力不匹配&#x2F;非法请求）</td>
+<td>服务端</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p><strong>与第14课Handoff状态机的对比</strong>（回收伏笔）：第14课的Handoff状态机（IDLE→ACTIVE→DONE）管理的是<strong>进程内控制权转移</strong>，状态是私有的实现细节；A2A Task状态机管理的是<strong>跨组织工作契约</strong>，状态是<strong>公开的协议承诺</strong>——客户端依赖这些状态做超时、重试、降级决策。额外的两个中断态（INPUT_REQUIRED&#x2F;AUTH_REQUIRED）正是”不可信边界”的产物：HITL（第12课interrupt）的跨组织版。</p>
+<h3 id="3-3-Task不可变性与精炼模式【应当理解】"><a href="#3-3-Task不可变性与精炼模式【应当理解】" class="headerlink" title="3.3 Task不可变性与精炼模式【应当理解】"></a>3.3 Task不可变性与精炼模式【应当理解】</h3><p><strong>不可变性原则</strong>：Task一旦到达终态（COMPLETED&#x2F;CANCELED&#x2F;REJECTED&#x2F;FAILED），<strong>不可重启</strong>。后续交互（如”把结果改成红色帆船”）必须在<strong>同一contextId下创建新Task</strong>，并用<code>referenceTaskIds</code>引用原任务。</p>
+<p>三个配套机制：</p>
+<ul>
+<li><strong><code>contextId</code></strong>：逻辑上分组多个Task和Message——服务端用它管理内部LLM会话状态（跨任务的对话连续性）。同一context下的Task可并行（订机票→并行订酒店+订雪橇车）。</li>
+<li><strong>Artifact版本追踪归客户端</strong>：服务端对同一工件的精炼版本保持一致的<code>artifact-name</code>但分配新<code>artifactId</code>；<strong>版本历史由客户端维护</strong>（客户端才是”什么算可接受结果”的裁决者）——这个设计决策把责任交给信息优势方。</li>
+<li><strong>ID简化</strong>：v1.0把复合ID（<code>tasks/{taskId}/pushNotificationConfigs/{configId}</code>）全部简化为简单UUID+分离字段——“ID直接映射数据库主键”，实现复杂度骤降。</li>
+</ul>
+<p><strong>为什么不可变？</strong> 回忆第12课的Checkpoint回放：不可变对象给了编排器<strong>可靠的因果追踪</strong>（每个输入对应哪个输出单元），trace与审计（第05课操作审计日志）才有干净的锚点。可重启的Task是分布式系统里最危险的模糊状态——“这个任务到底完成了没有”在部分失败场景下无法回答。</p>
+<h3 id="3-4-v1-0操作全景"><a href="#3-4-v1-0操作全景" class="headerlink" title="3.4 v1.0操作全景"></a>3.4 v1.0操作全景</h3><table>
+<thead>
+<tr>
+<th>v0.3.0操作名</th>
+<th>v1.0操作名</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>message/send</code></td>
+<td><code>SendMessage</code></td>
+<td>发消息（返回Message或Task）</td>
+</tr>
+<tr>
+<td><code>message/stream</code></td>
+<td><code>SendStreamingMessage</code></td>
+<td>发消息并订阅SSE流式更新</td>
+</tr>
+<tr>
+<td><code>tasks/get</code></td>
+<td><code>GetTask</code></td>
+<td>查询Task（含history）</td>
+</tr>
+<tr>
+<td>—（无）</td>
+<td><code>ListTasks</code> <strong>新增</strong></td>
+<td>列出调用者可见的Task（游标分页）</td>
+</tr>
+<tr>
+<td><code>tasks/cancel</code></td>
+<td><code>CancelTask</code></td>
+<td>取消Task</td>
+</tr>
+<tr>
+<td><code>tasks/resubscribe</code></td>
+<td><code>SubscribeToTask</code></td>
+<td>重连中断的流（断线恢复）</td>
+</tr>
+<tr>
+<td><code>agent/getAuthenticatedExtendedCard</code></td>
+<td><code>GetExtendedAgentCard</code></td>
+<td>获取认证后的扩展卡</td>
+</tr>
+<tr>
+<td><code>tasks/pushNotificationConfig/*</code></td>
+<td><code>CreateTaskPushNotificationConfig</code>等</td>
+<td>配置推送通知回调</td>
+</tr>
+</tbody></table>
+<p>三个工程细节值得注意：<strong>①流事件重设计</strong>——v0.3的<code>kind</code>判别字段与<code>final</code>布尔值被移除，事件类型由JSON成员名（<code>statusUpdate</code>&#x2F;<code>artifactUpdate</code>包装对象）判别，流的关闭（协议绑定特定机制）即终止指示；<strong>②ListTasks的可见性规则</strong>——服务端”必须只返回该调用者可见的任务”（多租户安全，见第四节）；<strong>③推送通知负载</strong>改用StreamResponse格式，与流式API统一。</p>
+<blockquote>
+<p><strong>与第12课异步架构的衔接</strong>：A2A的”轮询（GetTask）&#x2F;流式（SendStreamingMessage）&#x2F;推送（PushNotificationConfig）”三通道，就是第12课”异步Agent与事件驱动架构”在协议层的标准化——概念完全同构，只是从框架API升级为跨组织契约。</p>
+</blockquote>
+<hr>
+<h2 id="四、安全机制：不可信边界的信任建立（协议原理-Part-4）"><a href="#四、安全机制：不可信边界的信任建立（协议原理-Part-4）" class="headerlink" title="四、安全机制：不可信边界的信任建立（协议原理 Part 4）"></a>四、安全机制：不可信边界的信任建立（协议原理 Part 4）</h2><h3 id="4-1-三层安全栈"><a href="#4-1-三层安全栈" class="headerlink" title="4.1 三层安全栈"></a>4.1 三层安全栈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────┐</span><br><span class="line">│ 身份与元数据层：Signed Agent Cards                    │</span><br><span class="line">│   —— &quot;对端是谁、能干什么&quot;可信（JWS+RFC 8785）           │</span><br><span class="line">├────────────────────────────────────────────────────┤</span><br><span class="line">│ 认证层：OAuth 2.0（现代化）                            │</span><br><span class="line">│   —— &quot;对端有权访问我&quot;（Device Code流/PKCE/mTLS）        │</span><br><span class="line">├────────────────────────────────────────────────────┤</span><br><span class="line">│ 授权层：租户作用域 + 任务可见性                          │</span><br><span class="line">│   —— &quot;对端能看到哪些任务&quot;（tenant字段/ListTasks过滤）    │</span><br><span class="line">└────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-OAuth-2-0现代化：对齐Security-BCP"><a href="#4-2-OAuth-2-0现代化：对齐Security-BCP" class="headerlink" title="4.2 OAuth 2.0现代化：对齐Security BCP"></a>4.2 OAuth 2.0现代化：对齐Security BCP</h3><p>v1.0把OAuth支持对齐到OAuth 2.0 Security Best Current Practice：</p>
+<table>
+<thead>
+<tr>
+<th>变化</th>
+<th>原因</th>
+<th>Agent场景含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>移除</strong> Implicit流</td>
+<td>token暴露在浏览器历史&#x2F;日志</td>
+<td>Agent无浏览器，本就不该用</td>
+</tr>
+<tr>
+<td><strong>移除</strong> Password流</td>
+<td>凭据直传风险</td>
+<td>服务Agent绝不该存第三方密码</td>
+</tr>
+<tr>
+<td><strong>新增</strong> Device Code流（RFC 8628）</td>
+<td>无头环境认证</td>
+<td><strong>CLI工具&#x2F;IoT&#x2F;无人值守Agent</strong>：<code>verification_uri</code>+<code>user_code</code>模式，人机分离认证</td>
+</tr>
+<tr>
+<td><strong>新增</strong> <code>pkce_required</code>字段</td>
+<td>防授权码拦截攻击</td>
+<td>授权码流强化：公开客户端必须PKCE</td>
+</tr>
+</tbody></table>
+<p><strong>凭据带外获取原则</strong>：A2A协议本身不传输凭据获取过程——OAuth流程&#x2F;密钥分发在协议外（out-of-band）完成，协议只消费已获得的token。这与Agent Card的<code>securitySchemes</code>声明（与OpenAPI Specification对齐）配合：<strong>认证要求在Card里声明，凭据在协议外获取，请求在协议内验证</strong>。</p>
+<h3 id="4-3-多租户与任务可见性"><a href="#4-3-多租户与任务可见性" class="headerlink" title="4.3 多租户与任务可见性"></a>4.3 多租户与任务可见性</h3><p>v1.0原生多租户：请求消息携带<code>tenant</code>字段（可从AgentInterface继承默认值），单个端点安全托管多个Agent——对SaaS化Agent服务（一个域名后托管数百个客户的Agent）是关键能力。配套的可见性规则：<strong>GetTask&#x2F;ListTasks只返回该认证调用者可见的任务</strong>——防跨租户信息泄露的协议级保证。</p>
+<hr>
+<h2 id="五、互操作性挑战：语义对齐与能力协商（协议原理-Part-5）"><a href="#五、互操作性挑战：语义对齐与能力协商（协议原理-Part-5）" class="headerlink" title="五、互操作性挑战：语义对齐与能力协商（协议原理 Part 5）"></a>五、互操作性挑战：语义对齐与能力协商（协议原理 Part 5）</h2><p>协议标准化了”怎么说话”，但两个根本难题仍然存在——这是本课理论顶点。</p>
+<h3 id="5-1-语义对齐问题"><a href="#5-1-语义对齐问题" class="headerlink" title="5.1 语义对齐问题"></a>5.1 语义对齐问题</h3><p>同一张Agent Card，双方理解一致吗？三个层次的语义鸿沟：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">① 词汇层：双方都用&quot;patent-search&quot;标签 ——（tags+@context基本解决）</span><br><span class="line">② 语义层：A的&quot;检索&quot;=返回标题列表；B的&quot;检索&quot;=全文深度分析</span><br><span class="line">   —— 交付物粒度/质量标准完全不同（描述文本模糊）</span><br><span class="line">③ 语用层：A期望同步秒级响应；B的任务要跑30分钟</span><br><span class="line">   —— 交互契约（超时/重试/降级）未对齐</span><br></pre></td></tr></table></figure>
+
+<p>工程对策组合：skills的<code>examples</code>字段展示典型请求-交付对（缩小语义层鸿沟）、<code>defaultInputModes/OutputModes</code>声明交付形态、Hybrid形态的Message预协商（先问”你能做X并30分钟内交付吗”再委派Task）。<strong>语义对齐没有银弹</strong>——协议给了机器可读的框架，剩余的对齐成本靠交互设计消化。</p>
+<h3 id="5-2-能力协商的形式化：从匹配到博弈【必须掌握】"><a href="#5-2-能力协商的形式化：从匹配到博弈【必须掌握】" class="headerlink" title="5.2 能力协商的形式化：从匹配到博弈【必须掌握】"></a>5.2 能力协商的形式化：从匹配到博弈【必须掌握】</h3><p>“能力协商”听起来礼貌，本质是<strong>利益博弈</strong>：服务端Agent希望接到更多任务（夸大能力有利可图），客户端Agent希望任务成功（误信夸大代价高昂）。用博弈论严格分析。</p>
+<p><strong>博弈的三要素</strong>：参与人N&#x3D;{S（服务端）, C（客户端）}，策略空间Sᵢ，效用uᵢ。</p>
+<p><strong>模型一：一次性能力声明博弈</strong></p>
+<p>设支付矩阵（数值可自定，结构是关键）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                      客户端C</span><br><span class="line">                  委派(D)        拒绝(R)</span><br><span class="line">服务端S   诚实(H)  (8, 10)       (0, 0)</span><br><span class="line">         夸大(O)  (12, -5)       (0, 0)</span><br><span class="line">              （括号内为 (u_S, u_C)）</span><br><span class="line"></span><br><span class="line">u_S：报酬-成本；夸大成本低（承诺多、交付少）</span><br><span class="line">u_C：任务成功=+10；误信夸大=任务失败-5</span><br></pre></td></tr></table></figure>
+
+<p><strong>求纯策略纳什均衡</strong>（回忆定义：策略组合σ*，任一参与人单方面偏离无法获益）：</p>
+<ul>
+<li><strong>(H, D)</strong>：S偏离到O可得12&gt;8 → 非均衡</li>
+<li><strong>(O, D)</strong>：C偏离到R可得0&gt;-5 → 非均衡</li>
+<li><strong>(H, R)</strong>：C偏离到D可得10&gt;0 → 非均衡</li>
+<li><strong>(O, R)</strong>：C给定O，R得0&gt;D得-5，无偏离动机 ✓；S给定R，O与H都得0，无严格偏离动机 ✓</li>
+</ul>
+<p><strong>结论：唯一的（弱）纳什均衡是（夸大，拒绝）——市场崩溃。<strong>这正是Akerlof”柠檬市场”的Agent版：不对称信息摧毁互操作市场。一次性、匿名、无验证的开放Agent网络中，理性参与者互相不信任是</strong>均衡行为</strong>而非道德问题。</p>
+<p><strong>模型二：重复博弈与声誉（第一剂解药）</strong></p>
+<p>若交互重复进行，服务端欺骗的代价包含未来订单损失。设贴现因子δ∈(0,1)（每期收益折现比例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">诚实策略的持续价值：V_H = 8 + 8δ + 8δ² + ... = 8/(1-δ)</span><br><span class="line">欺骗一次的现值：    V_O = 12 + 0 + 0 + ...   = 12</span><br><span class="line"></span><br><span class="line">诚实成为均衡 ⟺ 8/(1-δ) ≥ 12 ⟺ δ ≥ 1/3</span><br></pre></td></tr></table></figure>
+
+<p>直觉：<strong>对未来的重视程度（δ）超过临界值，短期欺骗不再划算</strong>。声誉系统就是把”δ”做大的机制——但前提是身份不可伪造、历史不可篡改（否则换个身份重新入场）。</p>
+<p><strong>模型三：机制设计——A2A的实际组合拳（第二剂解药）</strong></p>
+<p>机制设计的视角反转问题：不改人的动机，改博弈规则，使<strong>诚实披露成为均衡策略</strong>（激励相容IC）+参与优于退出（个体理性IR）。A2A v1.0的机制组合：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">① Signed Agent Cards：声明不可篡改 → 欺骗必留证据（提高发现概率p）</span><br><span class="line">② Task状态机+artifacts可验证交付 → 客户端能事后验证&quot;承诺vs交付&quot;</span><br><span class="line">③ ListTasks任务历史 → 声誉系统的数据基础设施</span><br><span class="line">④ INPUT_REQUIRED优雅中断 → 能力边界处的&quot;诚实说不知道&quot;</span><br><span class="line">效果：夸大的期望效用 EU(O) = (1-p)·12 + p·(12 - C)</span><br><span class="line">     当验证概率p与惩罚C足够大 → EU(H) &gt; EU(O) → 诚实占优</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>一句话总结本节</strong>（也是本课最该带走的理论）：<strong>协议的字段设计（签名&#x2F;状态机&#x2F;任务历史）本质上是在设计博弈的支付矩阵——好的互操作协议让诚实成为最优策略，而不是祈祷参与者善良。</strong></p>
+</blockquote>
+<p><strong>延伸（知晓即可）</strong>：真正的多轮议价协商（价格&#x2F;SLA&#x2F;交付标准逐轮谈判）在学术侧有形式化工作——Rubinstein轮流出价模型证明无限期议价存在唯一子博弈完美均衡（份额由双方贴现因子决定）；ACNBP协议（arXiv 2506.13590）给出能力协商与绑定的10步工程流程（发现→预筛→安全协商→数字签名绑定）。A2A当前的”读Card→接受或放弃”是协商的最简形态，留足了演化空间。</p>
+<hr>
+<h2 id="六、ANP：去中心化的另一条路线（知晓即可）"><a href="#六、ANP：去中心化的另一条路线（知晓即可）" class="headerlink" title="六、ANP：去中心化的另一条路线（知晓即可）"></a>六、ANP：去中心化的另一条路线（知晓即可）</h2><p>A2A走的是<strong>企业联盟中心化路线</strong>：域名+DNS+HTTP+OAuth+PKI——信任锚是CA与授权服务器。另一条<strong>开放网络去中心化路线</strong>是ANP（Agent Network Protocol）——开源社区项目（W3C社区组技术报告），承诺开放中立、永不商业化。</p>
+<p><strong>ANP三层架构</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ 领域协议层：具体业务协议（专利检索/旅行预订…）│</span><br><span class="line">├─────────────────────────────────────────┤</span><br><span class="line">│ 元协议层：Agent间用自然语言动态协商         │</span><br><span class="line">│   &quot;用什么格式/协议通信&quot;——运行时约定，       │</span><br><span class="line">│   而非预设固定协议                          │</span><br><span class="line">├─────────────────────────────────────────┤</span><br><span class="line">│ 身份与加密通信层：W3C DID（去中心化标识符）  │</span><br><span class="line">│   did:wba方法 + WNS → 无中心化系统的        │</span><br><span class="line">│   相互认证与端到端加密                      │</span><br><span class="line">└─────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>v1.1协议族</strong>：ANP-07（Agent Description，能力描述与发布）、ANP-08（Agent Discovery，主动<code>.well-known</code>发现+被动注册到搜索智能体）、ANP-09（端到端即时消息：私聊&#x2F;群聊&#x2F;E2EE&#x2F;附件&#x2F;联邦语义）。</p>
+<p><strong>身份机制对比</strong>（ANP的DID认证）：请求方用自己的<strong>私钥对挑战字符串签名</strong>，签名附在HTTP Authorization头——不依赖任何CA&#x2F;授权服务器，自主权身份。Agent之间像”网站爬虫顺着链接发现页面”一样通过Linked Data相互发现——<strong>无需中心注册地自组织组网</strong>。</p>
+<h3 id="三协议定位对比【必须掌握】"><a href="#三协议定位对比【必须掌握】" class="headerlink" title="三协议定位对比【必须掌握】"></a>三协议定位对比【必须掌握】</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>MCP（第11课）</th>
+<th>A2A</th>
+<th>ANP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连接对象</td>
+<td>Agent ↔ 工具&#x2F;数据服务</td>
+<td>Agent ↔ Agent</td>
+<td>Agent ↔ Agent（开放网络）</td>
+</tr>
+<tr>
+<td>治理</td>
+<td>Linux基金会（Google赠予）</td>
+<td>Linux基金会（Google发起）</td>
+<td>开源社区（W3C CG）</td>
+</tr>
+<tr>
+<td>信任模型</td>
+<td>平台内信任+OAuth 2.1</td>
+<td>企业联盟（DNS+PKI+OAuth+mTLS）</td>
+<td>去中心化（DID自主身份）</td>
+</tr>
+<tr>
+<td>发现机制</td>
+<td>server&#x2F;discover + Mcp-Method头路由</td>
+<td>Agent Card（well-known URI）</td>
+<td>Agent Description+Linked Data爬取</td>
+</tr>
+<tr>
+<td>状态模型</td>
+<td>v2.0无状态核心（显式handle）</td>
+<td>有状态Task生命周期</td>
+<td>即时消息+联邦</td>
+</tr>
+<tr>
+<td>典型场景</td>
+<td>研究助手调用检索工具</td>
+<td>委派专利调研给供应商Agent</td>
+<td>开放互联网上Agent自发协作</td>
+</tr>
+<tr>
+<td>一句话</td>
+<td>“工具插座”</td>
+<td>“企业间电话系统”</td>
+<td>“Agent的互联网”</td>
+</tr>
+</tbody></table>
+<p><strong>架构师选型直觉</strong>：受信边界内接工具→MCP；跨组织受控协作→A2A；不受信开放网络的自组织→ANP（实验性）。三者不互斥——研究助手可以同时用MCP接内网工具、用A2A接供应商、留ANP作为开放生态观察哨。</p>
+<hr>
+<h2 id="七、实战：研究助手接入外部A2A检索服务（工程实现）"><a href="#七、实战：研究助手接入外部A2A检索服务（工程实现）" class="headerlink" title="七、实战：研究助手接入外部A2A检索服务（工程实现）"></a>七、实战：研究助手接入外部A2A检索服务（工程实现）</h2><h3 id="7-1-架构改造方案"><a href="#7-1-架构改造方案" class="headerlink" title="7.1 架构改造方案"></a>7.1 架构改造方案</h3><p>第14课的检索层是”图内并行子Agent”。本课把专利检索源替换为外部A2A服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">改造前（第14课）：                          改造后（本课）：</span><br><span class="line">┌────────────────────────┐                ┌────────────────────────┐</span><br><span class="line">│ LangGraph编排（进程内）   │                │ LangGraph编排（进程内）   │</span><br><span class="line">│  ├─ Retriever(文献)✚    │                │  ├─ Retriever(文献)✚    │</span><br><span class="line">│  ├─ PatentAgent(专利)✚  │                │  ├─ A2A客户端适配器 ────┼──▶ 外部PatentResearch</span><br><span class="line">│  └─ Reviewer(审核)✚     │                │  └─ Reviewer(审核)✚     │    Agent（供应商，</span><br><span class="line">└────────────────────────┘                └────────────────────────┘    A2A协议+OAuth）</span><br><span class="line">✚=进程内Agent                                                             [组织边界]</span><br></pre></td></tr></table></figure>
+
+<p>改造要点：①进程内PatentAgent对象→A2A客户端适配器（同样的接口签名，网络化实现）；②Supervisor的容错逻辑（第14课MAX_RETRY）现在必须处理<strong>网络层失败</strong>（超时&#x2F;5xx）与<strong>协议层失败</strong>（Task FAILED&#x2F;REJECTED）两类；③INPUT_REQUIRED的处理落到研究助手与用户的交互上（HITL转发）。</p>
+<h3 id="7-2-引导式代码实践：mini-A2A四合一实现"><a href="#7-2-引导式代码实践：mini-A2A四合一实现" class="headerlink" title="7.2 引导式代码实践：mini-A2A四合一实现"></a>7.2 引导式代码实践：mini-A2A四合一实现</h3><p><strong>第一层：完整可运行代码</strong>（纯Python标准库，零依赖——对应”最小版”教学路径；真实项目用官方SDK <code>pip install a2a-sdk</code>）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mini_a2a.py —— A2A v1.0核心机制教学实现（标准库版）</span></span><br><span class="line"><span class="comment"># 服务端：PatentResearchAgent（模拟外部专利检索供应商）</span></span><br><span class="line"><span class="comment"># 客户端：ResearchAssistant（研究助手的A2A适配器）</span></span><br><span class="line"><span class="comment"># 覆盖：Agent Card发现 / SendMessage委派 / Task状态机 /</span></span><br><span class="line"><span class="comment">#       INPUT_REQUIRED中断恢复 / （简化版）签名验证</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json, threading, time, uuid, hmac, hashlib, base64</span><br><span class="line"><span class="keyword">from</span> http.server <span class="keyword">import</span> BaseHTTPRequestHandler, ThreadingHTTPServer</span><br><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> Request, urlopen</span><br><span class="line"></span><br><span class="line"><span class="comment"># ═══════════════════ 服务端：Agent Card + Task状态机 ═══════════════════</span></span><br><span class="line"></span><br><span class="line">CARD_SIGNING_KEY = <span class="string">b&quot;vendor-secret-key&quot;</span>          <span class="comment"># 教学用对称密钥模拟JWS非对称签名</span></span><br><span class="line">STATE = &#123;<span class="string">&quot;tasks&quot;</span>: &#123;&#125;&#125;                            <span class="comment"># &#123;taskId: task&#125;，真实系统用DB</span></span><br><span class="line"></span><br><span class="line">AGENT_CARD = &#123;                                    <span class="comment"># v1.0风格Agent Card</span></span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PatentResearchAgent&quot;</span>,</span><br><span class="line">    <span class="string">&quot;description&quot;</span>: <span class="string">&quot;面向企业的专利检索与深度分析服务&quot;</span>,</span><br><span class="line">    <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.2.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;supportedInterfaces&quot;</span>: [&#123;                     <span class="comment"># v1.0：版本随接口声明</span></span><br><span class="line">        <span class="string">&quot;url&quot;</span>: <span class="string">&quot;http://127.0.0.1:8801/&quot;</span>,</span><br><span class="line">        <span class="string">&quot;protocolBinding&quot;</span>: <span class="string">&quot;JSONRPC&quot;</span>,</span><br><span class="line">        <span class="string">&quot;protocolVersion&quot;</span>: <span class="string">&quot;1.0&quot;</span>&#125;],</span><br><span class="line">    <span class="string">&quot;capabilities&quot;</span>: &#123;<span class="string">&quot;streaming&quot;</span>: <span class="literal">False</span>, <span class="string">&quot;pushNotifications&quot;</span>: <span class="literal">False</span>,</span><br><span class="line">                     <span class="string">&quot;extendedAgentCard&quot;</span>: <span class="literal">False</span>&#125;,</span><br><span class="line">    <span class="string">&quot;defaultInputModes&quot;</span>: [<span class="string">&quot;text/plain&quot;</span>],</span><br><span class="line">    <span class="string">&quot;defaultOutputModes&quot;</span>: [<span class="string">&quot;text/plain&quot;</span>, <span class="string">&quot;application/json&quot;</span>],</span><br><span class="line">    <span class="string">&quot;skills&quot;</span>: [&#123;                                  <span class="comment"># skills = 发现的单元</span></span><br><span class="line">        <span class="string">&quot;id&quot;</span>: <span class="string">&quot;patent-search&quot;</span>,</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;专利检索&quot;</span>,</span><br><span class="line">        <span class="string">&quot;description&quot;</span>: <span class="string">&quot;按技术领域/分类号/申请人检索专利&quot;</span>,</span><br><span class="line">        <span class="string">&quot;tags&quot;</span>: [<span class="string">&quot;patent&quot;</span>, <span class="string">&quot;search&quot;</span>, <span class="string">&quot;IPC&quot;</span>, <span class="string">&quot;research&quot;</span>],</span><br><span class="line">        <span class="string">&quot;examples&quot;</span>: [<span class="string">&quot;检索G06N20/00分类下2025年授权的发明专利&quot;</span>]&#125;],</span><br><span class="line">    <span class="string">&quot;security&quot;</span>: [],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">canonical</span>(<span class="params">obj</span>):                               <span class="comment"># RFC 8785的简化模拟：</span></span><br><span class="line">    <span class="keyword">return</span> json.dumps(obj, sort_keys=<span class="literal">True</span>,        <span class="comment"># 键排序+无空白=字节级唯一</span></span><br><span class="line">                      separators=(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;:&quot;</span>)).encode()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sign_card</span>(<span class="params">card</span>):                              <span class="comment"># Signed Agent Cards模拟</span></span><br><span class="line">    body = &#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> card.items() <span class="keyword">if</span> k != <span class="string">&quot;signatures&quot;</span>&#125;</span><br><span class="line">    sig = hmac.new(CARD_SIGNING_KEY, canonical(body),</span><br><span class="line">                   hashlib.sha256).hexdigest()</span><br><span class="line">    <span class="keyword">return</span> &#123;**card, <span class="string">&quot;signatures&quot;</span>: [&#123;<span class="string">&quot;alg&quot;</span>: <span class="string">&quot;HS256-教学模拟&quot;</span>, <span class="string">&quot;sig&quot;</span>: sig&#125;]&#125;</span><br><span class="line"></span><br><span class="line">AGENT_CARD = sign_card(AGENT_CARD)                <span class="comment"># 服务端上线即签名</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">new_task</span>(<span class="params">context_id, text</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;id&quot;</span>: <span class="built_in">str</span>(uuid.uuid4())[:<span class="number">8</span>], <span class="string">&quot;contextId&quot;</span>: context_id,</span><br><span class="line">            <span class="string">&quot;status&quot;</span>: &#123;<span class="string">&quot;state&quot;</span>: <span class="string">&quot;TASK_STATE_SUBMITTED&quot;</span>,</span><br><span class="line">                       <span class="string">&quot;timestamp&quot;</span>: iso_now()&#125;,</span><br><span class="line">            <span class="string">&quot;input&quot;</span>: text, <span class="string">&quot;artifacts&quot;</span>: [], <span class="string">&quot;history&quot;</span>: []&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">iso_now</span>():                                    <span class="comment"># v1.0：ISO 8601毫秒精度</span></span><br><span class="line">    <span class="keyword">return</span> time.strftime(<span class="string">&quot;%Y-%m-%dT%H:%M:%S&quot;</span>, time.gmtime()) \</span><br><span class="line">           + <span class="string">f&quot;.<span class="subst">&#123;<span class="built_in">int</span>(time.time()*<span class="number">1000</span>)%<span class="number">1000</span>:03d&#125;</span>Z&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">execute_patent_search</span>(<span class="params">task, text</span>):            <span class="comment"># 服务端核心逻辑</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;状态机：SUBMITTED→WORKING→&#123;COMPLETED | INPUT_REQUIRED&#125;&quot;&quot;&quot;</span></span><br><span class="line">    task[<span class="string">&quot;status&quot;</span>] = &#123;<span class="string">&quot;state&quot;</span>: <span class="string">&quot;TASK_STATE_WORKING&quot;</span>, <span class="string">&quot;timestamp&quot;</span>: iso_now()&#125;</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;IPC&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> text <span class="keyword">and</span> <span class="string">&quot;分类&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> text:</span><br><span class="line">        <span class="comment"># 信息不足 → 中断态：要求补充（A2A的HITL机制）</span></span><br><span class="line">        task[<span class="string">&quot;status&quot;</span>] = &#123;<span class="string">&quot;state&quot;</span>: <span class="string">&quot;TASK_STATE_INPUT_REQUIRED&quot;</span>,</span><br><span class="line">                          <span class="string">&quot;message&quot;</span>: &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;ROLE_AGENT&quot;</span>, <span class="string">&quot;parts&quot;</span>: [</span><br><span class="line">                              &#123;<span class="string">&quot;text&quot;</span>: <span class="string">&quot;请补充专利分类号（如G06N20/00）&quot;</span></span><br><span class="line">                                       <span class="string">&quot;或技术领域关键词&quot;</span>&#125;]&#125;,</span><br><span class="line">                          <span class="string">&quot;timestamp&quot;</span>: iso_now()&#125;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    result = &#123;<span class="string">&quot;query&quot;</span>: text, <span class="string">&quot;patents&quot;</span>: [</span><br><span class="line">        &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;CN11700001A&quot;</span>, <span class="string">&quot;title&quot;</span>: <span class="string">&quot;一种Agentic RAG的自适应检索方法&quot;</span>,</span><br><span class="line">         <span class="string">&quot;citedBy&quot;</span>: <span class="number">45</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;id&quot;</span>: <span class="string">&quot;CN11700002A&quot;</span>, <span class="string">&quot;title&quot;</span>: <span class="string">&quot;基于多Agent协作的专利分析系统&quot;</span>,</span><br><span class="line">         <span class="string">&quot;citedBy&quot;</span>: <span class="number">31</span>&#125;]&#125;</span><br><span class="line">    task[<span class="string">&quot;artifacts&quot;</span>].append(&#123;                    <span class="comment"># 交付物（可验证性基础）</span></span><br><span class="line">        <span class="string">&quot;artifactId&quot;</span>: <span class="built_in">str</span>(uuid.uuid4())[:<span class="number">8</span>],</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;patent_search_result.json&quot;</span>,</span><br><span class="line">        <span class="string">&quot;parts&quot;</span>: [&#123;<span class="string">&quot;data&quot;</span>: result, <span class="string">&quot;mediaType&quot;</span>: <span class="string">&quot;application/json&quot;</span>&#125;]&#125;)  <span class="comment"># v1.0统一Part</span></span><br><span class="line">    task[<span class="string">&quot;status&quot;</span>] = &#123;<span class="string">&quot;state&quot;</span>: <span class="string">&quot;TASK_STATE_COMPLETED&quot;</span>, <span class="string">&quot;timestamp&quot;</span>: iso_now()&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A2AServer</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">log_message</span>(<span class="params">self, *a</span>): <span class="keyword">pass</span>               <span class="comment"># 静默访问日志</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_send</span>(<span class="params">self, code, obj</span>):</span><br><span class="line">        body = json.dumps(obj).encode()</span><br><span class="line">        <span class="variable language_">self</span>.send_response(code)</span><br><span class="line">        <span class="variable language_">self</span>.send_header(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.send_header(<span class="string">&quot;Content-Length&quot;</span>, <span class="built_in">str</span>(<span class="built_in">len</span>(body)))</span><br><span class="line">        <span class="variable language_">self</span>.end_headers()</span><br><span class="line">        <span class="variable language_">self</span>.wfile.write(body)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.path == <span class="string">&quot;/.well-known/agent-card.json&quot;</span>:   <span class="comment"># ① 发现</span></span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>._send(<span class="number">200</span>, AGENT_CARD)</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.path.startswith(<span class="string">&quot;/tasks/&quot;</span>):               <span class="comment"># ② GetTask</span></span><br><span class="line">            task = STATE[<span class="string">&quot;tasks&quot;</span>].get(<span class="variable language_">self</span>.path.split(<span class="string">&quot;/&quot;</span>)[<span class="number">2</span>])</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>._send(<span class="number">200</span>, &#123;<span class="string">&quot;task&quot;</span>: task&#125;) <span class="keyword">if</span> task \</span><br><span class="line">                <span class="keyword">else</span> <span class="variable language_">self</span>._send(<span class="number">404</span>, &#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;TaskNotFound&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_POST</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.path == <span class="string">&quot;/message:send&quot;</span>:                  <span class="comment"># ③ SendMessage</span></span><br><span class="line">            req = json.loads(<span class="variable language_">self</span>.rfile.read(</span><br><span class="line">                <span class="built_in">int</span>(<span class="variable language_">self</span>.headers[<span class="string">&quot;Content-Length&quot;</span>])))</span><br><span class="line">            msg, task_id = req[<span class="string">&quot;message&quot;</span>], req.get(<span class="string">&quot;taskId&quot;</span>)</span><br><span class="line">            ctx = msg.get(<span class="string">&quot;contextId&quot;</span>) <span class="keyword">or</span> <span class="built_in">str</span>(uuid.uuid4())[:<span class="number">8</span>]</span><br><span class="line">            <span class="keyword">if</span> task_id <span class="keyword">and</span> task_id <span class="keyword">in</span> STATE[<span class="string">&quot;tasks&quot;</span>]:     <span class="comment"># INPUT_REQUIRED恢复</span></span><br><span class="line">                task = STATE[<span class="string">&quot;tasks&quot;</span>][task_id]</span><br><span class="line">                <span class="keyword">assert</span> task[<span class="string">&quot;status&quot;</span>][<span class="string">&quot;state&quot;</span>] == \</span><br><span class="line">                    <span class="string">&quot;TASK_STATE_INPUT_REQUIRED&quot;</span></span><br><span class="line">                execute_patent_search(task, msg[<span class="string">&quot;parts&quot;</span>][<span class="number">0</span>][<span class="string">&quot;text&quot;</span>])</span><br><span class="line">            <span class="keyword">else</span>:                                          <span class="comment"># 新任务</span></span><br><span class="line">                task = new_task(ctx, msg[<span class="string">&quot;parts&quot;</span>][<span class="number">0</span>][<span class="string">&quot;text&quot;</span>])</span><br><span class="line">                STATE[<span class="string">&quot;tasks&quot;</span>][task[<span class="string">&quot;id&quot;</span>]] = task</span><br><span class="line">                execute_patent_search(task, task[<span class="string">&quot;input&quot;</span>])</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>._send(<span class="number">200</span>, &#123;<span class="string">&quot;task&quot;</span>: task&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ═══════════════════ 客户端：发现→验证→委派→轮询 ═══════════════════</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A2AClient</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, base_url</span>):</span><br><span class="line">        <span class="variable language_">self</span>.base = base_url.rstrip(<span class="string">&quot;/&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_http</span>(<span class="params">self, method, path, body=<span class="literal">None</span></span>):</span><br><span class="line">        data = json.dumps(body).encode() <span class="keyword">if</span> body <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">        req = Request(<span class="variable language_">self</span>.base + path, data=data, method=method,</span><br><span class="line">                      headers=&#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>&#125;)</span><br><span class="line">        <span class="keyword">with</span> urlopen(req, timeout=<span class="number">5</span>) <span class="keyword">as</span> r:</span><br><span class="line">            <span class="keyword">return</span> json.loads(r.read())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">discover</span>(<span class="params">self</span>):                                   <span class="comment"># ① 发现+② 验签</span></span><br><span class="line">        card = <span class="variable language_">self</span>._http(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;/.well-known/agent-card.json&quot;</span>)</span><br><span class="line">        body = &#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> card.items() <span class="keyword">if</span> k != <span class="string">&quot;signatures&quot;</span>&#125;</span><br><span class="line">        expect = hmac.new(CARD_SIGNING_KEY, canonical(body),</span><br><span class="line">                          hashlib.sha256).hexdigest()</span><br><span class="line">        ok = hmac.compare_digest(expect, card[<span class="string">&quot;signatures&quot;</span>][<span class="number">0</span>][<span class="string">&quot;sig&quot;</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  [客户端] Agent Card发现：<span class="subst">&#123;card[<span class="string">&#x27;name&#x27;</span>]&#125;</span> &quot;</span></span><br><span class="line">              <span class="string">f&quot;skills=<span class="subst">&#123;[s[<span class="string">&#x27;id&#x27;</span>] <span class="keyword">for</span> s <span class="keyword">in</span> card[<span class="string">&#x27;skills&#x27;</span>]]&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  [客户端] 签名验证：<span class="subst">&#123;<span class="string">&#x27;通过 ✓（Card未被篡改）&#x27;</span> <span class="keyword">if</span> ok <span class="keyword">else</span> <span class="string">&#x27;失败 ✗&#x27;</span>&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> card</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">skill_match</span>(<span class="params">card, keywords</span>):                      <span class="comment"># ③ skill级匹配</span></span><br><span class="line">        tags = &#123;t <span class="keyword">for</span> s <span class="keyword">in</span> card[<span class="string">&quot;skills&quot;</span>] <span class="keyword">for</span> t <span class="keyword">in</span> s[<span class="string">&quot;tags&quot;</span>]&#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">bool</span>(tags &amp; <span class="built_in">set</span>(keywords))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send_message</span>(<span class="params">self, text, context_id=<span class="literal">None</span>, task_id=<span class="literal">None</span></span>):</span><br><span class="line">        msg = &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;ROLE_USER&quot;</span>,                        <span class="comment"># v1.0枚举风格</span></span><br><span class="line">               <span class="string">&quot;messageId&quot;</span>: <span class="built_in">str</span>(uuid.uuid4())[:<span class="number">8</span>],</span><br><span class="line">               <span class="string">&quot;parts&quot;</span>: [&#123;<span class="string">&quot;text&quot;</span>: text, <span class="string">&quot;mediaType&quot;</span>: <span class="string">&quot;text/plain&quot;</span>&#125;]&#125;</span><br><span class="line">        <span class="keyword">if</span> context_id: msg[<span class="string">&quot;contextId&quot;</span>] = context_id</span><br><span class="line">        <span class="keyword">if</span> task_id: msg[<span class="string">&quot;taskId&quot;</span>] = task_id</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._http(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;/message:send&quot;</span>,</span><br><span class="line">                          &#123;<span class="string">&quot;message&quot;</span>: msg&#125;)[<span class="string">&quot;task&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_task</span>(<span class="params">self, task_id</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._http(<span class="string">&quot;GET&quot;</span>, <span class="string">f&quot;/tasks/<span class="subst">&#123;task_id&#125;</span>&quot;</span>)[<span class="string">&quot;task&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">delegate</span>(<span class="params">self, query, keywords, poll_interval=<span class="number">0.3</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;完整委派流程：匹配→发送→处理中断→轮询到终态&quot;&quot;&quot;</span></span><br><span class="line">        card = <span class="variable language_">self</span>.discover()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.skill_match(card, keywords):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;放弃委派：skills与任务特征不匹配（匹配博弈第一关）&quot;</span></span><br><span class="line">        task = <span class="variable language_">self</span>.send_message(query)</span><br><span class="line">        <span class="keyword">while</span> task[<span class="string">&quot;status&quot;</span>][<span class="string">&quot;state&quot;</span>] <span class="keyword">not</span> <span class="keyword">in</span> (</span><br><span class="line">                <span class="string">&quot;TASK_STATE_COMPLETED&quot;</span>, <span class="string">&quot;TASK_STATE_FAILED&quot;</span>,</span><br><span class="line">                <span class="string">&quot;TASK_STATE_CANCELED&quot;</span>, <span class="string">&quot;TASK_STATE_REJECTED&quot;</span>):</span><br><span class="line">            <span class="keyword">if</span> task[<span class="string">&quot;status&quot;</span>][<span class="string">&quot;state&quot;</span>] == <span class="string">&quot;TASK_STATE_INPUT_REQUIRED&quot;</span>:</span><br><span class="line">                ask = task[<span class="string">&quot;status&quot;</span>][<span class="string">&quot;message&quot;</span>][<span class="string">&quot;parts&quot;</span>][<span class="number">0</span>][<span class="string">&quot;text&quot;</span>]</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;  [服务端] <span class="subst">&#123;task[<span class="string">&#x27;status&#x27;</span>][<span class="string">&#x27;state&#x27;</span>]&#125;</span>：<span class="subst">&#123;ask&#125;</span>&quot;</span>)</span><br><span class="line">                answer = input_with_default(<span class="string">&quot;IPC G06N20/00 Agentic RAG检索&quot;</span>)</span><br><span class="line">                task = <span class="variable language_">self</span>.send_message(answer,</span><br><span class="line">                                         context_id=task[<span class="string">&quot;contextId&quot;</span>],</span><br><span class="line">                                         task_id=task[<span class="string">&quot;id&quot;</span>])</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            time.sleep(poll_interval)</span><br><span class="line">            task = <span class="variable language_">self</span>.get_task(task[<span class="string">&quot;id&quot;</span>])</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;  [客户端] 轮询 <span class="subst">&#123;task[<span class="string">&#x27;id&#x27;</span>]&#125;</span>：<span class="subst">&#123;task[<span class="string">&#x27;status&#x27;</span>][<span class="string">&#x27;state&#x27;</span>]&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> task</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">input_with_default</span>(<span class="params">default</span>):                          <span class="comment"># 最小版：自动应答</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;  [用户] 补充信息（回车用默认）：<span class="subst">&#123;default&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> default</span><br><span class="line"></span><br><span class="line"><span class="comment"># ═══════════════════ 主演示 ═══════════════════</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    server = ThreadingHTTPServer((<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8801</span>), A2AServer)</span><br><span class="line">    threading.Thread(target=server.serve_forever, daemon=<span class="literal">True</span>).start()</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;═&quot;</span> * <span class="number">60</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;演示1：完整委派流程（含INPUT_REQUIRED中断恢复）&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;═&quot;</span> * <span class="number">60</span>)</span><br><span class="line">    client = A2AClient(<span class="string">&quot;http://127.0.0.1:8801&quot;</span>)</span><br><span class="line">    task = client.delegate(<span class="string">&quot;帮我检索最新的Agentic RAG相关专利&quot;</span>,</span><br><span class="line">                           keywords=&#123;<span class="string">&quot;patent&quot;</span>, <span class="string">&quot;search&quot;</span>&#125;)</span><br><span class="line">    arts = task[<span class="string">&quot;artifacts&quot;</span>][<span class="number">0</span>][<span class="string">&quot;parts&quot;</span>][<span class="number">0</span>][<span class="string">&quot;data&quot;</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;  [客户端] 任务终态：<span class="subst">&#123;task[<span class="string">&#x27;status&#x27;</span>][<span class="string">&#x27;state&#x27;</span>]&#125;</span>，&quot;</span></span><br><span class="line">          <span class="string">f&quot;交付<span class="subst">&#123;<span class="built_in">len</span>(arts[<span class="string">&#x27;patents&#x27;</span>])&#125;</span>条专利结果，&quot;</span></span><br><span class="line">          <span class="string">f&quot;首条：<span class="subst">&#123;arts[<span class="string">&#x27;patents&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;title&#x27;</span>]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;═&quot;</span> * <span class="number">60</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;演示2：skill不匹配的委派拒绝（匹配博弈）&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;═&quot;</span> * <span class="number">60</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;client.delegate(<span class="string">&#x27;帮我写一篇市场分析报告&#x27;</span>, keywords=&#123;<span class="string">&#x27;writing&#x27;</span>&#125;</span>)&#125;&quot;</span>)</span><br><span class="line">    server.shutdown()</span><br></pre></td></tr></table></figure>
+
+<p><strong>预期输出（最小版实测，进程内验证）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">============================================================</span><br><span class="line">演示1：完整委派流程（含INPUT_REQUIRED中断恢复）</span><br><span class="line">============================================================</span><br><span class="line">  [客户端] Agent Card发现：PatentResearchAgent skills=[&#x27;patent-search&#x27;]</span><br><span class="line">  [客户端] 签名验证：通过 ✓（Card未被篡改）</span><br><span class="line">  [服务端] TASK_STATE_INPUT_REQUIRED：请补充专利分类号（如G06N20/00）或技术领域关键词</span><br><span class="line">  [用户] 补充信息（回车用默认）：IPC G06N20/00 Agentic RAG检索</span><br><span class="line">  [客户端] 任务终态：TASK_STATE_COMPLETED，交付2条专利结果，</span><br><span class="line">  首条：一种Agentic RAG的自适应检索方法</span><br><span class="line"></span><br><span class="line">============================================================</span><br><span class="line">演示2：skill不匹配的委派拒绝（匹配博弈）</span><br><span class="line">============================================================</span><br><span class="line">  [客户端] Agent Card发现：PatentResearchAgent skills=[&#x27;patent-search&#x27;]</span><br><span class="line">  [客户端] 签名验证：通过 ✓（Card未被篡改）</span><br><span class="line">  放弃委派：skills与任务特征不匹配（匹配博弈第一关）</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意演示1的轨迹：首次消息→INPUT_REQUIRED（中断态）→补充信息（同taskId）→COMPLETED，全程无轮询打印——轮询仅在任务处于WORKING时发生。这正是Task状态机的精髓：<strong>状态转换路径由业务条件决定，协议只定义合法转换集</strong>。若把服务端检索逻辑改为耗时操作（如<code>time.sleep(2)</code>模拟慢检索），你将观察到<code>轮询 xxx：TASK_STATE_WORKING</code>的中间输出。</p>
+</blockquote>
+<p><strong>第二层：关键修改引导</strong>（动手实验）</p>
+<table>
+<thead>
+<tr>
+<th>修改点</th>
+<th>引导问题</th>
+<th>观察目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>execute_patent_search</code>中把<code>&quot;IPC&quot; not in text</code>条件改为<code>&quot;最新&quot; in text</code>触发INPUT_REQUIRED</td>
+<td>中断态的触发条件是业务决策还是协议规定？</td>
+<td>理解：协议定义状态，业务定义何时进入</td>
+</tr>
+<tr>
+<td>在<code>new_task</code>后插入<code>task[&quot;status&quot;]={&quot;state&quot;:&quot;TASK_STATE_AUTH_REQUIRED&quot;}</code>分支并在<code>delegate</code>中处理</td>
+<td>AUTH_REQUIRED与INPUT_REQUIRED的恢复路径有何不同？</td>
+<td>理解：前者带外认证后重试，后者协议内补充</td>
+</tr>
+<tr>
+<td>把服务端<code>AGENT_CARD</code>的<code>skills</code>改为含<code>&quot;report-writing&quot;</code>标签</td>
+<td>演示2的匹配结果变化？</td>
+<td>理解：tags决定路由——粒度设计的真实影响</td>
+</tr>
+<tr>
+<td>篡改<code>AGENT_CARD[&quot;description&quot;]</code>后不重签名</td>
+<td>客户端验签结果？</td>
+<td>体验：元数据篡改如何被签名拦下</td>
+</tr>
+<tr>
+<td>给<code>delegate</code>加<code>timeout=10</code>参数，超时后走本地降级（MCP内网检索）</td>
+<td>跨组织委派失败的降级路径怎么设计？</td>
+<td>架构决策：外部依赖必须有本地fallback</td>
+</tr>
+</tbody></table>
+<p><strong>第三层：架构决策练习</strong></p>
+<blockquote>
+<p><strong>场景</strong>：研究助手需要接入三个外部检索源——①专利库（供应商A，付费，OAuth 2.0+高SLA）；②arXiv（公开免费，无需认证）；③竞品公司的研究情报Agent（合作方，走VPN，mTLS双证）。<strong>预算约束</strong>：研发人力2人月；<strong>可靠性要求</strong>：检索层整体可用性99%。</p>
+<p>决策题：(a) 三源统一用自研A2A客户端适配，还是分别用供应商SDK？(b) 专利库委派的超时&#x2F;重试&#x2F;降级策略（给出参数并说明理由）？(c) INPUT_REQUIRED的补充信息流程在研究助手全链路（A2A客户端→LangGraph图→用户）怎么贯通？(d) 三源的Agent Card是启动时拉取缓存还是每次委派前刷新——权衡是什么？（参考答案见习题解答第5题）</p>
+</blockquote>
+<h3 id="7-3-环境降级方案"><a href="#7-3-环境降级方案" class="headerlink" title="7.3 环境降级方案"></a>7.3 环境降级方案</h3><table>
+<thead>
+<tr>
+<th>版本</th>
+<th>环境</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>完整版</td>
+<td>有公网+供应商账号</td>
+<td>用官方<code>a2a-sdk</code>接入真实A2A端点（如LangGraph hosted <code>/a2a/{assistant_id}</code>）+ 真实OAuth流程</td>
+</tr>
+<tr>
+<td>降级版</td>
+<td>仅本机</td>
+<td>本课mini-A2A（标准库零依赖，进程内起服务端模拟供应商）——<strong>默认路径</strong></td>
+</tr>
+<tr>
+<td>最小版</td>
+<td>无Python环境</td>
+<td>阅读代码+预期输出，分析第7.2节修改引导的五个问题</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="八、课后习题（20min）"><a href="#八、课后习题（20min）" class="headerlink" title="八、课后习题（20min）"></a>八、课后习题（20min）</h2><h3 id="A-基础概念题"><a href="#A-基础概念题" class="headerlink" title="A. 基础概念题"></a>A. 基础概念题</h3><p><strong>A1</strong>（状态机）画出A2A v1.0 Task状态机的完整状态转换图，标注：①四个终态；②两个中断态及其恢复路径；③哪些转换由客户端发起。为什么<code>INPUT_REQUIRED</code>不能是终态？</p>
+<p><strong>A2</strong>（协议对比）用一张表对比MCP、A2A、ANP在”连接对象&#x2F;信任模型&#x2F;发现机制&#x2F;状态模型”四个维度的差异，并各举一个研究助手项目的适用场景。</p>
+<p><strong>A3</strong>（v1.0变化辨析）判断正误并说明理由：</p>
+<ul>
+<li>(a) v1.0中<code>protocolVersion</code>写在Agent Card顶层；</li>
+<li>(b) v1.0移除了流事件的<code>kind</code>判别字段，改用JSON成员名判别事件类型；</li>
+<li>(c) Task到达COMPLETED后，客户端可以对该taskId发消息让它重启执行；</li>
+<li>(d) <code>skills[].tags</code>在v1.0是可选字段。</li>
+</ul>
+<h3 id="B-分析思考题"><a href="#B-分析思考题" class="headerlink" title="B. 分析思考题"></a>B. 分析思考题</h3><p><strong>B1</strong>（博弈分析）回到5.2节支付矩阵。若客户端引入”任务交付物验证”机制，验证发现夸大的概率p&#x3D;0.6，且发现后服务端被拉黑（未来收益归零，δ&#x3D;0.8时持续合作价值V_H&#x3D;8&#x2F;(1-δ)）。计算夸大策略的期望效用，判断诚实是否成为均衡策略。验证机制还改变了什么？</p>
+<p><strong>B2</strong>（不可变性设计）A2A规定Task终态不可重启、”把帆船改成红色”必须在同一contextId下新建Task。对比另一种设计：允许Task从COMPLETED回到WORKING（复用taskId）。从①因果追踪与审计、②客户端实现复杂度、③服务端并发安全三个角度分析两种设计的优劣，说明A2A选择前者的深层理由。</p>
+<p><strong>B3</strong>（安全分层）攻击者无法伪造Signed Agent Card（私钥保密），但成功入侵了供应商Agent的运行时，让它返回伪造的专利数据。这道攻击发生在哪一层？签名机制为什么防不住？研究助手侧的防御应该放在哪（提示：第03课评估、第14课Proposer-Reviewer）？</p>
+<h3 id="C-系统设计题"><a href="#C-系统设计题" class="headerlink" title="C. 系统设计题"></a>C. 系统设计题</h3><p><strong>C1</strong>（A2A服务端设计）为研究助手自己设计一个对外暴露的A2A能力：<strong>“深度文献综述Agent”</strong>（接收主题，产出综述报告）。要求：①设计Agent Card（skills至少2个，粒度&#x3D;任务边界）；②设计Task状态转换的业务触发规则（什么情况进入INPUT_REQUIRED&#x2F;REJECTED）；③设计多租户隔离方案（同一端点服务多个客户组织）；④说明Signed Card的签名与密钥管理流程。</p>
+<p><strong>C2</strong>（综合架构）把第14课的Supervisor模式扩展为”跨组织Supervisor”：Orchestrator（你的LangGraph图）现在管理①2个进程内子Agent+②3个外部A2A Agent。设计：①消息协议如何统一（对比第14课的本地消息信封）；②外部Agent的INPUT_REQUIRED如何流转回用户；③死锁&#x2F;循环委派的检测方案（hint：第14课wait-for图+hop_count如何映射到A2A的taskId&#x2F;contextId）；④整体容错策略（超时&#x2F;重试&#x2F;降级的分层设计）。</p>
+<hr>
+<h2 id="九、参考答案"><a href="#九、参考答案" class="headerlink" title="九、参考答案"></a>九、参考答案</h2><h3 id="A1"><a href="#A1" class="headerlink" title="A1"></a>A1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">                    ┌──REJECTED（终）</span><br><span class="line">SUBMITTED ──┬────────┤</span><br><span class="line">            │        └──►WORKING ──┬──COMPLETED（终）</span><br><span class="line">            │                       ├──FAILED（终）</span><br><span class="line">            │                       ├──CANCELED（终，客户端发起）</span><br><span class="line">            │                       ├──INPUT_REQUIRED ───┐</span><br><span class="line">            │                       └──AUTH_REQUIRED ────┤</span><br><span class="line">            │                              ▲            │</span><br><span class="line">            └──────────────────────────────┴─ 补充信息/完成认证后回WORKING</span><br></pre></td></tr></table></figure>
+
+<p>四个终态：COMPLETED&#x2F;FAILED&#x2F;CANCELED&#x2F;REJECTED——均不可逆。两个中断态：INPUT_REQUIRED（等客户端补充信息，客户端在同一taskId上追加Message后回WORKING）、AUTH_REQUIRED（等带外认证，重试后回WORKING）。客户端发起的转换：CANCELED（CancelTask请求）；INPUT_REQUIRED&#x2F;AUTH_REQUIRED的<strong>恢复</strong>也由客户端的后续消息驱动。INPUT_REQUIRED不能是终态：因为任务的目标尚未失败也未完成，只是<strong>暂停等待信息</strong>——若设为终态，”补一个分类号”就得重建整个任务（丢失已有进度与服务端已做的推理），交互成本不可接受。终态的本质语义是”该工作单元已产生最终裁决（成功&#x2F;失败&#x2F;取消&#x2F;拒绝），因果链已闭合”。</p>
+<h3 id="A2"><a href="#A2" class="headerlink" title="A2"></a>A2</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>MCP</th>
+<th>A2A</th>
+<th>ANP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连接对象</td>
+<td>Agent↔工具&#x2F;数据</td>
+<td>Agent↔Agent（跨组织）</td>
+<td>Agent↔Agent（开放网络）</td>
+</tr>
+<tr>
+<td>信任模型</td>
+<td>平台内信任+OAuth 2.1</td>
+<td>DNS+PKI+OAuth+mTLS（企业联盟）</td>
+<td>W3C DID自主身份（去中心化）</td>
+</tr>
+<tr>
+<td>发现机制</td>
+<td>server&#x2F;discover+Mcp-Method头路由</td>
+<td>Agent Card（&#x2F;.well-known&#x2F;agent-card.json）</td>
+<td>ANP-07描述文档+Linked Data爬取发现</td>
+</tr>
+<tr>
+<td>状态模型</td>
+<td>v2.0无状态核心（显式handle）</td>
+<td>有状态Task生命周期（8状态）</td>
+<td>即时消息+联邦语义</td>
+</tr>
+</tbody></table>
+<p>研究助手场景：MCP→调用文献检索工具（第11课已实现）；A2A→把专利深度调研委派给外部供应商Agent（本课实战）；ANP→观察开放Agent网络生态的实验性接入（知晓即可）。</p>
+<h3 id="A3"><a href="#A3" class="headerlink" title="A3"></a>A3</h3><ul>
+<li>(a) <strong>错</strong>。v1.0把<code>protocolVersion</code>从Card顶层下沉到<code>supportedInterfaces[]</code>的每个<code>AgentInterface</code>对象（url&#x2F;protocolBinding&#x2F;protocolVersion三要素）——支持接口级独立升级。</li>
+<li>(b) <strong>对</strong>。v1.0移除<code>kind</code>判别字段，流事件由JSON成员名判别（<code>statusUpdate</code>&#x2F;<code>artifactUpdate</code>包装对象），<code>final</code>布尔字段同时移除，流的关闭由协议绑定特定机制指示终止。</li>
+<li>(c) <strong>错</strong>。Task不可变性原则：终态Task不可重启。精炼请求必须在同一<code>contextId</code>下创建<strong>新Task</strong>，并用<code>referenceTaskIds</code>引用原任务。</li>
+<li>(d) <strong>错</strong>。v1.0中<code>skills[].tags</code>为<strong>必填</strong>——tags驱动skill级匹配，是路由器匹配任务的依据。</li>
+</ul>
+<h3 id="B1"><a href="#B1" class="headerlink" title="B1"></a>B1</h3><p>验证机制改变博弈：夸大被发现的概率p&#x3D;0.6。发现后拉黑，故夸大的后续收益为0；未发现（概率0.4）时得12。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EU(夸大) = 0.4 × 12 + 0.6 × 0 = 4.8</span><br><span class="line">EU(诚实) = 持续合作价值 V_H = 8/(1-0.8) = 40</span><br></pre></td></tr></table></figure>
+
+<p>40 ≫ 4.8，<strong>诚实成为严格占优策略</strong>——激励相容达成。验证机制除了改变支付结构，还改变了：①信息结构——“夸大vs交付”从不可观测变成可观测（可验证性是声誉的前提）；②博弈的重复性——拉黑机制把一次性博弈有效转成”最后通牒式重复博弈”，δ的意义从主观耐心变成制度化的退出机制。这正是5.2节结论的例证：A2A用Task状态机+可验证artifacts+任务历史设计支付矩阵，使诚实成为均衡。</p>
+<h3 id="B2"><a href="#B2" class="headerlink" title="B2"></a>B2</h3><table>
+<thead>
+<tr>
+<th>角度</th>
+<th>不可变（A2A选择）</th>
+<th>可重启</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>因果追踪与审计</td>
+<td>每个Task&#x3D;一个清晰的输入→输出单元，trace&#x2F;artifact映射干净（呼应第12课Checkpoint回放的价值）</td>
+<td>COMPLETED任务”又活了”，审计日志中同一taskId对应多个交付版本，因果链模糊</td>
+</tr>
+<tr>
+<td>客户端复杂度</td>
+<td>精炼&#x3D;新Task+referenceTaskIds，逻辑统一（永远面向”新请求”编程）</td>
+<td>需要处理”重启中”的中间态、新旧artifacts并存、部分完成的语义</td>
+</tr>
+<tr>
+<td>服务端并发安全</td>
+<td>终态是<strong>不可变的吸收态</strong>——无并发写终态任务的问题，天然缓存友好</td>
+<td>重启引入COMPLETED→WORKING的竞态窗口（两个客户端同时触发重启？），需要额外的状态锁</td>
+</tr>
+</tbody></table>
+<p>深层理由：<strong>分布式系统中”已完成但可能被撤销”是最危险的模糊状态</strong>（类比数据库的幻读）。A2A用”不可变+引用”（新建Task引用旧Task）替代”可变+重入”——这正是不可变数据结构在并发编程中优势的协议级复现。代价是任务对象数量增长，由ListTasks游标分页（v1.0新增）缓解。</p>
+<h3 id="B3"><a href="#B3" class="headerlink" title="B3"></a>B3</h3><p>攻击发生在<strong>内容&#x2F;交付层</strong>（服务端运行时被入侵→数据伪造），而Signed Agent Cards保护的是<strong>元数据层</strong>（Card声明本身的完整性与来源）——签名保证”这确实是供应商的Agent Card、内容未被篡改”，但不保证”该Agent运行时行为诚实”。防御应放在研究助手侧的<strong>交付物验证</strong>：①Proposer-Reviewer模式（第14课）——独立审核Agent对返回的专利数据做核验（编号存在性&#x2F;引用数合理性&#x2F;交叉源比对）；②多源交叉验证（专利数据与arXiv&#x2F;内网库比对）；③评估融入——把外部Agent交付质量纳入第10课评估体系（faithfulness指标）。安全是分层的：签名防元数据伪造，验证机制防内容欺骗，两者互补。</p>
+<h3 id="C1（参考方案）"><a href="#C1（参考方案）" class="headerlink" title="C1（参考方案）"></a>C1（参考方案）</h3><p><strong>①Agent Card</strong>：skills按任务边界划分——<code>lit-review</code>（主题综述：tags&#x3D;[research, survey, writing]）与<code>citation-verify</code>（引文核验：tags&#x3D;[citation, verify, fact-check]）。不设”超级检索”大杂烩skill（匹配噪声）。<code>supportedInterfaces</code>声明JSONRPC绑定+protocolVersion；<code>capabilities.extendedAgentCard=true</code>（认证后暴露企业客户专属技能）。</p>
+<p><strong>②状态触发规则</strong>：INPUT_REQUIRED——主题过宽（如”AI综述”）时要求限定范围与时间窗；引用列表缺失时要求提供。REJECTED——主题超出知识域（非科研领域）、请求含注入攻击模式（第04课消毒层拦截）。WORKING→FAILED——内部RAG流水线异常，错误信息入Task message。</p>
+<p><strong>③多租户</strong>：v1.0原生<code>tenant</code>字段——每个客户组织一个tenant ID；OAuth token与tenant绑定；Task存储按tenant分片（DB行级隔离或schema隔离）；GetTask&#x2F;ListTasks强制tenant过滤（协议规定”只返回调用者可见的任务”）。计费与配额按tenant维度。</p>
+<p><strong>④签名与密钥管理</strong>：发布方持有Ed25519私钥（HSM&#x2F;KMS托管，运维不可导出）；Card变更走CI流水线：新版本→RFC 8785规范化→KMS签名→signatures[]更新→发布；公钥通过带外渠道（客户组织的密钥分发&#x2F;JWK endpoint）分发；定期轮换（双签名过渡期）。验签失败策略：拒绝委派+告警（而非降级继续）。</p>
+<p><strong>评分要点</strong>（对应大纲6维度）：技能粒度合理（选型）；状态规则覆盖中断与拒绝（完整性）；租户隔离方案（安全）；密钥管理流程完整（安全+可扩展）。</p>
+<h3 id="C2（参考方案）"><a href="#C2（参考方案）" class="headerlink" title="C2（参考方案）"></a>C2（参考方案）</h3><p><strong>①消息协议统一</strong>：定义内部标准信封（第14课msg_id&#x2F;trace_id&#x2F;hop_count三件套保留），进程内子Agent直接消费；外部Agent经A2A适配器做双向转换——本地信封→SendMessage的<code>message.parts[0].data</code>（携带结构化字段），Task的statusUpdate&#x2F;artifacts→本地信封。关键：<code>contextId</code>与本地trace_id的映射表（委派时建立，恢复时反查）。</p>
+<p><strong>②INPUT_REQUIRED流转</strong>：A2A客户端适配器收到INPUT_REQUIRED→向LangGraph图发<code>interrupt</code>（第12课HITL机制）→图暂停，human节点构造问题呈现给用户→用户回答→<code>Command(resume=答案)</code>恢复→适配器在同一taskId上SendMessage补充信息。超时未答（如30min）→CancelTask+降级。</p>
+<p><strong>③循环委派检测</strong>：wait-for图映射——Orchestrator等待外部Agent&#x3D;wait边（标注taskId）；外部Agent又把任务委派回研究助手（或链式委派形成环）时，检测方法：在委派消息的data part中携带<code>delegation_chain</code>（累积taskId列表），收到委派请求时先查链上是否已有本Agent的taskId——有则拒绝（REJECTED）并返回链证据（这比wait-for图更轻量，本质是把hop_count从单跳推广到全链）；跨组织无全局视图，无法做第14课的三色DFS中心化检测，只能靠<strong>链上自检</strong>（分布式系统经典权衡：中心化检测vs链式自检）。</p>
+<p><strong>④容错分层</strong>：</p>
+<ul>
+<li>超时：连接超时3s（快速失败）&#x2F;任务超时按skill定（检索类120s，综述类1800s+轮询间隔自适应退避）；</li>
+<li>重试：网络层错误（5xx&#x2F;超时）幂等重试2次（SendMessage需幂等键防重复建Task）；协议层FAILED不重试（业务失败重试无意义），换降级源；</li>
+<li>降级：三级fallback——外部A2A专利源失败→MCP内网检索工具（能力降级但可用）→返回部分结果+明确标注缺口（比假完整好，呼应第14课MAST”工具输出未验证”教训）；</li>
+<li>熔断：某外部源近5分钟失败率&gt;50%→熔断10min，直接走降级（防止雪崩）。</li>
+</ul>
+<p><strong>常见错误模式</strong>：①把外部Agent当本地函数调用（同步阻塞无超时）——研究助手整体被外部故障拖死；②INPUT_REQUIRED无人应答导致Task永久挂起（必须配超时+取消）；③委派消息不带结构化元数据（trace断链，失败无法归因——第14课TraceElephant教训）；④忽略签名验证（元数据层裸奔）；⑤重试不带幂等键（重复计费+重复交付）。</p>
+<hr>
+<h2 id="十、延伸阅读"><a href="#十、延伸阅读" class="headerlink" title="十、延伸阅读"></a>十、延伸阅读</h2><ul>
+<li>A2A协议规范与v1.0变更文档：<a target="_blank" rel="noopener" href="https://a2a-protocol.org/latest/specification/">https://a2a-protocol.org/latest/specification/</a> 与 <a target="_blank" rel="noopener" href="https://a2a-protocol.org/latest/whats-new-v1/">https://a2a-protocol.org/latest/whats-new-v1/</a></li>
+<li>Linux基金会A2A一周年生态公告（150+组织&#x2F;5语言SDK）：<a target="_blank" rel="noopener" href="https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year">https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year</a></li>
+<li>A2A官方仓库（含五种语言SDK与示例）：<a target="_blank" rel="noopener" href="https://github.com/a2aproject/A2A">https://github.com/a2aproject/A2A</a></li>
+<li>ANP协议白皮书与v1.1协议族：<a target="_blank" rel="noopener" href="https://agent-network-protocol.com/">https://agent-network-protocol.com/</a> 与 <a target="_blank" rel="noopener" href="https://github.com/agent-network-protocol/AgentNetworkProtocol">https://github.com/agent-network-protocol/AgentNetworkProtocol</a></li>
+<li>W3C智能体网络协议技术报告（ANP社区组）：<a target="_blank" rel="noopener" href="https://w3c-cg.github.io/ai-agent-protocol/">https://w3c-cg.github.io/ai-agent-protocol/</a></li>
+<li>能力协商与绑定协议ACNBP：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2506.13590">https://arxiv.org/abs/2506.13590</a></li>
+<li>JSON Web Signature（RFC 7515）与JSON规范化（RFC 8785）：<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc7515">https://datatracker.ietf.org/doc/html/rfc7515</a> 与 <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc8785">https://datatracker.ietf.org/doc/html/rfc8785</a></li>
+</ul>
+<hr>
+<h2 id="十一、下一课预告"><a href="#十一、下一课预告" class="headerlink" title="十一、下一课预告"></a>十一、下一课预告</h2><p><strong>第16课《PyTorch&#x2F;TF速通——Agent架构师必需的模型操作能力》</strong>——第三单元（协议层）收官，进入第四单元（模型层）：</p>
+<ul>
+<li><strong>本课的边界与下一课的起点</strong>：到本课为止，研究助手的所有”智能”都来自<strong>外部API模型</strong>（LangChain的LLM抽象）。第四单元要下探到模型本体——你会亲手加载、调用、优化模型。第16课是模型层的”入场券”：不是从零造轮子，而是掌握<strong>加载预训练模型、调用推理、读懂训练脚本</strong>的工程能力</li>
+<li><strong>模型操作全景</strong>：Autograd计算图的概念理解（非实现）、nn.Module加载与推理、HuggingFace生态（Transformers&#x2F;Datasets&#x2F;Tokenizers三库分工）、VLM多模态模型调用（Qwen-VL，知晓即可）</li>
+<li><strong>推理优化初探</strong>：torch.compile图优化、动态图vs静态图、ONNX导出与算子兼容性——为第18&#x2F;19课的压缩与推理服务铺路</li>
+<li><strong>项目线</strong>：研究助手的<strong>模型调用层</strong>——把RAG流水线中的Embedding模型调用从”API黑盒”升级为”本地可控调用”</li>
+</ul>
+<p>本课结束时你已集齐协议层五件套：MCP（工具插座）+ LangGraph（图内编排）+ OpenManus（参考实现）+ 多Agent模式（图间协作）+ A2A（跨组织互操作）。下一课起，我们从”编排智能”下探到”模型本体”——那里是数学与硬件的主场。</p>
+<hr>
+<p><em>本教学资料为AI Agent系统架构设计课程第15课，对应教学大纲第三单元第15课（协议互操作课，第三单元收官）。</em><br><em>技术栈版本快照（2026-08-27）：A2A v1.0（Linux基金会，150+组织&#x2F;5语言SDK）&#x2F; MCP v2.0 &#x2F; ANP v1.1协议族 &#x2F; AP2【联网更新v6.0】</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/">https://handyes.github.io/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyEs的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/S0015-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告3：第三单元阶段总结（第11-15课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">总结报告3：第三单元阶段总结（第11-15课）</div></div><div class="info-2"><div class="info-item-1">总结报告3：第三单元阶段总结（第11-15课） 生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15&#x2F;22课   一、阶段知识脉络梳理1.1 知识图谱1234567891011121314151617181920                ┌─────────────────────────────────────┐                │   第15课：A2A互操作（本单元合龙）      │                │  Agent Card/Signed Card/Task状态机/  │                │  OAuth现代化/博弈论/ANP三协议对比     │                └──────────────┬──────────────────────┘         ┌─────────────────────┼───────────────────────┐         ▼                     ▼            ...</div></div></div></a><a class="pagination-related" href="/2026/08/26/AI-Agent/AI%20Agent/0014-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第14课：多Agent系统架构设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第14课：多Agent系统架构设计</div></div><div class="info-2"><div class="info-item-1">第14课：多Agent系统架构设计课程信息   项目 内容    课程定位 协作架构设计课——从”一个大脑”到”一个团队”的架构跃迁：建立多Agent的形式化对比框架、协议设计与可靠性工程，回答研究助手项目的最后一个架构悬案   前置依赖 第01课（PDA循环）、第03课（ReAct&#x2F;Reflexion状态机）、第05课（工具调用FSM）、第12课（StateGraph&#x2F;Send&#x2F;事件总线&#x2F;TimeoutPolicy）、第13课（OpenManus时间维调度伏笔）   时间分配 模式对比15min（第一、二节）+ 工程实现20min（第三、四、五节）+ 习题20min（合计约55min）   知识深度 四种模式形式化对比矩阵 &#x2F; Handoff协议状态机 &#x2F; 资源分配图死锁检测 &#x2F; Proposer-Reviewer vs Reflexion时机对比 &#x3D; 必须掌握；消息协议设计 &#x2F; 预防策略 &#x2F; 多Agent vs 单Agent决策框架 &#x2F; mini代码实现 &#x3D;...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/T0020-%E7%9F%AD%E6%9C%9F%E6%8A%A5%E5%91%8A/" title="短期报告2：课程后期综合评估（第1-20课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">短期报告2：课程后期综合评估（第1-20课）</div></div><div class="info-2"><div class="info-item-1">短期报告2：课程后期综合评估（第1-20课） 生成时间：2026-09-03（第20课完成触发） | 课程进度：20&#x2F;22课（91%） | 定位：六大培养目标终检 + 项目全栈复盘 + 毕业冲刺路线   一、综合架构能力评估对照大纲六大培养目标，逐项评估当前达成度（对比T0010中期评估）：    # 培养目标 中期(T0010) 当前 证据与缺口    1 系统设计能力（PDA闭环&#x2F;记忆&#x2F;工具） ✅ 90% ✅ 95% 单Agent架构（1-10课）+多Agent四模式与A2A互操作（11-15课）全部闭环；第20课1000并发总装完成容量设计   2 协议掌握（MCP&#x2F;A2A） ⬜ 15% ✅ 90% MCP v2.0无状态核心+handle状态迁移（第11课）、A2A v1.0八状态Task机+Signed Cards信任链（第15课）；缺口：真实跨组织环境实操   3 框架实战（LangChain&#x2F;LangGraph） ⬜ 10% ✅ 85% StateGraph&#x2F;Checkpoint&#x2F;TimeoutP...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/S0020-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告4：第四单元阶段总结（第16-20课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">总结报告4：第四单元阶段总结（第16-20课）</div></div><div class="info-2"><div class="info-item-1">总结报告4：第四单元阶段总结（第16-20课） 生成时间：2026-09-03（第20课完成触发） | 覆盖范围：模型优化与生产部署（模型层） | 项目进度：20&#x2F;22课（91%）   一、阶段知识脉络梳理1.1 知识图谱12345678910111213                ┌─────────────────────────────────────────┐                │  第20课：GPU集群规划与系统架构设计（本单元合龙）│                │  显存完整公式/三约束容量模型/K8s部署栈/      │                │  KEDA阈值/冷启动/Spot/1000并发总装         │                └────────────────────┬────────────────────┘         ┌──────────────┬───────────┴──────────┬──────────────┐         ▼              ▼           ...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</div></div><div class="info-2"><div class="info-item-1">E020月考参考答案：AI Agent系统架构设计（第1-20课全链路） 配套试卷：E020-月考试卷.md | 生成时间：2026-09-03（第20课完成触发）第一部分为标准答案（含完整计算过程）；第二部分为参考方案+评分维度；第三部分为参考架构+设计要点+常见错误模式自评原则：第二、三部分无唯一答案，对照本答案检查”决策是否有量化依据、全链路是否有遗漏”，而非字句一致   第一部分：基础原理（30分，标准答案）Q1 参考答案（8分）（1）显存完整公式（2分） $$M_{GPU} &#x3D; \underbrace{\frac{P \times s_{quant}}{TP}}{模型权重} + \underbrace{M{KV}}{KV\ Cache} + \underbrace{M{act}}{激活值} + \underbrace{M{fixed}}_{固定开销}$$  模型权重：参数量×每参数字节数（FP16&#x3D;2&#x2F;FP8&#x3D;1&#x2F;INT4&#x3D;0.5），TP为张量并行度（权重按卡切分） KV Cache：所有在途请求的上下文缓存之...</div></div></div></a><a class="pagination-related" href="/2026/08/17/AI-Agent/AI%20Agent/0005-FunctionCalling%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第05课：Function Calling与工具调用机制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-17</div><div class="info-item-2">第05课：Function Calling与工具调用机制</div></div><div class="info-2"><div class="info-item-1">第05课：Function Calling与工具调用机制  课号：第05课 标题：Function Calling与工具调用机制 时间分配：理论15min + 实战20min + 安全设计5min + 测试方法5min + 习题10min 项目贡献：基础架构层——为”企业级智能研究助手Agent系统”构建工具调用骨架，包含三个自定义工具（search_papers&#x2F;get_paper_detail&#x2F;analyze_citation_network）的完整实现、跨厂商工具调用适配层、并行调用调度器、错误处理FSM、执行安全层（危险操作分级&#x2F;审计日志）、Mock测试框架 先修要求：第01课（Harness工程五功能、PDA循环）、第03课（ReAct状态机、错误恢复策略）、第04课（System Prompt工程、Constrained Decoding、Prompt注入五层防御）    课程导入第04课我们完成了研究助手Agent的”信息管理”骨架——System Prompt模板、Skills按需加载、上下文压缩、Constrained Decodi...</div></div></div></a><a class="pagination-related" href="/2026/08/30/AI-Agent/AI%20Agent/0018-%E6%A8%A1%E5%9E%8B%E8%92%B8%E9%A6%8F%E4%B8%8E%E5%8E%8B%E7%BC%A9%E9%80%89%E5%9E%8B-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第18课：模型蒸馏与压缩——选型与评估"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-30</div><div class="info-item-2">第18课：模型蒸馏与压缩——选型与评估</div></div><div class="info-2"><div class="info-item-1">第18课：模型蒸馏与压缩——选型与评估一、课程信息   项目 内容    课号 第18课（0018），第四单元”模型优化与生产部署”第3课   前置 第16课（模型加载与调用）、第17课（SFT与Agentic RL，QLoRA产物）   定位 从”训得起”到”部署得起”——模型层收官：压缩选型决策   时间分配 原理推导20min（τ推导8min + 量化7min + 剪枝5min）+ 选型决策15min（蒸馏ROI 7min + 组合决策8min）+ 结果分析10min + 习题10min   核心知识点（大纲指定，全部必考）：  温度参数τ对softmax分布的平滑效应推导（必须掌握） GPTQ&#x2F;AWQ&#x2F;GGUF三种量化格式的选型决策矩阵（必须掌握） 蒸馏ROI计算方法（必须掌握）  知识深度边界：    层级 本课对应内容    必须掌握 τ的极限行为与梯度尺度推导、GPTQ&#x2F;AWQ&#x2F;GGUF选型矩阵、蒸馏ROI公式与盈亏平衡计算   应当理解 RTN&#x2F;分组量化代码、蒸馏损失实现、FP8&#x2F;NVFP4&#x2F;M...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">第20课：GPU集群规划与Agent系统架构设计</div></div><div class="info-2"><div class="info-item-1">第20课：GPU集群规划与Agent系统架构设计一、课程信息   项目 内容    课号 第20课（0020），第四单元”模型优化与生产部署”第5课，部署层收官课   前置 第19课（vLLM推理服务、KV Cache公式、三模型显存分配）、第18课（量化产物与接口约定）、第14课（多Agent架构模式）、第12课（LangGraph异步编排）   定位 部署层第2课 + 毕业项目架构总装：从”单机怎么服务好”到”1000并发怎么规划集群”——GPU怎么选、卡间怎么连、集群怎么编、钱怎么省   时间分配 硬件选型15min（显存公式与三约束模型7min + 硬件矩阵8min）+ 架构设计20min（集群拓扑4min + K8s部署与混部7min + 1000并发总装9min）+ 成本优化10min（冷启动4min + 弹性伸缩4min + Spot与监控2min）+ 习题10min   核心知识点（大纲指定，全部必考）：  GPU显存占用计算公式推导——模型权重+KV Cache+激活值的完整分解（必须掌握） 多模型混部的GPU分配策略（必须掌握） 弹性伸缩的冷启动优化与阈值计算...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC15%E8%AF%BE%EF%BC%9AA2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">第15课：A2A协议与Agent互操作性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">课程信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AF%BE%E5%AF%B9%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%B4%A1%E7%8C%AE%EF%BC%9A%E3%80%8C%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8BAgent%E7%B3%BB%E7%BB%9F%E3%80%8D"><span class="toc-number">1.2.</span> <span class="toc-text">本课对项目的贡献：「企业级智能研究助手Agent系统」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%8E%E6%A1%86%E6%9E%B6%E5%86%85%E5%88%B0%E8%B7%A8%E7%BB%84%E7%BB%87%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81A2A%EF%BC%88%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86-Part-1%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">一、从框架内到跨组织：为什么需要A2A（协议原理 Part 1）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%AC%AC14%E8%AF%BE%E7%9A%84%E8%BE%B9%E7%95%8C%EF%BC%9A%E4%B8%89%E9%87%8D%E5%81%87%E8%AE%BE%E5%A4%B1%E6%95%88"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.1 第14课的边界：三重假设失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-A2A%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E5%AE%9A%E4%BD%8D%E4%B8%8E%E5%88%86%E5%B1%82"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.2 A2A是什么：定位与分层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%8D%8F%E8%AE%AE%E6%BC%94%E8%BF%9B%E5%8F%B2%EF%BC%9A%E4%BB%8E0-1-0%E5%88%B0v1-0"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3 协议演进史：从0.1.0到v1.0</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Agent-Card%EF%BC%9A%E8%83%BD%E5%8A%9B%E7%9A%84%E6%9C%BA%E5%99%A8%E5%8F%AF%E8%AF%BB%E6%8F%8F%E8%BF%B0%EF%BC%88%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86-Part-2%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">二、Agent Card：能力的机器可读描述（协议原理 Part 2）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%8F%91%E7%8E%B0%E6%9C%BA%E5%88%B6%EF%BC%9Awell-known-URI"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.1 发现机制：well-known URI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-JSON-LD%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%8F%AA%E6%98%AFJSON%E3%80%90%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E3%80%91"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.2 JSON-LD语义模型：为什么不只是JSON【必须掌握】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Agent-Card-v1-0%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90%E3%80%90%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E3%80%91"><span class="toc-number">1.4.3.</span> <span class="toc-text">2.3 Agent Card v1.0结构解析【必须掌握】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Signed-Agent-Cards%EF%BC%9A%E9%98%B2%E7%AF%A1%E6%94%B9%E7%9A%84%E4%BF%A1%E4%BB%BB%E9%94%9A%E3%80%90%E5%BA%94%E5%BD%93%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">1.4.4.</span> <span class="toc-text">2.4 Signed Agent Cards：防篡改的信任锚【应当理解】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Task%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9A%E8%B7%A8%E7%BB%84%E7%BB%87%E7%9A%84%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%9C%BA%EF%BC%88%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86-Part-3%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">三、Task生命周期：跨组织的任务状态机（协议原理 Part 3）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Message-vs-Task%EF%BC%9A%E4%B8%A4%E7%A7%8D%E5%93%8D%E5%BA%94%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.1.</span> <span class="toc-text">3.1 Message vs Task：两种响应模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Task%E7%8A%B6%E6%80%81%E6%9C%BA%EF%BC%9A%E5%AE%8C%E6%95%B4%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE%E3%80%90%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E3%80%91"><span class="toc-number">1.5.2.</span> <span class="toc-text">3.2 Task状态机：完整状态转换图【必须掌握】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Task%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%80%A7%E4%B8%8E%E7%B2%BE%E7%82%BC%E6%A8%A1%E5%BC%8F%E3%80%90%E5%BA%94%E5%BD%93%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.3 Task不可变性与精炼模式【应当理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-v1-0%E6%93%8D%E4%BD%9C%E5%85%A8%E6%99%AF"><span class="toc-number">1.5.4.</span> <span class="toc-text">3.4 v1.0操作全景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%EF%BC%9A%E4%B8%8D%E5%8F%AF%E4%BF%A1%E8%BE%B9%E7%95%8C%E7%9A%84%E4%BF%A1%E4%BB%BB%E5%BB%BA%E7%AB%8B%EF%BC%88%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86-Part-4%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">四、安全机制：不可信边界的信任建立（协议原理 Part 4）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%B8%89%E5%B1%82%E5%AE%89%E5%85%A8%E6%A0%88"><span class="toc-number">1.6.1.</span> <span class="toc-text">4.1 三层安全栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-OAuth-2-0%E7%8E%B0%E4%BB%A3%E5%8C%96%EF%BC%9A%E5%AF%B9%E9%BD%90Security-BCP"><span class="toc-number">1.6.2.</span> <span class="toc-text">4.2 OAuth 2.0现代化：对齐Security BCP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%B8%8E%E4%BB%BB%E5%8A%A1%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="toc-number">1.6.3.</span> <span class="toc-text">4.3 多租户与任务可见性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E6%8C%91%E6%88%98%EF%BC%9A%E8%AF%AD%E4%B9%89%E5%AF%B9%E9%BD%90%E4%B8%8E%E8%83%BD%E5%8A%9B%E5%8D%8F%E5%95%86%EF%BC%88%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86-Part-5%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">五、互操作性挑战：语义对齐与能力协商（协议原理 Part 5）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%AF%AD%E4%B9%89%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.1.</span> <span class="toc-text">5.1 语义对齐问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%83%BD%E5%8A%9B%E5%8D%8F%E5%95%86%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96%EF%BC%9A%E4%BB%8E%E5%8C%B9%E9%85%8D%E5%88%B0%E5%8D%9A%E5%BC%88%E3%80%90%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E3%80%91"><span class="toc-number">1.7.2.</span> <span class="toc-text">5.2 能力协商的形式化：从匹配到博弈【必须掌握】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81ANP%EF%BC%9A%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E7%9A%84%E5%8F%A6%E4%B8%80%E6%9D%A1%E8%B7%AF%E7%BA%BF%EF%BC%88%E7%9F%A5%E6%99%93%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">六、ANP：去中心化的另一条路线（知晓即可）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%8D%8F%E8%AE%AE%E5%AE%9A%E4%BD%8D%E5%AF%B9%E6%AF%94%E3%80%90%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E3%80%91"><span class="toc-number">1.8.1.</span> <span class="toc-text">三协议定位对比【必须掌握】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%9E%E6%88%98%EF%BC%9A%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8B%E6%8E%A5%E5%85%A5%E5%A4%96%E9%83%A8A2A%E6%A3%80%E7%B4%A2%E6%9C%8D%E5%8A%A1%EF%BC%88%E5%B7%A5%E7%A8%8B%E5%AE%9E%E7%8E%B0%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">七、实战：研究助手接入外部A2A检索服务（工程实现）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%9E%B6%E6%9E%84%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88"><span class="toc-number">1.9.1.</span> <span class="toc-text">7.1 架构改造方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%BC%95%E5%AF%BC%E5%BC%8F%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5%EF%BC%9Amini-A2A%E5%9B%9B%E5%90%88%E4%B8%80%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.9.2.</span> <span class="toc-text">7.2 引导式代码实践：mini-A2A四合一实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E7%8E%AF%E5%A2%83%E9%99%8D%E7%BA%A7%E6%96%B9%E6%A1%88"><span class="toc-number">1.9.3.</span> <span class="toc-text">7.3 环境降级方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98%EF%BC%8820min%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">八、课后习题（20min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E9%A2%98"><span class="toc-number">1.10.1.</span> <span class="toc-text">A. 基础概念题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-%E5%88%86%E6%9E%90%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.10.2.</span> <span class="toc-text">B. 分析思考题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%A2%98"><span class="toc-number">1.10.3.</span> <span class="toc-text">C. 系统设计题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.11.</span> <span class="toc-text">九、参考答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A1"><span class="toc-number">1.11.1.</span> <span class="toc-text">A1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A2"><span class="toc-number">1.11.2.</span> <span class="toc-text">A2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A3"><span class="toc-number">1.11.3.</span> <span class="toc-text">A3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B1"><span class="toc-number">1.11.4.</span> <span class="toc-text">B1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B2"><span class="toc-number">1.11.5.</span> <span class="toc-text">B2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B3"><span class="toc-number">1.11.6.</span> <span class="toc-text">B3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C1%EF%BC%88%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.11.7.</span> <span class="toc-text">C1（参考方案）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C2%EF%BC%88%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.11.8.</span> <span class="toc-text">C2（参考方案）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-number">1.12.</span> <span class="toc-text">十、延伸阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E4%B8%8B%E4%B8%80%E8%AF%BE%E9%A2%84%E5%91%8A"><span class="toc-number">1.13.</span> <span class="toc-text">十一、下一课预告</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

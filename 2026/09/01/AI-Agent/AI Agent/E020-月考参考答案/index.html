@@ -1,0 +1,444 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>E020月考参考答案：AI Agent系统架构设计（第1-20课全链路） | HandyEs的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="E020月考参考答案：AI Agent系统架构设计（第1-20课全链路） 配套试卷：E020-月考试卷.md | 生成时间：2026-09-03（第20课完成触发）第一部分为标准答案（含完整计算过程）；第二部分为参考方案+评分维度；第三部分为参考架构+设计要点+常见错误模式自评原则：第二、三部分无唯一答案，对照本答案检查”决策是否有量化依据、全链路是否有遗漏”，而非字句一致   第一部分：基础原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）">
+<meta property="og:url" content="https://handyes.github.io/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/index.html">
+<meta property="og:site_name" content="HandyEs的博客">
+<meta property="og:description" content="E020月考参考答案：AI Agent系统架构设计（第1-20课全链路） 配套试卷：E020-月考试卷.md | 生成时间：2026-09-03（第20课完成触发）第一部分为标准答案（含完整计算过程）；第二部分为参考方案+评分维度；第三部分为参考架构+设计要点+常见错误模式自评原则：第二、三部分无唯一答案，对照本答案检查”决策是否有量化依据、全链路是否有遗漏”，而非字句一致   第一部分：基础原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-08-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-13T15:00:53.691Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）",
+  "url": "https://handyes.github.io/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-08-31T16:00:00.000Z",
+  "dateModified": "2026-09-13T15:00:53.691Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyEs的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T15:00:53.691Z" title="更新于 2026-09-13 23:00:53">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="E020月考参考答案：AI-Agent系统架构设计（第1-20课全链路）"><a href="#E020月考参考答案：AI-Agent系统架构设计（第1-20课全链路）" class="headerlink" title="E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）"></a>E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</h1><blockquote>
+<p>配套试卷：E020-月考试卷.md | 生成时间：2026-09-03（第20课完成触发）<br>第一部分为标准答案（含完整计算过程）；第二部分为参考方案+评分维度；第三部分为参考架构+设计要点+常见错误模式<br>自评原则：第二、三部分无唯一答案，对照本答案检查”决策是否有量化依据、全链路是否有遗漏”，而非字句一致</p>
+</blockquote>
+<hr>
+<h2 id="第一部分：基础原理（30分，标准答案）"><a href="#第一部分：基础原理（30分，标准答案）" class="headerlink" title="第一部分：基础原理（30分，标准答案）"></a>第一部分：基础原理（30分，标准答案）</h2><h3 id="Q1-参考答案（8分）"><a href="#Q1-参考答案（8分）" class="headerlink" title="Q1 参考答案（8分）"></a>Q1 参考答案（8分）</h3><p><strong>（1）显存完整公式（2分）</strong></p>
+<p>$$M_{GPU} &#x3D; \underbrace{\frac{P \times s_{quant}}{TP}}<em>{模型权重} + \underbrace{M</em>{KV}}<em>{KV\ Cache} + \underbrace{M</em>{act}}<em>{激活值} + \underbrace{M</em>{fixed}}_{固定开销}$$</p>
+<ul>
+<li><strong>模型权重</strong>：参数量×每参数字节数（FP16&#x3D;2&#x2F;FP8&#x3D;1&#x2F;INT4&#x3D;0.5），TP为张量并行度（权重按卡切分）</li>
+<li><strong>KV Cache</strong>：所有在途请求的上下文缓存之和，是高并发场景的最大显存消费者</li>
+<li><strong>激活值</strong>：forward中间张量。Decode阶段每步仅1 token&#x2F;序列（MB级，可忽略）；Prefill阶段一次性处理整个prompt，注意力矩阵达B×heads×L²量级（FlashAttention是必需品）</li>
+<li><strong>固定开销</strong>：CUDA context、通信缓冲等，约取max(2GB, 权重×12%)</li>
+</ul>
+<p><strong>（2）KV Cache计算（3分）</strong></p>
+<p>每token KV（GQA公式，2为K与V两份）：</p>
+<p>$$M_{token} &#x3D; 2 \times n_{layers} \times n_{kv_heads} \times d_{head} \times s &#x3D; 2 \times 64 \times 8 \times 128 \times 2B &#x3D; 262{,}144\ B &#x3D; \textbf{256 KB}$$</p>
+<p>单请求8192 token：8192 × 256KB &#x3D; <strong>2 GB</strong></p>
+<p><strong>（3）并发上限（3分）</strong></p>
+<p>KV可用预算 &#x3D; 80GB×90% − 权重18GB − 固定开销max(2, 18×0.12)&#x3D;2.16GB &#x3D; 72 − 20.16 &#x3D; 51.84GB</p>
+<p>并发上限 &#x3D; 51.84GB ÷ 2GB ≈ <strong>25路在途请求</strong>（若答≈26路给满分；未扣固定开销得22-23分位）</p>
+<h3 id="Q2-参考答案（8分）"><a href="#Q2-参考答案（8分）" class="headerlink" title="Q2 参考答案（8分）"></a>Q2 参考答案（8分）</h3><p><strong>（1）LoRA公式与参数量（3分）</strong></p>
+<p>$$W &#x3D; W_0 + \Delta W &#x3D; W_0 + BA,\quad B \in \mathbb{R}^{d_{out} \times r},\ A \in \mathbb{R}^{r \times d_{in}}$$</p>
+<p>每个被适配线性层新增可训练参数 &#x3D; r×(d_in+d_out) ≈ 2rd（近似方阵d&#x3D;3584）。7B模型28层×约7个线性层（q&#x2F;k&#x2F;v&#x2F;o&#x2F;gate&#x2F;up&#x2F;down）：</p>
+<p>28层 × 7层内矩阵 × 2 × 16 × 3584 ≈ 22M，考虑q&#x2F;k&#x2F;v的GQA维度差异，实际量级<strong>约2-4千万参数，占模型总参数&lt;1%</strong>（典型报告值~40M&#x2F;0.57%）。</p>
+<p>对比训练显存：全参微调≈权重14GB(fp16)+梯度14GB+AdamW优化器状态56GB≈84GB；QLoRA仅NF4底座~4.5GB+LoRA梯度与优化器&lt;1GB——<strong>单卡可跑</strong>。</p>
+<p><strong>（2）NF4与双重量化（3分）</strong></p>
+<ul>
+<li><strong>NF4信息论最优</strong>：假设预训练权重服从正态分布，NF4将4-bit的16个量化格点按<strong>标准正态分布的分位数</strong>放置（每格点承载相等的概率质量），使量化误差在正态先验下的<strong>KL散度最小</strong>——同为4-bit，NF4比均匀量化（INT4）对正态分布权重的重构误差更小</li>
+<li><strong>双重量化</strong>：NF4每组权重需要一个FP32量化常数，本身占0.5bit&#x2F;参数的额外开销；双重量化把这些常数再量化为FP8，每参数再省约0.37bit——NF4解决”权重怎么量化”，DQ解决”量化常数本身的开销”</li>
+</ul>
+<p><strong>（3）rank选择（2分）</strong></p>
+<ul>
+<li>r&#x3D;8-16：格式记忆&#x2F;简单风格适配（工具调用格式、术语）、数据量小（&lt;10K）</li>
+<li>r&#x3D;32-64：领域知识迁移重、行为模式复杂、数据充足</li>
+<li>rank过大风险：小数据上<strong>过拟合</strong>、低秩假设失效收益递减、推理合并开销与训练不稳定性上升</li>
+</ul>
+<h3 id="Q3-参考答案（7分）"><a href="#Q3-参考答案（7分）" class="headerlink" title="Q3 参考答案（7分）"></a>Q3 参考答案（7分）</h3><p><strong>（1）温度公式与梯度尺度（4分）</strong></p>
+<p>$$softmax_T(z)_i &#x3D; \frac{\exp(z_i&#x2F;T)}{\sum_j \exp(z_j&#x2F;T)}$$</p>
+<p>推导（两步）：学生logits经softmax_T求导时，链式法则引入<strong>1&#x2F;T因子</strong>：∂L&#x2F;∂z_j &#x3D; (1&#x2F;T)(p_j − q_j)；同时温度升高使教师与学生的概率分布差异(p_j − q_j)本身被压缩（平滑效应近似再贡献一个1&#x2F;T）。综合效应：<strong>soft target的梯度尺度 ∝ 1&#x2F;T²</strong>——因此Hinton的做法是对soft损失项乘<strong>T²补偿系数</strong>，否则T&gt;1时学生几乎学不到soft信号。</p>
+<p><strong>（2）温度的调节效应（3分）</strong></p>
+<ul>
+<li><strong>T调大</strong>→分布更平滑均匀，暴露”暗知识”（类间相对关系：教师认为”猫更像狗而非卡车”的次要概率）</li>
+<li><strong>T调小</strong>（T→1以下）→分布趋向one-hot，只保留top-1判断</li>
+<li><strong>蒸馏用高T的原因</strong>：T→1的one-hot输出把类间相似性压缩为零；高T让学生学习教师的<strong>相对判断</strong>而非硬标签，这是小模型获得教师泛化能力的关键通道</li>
+</ul>
+<h3 id="Q4-参考答案（7分）"><a href="#Q4-参考答案（7分）" class="headerlink" title="Q4 参考答案（7分）"></a>Q4 参考答案（7分）</h3><p><strong>（1）PagedAttention vs RadixAttention（2-3分）</strong></p>
+<p><strong>不是同一个问题</strong>。PagedAttention解决<strong>KV Cache内存管理</strong>（外部碎片）：按固定块（如16 token）分页存储+块表映射逻辑序列→物理块，浪费从预留制的60-80%降到&lt;4%，适合任意负载。RadixAttention解决<strong>前缀重复计算</strong>：以基数树缓存历史前缀的KV，新请求命中共享前缀直接复用（系统提示&#x2F;多轮历史），适合高前缀复用负载（多轮对话、共享system prompt的Agent服务）。二者可组合（SGLang UnifiedRadixTree既是树结构也是分页管理）。</p>
+<p><strong>（2）SFT vs RL（2-3分）</strong></p>
+<p>SFT是<strong>行为克隆</strong>：在”输入-理想输出”对上做极大似然，学的是<strong>格式与模式</strong>（工具调用JSON、领域表达），但上限是训练数据中出现过的组合。RL是<strong>试错优化</strong>：以奖励信号为目标在环境中探索，学的是<strong>策略</strong>（什么状态下选什么工具），可泛化到未见过的工具组合。RL前需SFT基线的原因：①格式不过关时，rollout大量轨迹在格式校验即失败，奖励稀疏、样本浪费；②SFT提供能产出<strong>合法轨迹</strong>的初始策略，RL从它出发探索而非从随机开始。</p>
+<p><strong>（3）Continuous Batching vs 静态批（2分）</strong></p>
+<p>静态批凑满后整批前向，直至批内<strong>最长</strong>序列完成才整体释放——短请求被长请求拖住（队头阻塞），新请求必须等整批结束。Continuous Batching是<strong>迭代级调度</strong>：每次forward后检查各序列，完成的立即移出、等待队列中的立即补入，复杂度O(B+Q)（B批内序列数+Q等待队列）——延迟稳定（不等长尾）、GPU持续满载（无空转步）。</p>
+<hr>
+<h2 id="第二部分：技术选型（30分，参考方案-评分维度）"><a href="#第二部分：技术选型（30分，参考方案-评分维度）" class="headerlink" title="第二部分：技术选型（30分，参考方案+评分维度）"></a>第二部分：技术选型（30分，参考方案+评分维度）</h2><h3 id="Q5-参考方案：模型定制路径（10分）"><a href="#Q5-参考方案：模型定制路径（10分）" class="headerlink" title="Q5 参考方案：模型定制路径（10分）"></a>Q5 参考方案：模型定制路径（10分）</h3><p><strong>第一步：问题分诊（2分）</strong></p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>本质</th>
+<th>对应路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>①JSON格式错误率8%</td>
+<td>格式问题（记忆）</td>
+<td>API+Prompt兜底 → QLoRA SFT</td>
+</tr>
+<tr>
+<td>②多步工具选择差</td>
+<td>策略问题（泛化）</td>
+<td>长期看RL，当前约束下不适用</td>
+</tr>
+</tbody></table>
+<p><strong>第二步：约束分析（3分）</strong></p>
+<ul>
+<li>数据5K条：够SFT（1-50K条即见效）；<strong>远不够RL</strong>（GRPO需海量rollout，live执行成本高——CacheRL的三级模糊缓存正是为此设计，但预算$500无法支撑）</li>
+<li>预算$500：QLoRA单卡A100租用约$1.39&#x2F;hr×30-50hr≈$50-70，可行；RL需rollout服务+多卡，不可行</li>
+<li>无RL经验：GRPO奖励设计、失败模式（过早终止占42% rollouts等）都是隐性成本</li>
+</ul>
+<p><strong>第三步：组合方案（3分）</strong></p>
+<ol>
+<li><strong>本周（≈$0）</strong>：API+Prompt工程——结构化输出约束（JSON Schema&#x2F;constrained decoding）+few-shot示例+错误重试FSM（第05课）。预期格式错误率8%→2%</li>
+<li><strong>2-4周（≈$50-100）</strong>：QLoRA SFT——5K条轨迹构造为混合思考格式（参考CacheRL：补充”为什么调这个工具”的因果解释），r&#x3D;16，训练后在<strong>held-out工具调用集</strong>上测过程准确率（对照第17课评估方法）</li>
+<li><strong>暂不做</strong>：Agentic RL（预算&#x2F;数据&#x2F;经验三缺，标注为二期——SFT上线后积累真实badcase轨迹，预算到位再上GRPO）；OPD蒸馏（需强Teacher API费，且本场景SFT已覆盖主要收益）</li>
+</ol>
+<p><strong>评分维度提示</strong>：选型合理性（分诊正确+顺序合理5分）&#x2F;成本意识（$500内排序、RL成本量化3分）&#x2F;评估方案（held-out集+过程准确率指标2分）。</p>
+<h3 id="Q6-参考方案：检索策略（10分）"><a href="#Q6-参考方案：检索策略（10分）" class="headerlink" title="Q6 参考方案：检索策略（10分）"></a>Q6 参考方案：检索策略（10分）</h3><p><strong>四维决策矩阵（5分）</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Long-Context直读</th>
+<th>RAG</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>精度</td>
+<td>多文档QA实证56.3%</td>
+<td>49.0%</td>
+<td>LC胜7个点</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>3亿token无法入窗；即便单查询50K token也≈$0.03-0.3&#x2F;次，超预算</td>
+<td>top-k检索~几十K token≈$0.012&#x2F;次</td>
+<td><strong>RAG大胜（50倍级）</strong></td>
+</tr>
+<tr>
+<td>新鲜度</td>
+<td>每次查询重新塞入</td>
+<td>增量索引（周更友好）</td>
+<td>RAG胜</td>
+</tr>
+<tr>
+<td>归因</td>
+<td>弱（”在某文档见过”）</td>
+<td>chunk级引用来源</td>
+<td><strong>RAG胜（硬要求）</strong></td>
+</tr>
+</tbody></table>
+<p><strong>结论（2分）</strong>：<strong>RAG为主路径</strong>——四维中三维胜出，唯一劣势（精度7个点）不足以补偿50倍成本与归因缺失。日5,000次×$0.012≈$60&#x2F;日，预算内。</p>
+<p><strong>Long-Context子场景（2分）</strong>：单文档深度分析——用户上传一篇论文（2-8万token）精读、对比、总结，无需检索，直接入窗。</p>
+<p><strong>混合路由（1分）</strong>：第10课Agentic RAG决策树——D0简单事实查询→直接RAG；单文档深读→Long-Context分支；跨文档综合→RAG多轮检索+融合。路由由轻量分类器或主模型PDA循环内判定。</p>
+<h3 id="Q7-参考方案：部署形态（10分）"><a href="#Q7-参考方案：部署形态（10分）" class="headerlink" title="Q7 参考方案：部署形态（10分）"></a>Q7 参考方案：部署形态（10分）</h3><p><strong>①量化格式（3分）</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>格式</th>
+<th>权重体积</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32B主模型</td>
+<td><strong>AWQ-Int4</strong></td>
+<td>~18GB</td>
+<td>服务端新默认：PPL损失<del>3.4%最优、吞吐比FP16快</del>31%</td>
+</tr>
+<tr>
+<td>7B工具调用</td>
+<td><strong>AWQ-Int4</strong></td>
+<td>~4.5GB</td>
+<td>同上，与粗筛共卡</td>
+</tr>
+<tr>
+<td>0.5B粗筛</td>
+<td>FP16或GGUF-Q8</td>
+<td>~1GB</td>
+<td>体积小不值得压缩；CPU部署不占GPU</td>
+</tr>
+</tbody></table>
+<p><strong>②推理引擎（2分）</strong>：<strong>vLLM</strong>——生态最广、文档最全、无分布式经验团队最友好（vLLM Production Stack CRD官方K8s路径）；SGLang留作高前缀复用场景备选；TGI已归档（2026-03）直接排除。</p>
+<p><strong>③拓扑与扩容（5分）</strong></p>
+<ul>
+<li><strong>起步50路</strong>：2×A100 80GB单节点——GPU0跑32B主模型（~25路，见Q1计算），GPU1跑7B+0.5B（MIG或time-slicing共享）。国内采购约束下可用H20 96GB（显存强算力弱、推理友好）或L40S 48GB替代评估</li>
+<li><strong>500路扩容</strong>：用<strong>三约束容量模型</strong>重算（第20课）而非拍脑袋——显存约束（500路×2GB KV÷单卡KV预算）→ 解码带宽约束（500路×每秒token÷单卡带宽×利用率）→ Prefill算力约束（到达率×平均输入token÷单卡算力×MFU），三者取最大。量级：主模型池约15-20×A100 + 工具池约5-7×L40S</li>
+<li><strong>扩容路径</strong>：K8s水平扩主模型池副本+池间缓存感知负载均衡；KEDA以队列深度（vllm:num_requests_waiting）为伸缩信号（HPA基于GPU利用率失效——生产集群平均利用率仅~5%）</li>
+</ul>
+<hr>
+<h2 id="第三部分：系统设计（40分，参考架构-设计要点-常见错误模式）"><a href="#第三部分：系统设计（40分，参考架构-设计要点-常见错误模式）" class="headerlink" title="第三部分：系统设计（40分，参考架构+设计要点+常见错误模式）"></a>第三部分：系统设计（40分，参考架构+设计要点+常见错误模式）</h2><h3 id="Q8-参考架构（核心交付物）"><a href="#Q8-参考架构（核心交付物）" class="headerlink" title="Q8 参考架构（核心交付物）"></a>Q8 参考架构（核心交付物）</h3><p><strong>参考架构图</strong>（九层架构·1000并发形态）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">                      ┌───────────────────────────────────────────┐</span><br><span class="line">1000并发用户 ────►     │ 接入层: LB + API网关（限流/认证/PII脱敏）    │</span><br><span class="line">                      └─────────────────────┬─────────────────────┘</span><br><span class="line">                                            ▼</span><br><span class="line">┌───────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 编排层: LangGraph StateGraph ×N（Checkpoint断点恢复 + HITL中断）    │</span><br><span class="line">│   ├─ Agentic RAG决策器（D0路由/CRAG三级纠正/Self-RAG段落自检）      │</span><br><span class="line">│   └─ Supervisor瞬态多Agent（并行多源检索→聚合，第14课三条件判据满足） │</span><br><span class="line">├───────────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 安全层: 输入消毒(注入检测) → Schema验证 → 执行分级+沙箱 → 审计台账   │</span><br><span class="line">├───────────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 工具层: MCP Server集群（文献检索/内网知识库/MinerU文档解析）         │</span><br><span class="line">│ 互操作层: A2A客户端（外部专利源: Signed Card验签+OAuth+超时降级）    │</span><br><span class="line">├───────────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 知识层: BGE-M3混合检索(稠密+BM25) → BGE-Reranker重排 → top-5      │</span><br><span class="line">│         Milvus向量库 + Prefix Caching(固定系统提示高命中)           │</span><br><span class="line">│ 记忆层: 三因子检索 + 遗忘曲线 + 时序冲突解决（第09课）               │</span><br><span class="line">├───────────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 推理服务层（vLLM池化，PD分离可选）:                                 │</span><br><span class="line">│   ├─ 主模型池: 32B-AWQ-Int4 × 7×A100（200路在途）                  │</span><br><span class="line">│   ├─ 工具池: 7B-AWQ-Int4 × 3×L40S（MIG共享，粗筛旁路）              │</span><br><span class="line">│   └─ 降级: 池过载→路由至外部API兜底                                 │</span><br><span class="line">├───────────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 基础设施: K8s + KEDA(队列深度伸缩) + 多AZ容灾 + Spot基线/OD兜底     │</span><br><span class="line">│ 可观测: LangSmith全链路追踪 + Prometheus(TTFT/TPOT/P99/GPU/成本)   │</span><br><span class="line">└───────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>八部分设计要点</strong>（对应题目要求）：</p>
+<ol>
+<li><strong>整体架构</strong>：九层分层，请求流”接入→安全→编排→（知识&#x2F;工具&#x2F;推理）→响应”；1000并发用户≈200路在途（×峰值系数），而非1000路——这是最常见的量级误判</li>
+<li><strong>模型栈</strong>：”重能力不定制、轻能力定制”——32B主模型<strong>不微调</strong>（通用能力+RAG知识注入，避免灾难性遗忘与成本失控）；7B工具调用QLoRA SFT（格式记忆）；0.5B粗筛零成本旁路</li>
+<li><strong>容量计算</strong>（三约束，必须展示过程）：显存约束25路&#x2F;卡→需8卡；解码带宽约束（200路×<del>40tok&#x2F;s÷单卡有效带宽）→约7卡；Prefill算力约束→约5卡；<strong>取最大≈7×A100</strong>（+1冗余）。KEDA阈值&#x3D;排队深度触发×冷启动预算（扩容副本须在SLO窗口内就绪，用守护实例唤醒</del>5s而非冷启动~500s）</li>
+<li><strong>协作设计</strong>：默认单Agent（编排层内并行多源检索），仅提交前审核用Proposer-Reviewer瞬态多Agent（上下文隔离的批判性自修正）；MCP接内网工具（无状态核心+header路由），A2A接外部专利源（验签+超时降级+熔断）</li>
+<li><strong>知识增强</strong>：BGE-M3单模型三路输出（稠密&#x2F;稀疏&#x2F;多向量）工程复杂度低；Late Chunking可选；重排BGE-Reranker-v2-m3；记忆三因子检索复用第09课</li>
+<li><strong>安全四道防线</strong>：输入消毒（注入检测）→工具Schema验证+错误FSM+超时控制→执行分级（只读&#x2F;写&#x2F;Shell分别沙箱化）→审计台账；跨组织：Agent Card验签（JWS+RFC 8785）+OAuth+租户隔离</li>
+<li><strong>评估闭环</strong>：离线四层（组件&#x2F;流水线RAGAS&#x2F;系统端到端&#x2F;轨迹MAST）+在线SLO仪表盘（TTFT P99&lt;3s&#x2F;TPOT&#x2F;错误率&#x2F;Token成本按模块归因）+告警分级（P99越界→扩容，错误率→oncall）→KEDA自动伸缩闭环</li>
+<li><strong>成本与演进</strong>：稳态7×A100+3×L40S按需价≈$9K&#x2F;月，Spot混合（A100级供给充裕，60-70%折扣）可降至$4-5K&#x2F;月；演进路线：50路起步（2卡）→500路（PD分离引入）→1000路全量（多AZ）→第21课进化机制（badcase回流）</li>
+</ol>
+<p><strong>评分标准</strong>（6维度各1-5分+架构图10分）：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>5分标准</th>
+<th>1-2分表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>技术选型合理性</td>
+<td>每项选型匹配场景约束且给出量化对比</td>
+<td>只列技术名词无论证</td>
+</tr>
+<tr>
+<td>架构完整性</td>
+<td>感知-决策-行动-记忆-工具-评估六环全覆盖</td>
+<td>只画模型部署，缺记忆&#x2F;评估</td>
+</tr>
+<tr>
+<td>可扩展性</td>
+<td>弹性伸缩+故障恢复+降级路径三件套</td>
+<td>静态架构，无伸缩设计</td>
+</tr>
+<tr>
+<td>成本意识</td>
+<td>容量计算有过程、成本有月度量级</td>
+<td>无数字，”视情况而定”</td>
+</tr>
+<tr>
+<td>安全考量</td>
+<td>四道防线+跨组织信任</td>
+<td>仅提”加鉴权”</td>
+</tr>
+<tr>
+<td>评估方案</td>
+<td>离线+在线+告警闭环</td>
+<td>仅提”做测试”</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="常见错误模式（自检清单）"><a href="#常见错误模式（自检清单）" class="headerlink" title="常见错误模式（自检清单）"></a>常见错误模式（自检清单）</h2><h3 id="一、典型架构设计错误"><a href="#一、典型架构设计错误" class="headerlink" title="一、典型架构设计错误"></a>一、典型架构设计错误</h3><ol>
+<li><strong>无容量计算直接报GPU数</strong>——“感觉需要20张H100”；正确做法是三约束模型算出7×A100且展示瓶颈项</li>
+<li><strong>忽略冷启动</strong>——KEDA扩容了，但新副本冷启动需数百秒（Qwen3-235B 348GB实证521s），扩容完成前SLO已崩；正确做法是守护实例&#x2F;warm pool+唤醒预算计入伸缩阈值</li>
+<li><strong>把1000并发用户当1000路在途</strong>——正确换算：1000用户×交互占空比≈200路在途，量级差5倍</li>
+<li><strong>单AZ无容灾</strong>——99.9%可用性要求多AZ部署+池间故障转移</li>
+<li><strong>主模型全量微调</strong>——成本失控+灾难性遗忘；工具模型不定制——8%格式错误率直接上线</li>
+<li><strong>无降级路径</strong>——推理池过载时应路由外部API兜底（有界降级），而非让全部请求超时</li>
+</ol>
+<h3 id="二、典型选型错误"><a href="#二、典型选型错误" class="headerlink" title="二、典型选型错误"></a>二、典型选型错误</h3><ol>
+<li><strong>高并发场景选无Continuous Batching的推理路径</strong>（裸transformers pipeline&#x2F;TGI已归档）——队头阻塞直接摧毁P99</li>
+<li><strong>国内场景只写H100</strong>——采购受限；应评估H20 96GB（推理友好）&#x2F;B30&#x2F;L40S替代矩阵</li>
+<li><strong>用HPA基于GPU利用率做伸缩</strong>——生产集群GPU平均利用率~5%，信号失效；应使用KEDA队列深度信号</li>
+<li><strong>3亿token知识库选Long-Context直读</strong>——50倍成本+归因缺失；RAG四维全胜</li>
+<li><strong>格式问题上RL</strong>——JSON错误率8%是SFT问题，用GRPO解决&#x3D;成本错配；RL增益有限论（CacheRL实证）</li>
+<li><strong>量化格式选错目标</strong>——服务端选GGUF（端侧格式）、Hopper上选NVFP4（Blackwell专属）；正确：服务端AWQ-Int4&#x2F;Hopper用FP8</li>
+</ol>
+<h3 id="三、典型安全遗漏"><a href="#三、典型安全遗漏" class="headerlink" title="三、典型安全遗漏"></a>三、典型安全遗漏</h3><ol>
+<li><strong>未设计Prompt注入防御</strong>——用户输入拼进系统提示，工具描述可被污染（第04课输入消毒缺失）</li>
+<li><strong>工具调用无超时控制</strong>——单工具挂死拖垮整个PDA循环（第05课错误FSM缺失）</li>
+<li><strong>MCP Server裸奔内网</strong>——无认证无授权，等于把内网数据暴露给任何能触达的Agent</li>
+<li><strong>A2A外部源不验签</strong>——Agent Card可被篡改（替换接口地址&#x2F;能力声明），请求被引向恶意Agent</li>
+<li><strong>无PII脱敏</strong>——用户研究数据&#x2F;查询内容直传外部API或进入日志（合规事故）</li>
+<li><strong>checkpoint存储暴露</strong>——LangGraph CVE-2025-64439&#x2F;67644教训：”checkpoint即攻击面”，需版本下限+网络隔离+最小权限</li>
+</ol>
+<hr>
+<p><em>本参考答案为E020月考配套文件，第20课完成触发自动生成。下一里程碑：全部22课完成 → 生成毕业答卷（99-毕业答卷.md）与参考答案（99-毕业参考答案.md）。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/">https://handyes.github.io/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyEs的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E8%AF%95%E5%8D%B7/" title="月考试卷：AI Agent系统架构设计（第1-20课全链路）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">月考试卷：AI Agent系统架构设计（第1-20课全链路）</div></div><div class="info-2"><div class="info-item-1">月考试卷：AI Agent系统架构设计（第1-20课全链路） 考试时间：建议150分钟 | 满分：100分 | 覆盖范围：第1-20课（侧重第16-20课模型与部署层，兼顾全链路）考试形式：建议闭卷计算题 + 开卷设计题（第一部分闭卷，第二、三部分可查阅课程资料）配套文件：E020-月考参考答案.md（含评分标准与常见错误模式）   第一部分：基础原理（30分，闭卷，有标准答案）Q1. KV Cache与显存容量计算（8分）某研究助手主模型为32B参数模型（64层，8个KV头，head_dim&#x3D;128），采用GQA架构，KV Cache使用FP16精度，模型权重为AWQ-Int4量化后的18GB，部署在一张A100 80GB上（可用显存利用率按90%计，固定开销按权重的12%计）。 （1） 写出GPU显存占用的完整公式，并说明四项各自的含义。（2分） （2） 计算该模型每token的KV Cache大小，以及单个8192 token上下文请求的KV Cache总量。（3分） （3） 计算单张A100上该模型的理论并发上限（在途请求数）。（3分） Q2. LoRA与QLo...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第20课：GPU集群规划与Agent系统架构设计</div></div><div class="info-2"><div class="info-item-1">第20课：GPU集群规划与Agent系统架构设计一、课程信息   项目 内容    课号 第20课（0020），第四单元”模型优化与生产部署”第5课，部署层收官课   前置 第19课（vLLM推理服务、KV Cache公式、三模型显存分配）、第18课（量化产物与接口约定）、第14课（多Agent架构模式）、第12课（LangGraph异步编排）   定位 部署层第2课 + 毕业项目架构总装：从”单机怎么服务好”到”1000并发怎么规划集群”——GPU怎么选、卡间怎么连、集群怎么编、钱怎么省   时间分配 硬件选型15min（显存公式与三约束模型7min + 硬件矩阵8min）+ 架构设计20min（集群拓扑4min + K8s部署与混部7min + 1000并发总装9min）+ 成本优化10min（冷启动4min + 弹性伸缩4min + Spot与监控2min）+ 习题10min   核心知识点（大纲指定，全部必考）：  GPU显存占用计算公式推导——模型权重+KV Cache+激活值的完整分解（必须掌握） 多模型混部的GPU分配策略（必须掌握） 弹性伸缩的冷启动优化与阈值计算...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/31/AI-Agent/AI%20Agent/0019-%E9%AB%98%E5%B9%B6%E5%8F%91%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第19课：高并发推理服务架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">第19课：高并发推理服务架构</div></div><div class="info-2"><div class="info-item-1">第19课：高并发推理服务架构一、课程信息   项目 内容    课号 第19课（0019），第四单元”模型优化与生产部署”第4课   前置 第16课（模型加载与调用）、第18课（量化产物AWQ-Int4、接口约定）   定位 部署层第1课：从”部署什么模型”到”怎么把模型服务化”——高并发推理   时间分配 原理分析20min（PagedAttention 8min + Continuous Batching 6min + 投机解码6min）+ 引擎对比5min + 配置调优10min + 可观测性10min + 习题10min   核心知识点（大纲指定，全部必考）：  PagedAttention的虚拟内存映射原理与内存节省计算（必须掌握） Continuous Batching调度复杂度分析（必须掌握） Speculative Decoding的接受概率α公式与加速比计算（必须掌握） RadixAttention与PagedAttention的KV Cache管理对比（必须掌握）  知识深度边界：    层级 本课对应内容    必须掌握 KV Cache占用公式与碎片率计算...</div></div></div></a><a class="pagination-related" href="/2026/08/20/AI-Agent/AI%20Agent/0008-RAG%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E4%B8%8E%E9%AB%98%E7%BA%A7%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第08课：RAG进阶——查询优化与高级架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-20</div><div class="info-item-2">第08课：RAG进阶——查询优化与高级架构</div></div><div class="info-2"><div class="info-item-1">第08课：RAG进阶——查询优化与高级架构 单元：第二单元 RAG检索增强与Agent记忆（第6-10课）前置：第07课（分块策略、混合检索BM25+RRF、Cross-Encoder重排序、RAGAS评估）时间分配：理论推导20min（第二&#x2F;四&#x2F;五节数学部分）+ 工程实践15min（第三&#x2F;六节）+ 项目关联10min（项目贡献+6.4架构决策）+ 习题10min（共55min核心内容，代码实践建议额外30-60min自习）  课程信息   项目 内容    课号 0008   课程标题 RAG进阶——查询优化与高级架构   核心主题 查询改写与HyDE、自查询metadata过滤、Multi-Query&#x2F;RAG-Fusion、GraphRAG   深度边界 必须掌握：HyDE向量空间偏移数学分析、GraphRAG实体关系图构建与PageRank式排序、多路检索的分数归一化策略应当理解：查询改写工程实现、Self-Query的预&#x2F;后过滤执行、GraphRAG索引流水线与查询模式、查询理解层代码知晓即可：DRIFT Search、L...</div></div></div></a><a class="pagination-related" href="/2026/08/15/AI-Agent/AI%20Agent/0003-Agent%E6%8E%A8%E7%90%86%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-15</div><div class="info-item-2">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion</div></div><div class="info-2"><div class="info-item-1">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion 课程信息  课程名称：AI Agent系统架构设计 本课序号：03&#x2F;22 预计学习时间：约55分钟（理论推导20min + 工程实现15min + 评估方法5min + 习题15min） 项目贡献：基础架构层——为”企业级智能研究助手Agent系统”设计推理循环架构，确立PDA循环的状态机模型与终止条件 先修要求：第01课（PDA循环定义）、第02课（Attention复杂度、KV Cache、上下文窗口约束）    本课导读第02课我们分析了LLM的”单次推理”机制——Attention的 $O(n^2d)$ 复杂度、KV Cache的显存占用、上下文窗口的Token预算。但Agent不是”问一次答一次”的聊天机器人，它的核心能力是循环推理：感知任务→推理决策→执行行动→观察结果→继续推理，直到任务完成。 这个循环就是第01课定义的PDA（Perceive-Decide-Act）循环。本课要解决的核心问题是：如何设计这个循环的控制结构，使Agent在有限Token预算内高...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/AI%20Agent/0010-RAG%E4%B8%8EAgent%E6%B7%B1%E5%BA%A6%E9%9B%86%E6%88%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第10课：RAG与Agent深度集成实战（项目线贯通点）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">第10课：RAG与Agent深度集成实战（项目线贯通点）</div></div><div class="info-2"><div class="info-item-1">第10课：RAG与Agent深度集成实战（项目线贯通点）课程信息   项目 内容    课程定位 项目线贯通点——串联第1-9课全部模块，产出研究助手完整架构图   前置依赖 第06-08课（RAG三课）、第09课（记忆系统）、第03课（推理架构）、第05课（工具调用）   时间分配 理论推导15min + 项目实战20min + 架构决策5min + 评估方法5min + 习题10min（合计约55min）   知识深度 CRAG三级评估&#x2F;Self-RAG反思token&#x2F;Agentic RAG决策树&#x2F;四维决策矩阵&#x2F;LLM-as-a-Judge闭环 &#x3D; 必须掌握；评估环境设计&#x2F;统计显著性 &#x3D; 应当理解；MinerU 2.5-Pro&#x2F;LLM Wiki编译器模式&#x2F;JURY面板 &#x3D; 知晓即可    本课对项目的贡献：「企业级智能研究助手Agent系统」本课是全课程的第一个合龙点。前9课各自贡献了一个模块，本课做三件事： 123456789第1-9课状态：九个独立模块，各自能跑，互不连通 ...</div></div></div></a><a class="pagination-related" href="/2026/08/30/AI-Agent/AI%20Agent/0018-%E6%A8%A1%E5%9E%8B%E8%92%B8%E9%A6%8F%E4%B8%8E%E5%8E%8B%E7%BC%A9%E9%80%89%E5%9E%8B-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第18课：模型蒸馏与压缩——选型与评估"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-30</div><div class="info-item-2">第18课：模型蒸馏与压缩——选型与评估</div></div><div class="info-2"><div class="info-item-1">第18课：模型蒸馏与压缩——选型与评估一、课程信息   项目 内容    课号 第18课（0018），第四单元”模型优化与生产部署”第3课   前置 第16课（模型加载与调用）、第17课（SFT与Agentic RL，QLoRA产物）   定位 从”训得起”到”部署得起”——模型层收官：压缩选型决策   时间分配 原理推导20min（τ推导8min + 量化7min + 剪枝5min）+ 选型决策15min（蒸馏ROI 7min + 组合决策8min）+ 结果分析10min + 习题10min   核心知识点（大纲指定，全部必考）：  温度参数τ对softmax分布的平滑效应推导（必须掌握） GPTQ&#x2F;AWQ&#x2F;GGUF三种量化格式的选型决策矩阵（必须掌握） 蒸馏ROI计算方法（必须掌握）  知识深度边界：    层级 本课对应内容    必须掌握 τ的极限行为与梯度尺度推导、GPTQ&#x2F;AWQ&#x2F;GGUF选型矩阵、蒸馏ROI公式与盈亏平衡计算   应当理解 RTN&#x2F;分组量化代码、蒸馏损失实现、FP8&#x2F;NVFP4&#x2F;M...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/T0020-%E7%9F%AD%E6%9C%9F%E6%8A%A5%E5%91%8A/" title="短期报告2：课程后期综合评估（第1-20课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">短期报告2：课程后期综合评估（第1-20课）</div></div><div class="info-2"><div class="info-item-1">短期报告2：课程后期综合评估（第1-20课） 生成时间：2026-09-03（第20课完成触发） | 课程进度：20&#x2F;22课（91%） | 定位：六大培养目标终检 + 项目全栈复盘 + 毕业冲刺路线   一、综合架构能力评估对照大纲六大培养目标，逐项评估当前达成度（对比T0010中期评估）：    # 培养目标 中期(T0010) 当前 证据与缺口    1 系统设计能力（PDA闭环&#x2F;记忆&#x2F;工具） ✅ 90% ✅ 95% 单Agent架构（1-10课）+多Agent四模式与A2A互操作（11-15课）全部闭环；第20课1000并发总装完成容量设计   2 协议掌握（MCP&#x2F;A2A） ⬜ 15% ✅ 90% MCP v2.0无状态核心+handle状态迁移（第11课）、A2A v1.0八状态Task机+Signed Cards信任链（第15课）；缺口：真实跨组织环境实操   3 框架实战（LangChain&#x2F;LangGraph） ⬜ 10% ✅ 85% StateGraph&#x2F;Checkpoint&#x2F;TimeoutP...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#E020%E6%9C%88%E8%80%83%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%9AAI-Agent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%EF%BC%88%E7%AC%AC1-20%E8%AF%BE%E5%85%A8%E9%93%BE%E8%B7%AF%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86%EF%BC%8830%E5%88%86%EF%BC%8C%E6%A0%87%E5%87%86%E7%AD%94%E6%A1%88%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">第一部分：基础原理（30分，标准答案）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%888%E5%88%86%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">Q1 参考答案（8分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%888%E5%88%86%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">Q2 参考答案（8分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%887%E5%88%86%EF%BC%89"><span class="toc-number">1.1.3.</span> <span class="toc-text">Q3 参考答案（7分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%887%E5%88%86%EF%BC%89"><span class="toc-number">1.1.4.</span> <span class="toc-text">Q4 参考答案（7分）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%EF%BC%8830%E5%88%86%EF%BC%8C%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88-%E8%AF%84%E5%88%86%E7%BB%B4%E5%BA%A6%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">第二部分：技术选型（30分，参考方案+评分维度）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%AE%9A%E5%88%B6%E8%B7%AF%E5%BE%84%EF%BC%8810%E5%88%86%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">Q5 参考方案：模型定制路径（10分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%9A%E6%A3%80%E7%B4%A2%E7%AD%96%E7%95%A5%EF%BC%8810%E5%88%86%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">Q6 参考方案：检索策略（10分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%9A%E9%83%A8%E7%BD%B2%E5%BD%A2%E6%80%81%EF%BC%8810%E5%88%86%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">Q7 参考方案：部署形态（10分）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%EF%BC%8840%E5%88%86%EF%BC%8C%E5%8F%82%E8%80%83%E6%9E%B6%E6%9E%84-%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%82%B9-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">第三部分：系统设计（40分，参考架构+设计要点+常见错误模式）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E5%8F%82%E8%80%83%E6%9E%B6%E6%9E%84%EF%BC%88%E6%A0%B8%E5%BF%83%E4%BA%A4%E4%BB%98%E7%89%A9%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">Q8 参考架构（核心交付物）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">常见错误模式（自检清单）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%B8%E5%9E%8B%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.1.</span> <span class="toc-text">一、典型架构设计错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%B8%E5%9E%8B%E9%80%89%E5%9E%8B%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.2.</span> <span class="toc-text">二、典型选型错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B8%E5%9E%8B%E5%AE%89%E5%85%A8%E9%81%97%E6%BC%8F"><span class="toc-number">1.4.3.</span> <span class="toc-text">三、典型安全遗漏</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

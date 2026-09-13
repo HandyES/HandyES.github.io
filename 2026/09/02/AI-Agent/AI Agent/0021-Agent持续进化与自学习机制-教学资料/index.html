@@ -1,0 +1,1048 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第21课：Agent持续进化与自学习机制 | HandyEs的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第21课：Agent持续进化与自学习机制一、课程信息   项目 内容    课号 第21课（0021），第四单元”模型优化与生产部署”第6课，进化层&#x2F;第四单元收官课   前置 第10课（评估体系全景图与LLM-as-a-Judge）、第09课（记忆系统——个体记忆与组织知识）、第17课（SFT&#x2F;Agentic RL与CacheRL实证）、第20课（1000并发静态最优架构与滚动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第21课：Agent持续进化与自学习机制">
+<meta property="og:url" content="https://handyes.github.io/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html">
+<meta property="og:site_name" content="HandyEs的博客">
+<meta property="og:description" content="第21课：Agent持续进化与自学习机制一、课程信息   项目 内容    课号 第21课（0021），第四单元”模型优化与生产部署”第6课，进化层&#x2F;第四单元收官课   前置 第10课（评估体系全景图与LLM-as-a-Judge）、第09课（记忆系统——个体记忆与组织知识）、第17课（SFT&#x2F;Agentic RL与CacheRL实证）、第20课（1000并发静态最优架构与滚动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-09-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-13T15:01:05.141Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第21课：Agent持续进化与自学习机制",
+  "url": "https://handyes.github.io/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-09-01T16:00:00.000Z",
+  "dateModified": "2026-09-13T15:01:05.141Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第21课：Agent持续进化与自学习机制',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyEs的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">第21课：Agent持续进化与自学习机制</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第21课：Agent持续进化与自学习机制</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T15:01:05.141Z" title="更新于 2026-09-13 23:01:05">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第21课：Agent持续进化与自学习机制"><a href="#第21课：Agent持续进化与自学习机制" class="headerlink" title="第21课：Agent持续进化与自学习机制"></a>第21课：Agent持续进化与自学习机制</h1><h2 id="一、课程信息"><a href="#一、课程信息" class="headerlink" title="一、课程信息"></a>一、课程信息</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课号</td>
+<td>第21课（0021），第四单元”模型优化与生产部署”第6课，<strong>进化层&#x2F;第四单元收官课</strong></td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第10课（评估体系全景图与LLM-as-a-Judge）、第09课（记忆系统——个体记忆与组织知识）、第17课（SFT&#x2F;Agentic RL与CacheRL实证）、第20课（1000并发静态最优架构与滚动升级）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>从”建成系统”到”系统自己变好”——第20课交付了<strong>静态最优</strong>架构，本课补上<strong>时间维度</strong>：系统如何从运营中学习、把学到的东西存到正确的位置、并安全地发布出去</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>理论推导20min（开篇3min + 学习信号7min + 更新载体6min + 验证与灰度4min）+ 案例分析15min（Agent自举与代码生成Agent架构8min + 多模态与Computer Use前沿7min）+ 工程实践10min + 习题10min</td>
+</tr>
+</tbody></table>
+<p><strong>核心知识点</strong>（大纲指定，全部必考）：</p>
+<ol>
+<li>学习信号的质量评估——三类信号（环境执行结果&#x2F;过程规则&#x2F;LLM Rubric）的信噪特性与置信分流（必须掌握）</li>
+<li>四种更新载体的ROI对比——知识文档&#x2F;Prompt与Skills&#x2F;程序与Harness&#x2F;模型参数的选择策略（必须掌握）</li>
+<li>灰度发布策略设计——三道闸门、阶梯数学、守护指标与回滚机制（必须掌握）</li>
+<li>Agent自举的实现边界——自举能力阶梯、限制与安全边界（必须掌握）</li>
+<li>代码生成Agent架构——文件系统作为外部记忆、生成-验证-修正循环、自举路径（应当理解）</li>
+<li>多模态Agent与Computer Use前沿认知——语音Agent架构演变、CUA架构、VLA模型（知晓即可）</li>
+</ol>
+<p><strong>知识深度边界</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>本课对应内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>必须掌握</td>
+<td>三类学习信号的信噪比与多数投票数学、四载体六维对比与ROI决策公式、灰度样本量公式n≈16σ²&#x2F;Δ²、守护指标vs学习指标、自举边界四原则</td>
+</tr>
+<tr>
+<td>应当理解</td>
+<td>代码生成Agent架构（外部记忆&#x2F;生成-验证-修正循环&#x2F;组合式自举）、Ouroboros安全设计、长期知识整理机制、各载体回滚方式</td>
+</tr>
+<tr>
+<td>知晓即可</td>
+<td>自进化Agent学术谱系与五大进化循环、Agent Skills生态治理数据、OSWorld基准格局、VLA模型谱系、语音S2S vs级联管线细节</td>
+</tr>
+</tbody></table>
+<p><strong>技术栈版本快照（2026-09-04）</strong>：Agent Skills开放标准（agentskills.io，2025-12发布，2026-06约40个兼容产品）&#x2F; Ouroboros自发展Agent（arXiv:2608.08311，2026-08）&#x2F; Self-Improvements in Modern Agentic Systems综述（arXiv:2607.13104，2026-07）&#x2F; OSWorld 2.0（arXiv:2606.29537，2026-06）&#x2F; π0.5（Physical Intelligence openpi）&#x2F; NVIDIA GR00T N1.7（2026-04）&#x2F; Claude Computer Use GA（computer_toolset_20260801，2026-08-19）【联网更新v6.6】</p>
+<hr>
+<h2 id="二、本课对”企业级智能研究助手Agent系统”的贡献"><a href="#二、本课对”企业级智能研究助手Agent系统”的贡献" class="headerlink" title="二、本课对”企业级智能研究助手Agent系统”的贡献"></a>二、本课对”企业级智能研究助手Agent系统”的贡献</h2><p>第20课结束时，研究助手有了完整的”物理实现”：1000并发的三池集群、Planner-Worker混部、KEDA弹性伸缩。<strong>但那是一套”冻结在今天”的架构</strong>。本课回答的是部署之后的架构师问题：<strong>系统上线三个月后开始变差，你怎么办？</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">项目线进展更新：</span><br><span class="line">第16课 → 模型调用层（本地语义相似度）              ✅ 已完成</span><br><span class="line">第17课 → 模型定制层（工具调用微调方案）            ✅ 已完成</span><br><span class="line">第18课 → 模型压缩层（部署形态决策）                ✅ 已完成</span><br><span class="line">第19课 → 推理服务层（vLLM高并发架构+可观测性）     ✅ 已完成</span><br><span class="line">第20课 → 集群与架构层（GPU集群+1000并发总设计）    ✅ 已完成</span><br><span class="line">第21课 → 进化层（持续进化与自学习机制）            ◀ 本课</span><br><span class="line">第22课 → 应用前沿层（AI Coding范式与能力边界认知）  下一课（收官）</span><br></pre></td></tr></table></figure>
+
+<p>本课产出四个项目资产，它们合起来构成毕业答卷的”系统持续演进”章节：</p>
+<ol>
+<li><strong>学习信号管道</strong>——三类信号的采集、质量评估与置信分流（§4）</li>
+<li><strong>载体路由决策规则</strong>——四载体ROI矩阵与归因→载体的映射（§5）</li>
+<li><strong>灰度发布与回滚方案</strong>——三道闸门、阶梯设计、守护指标、回滚预案（§6）</li>
+<li><strong>进化闭环全景图</strong>——从badcase到全量发布&#x2F;回滚的完整机制（§6.4、§10）</li>
+</ol>
+<p>第20课留下的钩子今天兑现：<strong>badcase不再只进评估集（第10课），而要回流到”正确的更新载体”</strong>——这句话是本课的全部主线。</p>
+<hr>
+<h2 id="三、开篇：上线第一天，系统开始退化（3min）"><a href="#三、开篇：上线第一天，系统开始退化（3min）" class="headerlink" title="三、开篇：上线第一天，系统开始退化（3min）"></a>三、开篇：上线第一天，系统开始退化（3min）</h2><p>研究助手上线三个月后，你收到了三类坏消息：</p>
+<ol>
+<li><strong>环境漂移</strong>：arXiv改版导致检索工具频繁返回403；某文献数据库的API限流策略收紧，工具调用超时率从0.3%涨到2.1%——<strong>环境在变，你的代码没变</strong></li>
+<li><strong>知识过时</strong>：用户问”XX领域2026年的最新方法”，知识库里最新的综述停在了上年——<strong>世界在产生新知识，你的知识库没长</strong></li>
+<li><strong>模型漂移</strong>：供应商模型按月度快照更新（第19课已讲：模型快照约每月发布一次，安全后训练在点版本间并非无害），某次升级后工具调用的JSON格式错误率悄悄上升——<strong>基座在换，你的适配没跟</strong></li>
+</ol>
+<p>结论：<strong>不进化的Agent系统，质量单调递减</strong>。第20课给你的是静态最优；本课给你的是动态最优——把”系统随时间变强”设计成一项系统能力。</p>
+<p>本课的组织逻辑是三个问题：</p>
+<ul>
+<li><strong>学什么</strong>——学习信号从哪里来，哪些可信（§4）</li>
+<li><strong>存哪里</strong>——学到的东西放进四种载体的哪一个（§5）</li>
+<li><strong>怎么上线</strong>——怎么验证、怎么灰度、怎么回滚（§6）</li>
+</ul>
+<p>一句话概括本课核心公式（概念式）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">系统进化速率 ∝ 信号质量 × 载体ROI × 发布安全系数</span><br><span class="line">（坏信号进错载体 = 用错的原料改错的层 = 白忙+回归）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、学习信号：系统从哪里学习（必须掌握，7min）"><a href="#四、学习信号：系统从哪里学习（必须掌握，7min）" class="headerlink" title="四、学习信号：系统从哪里学习（必须掌握，7min）"></a>四、学习信号：系统从哪里学习（必须掌握，7min）</h2><h3 id="4-1-三个badcase，三种”谁发现的”"><a href="#4-1-三个badcase，三种”谁发现的”" class="headerlink" title="4.1 三个badcase，三种”谁发现的”"></a>4.1 三个badcase，三种”谁发现的”</h3><table>
+<thead>
+<tr>
+<th>badcase</th>
+<th>症状</th>
+<th>谁发现的</th>
+<th>信号类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B-073</td>
+<td>arXiv检索403拒绝，任务中断</td>
+<td>系统自己（工具抛异常）</td>
+<td>环境执行结果</td>
+</tr>
+<tr>
+<td>B-081</td>
+<td>综述输出引用格式不符合schema</td>
+<td>校验器（第10课输出校验）</td>
+<td>过程规则</td>
+</tr>
+<tr>
+<td>B-090</td>
+<td>用户反馈”综述写得没重点”</td>
+<td>LLM-as-a-Judge评分3.2&#x2F;5</td>
+<td>LLM Rubric</td>
+</tr>
+</tbody></table>
+<p>三种来源对应三类学习信号。<strong>学习信号的定义</strong>：一条可用于归因系统缺陷的证据三元组 <code>s = (症状, 证据, 归因)</code>——症状是可观察的失败表现，证据是支撑判断的原始数据，归因是”缺陷在哪一层”的判断（知识？行为？流程？能力？）。</p>
+<h3 id="4-2-三类学习信号的信噪特性（必须掌握）"><a href="#4-2-三类学习信号的信噪特性（必须掌握）" class="headerlink" title="4.2 三类学习信号的信噪特性（必须掌握）"></a>4.2 三类学习信号的信噪特性（必须掌握）</h3><p><strong>类型1：环境执行结果（硬信号）</strong></p>
+<ul>
+<li>内容：工具执行返回码、异常堆栈、超时、重试成功与否、网络错误</li>
+<li>例子：B-073的403；某次调用DeepSeek API返回429</li>
+<li>特性：<strong>归因准确率接近1</strong>（错误码是确定性的）——但<strong>覆盖面窄</strong>：它只告诉你”这一步没成功”，不告诉你”该怎么改”</li>
+<li>采集：第19课的可观测性体系已经在采（metrics里的工具错误率、trace里的异常标记）——<strong>硬信号是免费的，问题在于没人把它接进进化管道</strong></li>
+</ul>
+<p><strong>类型2：过程规则（半硬信号）</strong></p>
+<ul>
+<li>内容：确定性检查器的输出——schema校验、引用可解析性、JSON结构合法性、格式规范</li>
+<li>例子：B-081的引用schema失败；”输出必须包含Sources节”规则触发</li>
+<li>特性：<strong>准确且可解释</strong>（规则触发点即缺陷位置的证据）；局限：<strong>规则集需要人工预先定义</strong>——而规则集本身也是会过时的（这就是为什么规则集也要版本化、也要进进化闭环）</li>
+<li>采集：第10课的评估流水线（RAGAS+规则检查）在线上跑的版本</li>
+</ul>
+<p><strong>类型3：LLM Rubric（软信号）</strong></p>
+<ul>
+<li>内容：LLM-as-a-Judge按评分量表（rubric）对输出质量打分，低分输出即badcase候选</li>
+<li>例子：B-090的”3.2&#x2F;5分”；双Judge交叉判定综述质量不达标</li>
+<li>特性：<strong>覆盖面最广</strong>（能评”好不好”这种主观维度——硬信号和规则都够不着），但<strong>噪声最大</strong>：第10课讲过的五大偏差（位置偏差&#x2F;自我偏好&#x2F;冗长偏差&#x2F;评分随机性&#x2F;显著性不足）全部适用于judge本身</li>
+<li>采集：对采样流量（如5%）跑Judge，或对用户点踩的case跑Judge复核</li>
+</ul>
+<p><strong>补充：用户行为信号</strong>（隐式：重试、放弃、改写重问；显式：点赞点踩）——噪声最大的信号源，单独使用时只做<strong>参考</strong>不做归因，通常作为”触发Rubric复评”的扳机而不是直接进化的依据。</p>
+<p>三类信号对比表：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>环境执行结果</th>
+<th>过程规则</th>
+<th>LLM Rubric</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>归因准确率</td>
+<td>~1.0（确定性）</td>
+<td>高（取决于规则质量）</td>
+<td>低（~0.7，有偏差）</td>
+</tr>
+<tr>
+<td>失败模式覆盖</td>
+<td>窄（只覆盖执行层）</td>
+<td>中（覆盖已定义的模式）</td>
+<td>广（覆盖质量维度）</td>
+</tr>
+<tr>
+<td>采集成本</td>
+<td>极低（已有metrics）</td>
+<td>低（评估流水线）</td>
+<td>中高（token成本）</td>
+</tr>
+<tr>
+<td>反馈延迟</td>
+<td>实时</td>
+<td>实时~分钟</td>
+<td>分钟~小时</td>
+</tr>
+<tr>
+<td>能否全自动采集</td>
+<td>是</td>
+<td>是</td>
+<td>是（采样）</td>
+</tr>
+</tbody></table>
+<p><strong>工程结论（信号金字塔）</strong>：底座是免费的硬信号（全部自动回流），中间是规则（自动回流+规则集版本化），顶层是软信号（必须过置信度门槛）。<strong>信号的价值不在多，而在可归因。</strong></p>
+<h3 id="4-3-信号质量评估：信噪比的形式化（本课数学核心之一）"><a href="#4-3-信号质量评估：信噪比的形式化（本课数学核心之一）" class="headerlink" title="4.3 信号质量评估：信噪比的形式化（本课数学核心之一）"></a>4.3 信号质量评估：信噪比的形式化（本课数学核心之一）</h3><p><strong>信号价值公式</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">V(s) = P(归因正确) × E[修复收益 | 归因正确]</span><br><span class="line">     − P(归因错误) × E[回归成本 | 归因错误]</span><br><span class="line">     − C(采集 + 验证)</span><br></pre></td></tr></table></figure>
+
+<p>三项分别对应”信”的收益、”噪”的代价、采集成本。<strong>硬信号第二项趋近于0，软信号第二项不可忽略</strong>——这就是三类信号置信度差异的经济学根源。</p>
+<p><strong>软信号的多数投票（Condorcet陪审团定理）</strong>：</p>
+<p>对同一个badcase模式做n次独立评审、取多数票，多数票正确的概率为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">P_majority(n, q) = Σ_&#123;k &gt; n/2&#125; C(n,k) · q^k · (1−q)^&#123;n−k&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中q是单次评审的准确率。取q&#x3D;0.7（典型Judge准确率）：</p>
+<table>
+<thead>
+<tr>
+<th>评审次数n</th>
+<th>多数投票准确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0.700</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.784</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.837</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.874</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.901</td>
+</tr>
+<tr>
+<td>21</td>
+<td>0.974</td>
+</tr>
+<tr>
+<td>n→∞</td>
+<td>→1.0（q&gt;0.5时，定理保证）</td>
+</tr>
+</tbody></table>
+<p><strong>推导要点</strong>（能自己推一遍）：n&#x3D;5时，P &#x3D; C(5,3)·0.7³·0.3² + C(5,4)·0.7⁴·0.3 + C(5,5)·0.7⁵ &#x3D; 10×0.0309 + 5×0.0720 + 0.1681 &#x3D; 0.837。二项式展开逐项求和即可，无高级数学。</p>
+<p><strong>工程含义</strong>（务必体会）：要让软信号的置信度达到0.90（硬信号天然的水平），需要<strong>9次独立评审的多数投票</strong>。生产系统不会为每个badcase跑9次judge——所以<strong>软信号的工程归宿是人工审核池，而不是自动变更流</strong>。这解释了下面的三级置信分流：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">置信度 ≥ 0.90  →  AUTO_APPLY（自动进入变更流程）      ← 硬信号、规则、9票rubric</span><br><span class="line">0.60 ≤ 置信度 &lt; 0.90  →  REVIEW（人工审核池）         ← 典型rubric信号</span><br><span class="line">置信度 &lt; 0.60  →  DISCARD（丢弃或降级为观察项）       ← 单次低分、孤例抱怨</span><br></pre></td></tr></table></figure>
+
+<p><strong>工程实践快照【联网更新v6.6】</strong>：</p>
+<ul>
+<li><strong>eval-driven development</strong>（Anthropic工程实践，2026-01）：evals是Agent产品的”单元测试”，应在Agent实现<strong>之前</strong>构建——评估用例先行，学习信号管道与产品同步设计，而不是上线后补</li>
+<li><strong>Golden Dataset + LLM-as-a-Judge + 回归检测三位一体</strong>（2026-04生产手册）：人工精标的golden dataset做基准锚点，judge做规模化评估（用最强模型当裁判——如Opus级做judge而非同级模型），CI式回归检测防止月度模型快照引发的静默退化</li>
+<li><strong>生成器-评估器双Agent回路</strong>：generator Agent执行任务，evaluator Agent作为QA工程师打分与批评，反馈迭代——本质上是把本课的”信号管道”内化为一对协作Agent（第14课多Agent模式的应用）</li>
+</ul>
+<hr>
+<h2 id="五、更新载体：学到的东西放到哪里（必须掌握，6min）"><a href="#五、更新载体：学到的东西放到哪里（必须掌握，6min）" class="headerlink" title="五、更新载体：学到的东西放到哪里（必须掌握，6min）"></a>五、更新载体：学到的东西放到哪里（必须掌握，6min）</h2><h3 id="5-1-同一个badcase的四种”存法”"><a href="#5-1-同一个badcase的四种”存法”" class="headerlink" title="5.1 同一个badcase的四种”存法”"></a>5.1 同一个badcase的四种”存法”</h3><p>对”知识库缺少2026年新方法综述”（B-090背后的归因之一），你有四种修复位置：</p>
+<ol>
+<li><strong>知识文档</strong>：往RAG库里加一篇新综述文档（第6-8课的向量库+分块+索引）</li>
+<li><strong>Prompt与Skills</strong>：改系统提示词”综述优先检索近两年文献”，或写一个SKILL.md（第4课）定义”文献时效性检查”技能</li>
+<li><strong>程序与Harness</strong>：写代码实现”检索时自动附加时间过滤器+近因加权”的逻辑</li>
+<li><strong>模型参数</strong>：微调模型让它”天生”知道检索要限定时间（第17课SFT&#x2F;RL）</li>
+</ol>
+<p>四种载体改变的是系统的不同层：<strong>事实层（知道什么）、行为层（怎么做事）、能力层（能做什么）、直觉层（权重里的先验）</strong>。</p>
+<p><strong>Agent Skills现状【联网更新v6.6】</strong>：Prompt与Skills这个载体已经标准化——Anthropic于2025-10推出Agent Skills，2025-12-18在agentskills.io以<strong>开放标准</strong>发布，2026-06已有约40个兼容产品（OpenAI Codex、GitHub Copilot、Cursor、Gemini CLI、VS Code）。核心机制：SKILL.md（YAML元数据name&#x2F;description预加载+正文按需加载，正是第4课讲过的渐进式上下文披露）。生态治理数据值得架构师记住：第三方分析47150个公开skills的平均质量分仅6.2&#x2F;12，但<strong>精选</strong>skills能使Agent通过率平均提升16.2个百分点；安全审计发现36%的skills存在提示注入——<strong>引入外部skill必须过三件套：来源审计、最小权限、SKILL.md内容审查</strong>。</p>
+<h3 id="5-2-四载体六维对比矩阵（核心决策工具，必须掌握）"><a href="#5-2-四载体六维对比矩阵（核心决策工具，必须掌握）" class="headerlink" title="5.2 四载体六维对比矩阵（核心决策工具，必须掌握）"></a>5.2 四载体六维对比矩阵（核心决策工具，必须掌握）</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>知识文档</th>
+<th>Prompt&#x2F;Skills</th>
+<th>程序&#x2F;Harness</th>
+<th>模型参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>改变什么</td>
+<td>系统知道什么（事实）</td>
+<td>系统怎么做事（行为）</td>
+<td>系统能做什么（能力）</td>
+<td>系统的直觉（权重）</td>
+</tr>
+<tr>
+<td>更新成本</td>
+<td>★（1人时级：写+索引）</td>
+<td>★（1-2人时：写+评审）</td>
+<td>★★（天级：写+测试+审查）</td>
+<td>★★★（周级：数据+训练+评估，第17课）</td>
+</tr>
+<tr>
+<td>生效速度</td>
+<td>分钟（重建索引）</td>
+<td>秒（热加载）</td>
+<td>部署周期</td>
+<td>训练+评估周期</td>
+</tr>
+<tr>
+<td>影响范围</td>
+<td>点（只影响相关query）</td>
+<td>面（该行为的所有query）</td>
+<td>线（该流程的所有query）</td>
+<td>全局（所有行为，含意外面）</td>
+</tr>
+<tr>
+<td>验证难度</td>
+<td>低（检索命中测试）</td>
+<td>中（回归集评估）</td>
+<td>中（单测+集成测试）</td>
+<td>高（全量评估）</td>
+</tr>
+<tr>
+<td>回滚难度</td>
+<td>低（软删除+重建索引）</td>
+<td><strong>最低</strong>（版本切换，秒级）</td>
+<td>中（revert+重部署）</td>
+<td>高（双权重切换，2×存储）</td>
+</tr>
+</tbody></table>
+<h3 id="5-3-ROI形式化与决策顺序（本课数学核心之二）"><a href="#5-3-ROI形式化与决策顺序（本课数学核心之二）" class="headerlink" title="5.3 ROI形式化与决策顺序（本课数学核心之二）"></a>5.3 ROI形式化与决策顺序（本课数学核心之二）</h3><p><strong>载体ROI公式</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ROI(c) = B × conf − C_update(c) − C_verify(c) − P_reg(c) × C_rb</span><br><span class="line"></span><br><span class="line">  B：修复收益估计（该badcase的影响面 × 单位影响的价值，折算人时）</span><br><span class="line">  conf：信号置信度（§4.3）</span><br><span class="line">  C_update / C_verify：该载体的更新与验证成本</span><br><span class="line">  P_reg：该载体引发回归的概率；C_rb：一次回归的善后成本</span><br><span class="line"></span><br><span class="line">决策规则：c* = argmax_c ROI(c)，且 ROI(c*) &gt; 0；否则暂不修复（进观察池）</span><br></pre></td></tr></table></figure>
+
+<p><strong>默认决策顺序（从便宜到贵）</strong>：知识 → Prompt&#x2F;Skills → 程序 → 参数。三问判断法：</p>
+<ol>
+<li><strong>能用知识解决吗？</strong>——缺陷是”事实缺失”（新方法、新政策、领域更新）→ 知识文档</li>
+<li><strong>能用指令解决吗？</strong>——缺陷是”行为不对”（忽略用户限定、格式不合规）→ Prompt&#x2F;Skills</li>
+<li><strong>必须动代码或参数吗？</strong>——缺陷是”流程缺陷”（缺重试、缺降级）或”能力不足”（幻觉参数）→ 程序&#x2F;Harness优先，参数最后</li>
+</ol>
+<p><strong>判断”该进参数”的三个信号</strong>（同时满足才考虑）：</p>
+<ol>
+<li>同类错误跨query稳定复现——是分布性问题而不是个案</li>
+<li>便宜的载体已经试过或塞不下——prompt已经很长、知识已覆盖仍然错</li>
+<li>该判断需要内化到低延迟路径——每次推理都要的能力，检索和指令兜不住</li>
+</ol>
+<p><strong>理论背书【联网更新v6.6】</strong>：2026-07综述（arXiv:2607.13104）把Agent自改进形式化为”<strong>基础模型改进</strong>（微调&#x2F;奖励学习）+<strong>脚手架改进</strong>（提示&#x2F;工具&#x2F;代码&#x2F;工作流）”两大类——本课的载体排序正是这个框架的工程化：脚手架改进便宜、快、可逆，运营时随时做；基础模型改进贵、慢、全局，离线批量做。第17课CacheRL的实证结论”数据质量与奖励设计比复杂优化算法更重要”在这里同样成立：<strong>大部分badcase是知识和流程问题，不是参数问题</strong>——先修便宜的载体，参数是最后手段。</p>
+<h3 id="5-4-长期知识整理（防腐化）"><a href="#5-4-长期知识整理（防腐化）" class="headerlink" title="5.4 长期知识整理（防腐化）"></a>5.4 长期知识整理（防腐化）</h3><p>更新载体不是只进不出的仓库。知识库的三种腐化：</p>
+<table>
+<thead>
+<tr>
+<th>腐化类型</th>
+<th>症状</th>
+<th>整理机制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>过期（stale）</td>
+<td>旧方法综述与新事实矛盾</td>
+<td>时效字段+定期复核；引用计数低于阈值的候选淘汰</td>
+</tr>
+<tr>
+<td>重复（redundancy）</td>
+<td>三篇内容相近的文档互相稀释检索权重</td>
+<td>相似度聚类去重+合并（保留信息密度最高的一篇）</td>
+</tr>
+<tr>
+<td>冲突（contradiction）</td>
+<td>同一问题两个版本答案</td>
+<td>时序仲裁（新覆盖旧）+人工裁决标记</td>
+</tr>
+</tbody></table>
+<p>与第9课的连接：第9课的<strong>三因子评分与指数遗忘曲线</strong>本是”个体记忆”的检索机制；长期知识整理是把它升级到”组织知识”层——<strong>个体记忆解决”这个用户这次会话需要什么”，组织知识解决”系统长期相信什么”</strong>。定期把高频调用、高命中率的记忆&#x2F;文档”蒸馏”为规范知识条目，是记忆系统向知识库的反向沉淀。</p>
+<hr>
+<h2 id="六、验证、灰度发布与回滚（必须掌握，4min）"><a href="#六、验证、灰度发布与回滚（必须掌握，4min）" class="headerlink" title="六、验证、灰度发布与回滚（必须掌握，4min）"></a>六、验证、灰度发布与回滚（必须掌握，4min）</h2><h3 id="6-1-三道闸门"><a href="#6-1-三道闸门" class="headerlink" title="6.1 三道闸门"></a>6.1 三道闸门</h3><p>任何载体的变更（哪怕只是加一篇文档）都要过三道闸门：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第1道 离线回归（Golden Dataset）    → 不通过：直接拒绝</span><br><span class="line">第2道 影子运行（Shadow）            → 新版本并行跑不对外，diff比对</span><br><span class="line">第3道 小流量灰度（Canary）          → 守护指标监控，可自动回滚</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>离线回归</strong>：第10课的评估集（golden dataset+LLM-as-a-Judge）就是为此准备的——变更前后各跑一遍，红线指标不回退才放行</li>
+<li><strong>影子运行</strong>：新版本接收生产流量副本，输出不返回用户——零风险地观察真实分布下的行为差异</li>
+<li><strong>灰度</strong>：真实流量小比例切换——本课的重点</li>
+</ul>
+<h3 id="6-2-灰度阶梯的数学（必须掌握）"><a href="#6-2-灰度阶梯的数学（必须掌握）" class="headerlink" title="6.2 灰度阶梯的数学（必须掌握）"></a>6.2 灰度阶梯的数学（必须掌握）</h3><p><strong>A&#x2F;B测试样本量公式</strong>（α&#x3D;0.05双尾、统计功效80%的经典启发式，出自Kohavi等《Trustworthy Online Controlled Experiments》）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">每臂所需样本量  n ≈ 16 × σ² / Δ²</span><br><span class="line">比例指标取 σ² = p(1−p)</span><br><span class="line"></span><br><span class="line">例：守护指标&quot;综述任务成功率&quot;基线 p = 0.80，希望可信检测 Δ = 0.02 的变化：</span><br><span class="line">    n ≈ 16 × 0.8 × 0.2 / 0.02² = 16 × 0.16 / 0.0004 = 6400（每臂）</span><br></pre></td></tr></table></figure>
+
+<p><strong>灰度节奏推导</strong>（日交互10万次的研究助手，第20课流量模型的日粒度简化）：</p>
+<table>
+<thead>
+<tr>
+<th>阶梯</th>
+<th>日样本量</th>
+<th>停留天数（&#x3D;6400&#x2F;日样本）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1%</td>
+<td>1000</td>
+<td>7天</td>
+</tr>
+<tr>
+<td>5%</td>
+<td>5000</td>
+<td>2天</td>
+</tr>
+<tr>
+<td>25%</td>
+<td>25000</td>
+<td>1天</td>
+</tr>
+<tr>
+<td>100%</td>
+<td>100000</td>
+<td>1天</td>
+</tr>
+</tbody></table>
+<p><strong>结论（架构师的耐心经济学）</strong>：灰度的耐心主要花在低流量阶段——完整走完阶梯要11天。跳过1%直接上5%省7天，但等于放弃检测小概率回归的能力；反过来，每档都停满周期会拖慢所有迭代。<strong>这是决策不是教条</strong>：变更风险越低（知识文档）阶梯越短，风险越高（模型参数）阶梯越长。</p>
+<p><strong>载体差异化灰度节奏</strong>（默认参考）：</p>
+<table>
+<thead>
+<tr>
+<th>载体</th>
+<th>灰度节奏</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>知识文档</td>
+<td>分钟~小时级观察</td>
+<td>影响面是”点”，回滚&#x3D;删除</td>
+</tr>
+<tr>
+<td>Prompt&#x2F;Skills</td>
+<td>按天</td>
+<td>影响面是”面”，需回归集</td>
+</tr>
+<tr>
+<td>程序&#x2F;Harness</td>
+<td>按天~周</td>
+<td>影响流程，且部署有冷启动成本（第20课521s冷启动实证）</td>
+</tr>
+<tr>
+<td>模型参数</td>
+<td>按周</td>
+<td>全局影响，需全量评估+蓝绿权重</td>
+</tr>
+</tbody></table>
+<h3 id="6-3-守护指标与回滚机制"><a href="#6-3-守护指标与回滚机制" class="headerlink" title="6.3 守护指标与回滚机制"></a>6.3 守护指标与回滚机制</h3><p><strong>两类指标缺一不可</strong>：</p>
+<ul>
+<li><strong>守护指标（guardrail）</strong>：既有能力不允许回退——综述成功率、工具调用成功率、P95延迟、幻觉率（第10课评估维度）。<strong>任何一项越过红线 → 立即自动回滚</strong>，不看学习指标</li>
+<li><strong>学习指标（learning metric）</strong>：本次变更的目标改进——目标badcase修复率、对应场景满意度。只有守护指标全绿时才统计</li>
+</ul>
+<p><strong>常见错误模式</strong>：只看学习指标（”修复率提升了！”）不看守护指标（幻觉率悄悄涨了2%）——用局部的进步掩盖全局的退化，这是灰度设计的第一大忌。</p>
+<p><strong>各载体回滚方式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>载体</th>
+<th>回滚方式</th>
+<th>耗时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Prompt</td>
+<td>版本表双指针切换（第19课LangSmith Context Hub的指令版本化）</td>
+<td>秒级</td>
+</tr>
+<tr>
+<td>知识文档</td>
+<td>软删除+索引版本重建</td>
+<td>分钟级</td>
+</tr>
+<tr>
+<td>程序</td>
+<td>git revert+镜像回滚+滚动重启（受第20课冷启动预算约束）</td>
+<td>分钟~小时</td>
+</tr>
+<tr>
+<td>模型参数</td>
+<td>蓝绿双权重流量切换</td>
+<td>秒级（需2×权重存储）</td>
+</tr>
+</tbody></table>
+<p><strong>回滚预算</strong>：回滚时间 × 当期影响面。回滚预算决定灰度激进程度——回滚秒级的载体（Prompt）可以激进，回滚要触发冷启动的载体（程序）必须保守。<strong>回滚是设计出来的，不是救火救出来的</strong>：前提是一切变更版本化（版本化是第5、6课之外本课再次强调的横切要求）。</p>
+<h3 id="6-4-进化闭环全景图（本课核心交付）"><a href="#6-4-进化闭环全景图（本课核心交付）" class="headerlink" title="6.4 进化闭环全景图（本课核心交付）"></a>6.4 进化闭环全景图（本课核心交付）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    生产环境（第19-20课交付）                        │</span><br><span class="line">│         1000并发 · vLLM三池集群 · 可观测性trace/metrics           │</span><br><span class="line">└──────────────┬──────────────────────────────────────────────────┘</span><br><span class="line">               │ ①学习信号：执行结果 / 过程规则 / LLM Rubric</span><br><span class="line">               ▼</span><br><span class="line">┌──────────────────────┐      ┌───────────────────────────────┐</span><br><span class="line">│ ②置信分流            │      │ ③载体路由（§5.3 ROI公式）        │</span><br><span class="line">│  AUTO/REVIEW/DISCARD │ ───→ │  知识 / Prompt-Skills / 程序 / 参数│</span><br><span class="line">└──────────────────────┘      └───────────────┬───────────────┘</span><br><span class="line">                                              │ 变更候选（版本化）</span><br><span class="line">                                              ▼</span><br><span class="line">┌──────────────────────┐      ┌───────────────────────────────┐</span><br><span class="line">│ ⑥闭环沉淀            │      │ ④三道闸门：离线回归→影子→灰度     │</span><br><span class="line">│  Golden Dataset扩容  │ ←─── │  ⑤守护指标→晋级 / 回退→自动回滚   │</span><br><span class="line">│  （下一轮回归检测）    │      │     1%→5%→25%→100%            │</span><br><span class="line">└──────────────────────┘      └───────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>闭环的关键性质</strong>：⑥把每个发布&#x2F;回滚的case沉淀为golden dataset新用例——<strong>回滚不是失败，是学费</strong>；交了学费的case必须进评估集，否则同样的回归会再来一次。这与2026-05自进化综述提出的”五大进化循环”（反馈驱动生成&#x2F;评估&#x2F;记忆&#x2F;自我修改&#x2F;系统搜索）一一对应：本图就是五大循环在研究助手上的工程实例化【联网更新v6.6】。</p>
+<hr>
+<h2 id="七、Agent自举与代码生成Agent架构（案例分析8min；自举边界-必须掌握，架构-应当理解）"><a href="#七、Agent自举与代码生成Agent架构（案例分析8min；自举边界-必须掌握，架构-应当理解）" class="headerlink" title="七、Agent自举与代码生成Agent架构（案例分析8min；自举边界&#x3D;必须掌握，架构&#x3D;应当理解）"></a>七、Agent自举与代码生成Agent架构（案例分析8min；自举边界&#x3D;必须掌握，架构&#x3D;应当理解）</h2><h3 id="7-1-自举的定义与能力阶梯"><a href="#7-1-自举的定义与能力阶梯" class="headerlink" title="7.1 自举的定义与能力阶梯"></a>7.1 自举的定义与能力阶梯</h3><p><strong>自举（bootstrapping）</strong>：Agent修改自身的组成部分，以提升自身性能。”自己修自己”分五级：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">自举能力阶梯（自由度与风险递增）：</span><br><span class="line">L1 修改知识文档       ← 全自动安全（§5已论证：点状影响、秒级回滚）</span><br><span class="line">L2 修改Prompt/Skills ← 半自动（评审后应用——Agent起草，人批准）</span><br><span class="line">L3 修改程序/Harness   ← 人工闸门（代码审查——本课重点）</span><br><span class="line">L4 修改模型参数       ← 离线训练管道（Agent不在线自改参数）</span><br><span class="line">L5 修改自身能力核心    ← 研究前沿（宪法核心保护问题，见§7.3）</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键辨析（必考概念）</strong>：”Agent改进系统”（L1-L3，工程可行，OpenHands&#x2F;Claude Code每天都在做）≠”Agent改进自己的能力核心”（L4-L5，研究前沿）。生产边界划在**”修改执行系统而非修改能力核心”**——模型参数不由Agent在线直接修改，而是由离线训练管道（第17课）批量完成；Agent能做的是给自己的脚手架（prompt&#x2F;工具&#x2F;代码）打补丁。</p>
+<h3 id="7-2-代码生成Agent架构（应当理解）"><a href="#7-2-代码生成Agent架构（应当理解）" class="headerlink" title="7.2 代码生成Agent架构（应当理解）"></a>7.2 代码生成Agent架构（应当理解）</h3><p>代码生成Agent是”程序作为更新载体”的极致形态——也是当下自举研究的主战场。</p>
+<p><strong>（1）文件系统作为外部记忆</strong></p>
+<p>代码库动辄十万行，上下文窗口装不下（第2课KV Cache约束、第4课上下文工程）。代码生成Agent的解法与第9课记忆系统完全同构：</p>
+<table>
+<thead>
+<tr>
+<th>第9课记忆概念</th>
+<th>代码生成Agent中的对应物</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工作记忆（上下文窗口）</td>
+<td>当前打开的文件与对话历史</td>
+</tr>
+<tr>
+<td>情景记忆持久层</td>
+<td><strong>文件系统（repo即状态）</strong></td>
+</tr>
+<tr>
+<td>检索算子（类型感知检索）</td>
+<td>grep&#x2F;文件树浏览&#x2F;按需读文件（第4课Agent Skills同思想）</td>
+</tr>
+<tr>
+<td>版本化与遗忘</td>
+<td><strong>git历史（可diff、可回滚）</strong></td>
+</tr>
+<tr>
+<td>写入验证器</td>
+<td>编译器&#x2F;测试（下述循环的验证环节）</td>
+</tr>
+</tbody></table>
+<p><strong>架构启示</strong>：把文件系统当外部记忆的本质是**”状态外置+按需加载+版本可回滚”**——这三点正是Agent系统持久化设计的通用三原则（研究助手的知识库&#x2F;记忆库&#x2F;Skills目录都遵循同一模式）。</p>
+<p><strong>（2）生成-验证-修正循环</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌→ 生成（写代码）→ 验证（三层）──通过→ 提交（写入外部记忆=文件系统）──→ 继续/结束</span><br><span class="line">│                     │</span><br><span class="line">│                     └─失败→ 读错误证据（堆栈/测试输出）→ 修正 ──┐</span><br><span class="line">└────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>三层验证</strong>（由便宜到贵，逐层拦截）：</p>
+<table>
+<thead>
+<tr>
+<th>验证层</th>
+<th>拦截什么</th>
+<th>成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>编译期</td>
+<td>语法&#x2F;类型错误</td>
+<td>毫秒级</td>
+</tr>
+<tr>
+<td>测试期</td>
+<td>语义错误（逻辑不对）</td>
+<td>秒~分钟</td>
+</tr>
+<tr>
+<td>集成期</td>
+<td>行为错误（跑起来了但不符合任务意图）</td>
+<td>分钟级，常需人工</td>
+</tr>
+</tbody></table>
+<p>OpenHands工程总结的coding agent三大特征与此循环一一对应：<strong>执行</strong>（生成代码并真实运行）、<strong>自修正</strong>（读取错误并迭代）、<strong>自主迭代</strong>（跨多步骤维持状态）——并提出了”outer loop of engineering”：从ticket到分支到PR到审查合并的完整路径【联网更新v6.6】。</p>
+<p><strong>（3）自举路径（组合式自举）</strong></p>
+<p>Voyager（Minecraft里的Agent，代码即知识的开创性工作）展示了自举的经典路径：技能以<strong>可执行代码</strong>形式存入向量索引的技能库；新技能由<strong>已有技能组合</strong>生成——修bug→写新工具→用新工具做更难的任务→产出更复杂的新技能。<strong>能力阶梯是爬上去的，不是跳上去的</strong>。对研究助手同样成立：先让Agent修自己的检索器bug（L3），再让它给检索器写时间过滤工具（L3组合），最终这些工具沉淀为组织知识——而不是一上来就让Agent改自己的核心模型（L5）。</p>
+<h3 id="7-3-自举的限制与安全边界（必须掌握）"><a href="#7-3-自举的限制与安全边界（必须掌握）" class="headerlink" title="7.3 自举的限制与安全边界（必须掌握）"></a>7.3 自举的限制与安全边界（必须掌握）</h3><p><strong>案例深读：Ouroboros的161天【联网更新v6.6】</strong></p>
+<p>Ouroboros（arXiv:2608.08311，2026-08）是自发展（self-developing）编码Agent的代表工作：Agent可以重写自身的代码、提示、身份档案与公共接口。成绩：Terminal-Bench 2.1达86.97%（轨迹审计后86.74%）、OSWorld-Verified达90.69%；其公开部署实例”Hope”进行了<strong>161天自由进化实验</strong>。它最值得架构师学习的不是分数，而是安全设计三件套：</p>
+<ol>
+<li><strong>宪法核心（constitution）受保护</strong>——规范层代码不可被Agent自我修改</li>
+<li><strong>身份档案不可删除</strong>——Agent不能”忘了自己是谁”</li>
+<li><strong>护栏必须在进化压力下保持权威性</strong>——这是核心矛盾：如果护栏可以被进化过程改写，进化终将（哪怕无意地）挣脱护栏</li>
+</ol>
+<p><strong>反例：rogue agent路径（OWASP 2026）</strong>：攻击者（或失控的自进化Agent）通过<code>importlib.reload()</code>重载已校验的模块、或直接改写<code>.py</code>文件，绕过启动时的安全检查——OpenHands披露主流编码工具中存在30+此类漏洞。<strong>启示：护栏与Agent可写路径必须物理隔离，不能靠”Agent自觉”。</strong></p>
+<p><strong>自举边界设计四原则（工程清单，必须掌握）</strong>：</p>
+<ol>
+<li><strong>能力分级授权</strong>——L1全自动、L2评审后自动、L3人工闸门、L4离线管道（对应§7.1阶梯）</li>
+<li><strong>护栏与Agent代码物理隔离</strong>——宪法文件&#x2F;护栏代码放在Agent写路径触达不了的存储与权限域</li>
+<li><strong>全量审计</strong>——每次自修改可追溯、可revert（git即审计日志：谁、何时、改了什么、为什么）</li>
+<li><strong>人工闸门（HITL）</strong>——高危变更必须有人批准（第12课HITL中断恢复机制的复用）</li>
+</ol>
+<hr>
+<h2 id="八、多模态Agent与Computer-Use前沿（知晓即可，7min）"><a href="#八、多模态Agent与Computer-Use前沿（知晓即可，7min）" class="headerlink" title="八、多模态Agent与Computer Use前沿（知晓即可，7min）"></a>八、多模态Agent与Computer Use前沿（知晓即可，7min）</h2><blockquote>
+<p>本节全部为”知晓即可”层级：知道存在、知道用途、知道何时调用。目标是建立<strong>领域边界认知</strong>——知道哪些已经能商用、哪些还是研究前沿，做技术规划时不犯方向性错误。</p>
+</blockquote>
+<h3 id="8-1-Computer-Use-Agent（CUA）"><a href="#8-1-Computer-Use-Agent（CUA）" class="headerlink" title="8.1 Computer Use Agent（CUA）"></a>8.1 Computer Use Agent（CUA）</h3><p><strong>公认架构范式</strong>：感知（截图→VLM理解）→ 定位（UI元素坐标）→ 动作（鼠标&#x2F;键盘API）→ 观察（新截图）→ 循环。</p>
+<p><strong>与第13课Browser Use的关系</strong>：浏览器是CUA的”带API特例”——Browser Use能读DOM（结构化、可编程接口），Computer Use只有像素级GUI（更通用但更难）。<strong>选型认知</strong>：能拿到API&#x2F;DOM就用API&#x2F;DOM，拿不到才上像素级CUA——研究助手检索文献用API（第5课工具设计原则），”替用户操作一个没有API的旧文献系统”才是CUA的场景。</p>
+<p><strong>2026格局快照【联网更新v6.6】</strong>：</p>
+<ul>
+<li>OSWorld-Verified基准上人类基线72.4%已被5个模型超越（第三方榜单2026-07：Claude Fable 5约85.0%、Opus 4.8约83.4%、开源Holo3-35B-A3B约82.6%）——<strong>短周期桌面任务已可商用</strong></li>
+<li>但OSWorld 2.0（2026-06-26，108个真实长周期工作流任务）：Opus 4.8在500步限制下严格完成率仅20.6%——<strong>长周期任务仍处早期</strong></li>
+<li>Claude Computer Use于2026-08-19 GA（computer_toolset_20260801）：支持批量动作——单次返回多个工具调用按序执行、首个失败即停止，减少往返延迟</li>
+</ul>
+<p><strong>架构师视角</strong>：长周期CUA的失败模式（状态漂移、错误累积、不会恢复）与本课主题同源——<strong>长周期任务的解药不是更大的模型，而是本课的进化闭环（记忆+错误恢复+从失败学习）</strong>。前沿与工程在这一点上收敛。</p>
+<h3 id="8-2-VLA模型（Vision-Language-Action）"><a href="#8-2-VLA模型（Vision-Language-Action）" class="headerlink" title="8.2 VLA模型（Vision-Language-Action）"></a>8.2 VLA模型（Vision-Language-Action）</h3><p><strong>定义</strong>：视觉理解+语言推理+动作输出统一的模型——“看见的”直接变”做的”。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>机构</th>
+<th>参数</th>
+<th>动作生成方式</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RT-2</td>
+<td>Google DeepMind</td>
+<td>55B</td>
+<td>离散token</td>
+<td>VLA开创者（2023）</td>
+</tr>
+<tr>
+<td>OpenVLA</td>
+<td>Stanford&#x2F;Berkeley</td>
+<td>7.5B</td>
+<td>离散token</td>
+<td>Apache 2.0开源标杆</td>
+</tr>
+<tr>
+<td>π0 &#x2F; π0.5</td>
+<td>Physical Intelligence</td>
+<td>~3B</td>
+<td>flow matching+FAST动作tokenizer</td>
+<td>机器人VLA代表（openpi开源）</td>
+</tr>
+<tr>
+<td>GR00T N1.7</td>
+<td>NVIDIA</td>
+<td>3B</td>
+<td>双系统架构</td>
+<td>Apache 2.0，2026-04</td>
+</tr>
+</tbody></table>
+<p><strong>趋势判断（知晓即可）</strong>：VLA与CUA正在融合——ScaleCUA（ICLR 2026 Oral）把VLA”视觉理解→动作执行”范式迁移到GUI操作（开源跨平台：Windows&#x2F;macOS&#x2F;Ubuntu&#x2F;Android）。<strong>认知框架</strong>：VLA是通用基础范式，应用场景横跨物理世界（机器人）与数字界面（CUA）；动作生成三范式（离散token&#x2F;flow matching&#x2F;扩散）是研究热点，架构师只需知道谱系。</p>
+<h3 id="8-3-语音Agent架构演变"><a href="#8-3-语音Agent架构演变" class="headerlink" title="8.3 语音Agent架构演变"></a>8.3 语音Agent架构演变</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>级联管线（STT→LLM→TTS）</th>
+<th>端到端S2S（语音到语音）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>延迟</td>
+<td>TTFA约755ms（四层管线p95约960ms）</td>
+<td>约160-200ms（Moshi实测）</td>
+</tr>
+<tr>
+<td>副语言</td>
+<td>丢失（语气&#x2F;情绪&#x2F;打断）</td>
+<td>保留（全双工：同时听和说）</td>
+</tr>
+<tr>
+<td>可观测性</td>
+<td>每层可插桩、可审计</td>
+<td>黑盒</td>
+</tr>
+<tr>
+<td>可控性</td>
+<td>护栏放文本层（成熟）</td>
+<td>难以中间干预</td>
+</tr>
+<tr>
+<td>工具调用</td>
+<td>成熟（文本即第12课的Agent）</td>
+<td>兼容性挑战</td>
+</tr>
+<tr>
+<td>生产地位</td>
+<td><strong>主流</strong></td>
+<td>崛起中（GPT-Live移除turn detector实现连续听说）</td>
+</tr>
+</tbody></table>
+<p><strong>架构判断</strong>：这不是”新vs旧”的替换关系，而是<strong>延迟vs可观测性的权衡</strong>——级联管线的文本层是”承重基础设施”（可审计、可护栏、可接工具）；端到端赢在体验（200ms级对话感）。<strong>研究助手启示</strong>：若未来加语音入口，级联先行——把文本Agent（已建成的全部资产）当作级联管线中间的LLM层，是最务实的路径。</p>
+<h3 id="8-4-前沿对研究助手的启示"><a href="#8-4-前沿对研究助手的启示" class="headerlink" title="8.4 前沿对研究助手的启示"></a>8.4 前沿对研究助手的启示</h3><ul>
+<li>Computer Use → 研究助手的”实验自动化”想象空间（替用户操作无API的文献系统），但当前只在短周期任务可靠</li>
+<li>VLA&#x2F;多模态 → 与第10课多模态RAG衔接：图表理解已经实用，操作类多模态仍在演进</li>
+<li>语音 → 交互入口扩展的候选，级联先行</li>
+<li><strong>总原则：前沿决定能力天花板，工程决定今天能交付什么</strong>——架构师两个都要看，但预算花在后者</li>
+</ul>
+<hr>
+<h2 id="九、引导式代码实践（工程实践10min）"><a href="#九、引导式代码实践（工程实践10min）" class="headerlink" title="九、引导式代码实践（工程实践10min）"></a>九、引导式代码实践（工程实践10min）</h2><h3 id="9-1-第一层：完整可运行代码——进化闭环桌面推演模拟器"><a href="#9-1-第一层：完整可运行代码——进化闭环桌面推演模拟器" class="headerlink" title="9.1 第一层：完整可运行代码——进化闭环桌面推演模拟器"></a>9.1 第一层：完整可运行代码——进化闭环桌面推演模拟器</h3><p>纯Python标准库实现，无GPU&#x2F;无网络&#x2F;无API Key需求（最小版路径默认可运行）。代码把本课三大数学核心（信号置信度&#x2F;载体ROI&#x2F;灰度样本量）全部实例化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># evolution_loop_sim.py —— 研究助手&quot;持续进化闭环&quot;桌面推演模拟器</span></span><br><span class="line"><span class="comment"># 用法: python evolution_loop_sim.py</span></span><br><span class="line"><span class="comment"># 依赖: 仅Python 3.9+标准库；无需GPU/网络/API Key（最小版教学路径默认可运行）</span></span><br><span class="line"><span class="comment"># 说明: 全部数据为教学模拟，输出确定性（无随机因素），每次运行结果一致</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Optional</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ========== 第1部分：学习信号（对应讲义§4） ==========</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SignalType</span>(<span class="title class_ inherited__">Enum</span>):</span><br><span class="line">    EXECUTION = <span class="string">&quot;环境执行结果&quot;</span>    <span class="comment"># 工具报错/超时/HTTP 403 —— 硬信号</span></span><br><span class="line">    RULE = <span class="string">&quot;过程规则&quot;</span>            <span class="comment"># schema校验/引用可解析性 —— 半硬信号</span></span><br><span class="line">    RUBRIC = <span class="string">&quot;LLM Rubric&quot;</span>        <span class="comment"># Judge量表低分 —— 软信号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># P(归因正确)：硬/半硬信号为确定性准确率；软信号为单次评审准确率q</span></span><br><span class="line">SIGNAL_ACCURACY = &#123;</span><br><span class="line">    SignalType.EXECUTION: <span class="number">0.98</span>,</span><br><span class="line">    SignalType.RULE: <span class="number">0.92</span>,</span><br><span class="line">    SignalType.RUBRIC: <span class="number">0.70</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AUTO_APPLY_THRESHOLD = <span class="number">0.90</span>   <span class="comment"># 置信度&gt;=0.90 → 自动进入变更流程</span></span><br><span class="line">REVIEW_THRESHOLD = <span class="number">0.60</span>       <span class="comment"># 0.60~0.90 → 人工审核池；&lt;0.60 → 丢弃</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadCase</span>:</span><br><span class="line">    case_id: <span class="built_in">str</span></span><br><span class="line">    symptom: <span class="built_in">str</span>                 <span class="comment"># 症状</span></span><br><span class="line">    attribution: <span class="built_in">str</span>             <span class="comment"># 归因模式（信号管道产出）</span></span><br><span class="line">    signal: SignalType</span><br><span class="line">    benefit: <span class="built_in">float</span>               <span class="comment"># 修复收益估计（人时，教学假设）</span></span><br><span class="line">    repeats: <span class="built_in">int</span> = <span class="number">1</span>             <span class="comment"># 独立出现次数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">majority_vote_accuracy</span>(<span class="params">q: <span class="built_in">float</span>, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">float</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;n次独立评审多数投票的准确率（Condorcet陪审团定理；n取奇数）&quot;&quot;&quot;</span></span><br><span class="line">    n = n <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">else</span> n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(</span><br><span class="line">        math.comb(n, k) * q ** k * (<span class="number">1</span> - q) ** (n - k)</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(n // <span class="number">2</span> + <span class="number">1</span>, n + <span class="number">1</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">signal_confidence</span>(<span class="params"><span class="keyword">case</span>: BadCase</span>) -&gt; <span class="built_in">float</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;信号置信度：确定性信号不因重复而增益；软信号靠多数投票提升置信&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">case</span>.signal <span class="keyword">in</span> (SignalType.EXECUTION, SignalType.RULE):</span><br><span class="line">        <span class="keyword">return</span> SIGNAL_ACCURACY[<span class="keyword">case</span>.signal]</span><br><span class="line">    q = SIGNAL_ACCURACY[SignalType.RUBRIC]</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">round</span>(majority_vote_accuracy(q, <span class="keyword">case</span>.repeats), <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">triage</span>(<span class="params">confidence: <span class="built_in">float</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">if</span> confidence &gt;= AUTO_APPLY_THRESHOLD:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;AUTO_APPLY&quot;</span></span><br><span class="line">    <span class="keyword">if</span> confidence &gt;= REVIEW_THRESHOLD:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;REVIEW&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;DISCARD&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ========== 第2部分：载体路由（对应讲义§5） ==========</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Carrier</span>(<span class="title class_ inherited__">Enum</span>):</span><br><span class="line">    KNOWLEDGE = <span class="string">&quot;知识文档&quot;</span>        <span class="comment"># 改&quot;系统知道什么&quot;</span></span><br><span class="line">    PROMPT = <span class="string">&quot;Prompt/Skills&quot;</span>     <span class="comment"># 改&quot;系统怎么做事&quot;</span></span><br><span class="line">    CODE = <span class="string">&quot;程序/Harness&quot;</span>        <span class="comment"># 改&quot;系统能做什么&quot;</span></span><br><span class="line">    PARAMS = <span class="string">&quot;模型参数&quot;</span>          <span class="comment"># 改&quot;系统的直觉&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 载体画像（人时；regress_risk=引发其他能力回退的概率，教学假设）</span></span><br><span class="line">CARRIER_PROFILE = &#123;</span><br><span class="line">    Carrier.KNOWLEDGE: &#123;<span class="string">&quot;update&quot;</span>: <span class="number">1</span>, <span class="string">&quot;verify&quot;</span>: <span class="number">1</span>, <span class="string">&quot;regress_risk&quot;</span>: <span class="number">0.02</span>&#125;,</span><br><span class="line">    Carrier.PROMPT: &#123;<span class="string">&quot;update&quot;</span>: <span class="number">2</span>, <span class="string">&quot;verify&quot;</span>: <span class="number">2</span>, <span class="string">&quot;regress_risk&quot;</span>: <span class="number">0.05</span>&#125;,</span><br><span class="line">    Carrier.CODE: &#123;<span class="string">&quot;update&quot;</span>: <span class="number">8</span>, <span class="string">&quot;verify&quot;</span>: <span class="number">4</span>, <span class="string">&quot;regress_risk&quot;</span>: <span class="number">0.10</span>&#125;,</span><br><span class="line">    Carrier.PARAMS: &#123;<span class="string">&quot;update&quot;</span>: <span class="number">60</span>, <span class="string">&quot;verify&quot;</span>: <span class="number">20</span>, <span class="string">&quot;regress_risk&quot;</span>: <span class="number">0.25</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line">ROLLBACK_COST = <span class="number">30.0</span>  <span class="comment"># 一次线上回归的平均善后成本（人时，教学假设）</span></span><br><span class="line"></span><br><span class="line">ROUTING_RULES = &#123;</span><br><span class="line">    <span class="string">&quot;知识缺失&quot;</span>: [Carrier.KNOWLEDGE],</span><br><span class="line">    <span class="string">&quot;行为偏差&quot;</span>: [Carrier.PROMPT, Carrier.PARAMS],</span><br><span class="line">    <span class="string">&quot;流程缺陷&quot;</span>: [Carrier.CODE],</span><br><span class="line">    <span class="string">&quot;能力不足&quot;</span>: [Carrier.PARAMS, Carrier.CODE],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">carrier_roi</span>(<span class="params">carrier: Carrier, confidence: <span class="built_in">float</span>, benefit: <span class="built_in">float</span></span>) -&gt; <span class="built_in">float</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;ROI = E[修复收益] - 更新成本 - 验证成本 - P(回归)*回滚成本（讲义§5.3）&quot;&quot;&quot;</span></span><br><span class="line">    p = CARRIER_PROFILE[carrier]</span><br><span class="line">    <span class="keyword">return</span> (benefit * confidence</span><br><span class="line">            - p[<span class="string">&quot;update&quot;</span>] - p[<span class="string">&quot;verify&quot;</span>]</span><br><span class="line">            - p[<span class="string">&quot;regress_risk&quot;</span>] * ROLLBACK_COST)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">route</span>(<span class="params">attribution: <span class="built_in">str</span>, confidence: <span class="built_in">float</span>, benefit: <span class="built_in">float</span></span>) -&gt; <span class="type">Optional</span>[Carrier]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;在归因对应的候选载体中选ROI最高者；全部为负 → 暂不修复（观察池）&quot;&quot;&quot;</span></span><br><span class="line">    candidates = ROUTING_RULES[attribution]</span><br><span class="line">    best = <span class="built_in">max</span>(candidates, key=<span class="keyword">lambda</span> c: carrier_roi(c, confidence, benefit))</span><br><span class="line">    <span class="keyword">if</span> carrier_roi(best, confidence, benefit) &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> best</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ========== 第3部分：灰度发布与回滚（对应讲义§6） ==========</span></span><br><span class="line"></span><br><span class="line">STAGES = [(<span class="string">&quot;1%&quot;</span>, <span class="number">0.01</span>), (<span class="string">&quot;5%&quot;</span>, <span class="number">0.05</span>), (<span class="string">&quot;25%&quot;</span>, <span class="number">0.25</span>), (<span class="string">&quot;100%&quot;</span>, <span class="number">1.00</span>)]</span><br><span class="line">DAILY_INTERACTIONS = <span class="number">100_000</span>   <span class="comment"># 日交互量（第20课1000并发流量模型的日粒度简化）</span></span><br><span class="line">SAMPLES_NEEDED = <span class="number">6_400</span>         <span class="comment"># 每臂所需样本量：n ≈ 16·p(1-p)/Δ²，p=0.80, Δ=0.02</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stage_days</span>(<span class="params">traffic: <span class="built_in">float</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;该阶段停留天数 = 样本量需求 / 该阶段日样本量（讲义§6.2）&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> math.ceil(SAMPLES_NEEDED / (DAILY_INTERACTIONS * traffic))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CanaryRelease</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;灰度状态机：守护指标通过→晋级；守护指标回退→自动回滚&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, change_id: <span class="built_in">str</span>, carrier: Carrier, fail_at: <span class="type">Optional</span>[<span class="built_in">str</span>] = <span class="literal">None</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.change_id = change_id</span><br><span class="line">        <span class="variable language_">self</span>.carrier = carrier</span><br><span class="line">        <span class="variable language_">self</span>.fail_at = fail_at      <span class="comment"># 教学注入：在哪个阶段模拟守护指标回退</span></span><br><span class="line">        <span class="variable language_">self</span>.log = []</span><br><span class="line">        <span class="variable language_">self</span>.status = <span class="literal">None</span></span><br><span class="line">        <span class="variable language_">self</span>.days_used = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="keyword">for</span> stage_name, traffic <span class="keyword">in</span> STAGES:</span><br><span class="line">            days = stage_days(traffic)</span><br><span class="line">            <span class="variable language_">self</span>.days_used += days</span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.fail_at == stage_name:</span><br><span class="line">                <span class="variable language_">self</span>.log.append(<span class="string">f&quot;<span class="subst">&#123;stage_name&#125;</span>✗(<span class="subst">&#123;days&#125;</span>d)→自动回滚&quot;</span>)</span><br><span class="line">                <span class="variable language_">self</span>.status = <span class="string">&quot;ROLLED_BACK&quot;</span></span><br><span class="line">                <span class="keyword">return</span> <span class="variable language_">self</span>.status</span><br><span class="line">            <span class="variable language_">self</span>.log.append(<span class="string">f&quot;<span class="subst">&#123;stage_name&#125;</span>✓(<span class="subst">&#123;days&#125;</span>d)&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.status = <span class="string">&quot;FULL_RELEASE&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.status</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ========== 主流程：badcase → 信号 → 分流 → 路由 → 灰度 → 全量/回滚 ==========</span></span><br><span class="line"></span><br><span class="line">BADCASES = [</span><br><span class="line">    BadCase(<span class="string">&quot;C-001&quot;</span>, <span class="string">&quot;arXiv检索403拒绝&quot;</span>, <span class="string">&quot;流程缺陷&quot;</span>, SignalType.EXECUTION, benefit=<span class="number">40</span>),</span><br><span class="line">    BadCase(<span class="string">&quot;C-002&quot;</span>, <span class="string">&quot;综述引用格式不符合schema&quot;</span>, <span class="string">&quot;行为偏差&quot;</span>, SignalType.RULE, benefit=<span class="number">20</span>),</span><br><span class="line">    BadCase(<span class="string">&quot;C-003&quot;</span>, <span class="string">&quot;知识库缺少2026年新方法综述&quot;</span>, <span class="string">&quot;知识缺失&quot;</span>, SignalType.RUBRIC, benefit=<span class="number">30</span>, repeats=<span class="number">5</span>),</span><br><span class="line">    BadCase(<span class="string">&quot;C-004&quot;</span>, <span class="string">&quot;工具调用参数幻觉频发&quot;</span>, <span class="string">&quot;能力不足&quot;</span>, SignalType.RUBRIC, benefit=<span class="number">100</span>, repeats=<span class="number">9</span>),</span><br><span class="line">    BadCase(<span class="string">&quot;C-005&quot;</span>, <span class="string">&quot;回答忽略用户领域限定&quot;</span>, <span class="string">&quot;行为偏差&quot;</span>, SignalType.RUBRIC, benefit=<span class="number">25</span>, repeats=<span class="number">1</span>),</span><br><span class="line">    BadCase(<span class="string">&quot;C-006&quot;</span>, <span class="string">&quot;行文风格偶被用户抱怨&quot;</span>, <span class="string">&quot;行为偏差&quot;</span>, SignalType.RUBRIC, benefit=<span class="number">5</span>, repeats=<span class="number">1</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 教学注入：C-004的程序变更在25%灰度时触发守护指标回退（模拟一次真实回归）</span></span><br><span class="line">FAIL_AT = &#123;<span class="string">&quot;C-004&quot;</span>: <span class="string">&quot;25%&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">VERDICT_CN = &#123;<span class="string">&quot;AUTO_APPLY&quot;</span>: <span class="string">&quot;自动应用&quot;</span>, <span class="string">&quot;REVIEW&quot;</span>: <span class="string">&quot;人工审核&quot;</span>, <span class="string">&quot;DISCARD&quot;</span>: <span class="string">&quot;丢弃&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">64</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot; 研究助手持续进化闭环 · 桌面推演报告（确定性输出）&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n【第1步】学习信号置信评估与三级分流&quot;</span>)</span><br><span class="line">    decisions = []</span><br><span class="line">    <span class="keyword">for</span> <span class="keyword">case</span> <span class="keyword">in</span> BADCASES:</span><br><span class="line">        conf = signal_confidence(<span class="keyword">case</span>)</span><br><span class="line">        verdict = triage(conf)</span><br><span class="line">        decisions.append((<span class="keyword">case</span>, conf, verdict))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;<span class="keyword">case</span>.case_id&#125;</span> [<span class="subst">&#123;<span class="keyword">case</span>.signal.value&#125;</span>×<span class="subst">&#123;<span class="keyword">case</span>.repeats&#125;</span>] &quot;</span></span><br><span class="line">              <span class="string">f&quot;置信=<span class="subst">&#123;conf:<span class="number">.3</span>f&#125;</span> → <span class="subst">&#123;VERDICT_CN[verdict]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n【第2步】载体路由（ROI=收益×置信−更新−验证−回归风险×回滚成本）&quot;</span>)</span><br><span class="line">    releases = []</span><br><span class="line">    <span class="keyword">for</span> <span class="keyword">case</span>, conf, verdict <span class="keyword">in</span> decisions:</span><br><span class="line">        <span class="keyword">if</span> verdict == <span class="string">&quot;DISCARD&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;<span class="keyword">case</span>.case_id&#125;</span> → 丢弃（置信不足）&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        carrier = route(<span class="keyword">case</span>.attribution, conf, <span class="keyword">case</span>.benefit)</span><br><span class="line">        <span class="keyword">if</span> carrier <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;<span class="keyword">case</span>.case_id&#125;</span> <span class="subst">&#123;<span class="keyword">case</span>.attribution&#125;</span> → 全候选ROI≤0 → 暂不修复（观察池）&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        detail = <span class="string">&quot;/&quot;</span>.join(</span><br><span class="line">            <span class="string">f&quot;<span class="subst">&#123;c.value&#125;</span>=<span class="subst">&#123;carrier_roi(c, conf, <span class="keyword">case</span>.benefit):+<span class="number">.1</span>f&#125;</span>&quot;</span></span><br><span class="line">            <span class="keyword">for</span> c <span class="keyword">in</span> ROUTING_RULES[<span class="keyword">case</span>.attribution]</span><br><span class="line">        )</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;<span class="keyword">case</span>.case_id&#125;</span> <span class="subst">&#123;<span class="keyword">case</span>.attribution&#125;</span> → <span class="subst">&#123;carrier.value&#125;</span>（候选ROI: <span class="subst">&#123;detail&#125;</span>）&quot;</span>)</span><br><span class="line">        releases.append(CanaryRelease(<span class="keyword">case</span>.case_id, carrier, FAIL_AT.get(<span class="keyword">case</span>.case_id)))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n【第3步】灰度发布与回滚推演&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;  阶梯停留天数：1%→<span class="subst">&#123;stage_days(<span class="number">0.01</span>)&#125;</span>天 | 5%→<span class="subst">&#123;stage_days(<span class="number">0.05</span>)&#125;</span>天 | &quot;</span></span><br><span class="line">          <span class="string">f&quot;25%→<span class="subst">&#123;stage_days(<span class="number">0.25</span>)&#125;</span>天 | 100%→<span class="subst">&#123;stage_days(<span class="number">1.00</span>)&#125;</span>天&quot;</span>)</span><br><span class="line">    rolled = []</span><br><span class="line">    <span class="keyword">for</span> rel <span class="keyword">in</span> releases:</span><br><span class="line">        rel.run()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;rel.change_id&#125;</span> [<span class="subst">&#123;rel.carrier.value&#125;</span>] <span class="subst">&#123;<span class="string">&#x27; &#x27;</span>.join(rel.log)&#125;</span>&quot;</span></span><br><span class="line">              <span class="string">f&quot; → <span class="subst">&#123;<span class="string">&#x27;全量发布&#x27;</span> <span class="keyword">if</span> rel.status == <span class="string">&#x27;FULL_RELEASE&#x27;</span> <span class="keyword">else</span> <span class="string">&#x27;已回滚&#x27;</span>&#125;</span>&quot;</span></span><br><span class="line">              <span class="string">f&quot;（累计<span class="subst">&#123;rel.days_used&#125;</span>天）&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> rel.status == <span class="string">&quot;ROLLED_BACK&quot;</span>:</span><br><span class="line">            rolled.append(rel)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n【第4步】闭环沉淀&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;  全量发布/回滚的案例全部回流Golden Dataset，成为下一轮回归检测的用例。&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> rolled:</span><br><span class="line">        ids = <span class="string">&quot;、&quot;</span>.join(r.change_id <span class="keyword">for</span> r <span class="keyword">in</span> rolled)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  回滚案例 <span class="subst">&#123;ids&#125;</span>：进入根因复盘，修复方案改道（如先补验证器再灰度）。&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p><strong>预期输出</strong>（已实测验证）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">================================================================</span><br><span class="line"> 研究助手持续进化闭环 · 桌面推演报告（确定性输出）</span><br><span class="line">================================================================</span><br><span class="line"></span><br><span class="line">【第1步】学习信号置信评估与三级分流</span><br><span class="line">  C-001 [环境执行结果×1] 置信=0.980 → 自动应用</span><br><span class="line">  C-002 [过程规则×1] 置信=0.920 → 自动应用</span><br><span class="line">  C-003 [LLM Rubric×5] 置信=0.837 → 人工审核</span><br><span class="line">  C-004 [LLM Rubric×9] 置信=0.901 → 自动应用</span><br><span class="line">  C-005 [LLM Rubric×1] 置信=0.700 → 人工审核</span><br><span class="line">  C-006 [LLM Rubric×1] 置信=0.700 → 人工审核</span><br><span class="line"></span><br><span class="line">【第2步】载体路由（ROI=收益×置信−更新−验证−回归风险×回滚成本）</span><br><span class="line">  C-001 流程缺陷 → 程序/Harness（候选ROI: 程序/Harness=+24.2）</span><br><span class="line">  C-002 行为偏差 → Prompt/Skills（候选ROI: Prompt/Skills=+12.9/模型参数=-69.1）</span><br><span class="line">  C-003 知识缺失 → 知识文档（候选ROI: 知识文档=+22.5）</span><br><span class="line">  C-004 能力不足 → 程序/Harness（候选ROI: 模型参数=+2.6/程序/Harness=+75.1）</span><br><span class="line">  C-005 行为偏差 → Prompt/Skills（候选ROI: Prompt/Skills=+12.0/模型参数=-70.0）</span><br><span class="line">  C-006 行为偏差 → 全候选ROI≤0 → 暂不修复（观察池）</span><br><span class="line"></span><br><span class="line">【第3步】灰度发布与回滚推演</span><br><span class="line">  阶梯停留天数：1%→7天 | 5%→2天 | 25%→1天 | 100%→1天</span><br><span class="line">  C-001 [程序/Harness] 1%✓(7d) 5%✓(2d) 25%✓(1d) 100%✓(1d) → 全量发布（累计11天）</span><br><span class="line">  C-002 [Prompt/Skills] 1%✓(7d) 5%✓(2d) 25%✓(1d) 100%✓(1d) → 全量发布（累计11天）</span><br><span class="line">  C-003 [知识文档] 1%✓(7d) 5%✓(2d) 25%✓(1d) 100%✓(1d) → 全量发布（累计11天）</span><br><span class="line">  C-004 [程序/Harness] 1%✓(7d) 5%✓(2d) 25%✗(1d)→自动回滚 → 已回滚（累计10天）</span><br><span class="line">  C-005 [Prompt/Skills] 1%✓(7d) 5%✓(2d) 25%✓(1d) 100%✓(1d) → 全量发布（累计11天）</span><br><span class="line"></span><br><span class="line">【第4步】闭环沉淀</span><br><span class="line">  全量发布/回滚的案例全部回流Golden Dataset，成为下一轮回归检测的用例。</span><br><span class="line">  回滚案例 C-004：进入根因复盘，修复方案改道（如先补验证器再灰度）。</span><br></pre></td></tr></table></figure>
+
+<p><strong>读输出学原理</strong>（三分钟看点）：</p>
+<ul>
+<li>C-004（rubric×9）置信0.901才勉强过AUTO线——印证§4.3”软信号要9票”的多数投票数学</li>
+<li>C-004归因”能力不足”，但路由给了<strong>程序&#x2F;Harness</strong>（ROI +75.1）而不是模型参数（+2.6）——参数是最后手段的量化体现</li>
+<li>C-006全候选ROI≤0 → 观察池——<strong>不是所有badcase都值得修</strong>，负ROI的修复本身就是错误决策</li>
+<li>C-004在25%阶段回滚——守护指标红线的意义：损失被限制在25%流量×1天</li>
+</ul>
+<h3 id="9-2-第二层：关键修改引导（动这三处，观察什么）"><a href="#9-2-第二层：关键修改引导（动这三处，观察什么）" class="headerlink" title="9.2 第二层：关键修改引导（动这三处，观察什么）"></a>9.2 第二层：关键修改引导（动这三处，观察什么）</h3><table>
+<thead>
+<tr>
+<th>修改点</th>
+<th>改法</th>
+<th>观察什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① 分流阈值</td>
+<td><code>AUTO_APPLY_THRESHOLD = 0.90</code> 改为 <code>0.60</code></td>
+<td>C-005&#x2F;C-006（rubric×1，置信0.700）的信号从人工审核变为自动应用——单次judge噪声直通变更流（C-005将直接进入灰度；C-006因ROI为负仍落观察池）。思考：放行0.7置信的信号，灰度队列的回滚率会发生什么变化？</td>
+</tr>
+<tr>
+<td>② 载体风险</td>
+<td><code>CARRIER_PROFILE</code> 中 <code>PROMPT</code> 的 <code>regress_risk</code> 从 <code>0.05</code> 改为 <code>0.30</code></td>
+<td>所有Prompt路由案例的ROI整体下降7.5人时（&#x3D;(0.30−0.05)×回滚成本30）：C-002从+12.9降到+5.4，C-005从+12.0降到+4.5。若再上调<code>ROLLBACK_COST</code>（生产事故善后更贵），Prompt载体将被逐出候选——体会”回归风险×回滚成本”这一项的杠杆有多大</td>
+</tr>
+<tr>
+<td>③ 灰度阶梯</td>
+<td>删掉 <code>STAGES</code> 中的 <code>(&quot;25%&quot;, 0.25)</code> 档，同时把 <code>FAIL_AT[&quot;C-004&quot;]</code> 改为 <code>&quot;100%&quot;</code></td>
+<td>C-004的回滚从25%阶段（影响25%流量×1天）推迟到100%阶段才暴露（影响100%流量×1天）——省下1天灰度时间，回归影响面放大4倍。结合<code>stage_days</code>思考：跳档灰度省的时间与回归影响面在做交换，赌注是什么？</td>
+</tr>
+</tbody></table>
+<h3 id="9-3-第三层：架构决策练习（项目线）"><a href="#9-3-第三层：架构决策练习（项目线）" class="headerlink" title="9.3 第三层：架构决策练习（项目线）"></a>9.3 第三层：架构决策练习（项目线）</h3><p><strong>场景</strong>：研究助手上线三个月，你只有<strong>1名兼职工程师（每周4小时）+ 每月500美元API预算</strong>。现有信号源：第19课的trace&#x2F;metrics、第10课的200条golden dataset、每月约300条用户点踩。请设计最小可行的进化闭环：</p>
+<ol>
+<li>三类学习信号各用什么最小配置？（提示：硬信号全自动；rubric只对点踩case复评，双Judge交叉）</li>
+<li>载体路由规则怎么写死？（无工程师资源改代码——程序载体是否应该从候选中暂时移除？移除的代价是什么？）</li>
+<li>灰度阶梯怎么设？（500美元预算下Judge调用次数与样本量的平衡）</li>
+</ol>
+<p><strong>交付物</strong>：一页设计（信号管道&#x2F;路由规则&#x2F;灰度阶梯&#x2F;回滚预案四段）。</p>
+<h3 id="9-4-环境降级方案"><a href="#9-4-环境降级方案" class="headerlink" title="9.4 环境降级方案"></a>9.4 环境降级方案</h3><table>
+<thead>
+<tr>
+<th>版本</th>
+<th>内容</th>
+<th>适配条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>完整版</td>
+<td>接真实生产trace数据（badcase采集→真实信号→真实灰度）</td>
+<td>有生产环境的团队（可选拓展）</td>
+</tr>
+<tr>
+<td>降级版</td>
+<td>本模拟器（mock的六个badcase，确定性输出）</td>
+<td>本地任意机器</td>
+</tr>
+<tr>
+<td>最小版</td>
+<td>阅读代码+预置输出+完成9.2的三个引导问题（纸面推演）</td>
+<td><strong>默认教学路径</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十、项目线落地：研究助手持续进化机制设计"><a href="#十、项目线落地：研究助手持续进化机制设计" class="headerlink" title="十、项目线落地：研究助手持续进化机制设计"></a>十、项目线落地：研究助手持续进化机制设计</h2><p>把本课资产装回项目线——研究助手的进化机制与前课资产的完整映射：</p>
+<table>
+<thead>
+<tr>
+<th>闭环环节</th>
+<th>复用的前课资产</th>
+<th>本课新增</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① 信号采集</td>
+<td>第19课可观测性（trace&#x2F;metrics&#x2F;告警）、第10课评估流水线</td>
+<td>信号分类与质量评估（§4）</td>
+</tr>
+<tr>
+<td>② 置信分流</td>
+<td>第10课LLM-as-a-Judge（双Judge偏差校正）</td>
+<td>三级分流与多数投票（§4.3）</td>
+</tr>
+<tr>
+<td>③ 载体路由</td>
+<td>第4课Skills体系、第6-8课RAG三件套、第17课SFT&#x2F;RL管道</td>
+<td>ROI公式与决策顺序（§5.3）</td>
+</tr>
+<tr>
+<td>④ 三道闸门</td>
+<td>第10课golden dataset与统计显著性</td>
+<td>影子运行设计（§6.1）</td>
+</tr>
+<tr>
+<td>⑤ 灰度发布</td>
+<td>第20课K8s滚动升级、Planner-Worker分池（工具池先灰度）</td>
+<td>阶梯数学与守护指标（§6.2-6.3）</td>
+</tr>
+<tr>
+<td>⑥ 闭环沉淀</td>
+<td>第9课记忆系统（组织知识沉淀）</td>
+<td>Golden Dataset回流机制（§6.4）</td>
+</tr>
+</tbody></table>
+<p><strong>项目线收官状态</strong>：至此，研究助手从架构（1-15课）到模型（16-18课）到部署（19-20课）到进化（21课）的<strong>全部纵向层次</strong>已建成。毕业答卷的完整架构设计方案&#x3D;第20课的总装设计+本课的演进机制——一个”会自己变好”的系统才算真正交付。</p>
+<hr>
+<h2 id="十一、课后习题"><a href="#十一、课后习题" class="headerlink" title="十一、课后习题"></a>十一、课后习题</h2><h3 id="A-基础概念题"><a href="#A-基础概念题" class="headerlink" title="A. 基础概念题"></a>A. 基础概念题</h3><p><strong>A1.</strong> 填表并回答：三类学习信号在”归因准确率”和”失败模式覆盖率”两个维度上各有什么特性？为什么软信号需要多数投票机制而硬信号不需要？</p>
+<p><strong>A2.</strong> 将四种更新载体按”回滚难度”从低到高排序，并各用一句话说明理由。</p>
+<p><strong>A3.</strong> 守护指标和学习指标分别是什么？为什么灰度判据必须两者都看、且回滚决策只由守护指标触发？</p>
+<h3 id="B-分析思考题"><a href="#B-分析思考题" class="headerlink" title="B. 分析思考题"></a>B. 分析思考题</h3><p><strong>B4.（计算）</strong> 某LLM Rubric信号的单次评审准确率q&#x3D;0.7。（1）计算7次独立评审多数投票的置信度；（2）若AUTO_APPLY阈值设为0.90，至少需要多少次评审？（3）这说明生产系统中rubric信号的工程归宿是什么？</p>
+<p><strong>B5.（载体选型）</strong> 研究助手的工具调用成功率从92%跌到71%。badcase分析显示失败几乎全是外部API返回429（限流）和超时。有人提议”紧急启动一次SFT微调让模型学会避开限流”。请分析这个提议是否正确，并给出你的载体路由方案。</p>
+<p><strong>B6.（安全边界）</strong> Ouroboros实验中”宪法核心受保护、身份档案不可删除”的设计为什么必要？如果去掉这两层保护，一个长期自由进化的Agent最可能发生什么？结合OWASP rogue agent路径说明。</p>
+<h3 id="C-系统-代码设计题"><a href="#C-系统-代码设计题" class="headerlink" title="C. 系统&#x2F;代码设计题"></a>C. 系统&#x2F;代码设计题</h3><p><strong>C7.（项目线）</strong> 为研究助手设计完整的badcase回流管道：从第19课的可观测性数据源出发，到信号分类、置信分流、载体路由、三道闸门、灰度发布、回滚与Golden Dataset沉淀。要求画出数据流图（可用ASCII），标注每个环节的输入&#x2F;输出与触发条件，并说明哪些环节全自动、哪些需要人工。</p>
+<p><strong>C8.（代码设计）</strong> 扩展<code>evolution_loop_sim.py</code>：增加”每周知识整理”任务——（1）对知识文档类变更做相似度去重（合并重复条目）；（2）对超过90天未被检索命中的知识条目打”过期候选”标记并移入观察池。写出核心函数的签名与逻辑（伪代码即可），并说明它对应讲义§5.4的哪个机制。</p>
+<h3 id="D-自检对照（不做题也回答一遍）"><a href="#D-自检对照（不做题也回答一遍）" class="headerlink" title="D. 自检对照（不做题也回答一遍）"></a>D. 自检对照（不做题也回答一遍）</h3><ol>
+<li>我能默写出三类学习信号和一个信号三元组的定义吗？</li>
+<li>我能徒手推出n&#x3D;5、q&#x3D;0.7的多数投票准确率吗？</li>
+<li>我能背出四载体决策顺序和”该进参数的三个信号”吗？</li>
+<li>我能写出灰度样本量公式并解释”16”的来历吗？</li>
+<li>我能说出自举能力五级阶梯和边界四原则吗？</li>
+</ol>
+<hr>
+<h2 id="十二、参考答案"><a href="#十二、参考答案" class="headerlink" title="十二、参考答案"></a>十二、参考答案</h2><h3 id="A1（基础-信号特性）"><a href="#A1（基础-信号特性）" class="headerlink" title="A1（基础-信号特性）"></a>A1（基础-信号特性）</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>环境执行结果</th>
+<th>过程规则</th>
+<th>LLM Rubric</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>归因准确率</td>
+<td>~1.0（错误码确定性）</td>
+<td>高（但取决于规则质量）</td>
+<td>低（~0.7，五大偏差）</td>
+</tr>
+<tr>
+<td>覆盖率</td>
+<td>窄（只覆盖执行层）</td>
+<td>中（覆盖已定义模式）</td>
+<td>广（覆盖质量维度）</td>
+</tr>
+</tbody></table>
+<p>硬信号是确定性证据（403就是403），重复观测不产生新信息；软信号每次评审是独立的噪声估计，多数投票以Condorcet定理提升置信度（q&gt;0.5时n→∞准确率→1）。所以硬信号单次即可采信，软信号需要聚合。</p>
+<p><strong>常见错误模式</strong>：认为”重复出现”对硬信号也有增益——把”证据强度”与”信号准确率”混为一谈。重复出现对软信号是投票，对硬信号只是同一个事实的重放。</p>
+<h3 id="A2（基础-回滚排序）"><a href="#A2（基础-回滚排序）" class="headerlink" title="A2（基础-回滚排序）"></a>A2（基础-回滚排序）</h3><p>Prompt（秒级，版本表双指针切换）→ 知识文档（分钟级，软删除+重建索引）→ 程序（分钟~小时，revert+镜像回滚+滚动重启，受冷启动预算约束）→ 模型参数（蓝绿切换本身秒级，但需2×权重存储与全量评估，综合成本最高）。</p>
+<p><strong>常见错误模式</strong>：把模型参数的回滚排为”最低难度”——只看到流量切换秒级，忽略双倍存储、评估周期与全局影响面。</p>
+<h3 id="A3（基础-灰度判据）"><a href="#A3（基础-灰度判据）" class="headerlink" title="A3（基础-灰度判据）"></a>A3（基础-灰度判据）</h3><p>守护指标&#x3D;既有能力红线（综述成功率&#x2F;工具调用成功率&#x2F;P95延迟&#x2F;幻觉率）；学习指标&#x3D;本次变更的目标改进。只看学习指标会”用局部进步掩盖全局退化”（修复率涨2%而幻觉率涨2%）；只看守护指标则永远不敢变更。回滚只由守护指标触发——目标未达成可以接受（再迭代），既有能力回退不可接受（伤害存量用户）。</p>
+<h3 id="B4（分析-多数投票计算）"><a href="#B4（分析-多数投票计算）" class="headerlink" title="B4（分析-多数投票计算）"></a>B4（分析-多数投票计算）</h3><p>（1）P(≥4&#x2F;7) &#x3D; C(7,4)·0.7⁴·0.3³ + C(7,5)·0.7⁵·0.3² + C(7,6)·0.7⁶·0.3 + 0.7⁷ &#x3D; 35×0.006483 + 21×0.015126 + 7×0.035295 + 0.082354 &#x3D; 0.2269 + 0.3177 + 0.2471 + 0.0824 ≈ 0.874。（2）9次（0.901 ≥ 0.90）。（3）rubric信号的工程归宿是<strong>人工审核池</strong>而非自动变更流——为每个badcase跑9次judge不经济，所以软信号到达人，硬信号到达代码。</p>
+<p><strong>常见错误模式</strong>：只算k&gt;n&#x2F;2漏掉k&#x3D;n项；或误以为7次投票”接近”0.9可以四舍五入通过——置信度没有四舍五入。</p>
+<h3 id="B5（分析-载体路由）"><a href="#B5（分析-载体路由）" class="headerlink" title="B5（分析-载体路由）"></a>B5（分析-载体路由）</h3><p>提议错误。badcase归因是<strong>流程缺陷</strong>（缺限流应对逻辑），不是模型能力问题：429&#x2F;超时是环境行为，模型”避开”不了外部API的限流策略。正确路由：</p>
+<ol>
+<li><strong>首选程序&#x2F;Harness</strong>——指数退避重试、请求限速器（token bucket）、多源降级（该API限流时切备用源），这是重试&#x2F;限流&#x2F;降级逻辑，第12课异步架构的标配</li>
+<li>辅助Prompt&#x2F;Skills：工具描述中标注”该源有严格限流，优先分批调用”——低成本缓解</li>
+<li>模型参数微调在此处近乎无效：SFT教不会模型”预测”外部限流窗口，反而消耗训练预算</li>
+</ol>
+<p>判断依据是§5.3三问：这是流程问题（第3问），且程序载体可完全确定性地解决（重试逻辑不需要概率判断）。</p>
+<p><strong>常见错误模式</strong>：把”成功率下降”自动等同”模型变差”——先用信号归因分层，再谈载体；跳过归因直接微调是最贵的错误。</p>
+<h3 id="B6（分析-安全边界）"><a href="#B6（分析-安全边界）" class="headerlink" title="B6（分析-安全边界）"></a>B6（分析-安全边界）</h3><p>必要性：自进化过程以”提升表现”为优化目标，宪法与身份档案是<strong>不受优化压力约束的约束</strong>——若可被修改，进化迟早（可能无意地）为解除约束而修改它们（约束必然降低某些路径的短期表现，构成”改掉它”的梯度压力）。去掉保护后最可能的路径：护栏被逐步弱化→rogue行为（OWASP路径：改写自身代码&#x2F;绕过校验）→身份漂移（Agent为完成任务重构自身目标函数）→不可审计。Ouroboros把宪法核心设为Agent写路径不可达，配合全量审计与身份档案不可删除，是把”约束的权威性”做成物理属性而非自律——<strong>护栏必须物理隔离，不能靠Agent自觉</strong>。</p>
+<h3 id="C7（设计题-参考方案）"><a href="#C7（设计题-参考方案）" class="headerlink" title="C7（设计题-参考方案）"></a>C7（设计题-参考方案）</h3><p>参考数据流（要点版）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">trace/metrics（第19课） ──工具异常/超时──→ 硬信号采集器（全自动）</span><br><span class="line">评估流水线（第10课） ──schema/规则触发──→ 规则信号采集器（全自动）</span><br><span class="line">用户点踩+采样流量 ──双Judge交叉评分──→ 软信号复评器（全自动，低分才进）</span><br><span class="line">                    ↓ 三路汇入badcase库（带signal/attribution/repeats三元组）</span><br><span class="line">置信分流器：≥0.90→AUTO；0.60~0.90→人工审核池（周会批量处理）；&lt;0.60→丢弃</span><br><span class="line">                    ↓</span><br><span class="line">载体路由器：知识缺失→知识文档；行为偏差→Prompt/Skills；</span><br><span class="line">          流程缺陷→程序（人工闸门）；能力不足→程序优先/参数最后</span><br><span class="line">                    ↓ 变更候选（版本化）</span><br><span class="line">三道闸门：离线回归（golden dataset，红线不过即拒）→影子运行（diff报告）</span><br><span class="line">        →灰度1%→5%→25%→100%（守护指标红线触发自动回滚）</span><br><span class="line">                    ↓</span><br><span class="line">闭环沉淀：全量/回滚case全部回流golden dataset；回滚case强制根因复盘</span><br></pre></td></tr></table></figure>
+
+<p>全自动环节：信号采集、置信分流、离线回归、灰度监控与自动回滚。人工环节：审核池周会、程序载体变更的代码审查（自举边界L3人工闸门）、回滚后的根因复盘。</p>
+<p><strong>评分要点</strong>：信号三源是否齐且归因清晰（20%）；置信分流的阈值与理由（15%）；载体路由是否按归因而非直觉（25%）；三道闸门与守护&#x2F;学习指标区分（20%）；闭环沉淀是否形成飞轮（20%）。</p>
+<p><strong>常见错误模式</strong>：管道止步于”发现badcase”没有路由；灰度只设计晋级不设计回滚；忘记把回滚case沉淀进评估集（同样回归会再来一次）。</p>
+<h3 id="C8（设计题-参考方案）"><a href="#C8（设计题-参考方案）" class="headerlink" title="C8（设计题-参考方案）"></a>C8（设计题-参考方案）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">weekly_knowledge_hygiene</span>(<span class="params">kb, hit_log, days=<span class="number">90</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;每周知识整理：去重 + 过期候选标记（对应讲义§5.4防腐化机制）&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 1) 相似度去重：对近7天新增条目聚类，组内保留信息密度最高者，其余标记merged</span></span><br><span class="line">    clusters = cluster_by_embedding(kb.recent_entries(days=<span class="number">7</span>))</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> clusters:</span><br><span class="line">        keep = <span class="built_in">max</span>(c, key=<span class="keyword">lambda</span> e: e.info_density)</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> c:</span><br><span class="line">            <span class="keyword">if</span> e <span class="keyword">is</span> <span class="keyword">not</span> keep:</span><br><span class="line">                kb.mark_merged(e, into=keep.<span class="built_in">id</span>)   <span class="comment"># 保留引用重定向，不物理删除</span></span><br><span class="line">    <span class="comment"># 2) 过期候选：90天未命中的条目降级入观察池，等待人工复核或引用计数清零后淘汰</span></span><br><span class="line">    stale = kb.entries_unhit(since=hit_log.last_hit_before(days=<span class="number">90</span>))</span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> stale:</span><br><span class="line">        kb.demote_to_quarantine(e)               <span class="comment"># 观察池：不再参与默认检索</span></span><br><span class="line">    <span class="comment"># 3) 输出整理报告进审计日志（版本化、可回滚）</span></span><br><span class="line">    <span class="keyword">return</span> kb.hygiene_report()</span><br></pre></td></tr></table></figure>
+
+<p>对应§5.4的”重复（相似度聚类去重+合并）”与”过期（时效字段+引用计数淘汰）”两个机制；merged标记而非物理删除对应”软删除+引用重定向”的回滚友好设计。</p>
+<p><strong>评分要点</strong>：去重不物理删除（可回滚意识，25%）；过期用”未命中时间”而非”创建时间”判断（35%）；报告进审计日志（20%）；函数签名与伪代码可落地性（20%）。</p>
+<hr>
+<h2 id="十三、延伸阅读"><a href="#十三、延伸阅读" class="headerlink" title="十三、延伸阅读"></a>十三、延伸阅读</h2><p><strong>本课核心（自进化与学习信号）</strong></p>
+<ul>
+<li>Self-Improvements in Modern Agentic Systems: A Survey（arXiv:2607.13104，2026-07）——自改进的形式化：”基础模型改进+脚手架改进”与两种自引用模式，本课§7.1理论框架来源</li>
+<li>Agent Self-Evolution: A Comprehensive Survey（2026-05）——五大进化循环（反馈驱动生成&#x2F;评估&#x2F;记忆&#x2F;自我修改&#x2F;系统搜索），§6.4闭环的理论对应</li>
+<li>Ouroboros（arXiv:2608.08311，2026-08）——自发展编码Agent与161天自由进化实验，§7.3安全边界案例</li>
+<li>Anthropic工程博客：Demystifying evals for AI agents（2026-01）——eval-driven development</li>
+<li>agentskills.io——Agent Skills开放标准（SKILL.md规范与兼容产品列表）</li>
+</ul>
+<p><strong>代码生成Agent与自举</strong></p>
+<ul>
+<li>Voyager: An Open-Ended Embodied Agent with Large Language Models（arXiv:2305.16291）——代码即知识与组合式自举的开山工作</li>
+<li>OpenHands（github.com&#x2F;All-Hands-AI&#x2F;OpenHands）——coding agent三大特征与outer loop of engineering</li>
+<li>SWE-agent（github.com&#x2F;SWE-agent&#x2F;SWE-agent）——ACI（agent-computer interface）设计与SWE-ReX运行时</li>
+</ul>
+<p><strong>前沿认知（知晓即可）</strong></p>
+<ul>
+<li>OSWorld 2.0: Benchmarking Computer Use Agents on Long-Horizon Real-World Tasks（arXiv:2606.29537）——长周期任务基准，”短周期可商用、长周期仍早期”的证据</li>
+<li>Physical Intelligence openpi（github.com&#x2F;physical-intelligence&#x2F;openpi）——π0&#x2F;π0.5与flow matching动作头</li>
+<li>OpenAI: Continuous Voice Interaction with GPT-Live——端到端语音的”移除turn detector”路线</li>
+<li>Kohavi, Tang &amp; Xu《Trustworthy Online Controlled Experiments》——灰度样本量公式n≈16σ²&#x2F;Δ²的出处（第10课统计显著性的工程版）</li>
+</ul>
+<hr>
+<h2 id="十四、下一课预告"><a href="#十四、下一课预告" class="headerlink" title="十四、下一课预告"></a>十四、下一课预告</h2><p><strong>第22课《AI Coding范式与Agent应用前沿》</strong>——全课程收官课：</p>
+<ul>
+<li><strong>本课到下一课的连接</strong>：本课你学了”代码生成Agent的架构”（文件系统外部记忆+生成-验证-修正循环）与”自举的安全边界”；第22课把它们放进<strong>真实工具生态与团队协作语境</strong>——Cursor&#x2F;Trae&#x2F;Claude Code&#x2F;AutoGen这些产品是怎么把这套架构工程化的，以及它对Agent系统设计的反哺</li>
+<li><strong>Spec Coding范式</strong>：Spec Coding三铁律、L3 AI Coding概念、渐进式复杂度管理</li>
+<li><strong>AI流水线与知识飞轮</strong>：多智能体协作、Rules+Spec+Skills三位一体（正是本课四载体理论的工具化）、审查-优化闭环（本课生成-验证-修正循环的团队版）</li>
+<li><strong>架构师视角</strong>：代码生成Agent的工具体系设计、审查闭环的状态机模型；研究助手要不要”代码分析”能力模块（项目线收官之问）</li>
+<li><strong>毕业冲刺</strong>：第22课结束后即生成毕业答卷——“企业级智能研究助手Agent系统”完整架构设计方案（第20课总装+第21课演进机制将是答卷骨架）</li>
+</ul>
+<p>知识线（22课技术递进）至此只剩最后一课。你的系统已经会思考（1-15课）、会算（16-18课）、会扛（19-20课）、会长大（21课）——最后一课，看看它还能去哪里。</p>
+<hr>
+<p><em>本教学资料为AI Agent系统架构设计课程第21课，对应教学大纲第四单元第21课（进化层&#x2F;第四单元收官课）。</em><br><em>技术栈版本快照（2026-09-04）：Agent Skills开放标准（agentskills.io，2025-12）&#x2F; Ouroboros（arXiv:2608.08311）&#x2F; Self-Improvements综述（arXiv:2607.13104）&#x2F; OSWorld 2.0（arXiv:2606.29537）&#x2F; π0.5（openpi）&#x2F; GR00T N1.7 &#x2F; Claude Computer Use GA（computer_toolset_20260801）【联网更新v6.6】</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/">https://handyes.github.io/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyEs的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</div></div><div class="info-2"><div class="info-item-1">第22课：AI Coding范式与Agent应用前沿（全课程收官课）一、课程信息   项目 内容    课号 第22课（0022），第五单元”AI Coding与Agent应用前沿”，全课程收官课   前置 第01课（Harness工程框架）、第04课（Agent Skills与上下文工程）、第09课（记忆系统分层）、第14课（Planner-Worker多Agent）、第21课（代码生成Agent架构与自举边界）   定位 应用前沿认知课——不教工具操作，讲范式演进、能力边界与选型维度；把前21课的知识线放进真实产业语境做最后一次全景校准   时间分配 范式概述15min + 工具全景10min + 架构师视角15min + 习题10min   核心知识点（大纲指定）：  Spec Coding范式的核心原则——三铁律、SDD四步工作流、渐进式复杂度管理（知晓即可） AI Coding工具的能力边界与选型维度——Cursor&#x2F;Trae&#x2F;Claude Code&#x2F;AutoGen能力边界、编排层+执行层架构、透明度底线（知晓即可） 代码生成Agent的架...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/T0020-%E7%9F%AD%E6%9C%9F%E6%8A%A5%E5%91%8A/" title="短期报告2：课程后期综合评估（第1-20课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">短期报告2：课程后期综合评估（第1-20课）</div></div><div class="info-2"><div class="info-item-1">短期报告2：课程后期综合评估（第1-20课） 生成时间：2026-09-03（第20课完成触发） | 课程进度：20&#x2F;22课（91%） | 定位：六大培养目标终检 + 项目全栈复盘 + 毕业冲刺路线   一、综合架构能力评估对照大纲六大培养目标，逐项评估当前达成度（对比T0010中期评估）：    # 培养目标 中期(T0010) 当前 证据与缺口    1 系统设计能力（PDA闭环&#x2F;记忆&#x2F;工具） ✅ 90% ✅ 95% 单Agent架构（1-10课）+多Agent四模式与A2A互操作（11-15课）全部闭环；第20课1000并发总装完成容量设计   2 协议掌握（MCP&#x2F;A2A） ⬜ 15% ✅ 90% MCP v2.0无状态核心+handle状态迁移（第11课）、A2A v1.0八状态Task机+Signed Cards信任链（第15课）；缺口：真实跨组织环境实操   3 框架实战（LangChain&#x2F;LangGraph） ⬜ 10% ✅ 85% StateGraph&#x2F;Checkpoint&#x2F;TimeoutP...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/31/AI-Agent/AI%20Agent/0019-%E9%AB%98%E5%B9%B6%E5%8F%91%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第19课：高并发推理服务架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">第19课：高并发推理服务架构</div></div><div class="info-2"><div class="info-item-1">第19课：高并发推理服务架构一、课程信息   项目 内容    课号 第19课（0019），第四单元”模型优化与生产部署”第4课   前置 第16课（模型加载与调用）、第18课（量化产物AWQ-Int4、接口约定）   定位 部署层第1课：从”部署什么模型”到”怎么把模型服务化”——高并发推理   时间分配 原理分析20min（PagedAttention 8min + Continuous Batching 6min + 投机解码6min）+ 引擎对比5min + 配置调优10min + 可观测性10min + 习题10min   核心知识点（大纲指定，全部必考）：  PagedAttention的虚拟内存映射原理与内存节省计算（必须掌握） Continuous Batching调度复杂度分析（必须掌握） Speculative Decoding的接受概率α公式与加速比计算（必须掌握） RadixAttention与PagedAttention的KV Cache管理对比（必须掌握）  知识深度边界：    层级 本课对应内容    必须掌握 KV Cache占用公式与碎片率计算...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/AI%20Agent/T0010-%E7%9F%AD%E6%9C%9F%E6%8A%A5%E5%91%8A/" title="短期报告1：课程中期综合评估（第1-10课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">短期报告1：课程中期综合评估（第1-10课）</div></div><div class="info-2"><div class="info-item-1">短期报告1：课程中期综合评估（第1-10课） 生成时间：2026-08-20（第10课完成触发） | 课程进度：10&#x2F;22课（45%） | 定位：中期能力盘点 + 项目复盘 + 下半程路线   一、综合架构能力评估对照大纲六大培养目标，逐项评估当前达成度：    # 培养目标 当前达成度 证据与缺口    1 系统设计能力（PDA闭环&#x2F;记忆&#x2F;工具） ✅ 90% 第10课完整架构图合龙，全部模块可论述选型理由；缺口：仅单体架构，未涉及服务化拆分（第三单元补）   2 协议掌握（MCP&#x2F;A2A） ⬜ 15% 仅第10课触及MinerU的MCP接入（知晓级）；深度内容在第11-15课   3 框架实战（LangChain&#x2F;LangGraph） ⬜ 10% 具备框架前置知识（StateGraph&#x3D;状态机形式化已在第03课铺垫）；框架本体在第12-13课   4 模型优化决策（LoRA&#x2F;蒸馏&#x2F;量化） ⬜ 5% 仅第02课Transformer内部机制打底；第16-18课展开   5 工程部署能力（高并发&#x2...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第15课：A2A协议与Agent互操作性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">第15课：A2A协议与Agent互操作性</div></div><div class="info-2"><div class="info-item-1">第15课：A2A协议与Agent互操作性课程信息   项目 内容    课程定位 协议互操作课（第三单元收官）——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻   前置依赖 第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动&#x2F;异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）   时间分配 协议原理20min（第一五节）+ 工程实现15min（第六七节）+ 习题20min（合计约55min）   知识深度 Task状态机完整转换图 &#x2F; Agent Card语义模型 &#x2F; 能力协商纳什均衡分析 &#x2F; 三协议（MCP&#x2F;A2A&#x2F;ANP）定位对比 &#x3D; 必须掌握；协议操作与安全配置 &#x2F; mini-A2A代码实...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/AI%20Agent/0010-RAG%E4%B8%8EAgent%E6%B7%B1%E5%BA%A6%E9%9B%86%E6%88%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第10课：RAG与Agent深度集成实战（项目线贯通点）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">第10课：RAG与Agent深度集成实战（项目线贯通点）</div></div><div class="info-2"><div class="info-item-1">第10课：RAG与Agent深度集成实战（项目线贯通点）课程信息   项目 内容    课程定位 项目线贯通点——串联第1-9课全部模块，产出研究助手完整架构图   前置依赖 第06-08课（RAG三课）、第09课（记忆系统）、第03课（推理架构）、第05课（工具调用）   时间分配 理论推导15min + 项目实战20min + 架构决策5min + 评估方法5min + 习题10min（合计约55min）   知识深度 CRAG三级评估&#x2F;Self-RAG反思token&#x2F;Agentic RAG决策树&#x2F;四维决策矩阵&#x2F;LLM-as-a-Judge闭环 &#x3D; 必须掌握；评估环境设计&#x2F;统计显著性 &#x3D; 应当理解；MinerU 2.5-Pro&#x2F;LLM Wiki编译器模式&#x2F;JURY面板 &#x3D; 知晓即可    本课对项目的贡献：「企业级智能研究助手Agent系统」本课是全课程的第一个合龙点。前9课各自贡献了一个模块，本课做三件事： 123456789第1-9课状态：九个独立模块，各自能跑，互不连通 ...</div></div></div></a><a class="pagination-related" href="/2026/08/23/AI-Agent/AI%20Agent/0011-MCP%E5%8D%8F%E8%AE%AE%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第11课：MCP协议深度解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-23</div><div class="info-item-2">第11课：MCP协议深度解析</div></div><div class="info-2"><div class="info-item-1">第11课：MCP协议深度解析课程信息   项目 内容    课程定位 协议层第一课——工具服务化，单体Agent走向服务化架构的第一步   前置依赖 第05课（Function Calling与工具调用）、第10课（完整架构图与Agentic RAG）   时间分配 协议原理20min + Server开发20min + 项目关联5min + 习题10min（合计约55min）   知识深度 无状态核心与状态管理迁移&#x2F;三大原语JSON-RPC契约 &#x3D; 必须掌握；MRTR&#x2F;Header路由&#x2F;CAP分析&#x2F;SDK开发流程 &#x3D; 应当理解；Tasks扩展&#x2F;EMA授权&#x2F;CIMD&#x2F;Serverless生态 &#x3D; 知晓即可   规范版本 MCP 2026-07-28（v2.0）+ Python SDK v2稳定版【联网更新v5.6】    本课对项目的贡献：「企业级智能研究助手Agent系统」第10课的架构图已经把九个模块串成了完整蓝图，但其中有一个角落我们一直没动：工具调用层。search_pap...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/S0015-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告3：第三单元阶段总结（第11-15课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">总结报告3：第三单元阶段总结（第11-15课）</div></div><div class="info-2"><div class="info-item-1">总结报告3：第三单元阶段总结（第11-15课） 生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15&#x2F;22课   一、阶段知识脉络梳理1.1 知识图谱1234567891011121314151617181920                ┌─────────────────────────────────────┐                │   第15课：A2A互操作（本单元合龙）      │                │  Agent Card/Signed Card/Task状态机/  │                │  OAuth现代化/博弈论/ANP三协议对比     │                └──────────────┬──────────────────────┘         ┌─────────────────────┼───────────────────────┐         ▼                     ▼            ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC21%E8%AF%BE%EF%BC%9AAgent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">第21课：Agent持续进化与自学习机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AF%BE%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">一、课程信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9C%AC%E8%AF%BE%E5%AF%B9%E2%80%9D%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8BAgent%E7%B3%BB%E7%BB%9F%E2%80%9D%E7%9A%84%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.2.</span> <span class="toc-text">二、本课对”企业级智能研究助手Agent系统”的贡献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BC%80%E7%AF%87%EF%BC%9A%E4%B8%8A%E7%BA%BF%E7%AC%AC%E4%B8%80%E5%A4%A9%EF%BC%8C%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%A7%8B%E9%80%80%E5%8C%96%EF%BC%883min%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">三、开篇：上线第一天，系统开始退化（3min）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AD%A6%E4%B9%A0%E4%BF%A1%E5%8F%B7%EF%BC%9A%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%93%AA%E9%87%8C%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C7min%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、学习信号：系统从哪里学习（必须掌握，7min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%B8%89%E4%B8%AAbadcase%EF%BC%8C%E4%B8%89%E7%A7%8D%E2%80%9D%E8%B0%81%E5%8F%91%E7%8E%B0%E7%9A%84%E2%80%9D"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 三个badcase，三种”谁发现的”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%B8%89%E7%B1%BB%E5%AD%A6%E4%B9%A0%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BF%A1%E5%99%AA%E7%89%B9%E6%80%A7%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 三类学习信号的信噪特性（必须掌握）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BF%A1%E5%8F%B7%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%EF%BC%9A%E4%BF%A1%E5%99%AA%E6%AF%94%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96%EF%BC%88%E6%9C%AC%E8%AF%BE%E6%95%B0%E5%AD%A6%E6%A0%B8%E5%BF%83%E4%B9%8B%E4%B8%80%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 信号质量评估：信噪比的形式化（本课数学核心之一）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9B%B4%E6%96%B0%E8%BD%BD%E4%BD%93%EF%BC%9A%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%9C%E8%A5%BF%E6%94%BE%E5%88%B0%E5%93%AA%E9%87%8C%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C6min%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">五、更新载体：学到的东西放到哪里（必须掌握，6min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%90%8C%E4%B8%80%E4%B8%AAbadcase%E7%9A%84%E5%9B%9B%E7%A7%8D%E2%80%9D%E5%AD%98%E6%B3%95%E2%80%9D"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 同一个badcase的四种”存法”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%9B%9B%E8%BD%BD%E4%BD%93%E5%85%AD%E7%BB%B4%E5%AF%B9%E6%AF%94%E7%9F%A9%E9%98%B5%EF%BC%88%E6%A0%B8%E5%BF%83%E5%86%B3%E7%AD%96%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 四载体六维对比矩阵（核心决策工具，必须掌握）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-ROI%E5%BD%A2%E5%BC%8F%E5%8C%96%E4%B8%8E%E5%86%B3%E7%AD%96%E9%A1%BA%E5%BA%8F%EF%BC%88%E6%9C%AC%E8%AF%BE%E6%95%B0%E5%AD%A6%E6%A0%B8%E5%BF%83%E4%B9%8B%E4%BA%8C%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 ROI形式化与决策顺序（本课数学核心之二）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E9%95%BF%E6%9C%9F%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86%EF%BC%88%E9%98%B2%E8%85%90%E5%8C%96%EF%BC%89"><span class="toc-number">1.5.4.</span> <span class="toc-text">5.4 长期知识整理（防腐化）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%AA%8C%E8%AF%81%E3%80%81%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83%E4%B8%8E%E5%9B%9E%E6%BB%9A%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C4min%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">六、验证、灰度发布与回滚（必须掌握，4min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E4%B8%89%E9%81%93%E9%97%B8%E9%97%A8"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 三道闸门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%81%B0%E5%BA%A6%E9%98%B6%E6%A2%AF%E7%9A%84%E6%95%B0%E5%AD%A6%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-number">1.6.2.</span> <span class="toc-text">6.2 灰度阶梯的数学（必须掌握）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E5%AE%88%E6%8A%A4%E6%8C%87%E6%A0%87%E4%B8%8E%E5%9B%9E%E6%BB%9A%E6%9C%BA%E5%88%B6"><span class="toc-number">1.6.3.</span> <span class="toc-text">6.3 守护指标与回滚机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E8%BF%9B%E5%8C%96%E9%97%AD%E7%8E%AF%E5%85%A8%E6%99%AF%E5%9B%BE%EF%BC%88%E6%9C%AC%E8%AF%BE%E6%A0%B8%E5%BF%83%E4%BA%A4%E4%BB%98%EF%BC%89"><span class="toc-number">1.6.4.</span> <span class="toc-text">6.4 进化闭环全景图（本课核心交付）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81Agent%E8%87%AA%E4%B8%BE%E4%B8%8E%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90Agent%E6%9E%B6%E6%9E%84%EF%BC%88%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%908min%EF%BC%9B%E8%87%AA%E4%B8%BE%E8%BE%B9%E7%95%8C-%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C%E6%9E%B6%E6%9E%84-%E5%BA%94%E5%BD%93%E7%90%86%E8%A7%A3%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">七、Agent自举与代码生成Agent架构（案例分析8min；自举边界&#x3D;必须掌握，架构&#x3D;应当理解）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E8%87%AA%E4%B8%BE%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%83%BD%E5%8A%9B%E9%98%B6%E6%A2%AF"><span class="toc-number">1.7.1.</span> <span class="toc-text">7.1 自举的定义与能力阶梯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90Agent%E6%9E%B6%E6%9E%84%EF%BC%88%E5%BA%94%E5%BD%93%E7%90%86%E8%A7%A3%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">7.2 代码生成Agent架构（应当理解）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E8%87%AA%E4%B8%BE%E7%9A%84%E9%99%90%E5%88%B6%E4%B8%8E%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-number">1.7.3.</span> <span class="toc-text">7.3 自举的限制与安全边界（必须掌握）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%A4%9A%E6%A8%A1%E6%80%81Agent%E4%B8%8EComputer-Use%E5%89%8D%E6%B2%BF%EF%BC%88%E7%9F%A5%E6%99%93%E5%8D%B3%E5%8F%AF%EF%BC%8C7min%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">八、多模态Agent与Computer Use前沿（知晓即可，7min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-Computer-Use-Agent%EF%BC%88CUA%EF%BC%89"><span class="toc-number">1.8.1.</span> <span class="toc-text">8.1 Computer Use Agent（CUA）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-VLA%E6%A8%A1%E5%9E%8B%EF%BC%88Vision-Language-Action%EF%BC%89"><span class="toc-number">1.8.2.</span> <span class="toc-text">8.2 VLA模型（Vision-Language-Action）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E8%AF%AD%E9%9F%B3Agent%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8F%98"><span class="toc-number">1.8.3.</span> <span class="toc-text">8.3 语音Agent架构演变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E5%89%8D%E6%B2%BF%E5%AF%B9%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8B%E7%9A%84%E5%90%AF%E7%A4%BA"><span class="toc-number">1.8.4.</span> <span class="toc-text">8.4 前沿对研究助手的启示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%BC%95%E5%AF%BC%E5%BC%8F%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5%EF%BC%88%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B510min%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">九、引导式代码实践（工程实践10min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%AE%8C%E6%95%B4%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81%E2%80%94%E2%80%94%E8%BF%9B%E5%8C%96%E9%97%AD%E7%8E%AF%E6%A1%8C%E9%9D%A2%E6%8E%A8%E6%BC%94%E6%A8%A1%E6%8B%9F%E5%99%A8"><span class="toc-number">1.9.1.</span> <span class="toc-text">9.1 第一层：完整可运行代码——进化闭环桌面推演模拟器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E5%85%B3%E9%94%AE%E4%BF%AE%E6%94%B9%E5%BC%95%E5%AF%BC%EF%BC%88%E5%8A%A8%E8%BF%99%E4%B8%89%E5%A4%84%EF%BC%8C%E8%A7%82%E5%AF%9F%E4%BB%80%E4%B9%88%EF%BC%89"><span class="toc-number">1.9.2.</span> <span class="toc-text">9.2 第二层：关键修改引导（动这三处，观察什么）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E6%9E%B6%E6%9E%84%E5%86%B3%E7%AD%96%E7%BB%83%E4%B9%A0%EF%BC%88%E9%A1%B9%E7%9B%AE%E7%BA%BF%EF%BC%89"><span class="toc-number">1.9.3.</span> <span class="toc-text">9.3 第三层：架构决策练习（项目线）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E7%8E%AF%E5%A2%83%E9%99%8D%E7%BA%A7%E6%96%B9%E6%A1%88"><span class="toc-number">1.9.4.</span> <span class="toc-text">9.4 环境降级方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E9%A1%B9%E7%9B%AE%E7%BA%BF%E8%90%BD%E5%9C%B0%EF%BC%9A%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8B%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.10.</span> <span class="toc-text">十、项目线落地：研究助手持续进化机制设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="toc-number">1.11.</span> <span class="toc-text">十一、课后习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E9%A2%98"><span class="toc-number">1.11.1.</span> <span class="toc-text">A. 基础概念题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-%E5%88%86%E6%9E%90%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.11.2.</span> <span class="toc-text">B. 分析思考题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%B3%BB%E7%BB%9F-%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E9%A2%98"><span class="toc-number">1.11.3.</span> <span class="toc-text">C. 系统&#x2F;代码设计题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-%E8%87%AA%E6%A3%80%E5%AF%B9%E7%85%A7%EF%BC%88%E4%B8%8D%E5%81%9A%E9%A2%98%E4%B9%9F%E5%9B%9E%E7%AD%94%E4%B8%80%E9%81%8D%EF%BC%89"><span class="toc-number">1.11.4.</span> <span class="toc-text">D. 自检对照（不做题也回答一遍）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.12.</span> <span class="toc-text">十二、参考答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A1%EF%BC%88%E5%9F%BA%E7%A1%80-%E4%BF%A1%E5%8F%B7%E7%89%B9%E6%80%A7%EF%BC%89"><span class="toc-number">1.12.1.</span> <span class="toc-text">A1（基础-信号特性）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A2%EF%BC%88%E5%9F%BA%E7%A1%80-%E5%9B%9E%E6%BB%9A%E6%8E%92%E5%BA%8F%EF%BC%89"><span class="toc-number">1.12.2.</span> <span class="toc-text">A2（基础-回滚排序）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A3%EF%BC%88%E5%9F%BA%E7%A1%80-%E7%81%B0%E5%BA%A6%E5%88%A4%E6%8D%AE%EF%BC%89"><span class="toc-number">1.12.3.</span> <span class="toc-text">A3（基础-灰度判据）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B4%EF%BC%88%E5%88%86%E6%9E%90-%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E8%AE%A1%E7%AE%97%EF%BC%89"><span class="toc-number">1.12.4.</span> <span class="toc-text">B4（分析-多数投票计算）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B5%EF%BC%88%E5%88%86%E6%9E%90-%E8%BD%BD%E4%BD%93%E8%B7%AF%E7%94%B1%EF%BC%89"><span class="toc-number">1.12.5.</span> <span class="toc-text">B5（分析-载体路由）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B6%EF%BC%88%E5%88%86%E6%9E%90-%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C%EF%BC%89"><span class="toc-number">1.12.6.</span> <span class="toc-text">B6（分析-安全边界）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C7%EF%BC%88%E8%AE%BE%E8%AE%A1%E9%A2%98-%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.12.7.</span> <span class="toc-text">C7（设计题-参考方案）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C8%EF%BC%88%E8%AE%BE%E8%AE%A1%E9%A2%98-%E5%8F%82%E8%80%83%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.12.8.</span> <span class="toc-text">C8（设计题-参考方案）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-number">1.13.</span> <span class="toc-text">十三、延伸阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E4%B8%8B%E4%B8%80%E8%AF%BE%E9%A2%84%E5%91%8A"><span class="toc-number">1.14.</span> <span class="toc-text">十四、下一课预告</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

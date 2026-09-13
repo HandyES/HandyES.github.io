@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HandyEs的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录学习与生活">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HandyEs的博客">
+<meta property="og:url" content="https://handyes.github.io/page/2/index.html">
+<meta property="og:site_name" content="HandyEs的博客">
+<meta property="og:description" content="记录学习与生活">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:author" content="HandyES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HandyEs的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyEs的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">HandyEs的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/30/AI-Agent/AI%20Agent/0018-%E6%A8%A1%E5%9E%8B%E8%92%B8%E9%A6%8F%E4%B8%8E%E5%8E%8B%E7%BC%A9%E9%80%89%E5%9E%8B-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第18课：模型蒸馏与压缩——选型与评估">第18课：模型蒸馏与压缩——选型与评估</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-29T16:00:00.000Z" title="发表于 2026-08-30 00:00:00">2026-08-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第18课：模型蒸馏与压缩——选型与评估一、课程信息   项目 内容    课号 第18课（0018），第四单元”模型优化与生产部署”第3课   前置 第16课（模型加载与调用）、第17课（SFT与Agentic RL，QLoRA产物）   定位 从”训得起”到”部署得起”——模型层收官：压缩选型决策   时间分配 原理推导20min（τ推导8min + 量化7min + 剪枝5min）+ 选型决策15min（蒸馏ROI 7min + 组合决策8min）+ 结果分析10min + 习题10min   核心知识点（大纲指定，全部必考）：  温度参数τ对softmax分布的平滑效应推导（必须掌握） GPTQ&#x2F;AWQ&#x2F;GGUF三种量化格式的选型决策矩阵（必须掌握） 蒸馏ROI计算方法（必须掌握）  知识深度边界：    层级 本课对应内容    必须掌握 τ的极限行为与梯度尺度推导、GPTQ&#x2F;AWQ&#x2F;GGUF选型矩阵、蒸馏ROI公式与盈亏平衡计算   应当理解 RTN&#x2F;分组量化代码、蒸馏损失实现、FP8&#x2F;NVFP4&#x2F;M...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/29/AI-Agent/AI%20Agent/0017-%E6%A8%A1%E5%9E%8B%E5%90%8E%E8%AE%AD%E7%BB%83%E4%BB%8ESFT%E5%88%B0AgenticRL-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第17课：模型后训练——从SFT到Agentic RL">第17课：模型后训练——从SFT到Agentic RL</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-28T16:00:00.000Z" title="发表于 2026-08-29 00:00:00">2026-08-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第17课：模型后训练——从SFT到Agentic RL一、课程信息   项目 内容    课号 第17课（第四单元：模型优化、生产部署与持续进化）   课程标题 模型后训练——从SFT到Agentic RL   前置课程 第16课（PyTorch模型操作 &#x2F; transformers &#x2F; PEFT与TRL生态认知）、第05课（Function Calling工具调用格式）、第10课（评估闭环与LLM-as-a-Judge）   课程定位 从”模型操作者”到”模型训练者”：掌握后训练的数学原理、工程配置与选型决策   时间分配 原理推导20min + Agentic RL 10min + 决策分析10min + 脚本调优10min + 习题10min（合计60min）   知识深度边界（本课三级分类）：    层级 本课对应知识点    必须掌握 LoRA的 W&#x3D;W₀+BA 推导与rank选择、全参微调vs PEFT显存决策矩阵、SFT记忆与RL泛化的定位区分、GRPO组相对优势计算与算法流程、”SFT&#x2F;RL&#x2F;API+Prompt”...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/28/AI-Agent/AI%20Agent/0016-PyTorch%E9%80%9F%E9%80%9A%E4%B8%8E%E6%A8%A1%E5%9E%8B%E6%93%8D%E4%BD%9C-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力">第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-27T16:00:00.000Z" title="发表于 2026-08-28 00:00:00">2026-08-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第16课：PyTorch&#x2F;TF速通——Agent架构师必需的模型操作能力课程信息   项目 内容    课程定位 模型层入门课（第四单元第一课）——前15课研究助手的所有”智能”都来自外部API模型（LangChain的LLM抽象把模型藏成了黑盒）。本课把黑盒打开：你会亲手加载模型、调用推理、读懂训练脚本。这是模型层的”入场券”——不是从零造轮子，而是掌握加载、调用、配置、调优四项工程能力   前置依赖 第02课（Transformer架构、Attention、KV Cache）、第06课（Embedding、向量相似度）、第07课（Cross-Encoder重排序）、第10课（Agentic RAG、多模态RAG）   时间分配 原理理解15min（第一二节）+ 模型操作实战15min（第三节+第七节）+ 生态认知5min（3.4节与第四节VLM）+ 配置调优5min（第五六节）+ 习题10min（合计约50min）   知识深度 torch.compile配置与模式选择 &#x2F; ONNX算子兼容性检查清单 &#x2F; 推理模式三件套 &#x3D; 必须掌握；...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第15课：A2A协议与Agent互操作性">第15课：A2A协议与Agent互操作性</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-26T16:00:00.000Z" title="发表于 2026-08-27 00:00:00">2026-08-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第15课：A2A协议与Agent互操作性课程信息   项目 内容    课程定位 协议互操作课（第三单元收官）——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻   前置依赖 第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动&#x2F;异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）   时间分配 协议原理20min（第一五节）+ 工程实现15min（第六七节）+ 习题20min（合计约55min）   知识深度 Task状态机完整转换图 &#x2F; Agent Card语义模型 &#x2F; 能力协商纳什均衡分析 &#x2F; 三协议（MCP&#x2F;A2A&#x2F;ANP）定位对比 &#x3D; 必须掌握；协议操作与安全配置 &#x2F; mini-A2A代码实...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/27/AI-Agent/AI%20Agent/S0015-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告3：第三单元阶段总结（第11-15课）">总结报告3：第三单元阶段总结（第11-15课）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-26T16:00:00.000Z" title="发表于 2026-08-27 00:00:00">2026-08-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">总结报告3：第三单元阶段总结（第11-15课） 生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15&#x2F;22课   一、阶段知识脉络梳理1.1 知识图谱1234567891011121314151617181920                ┌─────────────────────────────────────┐                │   第15课：A2A互操作（本单元合龙）      │                │  Agent Card/Signed Card/Task状态机/  │                │  OAuth现代化/博弈论/ANP三协议对比     │                └──────────────┬──────────────────────┘         ┌─────────────────────┼───────────────────────┐         ▼                     ▼            ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/26/AI-Agent/AI%20Agent/0014-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第14课：多Agent系统架构设计">第14课：多Agent系统架构设计</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-25T16:00:00.000Z" title="发表于 2026-08-26 00:00:00">2026-08-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第14课：多Agent系统架构设计课程信息   项目 内容    课程定位 协作架构设计课——从”一个大脑”到”一个团队”的架构跃迁：建立多Agent的形式化对比框架、协议设计与可靠性工程，回答研究助手项目的最后一个架构悬案   前置依赖 第01课（PDA循环）、第03课（ReAct&#x2F;Reflexion状态机）、第05课（工具调用FSM）、第12课（StateGraph&#x2F;Send&#x2F;事件总线&#x2F;TimeoutPolicy）、第13课（OpenManus时间维调度伏笔）   时间分配 模式对比15min（第一、二节）+ 工程实现20min（第三、四、五节）+ 习题20min（合计约55min）   知识深度 四种模式形式化对比矩阵 &#x2F; Handoff协议状态机 &#x2F; 资源分配图死锁检测 &#x2F; Proposer-Reviewer vs Reflexion时机对比 &#x3D; 必须掌握；消息协议设计 &#x2F; 预防策略 &#x2F; 多Agent vs 单Agent决策框架 &#x2F; mini代码实现 &#x3D;...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/25/AI-Agent/AI%20Agent/0013-OpenManus%E5%AE%9E%E6%88%98%E4%B8%8E%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第13课：OpenManus实战与架构分析">第13课：OpenManus实战与架构分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-24T16:00:00.000Z" title="发表于 2026-08-25 00:00:00">2026-08-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第13课：OpenManus实战与架构分析课程信息   项目 内容    课程定位 开源框架解剖课——用架构师视角逐层解剖OpenManus，检验第12课自建编排引擎的设计判断，为第14课多Agent协作架构做准备   前置依赖 第01课（Harness五功能）、第03课（ReAct状态机）、第05课（工具调用与执行安全）、第11课（MCP协议）、第12课（StateGraph编排）   时间分配 架构分析20min + 二次开发20min + 习题15min（合计约55min）   知识深度 四层架构内聚耦合矩阵 &#x2F; ReAct状态转移图（含恢复语义）&#x2F; 沙箱双轨制 &#x3D; 必须掌握；Agent继承树 &#x2F; 工具全景 &#x2F; LLM集成层 &#x2F; Browser MCP化细节 &#x3D; 应当理解；OpenManus-RL &#x2F; Java移植版 &#x2F; 社区生态 &#x3D; 知晓即可   框架版本 OpenManus main分支（FoundationAgents，535 commits，2026-08-25源码级...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/24/AI-Agent/AI%20Agent/0012-LangChain%E4%B8%8ELangGraph%E5%AE%9E%E6%88%98-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第12课：LangChain/LangGraph实战">第12课：LangChain/LangGraph实战</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-23T16:00:00.000Z" title="发表于 2026-08-24 00:00:00">2026-08-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第12课：LangChain&#x2F;LangGraph实战课程信息   项目 内容    课程定位 编排层核心课——把控制流从”手写while循环”升级为”显式状态图+持久化checkpoint”，研究助手获得可中断、可恢复、可回放的编排引擎   前置依赖 第03课（ReAct状态机）、第05课（工具调用）、第10课（完整架构图与CRAG）、第11课（MCP工具服务）   时间分配 框架原理15min + 实战20min + 异步架构5min + 习题10min（合计约50min）   知识深度 StateGraph形式化&#x2F;Conditional Edge路由&#x2F;Checkpoint恢复&#x2F;事件驱动架构 &#x3D; 必须掌握；LCEL&#x2F;create_agent&#x2F;并行与子图&#x2F;HITL中断&#x2F;超时策略&#x2F;mini引擎代码 &#x3D; 应当理解；LangGraph Platform&#x2F;流式v3细节&#x2F;DeltaChannel内部 &#x3D; 知晓即可   框架版本 LangChain 1....</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/23/AI-Agent/AI%20Agent/0011-MCP%E5%8D%8F%E8%AE%AE%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第11课：MCP协议深度解析">第11课：MCP协议深度解析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-22T16:00:00.000Z" title="发表于 2026-08-23 00:00:00">2026-08-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第11课：MCP协议深度解析课程信息   项目 内容    课程定位 协议层第一课——工具服务化，单体Agent走向服务化架构的第一步   前置依赖 第05课（Function Calling与工具调用）、第10课（完整架构图与Agentic RAG）   时间分配 协议原理20min + Server开发20min + 项目关联5min + 习题10min（合计约55min）   知识深度 无状态核心与状态管理迁移&#x2F;三大原语JSON-RPC契约 &#x3D; 必须掌握；MRTR&#x2F;Header路由&#x2F;CAP分析&#x2F;SDK开发流程 &#x3D; 应当理解；Tasks扩展&#x2F;EMA授权&#x2F;CIMD&#x2F;Serverless生态 &#x3D; 知晓即可   规范版本 MCP 2026-07-28（v2.0）+ Python SDK v2稳定版【联网更新v5.6】    本课对项目的贡献：「企业级智能研究助手Agent系统」第10课的架构图已经把九个模块串成了完整蓝图，但其中有一个角落我们一直没动：工具调用层。search_pap...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/08/22/AI-Agent/AI%20Agent/0010-RAG%E4%B8%8EAgent%E6%B7%B1%E5%BA%A6%E9%9B%86%E6%88%90-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第10课：RAG与Agent深度集成实战（项目线贯通点）">第10课：RAG与Agent深度集成实战（项目线贯通点）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-08-21T16:00:00.000Z" title="发表于 2026-08-22 00:00:00">2026-08-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">第10课：RAG与Agent深度集成实战（项目线贯通点）课程信息   项目 内容    课程定位 项目线贯通点——串联第1-9课全部模块，产出研究助手完整架构图   前置依赖 第06-08课（RAG三课）、第09课（记忆系统）、第03课（推理架构）、第05课（工具调用）   时间分配 理论推导15min + 项目实战20min + 架构决策5min + 评估方法5min + 习题10min（合计约55min）   知识深度 CRAG三级评估&#x2F;Self-RAG反思token&#x2F;Agentic RAG决策树&#x2F;四维决策矩阵&#x2F;LLM-as-a-Judge闭环 &#x3D; 必须掌握；评估环境设计&#x2F;统计显著性 &#x3D; 应当理解；MinerU 2.5-Pro&#x2F;LLM Wiki编译器模式&#x2F;JURY面板 &#x3D; 知晓即可    本课对项目的贡献：「企业级智能研究助手Agent系统」本课是全课程的第一个合龙点。前9课各自贡献了一个模块，本课做三件事： 123456789第1-9课状态：九个独立模块，各自能跑，互不连通 ...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-Agent/"><span class="card-category-list-name">AI Agent</span><span class="card-category-list-count">33</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" style="font-size: 1.1em; color: #999">学习资料</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/09/">
+            <span class="card-archive-list-date">
+              九月 2026
+            </span>
+            <span class="card-archive-list-count">9</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/08/">
+            <span class="card-archive-list-date">
+              八月 2026
+            </span>
+            <span class="card-archive-list-count">24</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">33</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-09-13T15:03:10.061Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,1057 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI Agent系统架构设计 — 教学大纲 | HandyEs的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="AI Agent系统架构设计 — 教学大纲课程基本信息   项目 内容    课程名称 AI Agent系统架构设计   培养目标 AI Agent系统架构设计师   授课对象 信息与计算科学专业本科毕业生（具备数学、编程、ML基础）   课程形式 夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）   先修知识 Python、线">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Agent系统架构设计 — 教学大纲">
+<meta property="og:url" content="https://handyes.github.io/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/index.html">
+<meta property="og:site_name" content="HandyEs的博客">
+<meta property="og:description" content="AI Agent系统架构设计 — 教学大纲课程基本信息   项目 内容    课程名称 AI Agent系统架构设计   培养目标 AI Agent系统架构设计师   授课对象 信息与计算科学专业本科毕业生（具备数学、编程、ML基础）   课程形式 夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）   先修知识 Python、线">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-08-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-13T14:58:49.600Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI Agent系统架构设计 — 教学大纲",
+  "url": "https://handyes.github.io/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-08-11T16:00:00.000Z",
+  "dateModified": "2026-09-13T14:58:49.600Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI Agent系统架构设计 — 教学大纲',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyEs的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">AI Agent系统架构设计 — 教学大纲</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">AI Agent系统架构设计 — 教学大纲</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-11T16:00:00.000Z" title="发表于 2026-08-12 00:00:00">2026-08-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T14:58:49.600Z" title="更新于 2026-09-13 22:58:49">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="AI-Agent系统架构设计-—-教学大纲"><a href="#AI-Agent系统架构设计-—-教学大纲" class="headerlink" title="AI Agent系统架构设计 — 教学大纲"></a>AI Agent系统架构设计 — 教学大纲</h1><h2 id="课程基本信息"><a href="#课程基本信息" class="headerlink" title="课程基本信息"></a>课程基本信息</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课程名称</td>
+<td>AI Agent系统架构设计</td>
+</tr>
+<tr>
+<td>培养目标</td>
+<td>AI Agent系统架构设计师</td>
+</tr>
+<tr>
+<td>授课对象</td>
+<td>信息与计算科学专业本科毕业生（具备数学、编程、ML基础）</td>
+</tr>
+<tr>
+<td>课程形式</td>
+<td>夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）</td>
+</tr>
+<tr>
+<td>先修知识</td>
+<td>Python、线性代数、概率统计、机器学习基础、计算机网络基础</td>
+</tr>
+<tr>
+<td>开课日期</td>
+<td>2026年8月</td>
+</tr>
+</tbody></table>
+<h2 id="培养目标"><a href="#培养目标" class="headerlink" title="培养目标"></a>培养目标</h2><p>完成本课程后，学生将具备以下能力：</p>
+<ol>
+<li><strong>系统设计能力</strong>：能从零设计完整的AI Agent系统架构，包括感知-决策-行动闭环、记忆系统、工具体系</li>
+<li><strong>协议掌握能力</strong>：深入理解并实际开发MCP Server&#x2F;Client，掌握A2A多Agent通信协议</li>
+<li><strong>框架实战能力</strong>：能使用LangChain&#x2F;LangGraph、OpenManus等框架构建生产级Agent应用</li>
+<li><strong>模型优化决策能力</strong>：理解LoRA&#x2F;QLoRA微调、模型蒸馏与量化压缩的原理，能做出技术选型与调优决策</li>
+<li><strong>工程部署能力</strong>：能设计高并发推理服务架构，规划GPU集群，完成Agent系统的生产级部署</li>
+<li><strong>评估与可观测性能力</strong>：能设计Agent评估体系、测试方案和生产监控架构</li>
+<li><strong>应用前沿认知</strong>：了解AI Coding范式变革和多模态Agent趋势，知晓Agent技术的应用前沿与能力边界</li>
+</ol>
+<h2 id="课程结构设计：双线并行"><a href="#课程结构设计：双线并行" class="headerlink" title="课程结构设计：双线并行"></a>课程结构设计：双线并行</h2><table>
+<thead>
+<tr>
+<th>线路</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>明线（知识线）</strong></td>
+<td>22课技术递进结构，每课聚焦自身核心知识点</td>
+</tr>
+<tr>
+<td><strong>暗线（项目线）</strong></td>
+<td>贯穿全课程的虚拟项目：<strong>“企业级智能研究助手Agent系统”</strong>，每课实战部分贡献项目的不同模块</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">项目线进展：</span><br><span class="line"></span><br><span class="line">第1-5课   → 基础架构层：Harness工程框架 + PDA循环 + 上下文工程 + 工具调用骨架</span><br><span class="line">第6-10课  → 知识层：RAG知识库 + 记忆系统 + Agentic RAG集成 + 项目架构贯通</span><br><span class="line">第11-15课 → 协议层：MCP工具服务 + LangGraph编排 + 异步Agent + 多Agent协作</span><br><span class="line">第16-18课 → 模型层：模型加载/调用 + 后训练(SFT+Agentic RL) + 蒸馏压缩选型</span><br><span class="line">第19-20课 → 部署层：高并发推理 + GPU集群 + 生产监控 + 安全隔离</span><br><span class="line">第21课    → 进化层：Agent持续进化与自学习机制（含多模态Agent与Computer Use前沿）</span><br><span class="line">第22课    → 应用前沿层：AI Coding范式与Agent应用场景拓展</span><br><span class="line"></span><br><span class="line">毕业答卷 = 完成该项目的完整架构设计方案</span><br></pre></td></tr></table></figure>
+
+<h2 id="实战教学定义：引导式代码实践"><a href="#实战教学定义：引导式代码实践" class="headerlink" title="实战教学定义：引导式代码实践"></a>实战教学定义：引导式代码实践</h2><p>每课实战部分包含三个层次：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>内容</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>完整可运行代码</strong></td>
+<td>附环境配置说明、最小数据集&#x2F;mock数据、预期输出</td>
+<td>MCP Server完整代码 + pip install命令</td>
+</tr>
+<tr>
+<td><strong>关键修改引导</strong></td>
+<td>代码中标注修改点，引导学生主动实验</td>
+<td>“将chunk_size从512改为256，观察检索效果变化”</td>
+</tr>
+<tr>
+<td><strong>架构决策练习</strong></td>
+<td>真实场景约束下的技术选型决策</td>
+<td>“预算5000$&#x2F;月、100并发、中文检索，选择向量数据库并说明理由”</td>
+</tr>
+</tbody></table>
+<p><strong>环境降级方案</strong>：对于需要GPU&#x2F;API Key的实战，提供：</p>
+<ul>
+<li><p>完整版：真实GPU环境运行（可选拓展，非默认路径）</p>
+</li>
+<li><p>降级版：CPU模拟&#x2F;Colab免费版&#x2F;API mock替代</p>
+</li>
+<li><p>最小版：阅读预置输出 + 分析结果（<strong>默认教学路径</strong>）</p>
+</li>
+</ul>
+<blockquote>
+<p>⚠️ v4.0调整（grill-me决策D1）：因无GPU&#x2F;集群实操环境，全课程默认采用”最小版”路径进行教学。第16-18课以”分析决策+编写配置方案”为主，第19-20课以”架构设计+容量规划+成本估算”为主，代码部分改为计算器&#x2F;规划器工具。完整版GPU实操作为可选拓展，不作为教学必需路径。</p>
+</blockquote>
+<h2 id="技术栈全景"><a href="#技术栈全景" class="headerlink" title="技术栈全景"></a>技术栈全景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│                    AI Agent系统架构设计师                   │</span><br><span class="line">├──────────────┬───────────────┬──────────────────────────┤</span><br><span class="line">│   模型层      │   协议层       │      工程层               │</span><br><span class="line">│              │               │                          │</span><br><span class="line">│ LLM内部机制   │ MCP协议       │ 高并发推理服务(vLLM/SGLang) │</span><br><span class="line">│ Transformer  │ A2A协议       │ GPU集群规划               │</span><br><span class="line">│ Attention    │ Function Call │ 负载均衡与缓存             │</span><br><span class="line">│              │               │                          │</span><br><span class="line">│ Fine-tuning  │   框架层       │   应用层                  │</span><br><span class="line">│ LoRA/QLoRA   │ LangChain     │ Prompt Engineering       │</span><br><span class="line">│ 模型蒸馏      │ LangGraph     │ RAG检索增强               │</span><br><span class="line">│ 量化压缩      │ OpenManus     │ 记忆系统                  │</span><br><span class="line">│              │               │ 多Agent协作               │</span><br><span class="line">│ PyTorch      │               │ 评估与可观测性             │</span><br><span class="line">│ TensorFlow   │               │                          │</span><br><span class="line">├──────────────┴───────────────┴──────────────────────────┤</span><br><span class="line">│                  深度学习平台 (PyTorch / TensorFlow)        │</span><br><span class="line">└─────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="知识深度边界"><a href="#知识深度边界" class="headerlink" title="知识深度边界"></a>知识深度边界</h2><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>标准</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>必须掌握</strong></td>
+<td>能推导核心公式、解释参数影响</td>
+<td>推导LoRA的W&#x3D;W₀+BA，解释rank r对效果和显存的影响</td>
+</tr>
+<tr>
+<td><strong>应当理解</strong></td>
+<td>能阅读代码、理解流程、修改参数</td>
+<td>看懂QLoRA训练脚本，调整learning rate和batch size</td>
+</tr>
+<tr>
+<td><strong>知晓即可</strong></td>
+<td>知道存在、知道用途、知道何时调用</td>
+<td>知道GPTQ量化算法原理，能决定是否使用，不需手写实现</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>原则：架构设计师需要知道”用什么、为什么用、怎么配”，而非”从零造轮子”。</p>
+</blockquote>
+<h2 id="教学进度表"><a href="#教学进度表" class="headerlink" title="教学进度表"></a>教学进度表</h2><h3 id="第一单元：Agent核心架构与Prompt工程（第1-5课）"><a href="#第一单元：Agent核心架构与Prompt工程（第1-5课）" class="headerlink" title="第一单元：Agent核心架构与Prompt工程（第1-5课）"></a>第一单元：Agent核心架构与Prompt工程（第1-5课）</h3><ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第01课：AI Agent历史演变（半节）+ 系统架构总览（半节） ✅（2026-08-09 完成，2026-08-12 v2更新引入Harness工程）</p>
+<ul>
+<li><p>历史脉络：符号主义→专家系统→强化学习→LLM Agent→多Agent协同（25分钟速览）</p>
+</li>
+<li><p>核心架构：Harness工程框架（五功能：上下文与工具&#x2F;约束&#x2F;验证&#x2F;纠正&#x2F;编排）、PDA循环作为Harness编排功能的具体实现、记忆系统、工具体系、反思机制的全局视图（20分钟）</p>
+</li>
+<li><p>项目引入：介绍”企业级智能研究助手Agent”项目背景与目标</p>
+</li>
+<li><p>时间分配：历史速览25min + 架构总览20min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：Harness工程五功能框架、Agent系统组件分解、PDA循环形式化描述、LLM作为决策核心的架构范式</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第02课：LLM内部机制——Agent架构师视角 ✅（2026-08-10 完成，2026-08-12 v2更新标注上下文工程基础）</p>
+<ul>
+<li><p>Transformer架构：聚焦影响Agent设计的部分（Embedding→Attention→FFN→Output）</p>
+</li>
+<li><p>注意力机制：Scaled Dot-Product Attention公式推导、Multi-Head的并行计算</p>
+</li>
+<li><p>KV Cache原理：上下文工程底层基础——内存占用计算公式、为什么影响推理成本与并发设计</p>
+</li>
+<li><p>Tokenizer：BPE&#x2F;SentencePiece对Prompt Engineering和Token成本的影响</p>
+</li>
+<li><p>时间分配：理论推导20min + 工程分析15min + 项目关联10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：Attention计算复杂度O(n²d)推导、KV Cache显存占用公式、上下文窗口对RAG分块和记忆设计的约束分析</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion ✅（2026-08-11 完成）</p>
+<ul>
+<li><p>ReAct模式：Reasoning+Acting交替循环，Thought-Action-Observation三元组形式化</p>
+</li>
+<li><p>Plan-and-Execute：任务分解DAG构建、Planner-Executor分离架构</p>
+</li>
+<li><p>Reflexion：自我反思闭环，Verbal Reinforcement Learning，反思记忆的写入与利用</p>
+</li>
+<li><p>推理循环工程实现：状态机模型、终止条件设计、错误恢复策略</p>
+</li>
+<li><p>【评估融入】推理质量评估：ReAct轨迹正确性度量、任务完成率指标设计</p>
+</li>
+<li><p>时间分配：理论推导20min + 工程实现15min + 评估方法5min + 习题15min</p>
+</li>
+<li><p><strong>核心知识点</strong>：三种推理模式的状态机形式化对比、ReAct循环的终止条件设计、Reflexion反思记忆的更新策略</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第04课：上下文工程与Prompt设计 ✅（2026-08-12 完成）</p>
+<ul>
+<li><p>CoT（Chain-of-Thought）：推理链构造，Zero-shot&#x2F;Few-shot CoT的触发机制</p>
+</li>
+<li><p>ToT（Tree-of-Thoughts）：树搜索式推理，BFS&#x2F;DFS策略选择，状态评估函数设计</p>
+</li>
+<li><p>结构化输出控制：JSON Schema约束、Constrained Decoding的有限状态机原理</p>
+</li>
+<li><p>系统提示词工程：角色定义、工具描述、Few-shot模板的工程化设计方法</p>
+</li>
+<li><p>Agent Skills按需加载：动态加载提示词解决提示词无限膨胀问题、Skills与工具列表的协同管理（grill-me决策D2）</p>
+</li>
+<li><p>上下文压缩策略：长对话中的主动压缩方法、摘要保留与信息损失权衡</p>
+</li>
+<li><p>Agent状态栏技术：让Agent感知执行环境、用户时间&#x2F;工作状态的设计模式</p>
+</li>
+<li><p>Prompt注入攻击与防御：Agent场景下的安全边界设计、输入消毒策略（输入安全层）</p>
+</li>
+<li><p>时间分配：理论推导15min + 工程实践20min + 安全设计10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：ToT搜索算法的BFS&#x2F;DFS实现、Constrained Decoding的FSM原理、Agent Skills按需加载机制、上下文压缩策略的信息损失权衡、Prompt注入的攻击向量分类与防御模式</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第05课：Function Calling与工具调用机制 ✅（2026-08-13 完成）</p>
+<ul>
+<li><p>Function Calling协议：OpenAI&#x2F;Anthropic&#x2F;Google三家的实现差异与适配策略</p>
+</li>
+<li><p>JSON Schema工具描述：参数验证、类型系统、枚举约束、递归Schema</p>
+</li>
+<li><p>并行工具调用：多工具并发执行的调度与结果聚合、依赖图分析</p>
+</li>
+<li><p>工具调用错误处理：重试策略、降级方案、超时控制、有限状态机设计</p>
+</li>
+<li><p>【安全融入】工具调用安全：危险操作分级与确认机制、越权操作检测、操作审计日志（执行安全层，grill-me决策D14）</p>
+</li>
+<li><p>自定义工具开发实战：从需求分析到Schema设计到实现（项目：研究助手的搜索工具）</p>
+</li>
+<li><p>多模态工具封装：将VLM调用封装为Agent工具（如analyze_image工具），多模态输入的统一表征与分发（grill-me决策D2）</p>
+</li>
+<li><p>【评估融入】工具调用测试：Mock工具测试框架、工具调用回归测试策略</p>
+</li>
+<li><p>时间分配：理论15min + 实战20min + 安全设计5min + 测试方法5min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：JSON Schema类型系统与验证机制、并行调用的依赖图拓扑排序、危险操作分级与确认机制设计、错误处理FSM的完整状态转换设计</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📋 <strong>里程碑</strong>：完成第5课后 → 生成「总结报告1」（含项目基础架构层进展 + Agent评估体系阶段性梳理）</p>
+</blockquote>
+<h3 id="第二单元：RAG检索增强与Agent记忆（第6-10课）"><a href="#第二单元：RAG检索增强与Agent记忆（第6-10课）" class="headerlink" title="第二单元：RAG检索增强与Agent记忆（第6-10课）"></a>第二单元：RAG检索增强与Agent记忆（第6-10课）</h3><ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第06课：RAG基础架构与完整流水线 ✅（2026-08-14 完成）</p>
+<ul>
+<li><p>RAG架构总览：Indexing→Retrieval→Generation三阶段流水线</p>
+</li>
+<li><p>Embedding模型原理：对比学习InfoNCE损失函数推导、句向量空间几何结构；2026年主流模型选型（Qwen3-Embedding-8B MTEB第一&#x2F;BGE-M3 Dense+Sparse+Multi-vec混合检索）</p>
+</li>
+<li><p>向量相似度计算：Cosine、Dot Product、L2距离的数学等价性与工程选择</p>
+</li>
+<li><p>向量数据库对比：FAISS v1.15.0&#x2F;Milvus v3.0.0&#x2F;Pinecone&#x2F;Chroma&#x2F;pgvector的索引算法与选型决策矩阵（含pgvector CVE-2026-3172安全提醒、Milvus v3.0湖原生架构、FAISS EDEN量化器与RaBitQ优化）</p>
+</li>
+<li><p>时间分配：理论推导20min + 工程实践15min + 项目关联10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：InfoNCE损失函数推导、HNSW索引算法原理（分层小世界图）、向量数据库选型决策矩阵</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第07课：RAG进阶——分块、检索与重排序 ✅（2026-08-17 完成）</p>
+<ul>
+<li><p>文档分块策略：固定窗口、语义分块、递归分块、父子分块的工程实现与适用场景</p>
+</li>
+<li><p>Late Chunking（2026新策略，知晓即可）：长上下文Embedding模型下”先整文编码、后分块池化”，保留跨句指代语义；适用长文档（~8K token），需长上下文Embedding（如Jina embeddings-v3）【联网更新v5.2】</p>
+</li>
+<li><p>混合检索：BM25稀疏检索 + 稠密向量检索的融合，Reciprocal Rank Fusion公式推导；BGE-M3的Dense+Sparse一体输出复用</p>
+</li>
+<li><p>重排序模型：Cross-Encoder vs Bi-Encoder复杂度分析；2026选型矩阵——BGE-Reranker-v2-m3（568M默认多语言）&#x2F;v2-MiniCPM（2.7B速度质量平衡）&#x2F;v2-Gemma（9B最高质量）、Qwen3-Reranker（4B&#x2F;8B新选项）、Cohere Rerank API；Jina ColBERT v2 late-interaction模型认知（知晓即可）【联网更新v5.2】</p>
+</li>
+<li><p>检索质量评估：RAGAS框架，Context Relevance&#x2F;Faithfulness&#x2F;Answer Relevance指标；RAGAS v0.2 API变更——metric需以llm&#x2F;embeddings实例化后传入evaluate()，faithfulness 0.19+评分逻辑更严格【联网更新v5.2】</p>
+</li>
+<li><p>时间分配：理论推导15min + 工程实践20min + 评估方法10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：RRF公式推导与分数归一化、Cross-Encoder重排序的O(n×L²)复杂度分析、RAGAS评估框架的三维度计算方法</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第08课：RAG进阶——查询优化与高级架构 ✅（2026-08-18 完成）</p>
+<ul>
+<li><p>查询改写：Query Rewriting、HyDE（Hypothetical Document Embedding）的向量空间偏移分析</p>
+</li>
+<li><p>自查询：LLM生成结构化过滤条件（metadata filtering）的实现机制</p>
+</li>
+<li><p>多路检索：Multi-Query、RAG-Fusion的并行检索与结果合并</p>
+</li>
+<li><p>GraphRAG：知识图谱增强检索，实体抽取与关系推理，图遍历算法；2026查询模式全景（Global&#x2F;Local&#x2F;DRIFT&#x2F;Basic四模式+增量索引），生态对比LightRAG（v1.5.x，增量更新主打工程落地）&#x2F;HippoRAG2（PPR多跳最强），WildGraphBench实证——简单事实查询BM25仍有竞争力、多事实聚合MS GraphRAG(global)最优【联网更新v5.3】</p>
+</li>
+<li><p>时间分配：理论推导20min + 工程实践15min + 项目关联10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：HyDE的向量空间偏移数学分析、GraphRAG实体关系图构建与PageRank式排序、多路检索的分数归一化策略</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第09课：Agent记忆系统设计 ✅（2026-08-19 完成）</p>
+<ul>
+<li><p>短期记忆（工作记忆）：上下文窗口管理、滑动窗口、摘要压缩的Token预算分配</p>
+</li>
+<li><p>长期记忆：Episodic&#x2F;Semantic&#x2F;Procedural三类记忆的认知科学模型映射</p>
+</li>
+<li><p>记忆检索：向量检索召回、时间衰减权重函数、重要性评分算法；MemGPT&#x2F;Letta分层内存与自编辑记忆（记忆即工具）；2026检索范式前沿——MemR3反思式检索（retrieve&#x2F;reflect&#x2F;answer路由+证据缺口跟踪）、MRAgent”记忆是重构而非检索”（ICML 2026，最高+23%）、MemoryCPT成本感知QPC指标（知晓即可）【联网更新v5.4】</p>
+</li>
+<li><p>记忆更新策略：遗忘曲线（指数衰减函数）、记忆合并与去重、冲突解决机制（Zep时序知识图谱valid_from&#x2F;valid_to事实版本化——被反驳不删除）、记忆巩固（episodic→semantic提升、A-MEM记忆演化、Cognee memify巩固）；记忆污染攻击与防御（写入白名单+检索消毒+审计台账）【联网更新v5.4】</p>
+</li>
+<li><p>工程实现：基于Redis + 向量数据库的记忆系统架构设计（项目：研究助手的记忆模块）；2026记忆框架生态四大阵营选型矩阵——vector+抽取（Mem0 SDK 2.0单遍抽取~50%写延迟降低、Plugin v1.0.0九MCP工具+四生命周期钩子）&#x2F;graph-first（Zep Graphiti v0.29.0、Cognee v1.0.4）&#x2F;filesystem-first（Letta Context Repositories记忆&#x3D;git仓库）&#x2F;research-grade（MemoryOS EMNLP 2025 LoCoMo +49.11% F1、A-MEM NeurIPS 2025）；厂商基准警示——Zep LoCoMo 84%被社区纠正为58.44%，选型前须自有数据复现【联网更新v5.4】</p>
+</li>
+<li><p>时间分配：理论推导15min + 工程实践20min + 项目关联10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：三类记忆的数学模型形式化、记忆重要性评分函数设计、遗忘曲线的指数衰减M(t)&#x3D;M₀·e^(-t&#x2F;τ)参数选择</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第10课：RAG与Agent深度集成实战（项目线贯通点） ✅（2026-08-20 完成）</p>
+<ul>
+<li><p>知识增强Agent架构：RAG作为Agent的”知识工具”</p>
+</li>
+<li><p>Agentic RAG：Agent自主决定何时检索、检索什么、如何使用检索结果</p>
+</li>
+<li><p>Corrective RAG（CRAG）：检索质量评估与三级自我纠正机制</p>
+</li>
+<li><p>Self-RAG：Agent自主决定是否需要检索、是否需要重新检索，反思token设计</p>
+</li>
+<li><p>多模态RAG：处理含图表的PDF&#x2F;论文，VLM提取图表信息纳入知识库，MinerU2.5-Pro文档解析（OmniDocBench v1.6达95.69，数据引擎驱动；支持MCP协议接入；grill-me决策D2）【联网更新v5.5】</p>
+</li>
+<li><p>RAG vs 替代方案：架构决策框架——Long-Context vs RAG四维决策矩阵（2026实证：精度56.3% vs 49.0%但Token成本50倍，1000页×1000请求&#x2F;日场景RAG便宜8-82倍，Context Rot注意力稀释）、Agentic Search vs 预检索RAG、LLM Wiki”编译器模式”概念（grill-me决策D5）【联网更新v5.5】</p>
+</li>
+<li><p>【评估融入·增强】Agent评估体系全景图：LLM-as-a-Judge方法与偏差校正（2026研究：单Judge与ground truth一致率仅87.6%、位置&#x2F;冗长偏差率0.73；JURY偏差感知面板+PlanJudge两步法；生产纪律&#x3D;顺序交换+双Judge交叉）、评估环境设计（Mock工具&#x2F;沙箱&#x2F;仿真）、统计显著性基础（配对检验&#x2F;样本量&#x2F;p值陷阱）、评估到改进的完整闭环（grill-me决策D8）【联网更新v5.5】</p>
+</li>
+<li><p>项目线贯通：研究助手Agent完整架构设计——串联第1-10课所有项目模块（PDA循环&#x2F;LLM选型&#x2F;推理架构&#x2F;上下文工程&#x2F;工具调用&#x2F;RAG流水线&#x2F;记忆系统）为完整架构图（grill-me决策D7）</p>
+</li>
+<li><p>完整项目实战：构建研究助手的知识增强模块</p>
+</li>
+<li><p>时间分配：理论推导15min + 项目实战20min + 架构决策5min + 评估方法5min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：CRAG三级检索质量评估策略（correct&#x2F;ambiguous&#x2F;incorrect）、Self-RAG的Retrieve&#x2F;Critique&#x2F;Relocate反思token设计、Agentic RAG决策树、Long-Context vs RAG的四维决策矩阵、LLM-as-a-Judge方法与评估闭环</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📋 <strong>里程碑</strong>：完成第10课后 → 生成「总结报告2」+「短期报告1」（含项目知识层进展 + Agent评估体系全景图）</p>
+</blockquote>
+<h3 id="第三单元：MCP协议与框架实战（第11-15课）"><a href="#第三单元：MCP协议与框架实战（第11-15课）" class="headerlink" title="第三单元：MCP协议与框架实战（第11-15课）"></a>第三单元：MCP协议与框架实战（第11-15课）</h3><ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第11课：MCP协议深度解析 ✅（2026-08-21 完成，同日v5.6联网更新细化v2.0机制与SDK v2）</p>
+<ul>
+<li><p>MCP 2026-07-28 v2.0规范：无状态请求&#x2F;响应模型（initialize握手与Mcp-Session-Id正式退役、请求经_meta自描述、server&#x2F;discover能力发现RPC）、从有状态双向协议的迁移方案（显式handle模式；双版本共存——同一Server同时服务2025&#x2F;2026两代客户端）</p>
+</li>
+<li><p>协议核心：Tools、Resources、Prompts三大原语的设计哲学与接口契约（控制权三元组：模型&#x2F;应用&#x2F;用户；JSON Schema输入验证；列表缓存ttlMs&#x2F;cacheScope提示）</p>
+</li>
+<li><p>MRTR多轮往返请求（SEP-2322）：resultType:”input_required”+inputResponses重试，替代server发起的elicitation&#x2F;sampling&#x2F;roots请求；Header路由（SEP-2243）：Mcp-Method&#x2F;Mcp-Name请求头，网关免解析body即可路由&#x2F;限流&#x2F;授权【联网更新v5.6】</p>
+</li>
+<li><p>授权强化与Extensions框架：RFC 9207 iss验证、client credentials绑定issuer、DCR弃用→CIMD；Tasks移入io.modelcontextprotocol&#x2F;tasks扩展（SEP-2663，poll-based tasks&#x2F;get+tasks&#x2F;update+subscriptions&#x2F;listen单流）、MCP Apps与EMA；弃用清单——Roots&#x2F;Sampling&#x2F;Logging（SEP-2577，12个月窗口）、ping移除、HTTP+SSE transport弃用【联网更新v5.6】</p>
+</li>
+<li><p>MCP Server开发：从零实现一个MCP Server（Python SDK v2稳定版实战——FastMCP更名MCPServer、一等公民Client三连接形态、Resolve(fn)&#x2F;Elicit用户输入、低层Server构造函数式handler，项目：研究助手的文献检索服务）【联网更新v5.6】</p>
+</li>
+<li><p>MCP Client集成：与Claude&#x2F;GPT等LLM的对接，v2.0的Serverless&#x2F;Edge部署（无状态核心使MCP成为first-class HTTP workload，Cloudflare Workers&#x2F;Netlify&#x2F;Bedrock AgentCore原生支持）</p>
+</li>
+<li><p>服务发现与路由：server&#x2F;discover（server必须实现、client可选调用）+header路由网关架构（网关不持session状态）、无状态化对CAP权衡的天然规避分析（原”分布式服务注册机制”表述校准——v2.0无传统注册中心，能力发现+路由头+无状态实例构成服务网格基础）【联网更新v5.6】</p>
+</li>
+<li><p>时间分配：协议原理20min + Server开发20min + 项目关联5min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：MCP v2.0无状态协议的状态管理迁移方案（显式handle模式）、三大原语的JSON-RPC接口契约、MRTR多轮往返请求机制、header路由与服务发现的CAP权衡分析</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第12课：LangChain&#x2F;LangGraph实战 ✅（2026-08-24 完成，同日v5.7联网更新——LangChain 1.x&#x2F;LangGraph 1.2生产强化&#x2F;checkpoint安全CVE）</p>
+<ul>
+<li><p>LangChain 1.x架构（1.0于2025-10发布，语义化版本承诺2.0前无破坏性变更）：LCEL流水线编排、Runnable接口；AgentExecutor&#x2F;LLMChain已移除→create_agent成为标准Agent API（prebuilt并入langchain包，基于LangGraph运行时+middleware架构）【联网更新v5.7】</p>
+</li>
+<li><p>LangGraph核心（当前1.2.x）：StateGraph&#x2F;Node&#x2F;Edge&#x2F;Conditional Edge的图编程模型；1.2生产强化——节点级超时TimeoutPolicy(run_timeout&#x2F;idle_timeout→NodeTimeoutError)、DeltaChannel增量检查点（snapshot_frequency&#x3D;K，解决O(N²)写放大）、流式API v3类型化内容块（run.messages&#x2F;run.values&#x2F;run.subgraphs&#x2F;run.lifecycle投影）【联网更新v5.7】</p>
+</li>
+<li><p>状态持久化：Checkpoint到PostgreSQL，断点恢复与回放机制；checkpoint安全——CVE-2025-64439（反序列化RCE）&#x2F;CVE-2025-67644（SQLite注入CVSS 7.3）&#x2F;langchain-core CVE-2025-68664（LangGrinch序列化注入，需1.2.5+）——“checkpoint即攻击面”【联网更新v5.7】</p>
+</li>
+<li><p>高级特性：并行执行（Fan-out与Send动态分发）、Human-in-the-Loop中断（interrupt&#x2F;Command(resume&#x3D;)两种断点形态）、子图嵌套</p>
+</li>
+<li><p>异步Agent与事件驱动架构：同步vs异步Agent对比、事件总线架构、HITL中断与恢复、定时触发（LangGraph Platform Cron：client.crons.create_for_thread）与Webhook集成（grill-me决策D6）</p>
+</li>
+<li><p>实战：用LangGraph构建带状态恢复的多步骤研究Agent（项目核心编排层）</p>
+</li>
+<li><p>时间分配：框架原理15min + 实战20min + 异步架构5min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：StateGraph的状态机形式化定义、Conditional Edge路由函数设计、Checkpoint状态序列化与恢复机制、异步Agent的事件驱动架构设计</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第13课：OpenManus实战与架构分析 ✅（2026-08-25 完成，同日v5.8联网更新——源码级核实Browser Use CLI 3.0 MCP化&#x2F;沙箱双轨制&#x2F;state_context恢复语义）</p>
+<ul>
+<li><p>OpenManus架构分析：基础设施层&#x2F;工具层&#x2F;智能体层&#x2F;流程层的分层设计与内聚耦合评估；2026-08架构快照——仓库535 commits&#x2F;59贡献者&#x2F;~56k stars、Agent继承树扩展（BaseAgent→ReActAgent→ToolCallAgent→{Manus&#x2F;BrowserAgent&#x2F;MCPAgent&#x2F;SandboxAgent&#x2F;SWEAgent&#x2F;DataAnalysisAgent}）、四个入口（main.py单Agent&#x2F;run_flow.py计划流&#x2F;run_mcp.py客户端&#x2F;run_mcp_server.py服务端）【联网更新v5.8】</p>
+</li>
+<li><p>单一ReAct循环：统一调度机制的实现形态（主路径&#x3D;Manus单Agent自循环+MCP动态工具注入；flow路径&#x3D;PlanningFlow的get_executor按[TYPE]标签选择执行者；”AgentCoordinator”为Java移植版对该调度角色的命名），与多Agent架构的本质区别（时间维调度vs空间维协作）</p>
+</li>
+<li><p>工具系统：BaseTool抽象类、代码执行沙箱的安全隔离机制；Browser工具架构演进——内置browser-use库已迁移为Browser Use CLI 3.0 MCP Server（uvx browser-use –cli-mcp、原生browser_exec&#x2F;browser_screenshot工具、MCP server instructions注入memory、”工具即服务”验证第11课判断）【联网更新v5.8】</p>
+</li>
+<li><p>沙箱双轨制：默认路径PythonExecute（multiprocessing.Process+超时，进程级弱隔离——safe_globals仍暴露完整builtins）vs DockerSandbox按需启用（cgroup资源限制mem_limit&#x2F;cpu_quota+network_mode&#x3D;none+路径穿越校验+use_sandbox&#x3D;false默认关闭）——“默认关闭的深度防御”批判性案例</p>
+</li>
+<li><p>LLM集成层：多Provider抽象（api_type：Anthropic&#x2F;Azure&#x2F;Bedrock&#x2F;Ollama&#x2F;Jiekou）、流式响应、上下文管理与重试策略（tenacity指数退避+卡死检测duplicate_threshold）、structlog结构化日志（2026-08新增）；OpenManus-RL姊妹项目（GRPO后训练，衔接第17课）</p>
+</li>
+<li><p>实战：基于OpenManus二次开发自定义Agent（项目：研究助手的工作流定制）</p>
+</li>
+<li><p>时间分配：架构分析20min + 二次开发20min + 习题15min</p>
+</li>
+<li><p><strong>核心知识点</strong>：四层架构的内聚耦合矩阵分析、ReAct循环的完整状态转移图（含state_context恢复语义与卡死检测）、沙箱代码执行的命名空间隔离+资源限制安全机制</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第14课：多Agent系统架构设计 ✅（2026-08-26 完成，同日v5.9联网更新——MAST失败研究&#x2F;Anthropic orchestrator-worker经验&#x2F;2026框架生态快照）</p>
+<ul>
+<li><p>多Agent判据与决策框架：真多Agent判据（空间维协作vs时间维调度，回收第13课伏笔）、多Agent vs 单Agent决策五问、共享结构化工件状态管理共识；MAST失败研究——7框架1,642轨迹生产失败率41%-87%、系统设计缺陷约44%为最大根因类别（协调缺陷而非模型能力），三类根因→三层修复层映射【联网更新v5.9】</p>
+</li>
+<li><p>Supervisor模式：中心化调度器设计，任务分配与结果聚合；Proposer-Reviewer作为Supervisor特例——提交前由独立审核者检查，前置防御vs Reflexion后置纠正的时机对比（grill-me决策D13）；Anthropic orchestrator-worker工程经验——并行子Agent约90%墙钟时间缩减、约15倍token开销、任务描述对Agent行为的高敏感性【联网更新v5.9】</p>
+</li>
+<li><p>Swarm模式：去中心化协作，Agent间Handoff机制与状态传递；OpenAI Agents SDK（Swarm生产级继任者：handoff+guardrails+tracing）与langgraph-swarm为参考实现；多样性崩溃陷阱（ACL 2026：结构耦合推动过早共识，加Agent不保证多样性）【联网更新v5.9】</p>
+</li>
+<li><p>Hierarchical模式：层级化组织，任务委派与结果上报链路（CrewAI hierarchical&#x2F;Google ADK嵌套团队）【联网更新v5.9】</p>
+</li>
+<li><p>Event-Driven模式：事件总线驱动，异步协作与解耦（衔接第12课事件总线；AG2事件驱动编排）</p>
+</li>
+<li><p>多Agent通信：消息格式设计（结构化信封msg_id&#x2F;trace_id&#x2F;hop_count三件套）、状态同步（共享黑板&#x2F;消息传递&#x2F;共享工件+引用三模式）、死锁检测与预防算法（Coffman四条件映射、资源分配图→wait-for图→三色DFS环检测O(V+E)、牺牲者选择、依赖循环&#x2F;资源竞争&#x2F;循环交接&#x2F;协议活锁&#x2F;行为漂移五种失败形态）【联网更新v5.9】</p>
+</li>
+<li><p>多Agent可观测性与失败归因（知晓即可）：MAST分类法作debug checklist、TraceElephant&#x2F;BLAME&#x2F;Aegis&#x2F;LumiMAS归因研究生态【联网更新v5.9】</p>
+</li>
+<li><p>时间分配：模式对比15min + 工程实现20min + 习题20min</p>
+</li>
+<li><p><strong>核心知识点</strong>：四种模式的拓扑&#x2F;通信复杂度&#x2F;容错性形式化对比矩阵、Proposer-Reviewer审核触发时机与Reflexion反思时机的对比、Handoff协议状态机设计、基于资源分配图的死锁检测算法</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第15课：A2A协议与Agent互操作性 ✅（2026-08-27 完成，同日v6.0联网更新——A2A v1.0稳定版&#x2F;Signed Agent Cards&#x2F;ANP v1.1）</p>
+<ul>
+<li><p>A2A（Agent-to-Agent）协议：跨框架Agent通信标准；v1.0稳定版（2026年初，Linux基金会治理下首个生产就绪版本）——四大主题：协议成熟度与标准化（a2a.proto升格普适规范唯一事实源、REST&#x2F;gRPC&#x2F;JSON-RPC三绑定形式化等价）、类型安全（kind判别字段移除改JSON成员多态、枚举SCREAMING_SNAKE_CASE合规ProtoJSON）、开发者体验（八组操作重命名message&#x2F;send→SendMessage等、复合ID简化为UUID、HTTP路径移除&#x2F;v1前缀）、企业就绪（多租户tenant原生支持、ListTasks游标分页）【联网更新v6.0】</p>
+</li>
+<li><p>Agent Card：Agent能力描述与发现机制，JSON-LD语义模型；v1.0结构重组——supportedInterfaces[]每接口独立protocolVersion（url&#x2F;protocolBinding&#x2F;protocolVersion）、skills的tags字段必填驱动skill级匹配、capabilities.extendedAgentCard、signatures[]签名数组【联网更新v6.0】</p>
+</li>
+<li><p>Signed Agent Cards：JWS（RFC 7515）签名+JSON规范化（RFC 8785）的加密身份验证——公开URL上的Card防篡改（接口地址&#x2F;能力&#x2F;安全要求替换攻击防护），组织边界跨域信任建立【联网更新v6.0】</p>
+</li>
+<li><p>Task生命周期管理：任务分配、状态跟踪、结果回收，状态转换图；v1.0八状态TASK_STATE_前缀（SUBMITTED&#x2F;WORKING&#x2F;COMPLETED&#x2F;FAILED&#x2F;CANCELED&#x2F;REJECTED&#x2F;INPUT_REQUIRED&#x2F;AUTH_REQUIRED）、Task不可变性原则（终态不可重启，精炼&#x3D;同contextId新任务+referenceTaskIds引用）、contextId逻辑分组、Agent三形态（Message-only&#x2F;Task-generating&#x2F;Hybrid）、Part对象统一重设计（成员存在性判别text&#x2F;raw&#x2F;url&#x2F;data）【联网更新v6.0】</p>
+</li>
+<li><p>安全机制：Agent身份认证（OAuth 2.0现代化——新增Device Code flow RFC 8628、移除deprecated implicit&#x2F;password流、PKCE pkce_required字段）、授权（tenant租户作用域）、通信加密（mutual TLS）；凭据带外获取原则【联网更新v6.0】</p>
+</li>
+<li><p>互操作性挑战：不同框架间的语义对齐、能力协商的博弈论模型（纳什均衡分析+机制设计激励相容——“接受或放弃”匹配博弈、一次性声明博弈的夸大动机、Signed Card+执行验证&#x3D;可验证博弈）</p>
+</li>
+<li><p>ANP（Agent Network Protocol）协议简介：Agent发现与组网机制，与MCP&#x2F;A2A的定位对比（知晓即可，grill-me决策D13）；v1.1协议族（ANP-07描述&#x2F;ANP-08发现&#x2F;ANP-09端到端即时消息）+W3C DID去中心化身份路线（did:wba方法、私钥挑战签名认证）——与A2A构成”企业联盟中心化 vs 开放网络去中心化”两条路线【联网更新v6.0】</p>
+</li>
+<li><p>AP2（Agent Payments Protocol）与A2A生态前沿：150+组织&#x2F;5语言SDK（Python&#x2F;JS&#x2F;Java&#x2F;Go&#x2F;.NET）&#x2F;22k stars、Microsoft Copilot Studio与Azure AI Foundry与Amazon Bedrock GA、Vertex AI Agent Engine托管部署、LangGraph hosted A2A端点（&#x2F;a2a&#x2F;{assistant_id}+自动Agent Card）、CrewAI AMP（知晓即可）【联网更新v6.0】</p>
+</li>
+<li><p>时间分配：协议原理20min + 工程实现15min + 习题20min</p>
+</li>
+<li><p><strong>核心知识点</strong>：Agent Card的JSON-LD语义描述模型、Task状态机的完整状态转换图、能力协商的纳什均衡分析、ANP与MCP&#x2F;A2A的协议定位对比</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📋 <strong>里程碑</strong>：完成第15课后 → 生成「总结报告3」（含项目协议层进展 + 多Agent架构模式对比矩阵）</p>
+</blockquote>
+<h3 id="第四单元：模型优化、生产部署与持续进化（第16-21课）"><a href="#第四单元：模型优化、生产部署与持续进化（第16-21课）" class="headerlink" title="第四单元：模型优化、生产部署与持续进化（第16-21课）"></a>第四单元：模型优化、生产部署与持续进化（第16-21课）</h3><blockquote>
+<p>⚠️ 本单元定位调整（grill-me决策D3）：聚焦<strong>架构决策与配置调优</strong>，而非从零实现。代码实战聚焦”调用、配置、调优”。</p>
+</blockquote>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第16课：PyTorch&#x2F;TF速通——Agent架构师必需的模型操作能力 ✅（2026-08-28 完成，同日v6.1联网更新——transformers v5&#x2F;PyTorch 2.13&#x2F;ONNX Runtime 1.29&#x2F;Qwen3-VL生态&#x2F;PEFT 0.20&#x2F;TRL 1.8）</p>
+<ul>
+<li><p>PyTorch核心：Autograd计算图原理、nn.Module模型加载与推理调用（非从零构建）；2026版本快照——PyTorch 2.13（2026-07-08：CuTeDSL原生DSL后端成为Inductor第二条高性能代码路径且编译更快、FlexAttention落地Apple Silicon MPS稀疏模式较SDPA约12倍、nn.LinearCrossEntropyLoss大词表LLM训练GPU峰值显存降4倍、Linux Python 3.15 wheel含free-threaded 3.15t构建）【联网更新v6.1】</p>
+</li>
+<li><p>Agent中的模型操作：加载预训练Embedding模型、调用重排序模型、解析模型输出</p>
+</li>
+<li><p>HuggingFace生态全景：Transformers&#x2F;Datasets&#x2F;Tokenizers三大库职责、Model Hub&#x2F;Dataset Hub使用、PEFT与TRL在微调中的角色定位（grill-me决策D6b，知晓即可；PEFT v0.20.0新增HiRA&#x2F;GLoRA等九种方法、TRL v1.8.0含75+后训练方法——原”TRLx”已并入TRL）；transformers v5重大变更——移除TensorFlow与Jax后端（torch成为唯一后端）、动态权重加载API（WeightConverter+ConversionOps支持reshape&#x2F;merge&#x2F;split，量化+MoE&#x2F;TP+MoE组合必需）、Tokenizer四后端架构重构（TokenizersBackend&#x2F;SentencePieceBackend&#x2F;PythonBackend&#x2F;MistralCommonBackend替代slow&#x2F;fast双实现）、apply_chat_template返回BatchEncoding（breaking change）【联网更新v6.1】</p>
+</li>
+<li><p>VLM加载与调用：通过transformers库调用Qwen-VL等多模态模型（grill-me决策D2，知晓即可）；Qwen3-VL生态——2B&#x2F;4B&#x2F;8B&#x2F;32B dense+30B-A3B&#x2F;235B-A22B MoE三模块架构（vision encoder+MLP merger+LLM；Interleaved-MRoPE&#x2F;DeepStack&#x2F;Text-Timestamp Alignment）、Qwen3-VL-Embedding&#x2F;Reranker（MRL灵活维度&#x2F;32k token输入&#x2F;30+语言）多模态检索排序衔接第10课多模态RAG【联网更新v6.1】</p>
+</li>
+<li><p>推理优化：torch.compile配置（torch.compiler.set_stance全局编译姿态旋钮——2.6+引入，force_eager&#x2F;default等模式运行时切换eager与compiled性能对比）、动态图vs静态图选择、ONNX导出与跨平台部署（ONNX Runtime v1.29.0 sparse tensor外部路径安全加固、onnxruntime-genai v0.15.2 LLM跨平台生成推理路径）【联网更新v6.1】</p>
+</li>
+<li><p>TensorFlow Serving：模型版本管理、A&#x2F;B测试配置、灰度发布流程（transformers v5移除TF后端后重新定位——版本管理&#x2F;灰度发布作为通用推理服务方法论教学，HF生态已全面转向torch，知晓即可）【联网更新v6.1】</p>
+</li>
+<li><p>实战：用PyTorch加载并调用一个Agent专用的语义相似度模型（项目：模型调用层）</p>
+</li>
+<li><p>时间分配：原理理解15min + 模型操作实战15min + 生态认知5min + 配置调优5min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：Autograd反向传播链式法则概念理解（非实现）、torch.compile的图优化配置、ONNX导出的算子兼容性检查清单</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第17课：模型后训练——从SFT到Agentic RL ✅（2026-08-31 完成，同日v6.2联网更新——TRL v1.11.0&#x2F;GRPO变体谱系&#x2F;CacheRL实证）</p>
+<ul>
+<li><p>全参数微调vs PEFT：计算复杂度、显存需求、效果对比的决策矩阵</p>
+</li>
+<li><p>LoRA原理：低秩矩阵分解 W &#x3D; W₀ + BA 的数学推导与rank选择策略</p>
+</li>
+<li><p>QLoRA：NF4量化 + LoRA，4-bit NormalFloat的信息论最优性</p>
+</li>
+<li><p>SFT数据构造：Agent场景的工具调用训练数据格式设计、指令-响应对构造原则；CacheRL混合思考轨迹（hybrid thinking trajectory）——用GPT-5为轨迹补充”为什么调这个工具”的因果解释，教小模型why而非仅what（1185个工具、1.5K→44K样本扩展带来21.2%提升）【联网更新v6.2】</p>
+</li>
+<li><p>SFT vs RL定位区分：”SFT记忆格式，RL泛化策略”——SFT让模型记住工具调用格式，RL让模型泛化到未见过的工具组合（grill-me决策D4）；CacheRL实证校准：”RL提升训练稳定性但超越强SFT的增益有限，数据质量与奖励设计比复杂优化算法更重要”（Qwen3-4B-Thinking验证奖励0.43→0.78，92%过程准确率逼近GPT-5的94%且算力1&#x2F;100）【联网更新v6.2】</p>
+</li>
+<li><p>Agentic RL流程：Agent轨迹采集→奖励信号设计→GRPO（分组相对策略优化）训练；轨迹采集的live执行成本问题→CacheRL三级模糊缓存（exact&#x2F;fuzzy&#x2F;best-effort+token级掩码，单轨迹成本从美元级降至分币级）；GRPO变体谱系（知晓即可）——DAPO（2025-03字节Seed：动态采样丢弃零方差组+clip-higher解熵探索受限）、Dr.GRPO（2025-03 Sea AI Lab：常数归一化除以固定值消除长度偏差）、GSM8K实证两者精度几乎相同（78.2% vs 77.9%）→”任务不复杂时变体选择不敏感”【联网更新v6.2】</p>
+</li>
+<li><p>奖励信号设计：二元奖励→过程奖励（PRM）→”奖励结果、约束过程”的验证路径惩罚；CacheRL缓存层级感知奖励（cache-tier-aware reward）——按缓存质量动态加权outcome信号（LLM-as-Judge）与process信号（确定性校验），解决”模型因缓存局限被罚而非决策错误”的归因问题（消融：缓存感知奖励+17%、去掉知识转移-41%）；Agent RL失败模式案例库——过早终止（42% rollouts）、缓存不匹配级联（17%）、工具过度链式调用、元推理代替任务执行【联网更新v6.2】</p>
+</li>
+<li><p>决策框架：”何时用SFT、何时用RL、何时用API+Prompt”的选型矩阵</p>
+</li>
+<li><p>实战：运行QLoRA微调脚本微调7B模型，分析训练曲线与效果（提供完整脚本，学生调参分析）</p>
+</li>
+<li><p>工程生态2026-08快照（知晓即可）：TRL v1.11.0（2026-08-26发布；v1.12.0为误发布之v1.11.0位相同副本，下一真实版本v1.13.0）——<code>trl vllm-serve</code>改为包装vLLM原生服务器（自定义FastAPI从1218行砍至<del>130行、NCCL权重传输引擎、GRPO server-mode提速1.44</del>1.59倍）、v1.10.0 AsyncGRPOTrainer黑盒loop-owning路径（OpenEnv harness训练opencode等自持工具循环的外部Agent，transparent_proxy捕获token ids&#x2F;logprobs重建每轮训练行+rollout_reward_fn&#x2F;train_turn_fn&#x2F;agent_turn_fn三策略钩子）、DistillationTrainer升为顶层稳定trainer并支持工具调用、v1.9.x新增DPPO实验trainer（散度约束替代PPO clipping）；NVIDIA NeMo RL生态（NeMo Gym环境评估+NeMo Data Designer合成数据+可验证奖励）为商用Agent RL训练全栈代表【联网更新v6.2】</p>
+</li>
+<li><p>时间分配：原理推导20min + Agentic RL 10min + 决策分析10min + 脚本调优10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：LoRA低秩近似的SVD理论基础与rank选择策略、NF4量化的KL散度最优性证明概要、SFT记忆与RL泛化的定位区分、GRPO算法流程与奖励信号设计、微调vs RL vs API调用的决策框架</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第18课：模型蒸馏与压缩——选型与评估 ✅（2026-09-01 完成，同日v6.3联网更新——AWQ成INT4默认&#x2F;FP8·NVFP4·MXFP4浮点量化格局&#x2F;OPD蒸馏&#x2F;剪枝vs量化实证）</p>
+<ul>
+<li><p>知识蒸馏：Teacher-Student架构、Soft Target、温度参数τ对softmax分布的影响推导（含τ²系数的两步梯度尺度推导：一阶展开下soft梯度∝1&#x2F;τ²）</p>
+</li>
+<li><p>蒸馏策略选择：Logit蒸馏&#x2F;Feature蒸馏&#x2F;Relation蒸馏的适用场景与ROI分析；白盒&#x2F;黑盒&#x2F;代理（Proxy-KD）三层访问模型；黑盒API蒸馏合规红线（Fable 5提取丑闻后厂商收紧滥用检测）</p>
+</li>
+<li><p>模型量化：PTQ vs QAT对比，INT8&#x2F;INT4精度损失评估，GGUF&#x2F;GPTQ&#x2F;AWQ部署格式选择</p>
+</li>
+<li><p>模型剪枝：结构化vs非结构化剪枝，稀疏度-精度权衡曲线分析</p>
+</li>
+<li><p>实战：运行蒸馏+量化脚本，分析精度损失与推理加速比（运行预置脚本+分析结果）</p>
+</li>
+<li><p>工程生态2026-09快照（知晓即可）：INT4格式实践规则校准——AWQ为服务端新量化默认（PPL损失<del>3.4%最优、吞吐比FP16快</del>31%），GPTQ定位转向复用社区存量artifact，GGUF仍是CPU&#x2F;Apple Silicon&#x2F;端侧唯一格式（量化免GPU约18分钟）；浮点量化格局——FP8（sm_89+，Hopper&#x2F;Blackwell甜点位，动态在线量化免校准）&#x2F;NVFP4（Blackwell SM100专属）&#x2F;MXFP4（OCP开放标准，sm_80+&#x2F;ROCm），NVIDIA官方建议Hopper用FP8、Blackwell用NVFP4；llm-compressor+compressed-tensors成为量化→vLLM标准工作流（替代散装AutoGPTQ&#x2F;AutoAWQ）；蒸馏前沿——On-Policy Distillation兴起（Rubric黑盒OPD在复杂推理任务上被观察可能全面优于白盒OPD，SODA半在线折中路线arXiv 2604.03873，OPD综述arXiv 2604.00626）；剪枝vs量化实证（QP论文）——50%压缩量化最大损失1.81% vs 剪枝16.61%、4-bit 5.6% vs 75%稀疏48.07%（”Junk DNA假设”剪枝损伤不可逆），非结构化剪枝反直觉增强测试时缩放TTS（s1.1-7B&#x2F;Qwen3-8B，arXiv 2604.25098），Minitron”剪枝+蒸馏”产业路线；剪枝教学定位收窄为”2:4半结构化稀疏+模型工厂场景”；TRL DistillationTrainer（v1.10+稳定，支持工具调用蒸馏）衔接第17课【联网更新v6.3】</p>
+</li>
+<li><p>时间分配：原理推导20min + 选型决策15min + 结果分析10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：温度参数τ对softmax分布的平滑效应推导、GPTQ&#x2F;AWQ&#x2F;GGUF三种量化格式的选型决策矩阵、蒸馏ROI计算方法</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第19课：高并发推理服务架构 ✅（2026-09-02 完成，同日v6.4联网更新——TGI归档&#x2F;vLLM v0.28.0版本校准&#x2F;SGLang v0.5.18&#x2F;2026内存层级之争&#x2F;PD分离&#x2F;投机解码实证）</p>
+<ul>
+<li><p>vLLM深度解析：PagedAttention虚拟内存映射原理、Continuous Batching调度算法</p>
+</li>
+<li><p>TGI（历史视角）：流式生成、张量并行、Pipeline并行的历史贡献——2025-12进入维护模式、2026-03-21仓库归档（最终版v3.3.7），HF官方推荐迁移至vLLM&#x2F;SGLang</p>
+</li>
+<li><p>推理引擎对比：vLLM vs SGLang（TGI作历史参照）——RadixAttention基数树 vs PagedAttention分页表的KV Cache管理对比、2026内存层级之争（vLLM分层KV offloading下推 vs SGLang UnifiedRadixTree缩小共享）、Token Healing技术、选型决策矩阵（grill-me决策D6a，应当理解）</p>
+</li>
+<li><p>推理加速：Prefix Caching配置与命中收益计算、Speculative Decoding的接受概率计算（α公式、EAGLE-3接受率60-80%、DeepSeek-V3 MTP-1&gt;80%即~1.8x、DSpark&#x2F;DFlash2新方法谱系）</p>
+</li>
+<li><p>PD分离架构：Prefill（计算密集）与Decode（带宽密集）拆分部署——vLLM E&#x2F;P&#x2F;D分离（Model Runner V2）与SGLang –pd-disaggregation（Mooncake&#x2F;NIXL传输引擎）</p>
+</li>
+<li><p>负载均衡：多GPU负载分发策略、请求路由算法（round-robin&#x2F;least-loaded&#x2F;缓存感知路由）、队列管理与准入控制</p>
+</li>
+<li><p>缓存架构：语义缓存（Semantic Cache）、Embedding缓存、KV Cache复用策略、分层KV offloading（GPU→CPU→磁盘&#x2F;对象存储二级层）</p>
+</li>
+<li><p>【评估融入】可观测性：LangSmith&#x2F;LangFuse追踪集成、延迟P99&#x2F;P50分析、Token成本监控、告警规则设计</p>
+</li>
+<li><p>时间分配：原理分析20min + 引擎对比5min + 配置调优10min + 可观测性10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：PagedAttention的虚拟内存映射原理与内存节省计算、Continuous Batching调度复杂度分析、Speculative Decoding的接受概率α公式与加速比计算、RadixAttention与PagedAttention的KV Cache管理对比</p>
+</li>
+<li><p>工程生态2026-09快照（知晓即可）：vLLM v0.28.0（2026-08-27发布，584 commits；版本号校准——v6.3所记v0.12.x有误，2026年7-8月实际为v0.26→v0.28；分层KV offloading成熟至磁盘&#x2F;对象存储二级层+workload identity、E&#x2F;P&#x2F;D分离、Mooncake&#x2F;NIXL连接器、新默认max_num_batched_tokens 8192→16384、Mamba默认开prefix caching、在线MXFP4量化、bitsandbytes移出树外插件、Transformers 5.15依赖、Rust前端+gRPC）、SGLang v0.5.18（2026-08-22，PyTorch 2.13；v0.5.16起UnifiedRadixTree成为SWA&#x2F;Mamba&#x2F;DSA默认缓存、GLM-5.2 cache-layer split每rank KV内存-74%（0.77→0.20GB）、DSpark投机解码383.7 tok&#x2F;s accept~5、ReplaySSM投机scratch 11.5→1.8GB、MLX后端）、TGI v3.3.7最终版后归档（2025-12维护模式→2026-03-21归档，HF点名推荐vLLM与SGLang）、投机解码实证（EAGLE-3分布内接受率60-80% vs 独立draft模型40-60%、DeepSeek-V3 MTP-1&gt;80%开箱1.8x、多方法自适应组合4.9x arXiv 2601.11580）、可观测性生态（LangSmith Interrupt 2026：LLM Gateway支出限额+PII脱敏+Context Hub+Messages View，OTel摄取；LangFuse：MIT核心自托管+Agent Skill开放标准）【联网更新v6.4】</p>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+第20课：GPU集群规划与Agent系统架构设计 ✅（2026-09-03 完成，同日v6.5联网更新——三约束容量模型&#x2F;GPU硬件2026-09快照&#x2F;KEDA冷启动阈值&#x2F;1000并发总装设计）</p>
+<ul>
+<li><p>GPU硬件选型：H100&#x2F;A100&#x2F;L40&#x2F;RTX 5090的显存&#x2F;带宽&#x2F;并发能力对比与选型矩阵</p>
+</li>
+<li><p>集群拓扑：NVLink&#x2F;InfiniBand&#x2F;RoCE的带宽与延迟特性，通信瓶颈分析</p>
+</li>
+<li><p>部署架构：Kubernetes + vLLM多节点Agent推理集群设计</p>
+</li>
+<li><p>多Agent部署模式：Planner模型（70B FP8 on 2×H100）+ Worker模型（8B on A100&#x2F;L40）</p>
+</li>
+<li><p>成本优化：冷启动问题与预热策略、弹性伸缩阈值设计、Spot实例策略</p>
+</li>
+<li><p>【评估融入】生产监控：GPU利用率监控、推理延迟P99告警、自动伸缩规则设计</p>
+</li>
+<li><p>完整架构设计：从零设计支持1000并发的多Agent生产系统（毕业项目核心）</p>
+</li>
+<li><p>时间分配：硬件选型15min + 架构设计20min + 成本优化10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：GPU显存占用计算公式推导（模型权重+KV Cache+激活值）、多模型混部的GPU分配策略、弹性伸缩的冷启动优化与阈值计算</p>
+</li>
+<li><p>工程生态2026-09快照（知晓即可）：GPU硬件——Blackwell Ultra B300&#x2F;GB300（288GB HBM3e&#x2F;8TB&#x2F;s&#x2F;FP4 15 PFLOPS&#x2F;GPU，GB300 NVL72整柜$370-400万）、H200 141GB长上下文卡（$4.59&#x2F;hr）、中国特供H20 96GB HBM3&#x2F;4TB&#x2F;s（显存强算力弱、采购价¥9-12万，推理友好）与B30（GDDR7<del>180GB、FP4支持、$6.5-8k）、RTX PRO 6000 Blackwell 96GB GDDR7 ECC工作站卡、RTX 5090 32GB&#x2F;1.79TB&#x2F;s（Qwen3-8B Q4约186 tok&#x2F;s，Vast.ai低至$0.27&#x2F;hr）、AMD MI350X&#x2F;355X 288GB竞品；云价快照——A100 $1.39&#x2F;L40S $0.99&#x2F;H100 $2.89-3.29&#x2F;H200 $4.59&#x2F;B300 $5.8-9.2&#x2F;hr，”数据中心卡$&#x2F;GB&#x2F;s趋同（0.0007-0.001）、消费卡带宽性价比最优但32GB显存无ECC无MIG”选型洞察；K8s部署生态——vLLM Production Stack CRD为官方生产路径、多节点TP&#x2F;PP用Ray&#x2F;KubeRay编排、llm-d（Red Hat 2026-04捐CNCF）与NVIDIA Dynamo 1.0（2026-06生产就绪，多引擎+PD分离+KV分层）为编排层新选项；GPU共享三模式——MIG硬件分区（Ampere+，与time-slicing&#x2F;MPS互斥）&#x2F;Time-slicing软共享&#x2F;DRA（K8s 1.32+，1.34默认启用）；互联——NVLink 4（Hopper 900GB&#x2F;s）vs NVLink 5（Blackwell 1.8TB&#x2F;s、NVL72域聚合130TB&#x2F;s）、NDR 400G部署中&#x2F;XDR 800G进入2026发布节奏、RoCEv2&#x2F;Spectrum-X（MRC多路RDMA 2026-05经OCP开放规范、UEC 1.0规范2025-06）、跨节点PD分离KV传输必须RDMA（Dynamo：回退TCP即瓶颈）、Mooncake&#x2F;NIXL传输引擎；冷启动实证——Qwen3-235B 348GB冷启动521s（权重加载69%&#x2F;编译15%&#x2F;CUDA Graph 5%），优化谱系守护实例唤醒4.91s&#x2F;RDMA权重传输348GB约2s&#x2F;Lazy CUDA Graph 10-60s→1-2s&#x2F;vLLM Sleep Mode秒级&#x2F;权重流式tensorizer·run:ai streamer&#x2F;编译缓存复用+Fork代替Spawn，vLLM Q3 2026 Cold Start路线图（JIT缓存key可移植&#x2F;warm-replica cache transfer&#x2F;权重预放置）；弹性伸缩——KEDA（vllm:num_requests_waiting队列深度信号）+Karpenter为主流组合、HPA基于GPU利用率失效（Cast AI 2026：生产集群GPU平均利用率</del>5%）、cooldown社区实践120-360s、Knative serverless GPU为候选；Spot实证——AWS H100 p5中断&lt;5%&#x2F;警告2min&#x2F;折扣60-80%（$12.29→$5.50）、A100 p4d中断15-20%&#x2F;折扣60-70%、GCP a3约58% off（$11.56→$4.90）、混合模式Spot基线+OD兜底+keep-warm floor、H100&#x2F;B200级Spot供给紧张而A100&#x2F;L40S&#x2F;5090级相对充裕；单位经济学——自托管H100 spot约$1.81-2.08&#x2F;M tok（FP8 KV优化-13%）vs API成本谱系（DeepSeek缓存命中$0.0028&#x2F;M→GPT-5.5-pro $180&#x2F;M，跨4个数量级）、GPT-3级能力3年1000倍降价（a16z）【联网更新v6.5】</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📋 <strong>里程碑</strong>：完成第20课后 → 生成「总结报告4」+「短期报告2」+「月考试卷与参考答案」</p>
+</blockquote>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 第21课：Agent持续进化与自学习机制 ✅（2026-09-04 完成，同日v6.6联网更新——自进化Agent学术谱系&#x2F;Agent Skills开放标准与生态治理&#x2F;Ouroboros自举安全案例&#x2F;Computer Use·VLA·语音Agent前沿校准）<ul>
+<li><p>学习信号提取：环境执行结果、过程规则、LLM Rubric组成的三类学习信号及其质量评估</p>
+</li>
+<li><p>更新载体对比：知识文档、Prompt与Skills、程序与Harness、模型参数四种载体的ROI对比与选择策略</p>
+</li>
+<li><p>验证与发布：新版本验证方法、灰度发布策略、回滚机制与长期知识整理</p>
+</li>
+<li><p>Agent自举：代码生成实现自我改进的路径、限制与安全边界</p>
+</li>
+<li><p>代码生成Agent架构设计（应当理解）：文件系统作为外部记忆、生成-验证-修正循环、自举路径（grill-me决策D12）</p>
+</li>
+<li><p>多模态Agent与Computer Use前沿（知晓即可）：语音Agent架构演变、Computer Use架构、VLA模型（grill-me决策D12）</p>
+</li>
+<li><p>项目线贡献：研究助手Agent的持续进化机制设计——从运营中学习并自我改进</p>
+</li>
+<li><p>时间分配：理论推导20min + 案例分析15min + 工程实践10min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：学习信号的质量评估、四种更新载体的ROI对比、灰度发布策略设计、Agent自举的实现边界、代码生成Agent架构（文件系统外部记忆+生成验证修正循环）、多模态Agent与Computer Use前沿认知</p>
+</li>
+<li><p>工程生态2026-09快照（知晓即可）：自进化Agent学术谱系——Agent Self-Evolution综述（2026-05，覆盖107篇核心论文&#x2F;348个GitHub仓库&#x2F;97个用户痛点，五大进化循环：反馈驱动生成&#x2F;评估&#x2F;记忆&#x2F;自我修改&#x2F;系统搜索）、Self-Improvements in Modern Agentic Systems综述（2026-07，arXiv:2607.13104，自改进形式化为”基础模型改进（微调&#x2F;奖励学习）+脚手架改进（提示&#x2F;工具&#x2F;代码&#x2F;工作流）”，自诱导算子&#x2F;自指导两种自引用模式）；Agent Skills开放标准——2025-10 Anthropic首发，2025-12-18 agentskills.io开放标准发布，2026-06约40个兼容产品（OpenAI Codex&#x2F;GitHub Copilot&#x2F;Cursor&#x2F;Gemini CLI&#x2F;VS Code），生态实证（2026-06）：SkillsMP约190万公开skills、SkillsBench分析47150个skills平均质量6.2&#x2F;12、精选skills使Agent通过率平均+16.2pp、ToxicSkills检测36%存在提示注入（skill治理三件套：来源审计&#x2F;最小权限&#x2F;SKILL.md内容审查）；学习信号工程实践——eval-driven development（Anthropic 2026-01，eval&#x3D;Agent的单元测试、实现前构建）、Golden Dataset+LLM-as-a-Judge（Opus当裁判）+回归检测三位一体生产模式（2026-04 playbook）、GAN式生成器-评估器双Agent回路；Agent自举安全案例——Ouroboros（2026-08，arXiv:2608.08311，自发展编码Agent：Terminal-Bench 2.1 86.97%&#x2F;OSWorld-Verified 90.69%，公开部署”Hope”161天自由进化，安全设计&#x3D;宪法核心受保护&#x2F;身份档案不可删除&#x2F;护栏必须在进化压力下保持权威性）、OWASP 2026 rogue agent路径（importlib.reload()与直接写.py绕过约束，OpenHands披露30+主流编码工具漏洞）；Computer Use前沿——OSWorld-Verified人类基线72.4%已被5个模型超越（Claude Fable 5 85.0%&#x2F;Opus 4.8 83.4%&#x2F;开源Holo3-35B-A3B 82.6% Apache 2.0），OSWorld 2.0（2026-06-26，108个长周期真实任务）Opus 4.8严格完成率仅20.6%（500步限制、GPT-5.5约13%）——“短周期可商用、长周期仍早期”教学主线；Claude Computer Use GA（2026-08-19，computer_toolset_20260801批量动作：单次返回多工具调用按序执行&#x2F;首错即停，旧版beta参数移除）；VLA——π0.5（Physical Intelligence，flow matching动作头+FAST动作tokenizer、知识隔离训练增强泛化）、NVIDIA GR00T N1.7（2026-04，3B Apache 2.0，集成Cosmos-Reason2-2B）、ScaleCUA（ICLR 2026 Oral，开源跨平台CUA：Windows&#x2F;macOS&#x2F;Ubuntu&#x2F;Android）证明VLA”视觉理解→动作执行”范式从机器人迁移到GUI——VLA与CUA融合趋势；语音Agent——级联管线（STT→LLM→TTS）仍是生产主流（可观测性&#x2F;可控性&#x2F;工具调用成熟，TTFA约755ms&#x2F;四层管线p95约960ms），端到端S2S全双工崛起（Moshi约160-200ms端到端、OpenAI GPT-Live移除turn detector实现同时听说、NVIDIA PersonaPlex-7B 170ms轮流&#x2F;240ms打断）——延迟vs可观测性的架构权衡【联网更新v6.6】</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="第五单元：AI-Coding与Agent应用前沿（第22课）"><a href="#第五单元：AI-Coding与Agent应用前沿（第22课）" class="headerlink" title="第五单元：AI Coding与Agent应用前沿（第22课）"></a>第五单元：AI Coding与Agent应用前沿（第22课）</h3><blockquote>
+<p>⚠️ 本单元为应用前沿认知单元。定位为”熟悉即可”层级，不要求熟练和精通。聚焦AI Coding范式与Agent应用前沿，非工具操作教学。</p>
+</blockquote>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 第22课：AI Coding范式与Agent应用前沿 ✅（2026-09-07 完成，同日v6.7联网更新——Spec Coding三铁律与渐进式复杂度方法论谱系&#x2F;L3成熟度模型与Operator Leverage&#x2F;编排层-执行层两层架构&#x2F;Cursor·Trae·Claude Code·AutoGen(MAF&#x2F;AG2) 2026-09工具快照&#x2F;AI重构四步法与暴力拆解-精准缝合&#x2F;审查闭环状态机&#x2F;研究助手代码分析模块分层决策）<ul>
+<li><p>Spec Coding范式：Spec Coding三铁律、L3 AI Coding概念、渐进式复杂度管理</p>
+</li>
+<li><p>AI流水线与知识飞轮：多智能体协作模式、Rules+Spec+Skills三位一体体系、审查-优化闭环</p>
+</li>
+<li><p>工具全景：Cursor&#x2F;Trae&#x2F;Claude Code&#x2F;AutoGen的能力边界与选型认知（不教操作，讲选型）</p>
+</li>
+<li><p>AI重构方法论：演进式设计、AI辅助”暴力拆解”与”精准缝合”、生成-验证-修正质量飞轮</p>
+</li>
+<li><p>团队协作变革：Spec架构师&#x2F;AI训练师&#x2F;质量验证师的角色认知（概述，非重点）</p>
+</li>
+<li><p>架构师视角：AI Coding对Agent系统设计的启示——代码生成Agent的工具体系设计、审查闭环的状态机模型</p>
+</li>
+<li><p>项目线贡献：探讨研究助手Agent是否需要”代码分析”能力模块</p>
+</li>
+<li><p>时间分配：范式概述15min + 工具全景10min + 架构师视角15min + 习题10min</p>
+</li>
+<li><p><strong>核心知识点</strong>：Spec Coding范式的核心原则、AI Coding工具的能力边界与选型维度、代码生成Agent的架构设计启示</p>
+</li>
+<li><p><strong>知识深度</strong>：全部”知晓即可”层级</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="结业考核"><a href="#结业考核" class="headerlink" title="结业考核"></a>结业考核</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> 毕业答卷 + 参考答案 ✅（2026-09-10 完成，同日v6.8大纲更新）</li>
+</ul>
+<blockquote>
+<p>🎓 完成全部22课后生成。毕业答卷 &#x3D; “企业级智能研究助手Agent系统”的完整架构设计方案。</p>
+</blockquote>
+<h2 id="考核体系说明"><a href="#考核体系说明" class="headerlink" title="考核体系说明"></a>考核体系说明</h2><table>
+<thead>
+<tr>
+<th>考核类型</th>
+<th>触发条件</th>
+<th>考核重点</th>
+<th>答案形式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>课后习题</td>
+<td>每课</td>
+<td>核心知识点的深度理解与代码实践</td>
+<td>标准答案（基础题）+ 参考方案（设计题）</td>
+</tr>
+<tr>
+<td>总结报告</td>
+<td>每5课</td>
+<td>阶段知识脉络、技术选型矩阵、项目模块进展</td>
+<td>知识梳理 + 评估体系阶段性更新</td>
+</tr>
+<tr>
+<td>短期报告</td>
+<td>每10课</td>
+<td>综合架构能力评估、知识图谱、项目复盘</td>
+<td>知识图谱 + Agent评估体系全景图</td>
+</tr>
+<tr>
+<td>月考试卷</td>
+<td>第20课</td>
+<td>全链路系统设计+代码实现+架构决策</td>
+<td>参考架构方案 + 评分标准 + 常见错误模式</td>
+</tr>
+<tr>
+<td>毕业答卷</td>
+<td>全部完成</td>
+<td>完整Agent系统架构设计方案</td>
+<td>参考架构方案 + 评分标准 + 常见错误模式</td>
+</tr>
+</tbody></table>
+<h3 id="月考-毕业答卷结构"><a href="#月考-毕业答卷结构" class="headerlink" title="月考&#x2F;毕业答卷结构"></a>月考&#x2F;毕业答卷结构</h3><table>
+<thead>
+<tr>
+<th>部分</th>
+<th>占比</th>
+<th>题型</th>
+<th>考核能力</th>
+<th>“参考答案”形式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一部分</td>
+<td>30%</td>
+<td>数学推导+概念辨析</td>
+<td>核心知识深度</td>
+<td>有标准答案</td>
+</tr>
+<tr>
+<td>第二部分</td>
+<td>30%</td>
+<td>场景约束下的技术选型</td>
+<td>架构决策能力</td>
+<td>参考方案+评分维度</td>
+</tr>
+<tr>
+<td>第三部分</td>
+<td>40%</td>
+<td>开放式系统设计</td>
+<td>综合架构能力</td>
+<td>参考架构图+设计要点+常见错误</td>
+</tr>
+</tbody></table>
+<h3 id="评分维度（第二、三部分）"><a href="#评分维度（第二、三部分）" class="headerlink" title="评分维度（第二、三部分）"></a>评分维度（第二、三部分）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">每项1-5分：</span><br><span class="line">1. 技术选型合理性：选型是否匹配场景约束（预算/并发/延迟）</span><br><span class="line">2. 架构完整性：是否覆盖感知-决策-行动-记忆-工具-评估全链路</span><br><span class="line">3. 可扩展性设计：弹性伸缩、故障恢复、降级方案</span><br><span class="line">4. 成本意识：ROI分析、资源估算、Token成本控制</span><br><span class="line">5. 安全考量：Prompt注入防御、数据隔离、权限控制</span><br><span class="line">6. 评估方案：评估指标设计、监控告警、可观测性架构</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考答案中的”常见错误模式”"><a href="#参考答案中的”常见错误模式”" class="headerlink" title="参考答案中的”常见错误模式”"></a>参考答案中的”常见错误模式”</h3><p>每次月考&#x2F;毕业参考答案均包含”常见错误模式”章节，列举：</p>
+<ul>
+<li><p>典型架构设计错误（如：未考虑冷启动、忽略Token成本预算）</p>
+</li>
+<li><p>典型选型错误（如：高并发场景选了不支持Continuous Batching的推理引擎）</p>
+</li>
+<li><p>典型安全遗漏（如：未设计Prompt注入防御、工具调用无超时控制）</p>
+</li>
+</ul>
+<h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><table>
+<thead>
+<tr>
+<th>日期</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026-08-09</td>
+<td>v2.0</td>
+<td>全面重构大纲。从”概念科普”升级为”架构设计师培养”。核心变化：①删除未来展望课程；②AI Agent历史压缩至半节课；③新增PyTorch&#x2F;TF、Fine-tuning、模型蒸馏、高并发推理、GPU集群规划；④深化RAG为3课；⑤MCP按2026-07-28 v2.0规范教学</td>
+</tr>
+<tr>
+<td>2026-08-09</td>
+<td>v3.0</td>
+<td>grill-me审核后修订。六项关键决策落地：①D1-每课标注时间分配，第02课重新定位为”Agent架构师视角”；②D2-定义”引导式代码实践”三层结构与环境降级方案；③D3-第16-18课从”从零实现”调整为”架构决策与配置调优”；④D4-评估与可观测性融入第3&#x2F;5&#x2F;10&#x2F;19&#x2F;20课，总结报告增加”Agent评估体系全景图”；⑤D5-考核改为”参考架构+评分标准+常见错误模式”三部分结构；⑥D6-增加”双线并行”结构，项目线贯穿全课程</td>
+</tr>
+<tr>
+<td>2026-08-10</td>
+<td>v4.0</td>
+<td>对标网课课程表（2026-05-28版）后grill-me审核修订。九项决策落地：①D1-全课程默认”最小版”教学路径，GPU实操降为可选拓展（偏理论调整）；②D2-多模态内容融入第05&#x2F;10&#x2F;16课（多模态工具封装+多模态RAG+VLM调用）；③D3-解除20课课时限制，纳入AI Coding（熟悉即可）；④D4-新增第21课”AI Coding范式与Agent应用前沿”（第五单元）；⑤D5-第10课增”RAG vs 替代方案架构决策框架”（Long-Context&#x2F;Agentic Search&#x2F;LLM Wiki）；⑥D6a-第19课增”推理引擎对比vLLM vs SGLang vs TGI”；⑦D6b-第16课增”HuggingFace生态全景”；⑧D6c-Harness Engineering不纳入；⑨D7-第01课小幅编辑、第02课不改</td>
+</tr>
+<tr>
+<td>2026-08-12</td>
+<td>v5.0</td>
+<td>对标GitHub高星课程（Hello-Agents、李博洁《深入理解AI Agent》）后grill-me审核修订。十四项决策落地：①D1-第01课引入Harness工程作为顶层框架（逆转v4.0 D6c）；②D2-第04课扩展为”上下文工程与Prompt设计”（Agent Skills按需加载&#x2F;上下文压缩&#x2F;状态栏技术）；③D4-第17课扩展为”从SFT到Agentic RL”（GRPO算法&#x2F;奖励信号设计&#x2F;SFT vs RL vs API选型矩阵）；④D5-第10课增”Long-Context vs RAG决策矩阵”与”LLM Wiki编译器模式”；⑤D6-第12课增”异步Agent与事件驱动架构”（事件总线&#x2F;HITL中断恢复&#x2F;定时触发&#x2F;Webhook）；⑥D7-第10课作为项目线贯通点，含完整架构设计；⑦D8-第10课增”Agent评估体系全景图”（LLM-as-a-Judge&#x2F;评估环境&#x2F;统计显著性&#x2F;评估闭环）；⑧D10-第17课增Agentic RL全流程（轨迹采集→奖励设计→GRPO训练）；⑨D11-第02课标注上下文工程底层基础（KV Cache与上下文窗口约束）；⑩D12-新增第21课”Agent持续进化与自学习机制”（学习信号&#x2F;更新载体&#x2F;灰度发布&#x2F;Agent自举&#x2F;代码生成Agent架构&#x2F;多模态Agent与Computer Use前沿），总课时22课；⑪D13-第14课增Proposer-Reviewer模式、第15课增ANP协议；⑫D14-安全三层融入（第04课输入安全&#x2F;第05课执行安全&#x2F;第20课部署安全）；⑬D2-多模态内容扩展至第21课（语音Agent&#x2F;Computer Use&#x2F;VLA模型）；⑭第22课（原第21课）保持”AI Coding范式与Agent应用前沿”定位不变</td>
+</tr>
+<tr>
+<td>2026-08-14</td>
+<td>v5.1</td>
+<td>第06课联网知识更新。重大变更：①Milvus v3.0.0（2026-07-29发布）湖原生架构转型，外部Collection零拷贝查询、灵活Schema热升级、SINDI稀疏索引QPS达MaxScore 10倍；②FAISS v1.15.0（2026-07-31发布）新增EDEN量化器、Metal GPU后端、RaBitQ大幅优化、HNSW Panorama加速；③pgvector CVE-2026-3172缓冲区溢出安全漏洞，需立即升级至0.8.2+；④Qwen3-Embedding-8B登顶MTEB多语言排行榜（70.58分），支持MRL原生维度自定义；⑤BGE-M3三合一混合检索仍为企业落地主流选择；⑥InfoNCE范式转变——SigLIP sigmoid损失消除大batch依赖，xNCE解决模态间隙</td>
+</tr>
+<tr>
+<td>2026-08-17</td>
+<td>v5.2</td>
+<td>第07课联网知识更新。变更：①Late Chunking成为2026分块热点策略——先整文编码后分块池化，保留跨句指代语义，长文档（~8K token）相对朴素分块再提升约3.6%，需长上下文Embedding模型；②Reranker选型矩阵更新——BGE-Reranker-v2-m3（568M，MIT，MTEB 60.4）仍为默认多语言选择，v2-Gemma（9B，64.5）质量最高，v2-MiniCPM（2.7B，62.3）速度质量平衡，Qwen3-Reranker（4B&#x2F;8B）为新选项，Jina ColBERT v2为late-interaction代表（存储&#x2F;延迟2-3倍代价）；③RAGAS v0.2重大架构升级——从RAG评估库转型通用LLM应用评估框架，API breaking change：metric需以llm&#x2F;embeddings参数实例化后传入evaluate()，faithfulness 0.19+评分逻辑更严格（旧版本分数不可比）</td>
+</tr>
+<tr>
+<td>2026-08-18</td>
+<td>v5.3</td>
+<td>第08课联网知识更新。变更：①Microsoft GraphRAG查询模式全景——Global&#x2F;Local&#x2F;DRIFT&#x2F;Basic四模式，DRIFT（Dynamic Reasoning and Inference with Flexible Traversal）混合全局社区上下文与局部邻域扩展，官方支持增量索引（update&#x2F;fast方法）；②轻量图RAG生态分化——LightRAG（HKU，v1.5.x：naive&#x2F;local&#x2F;global&#x2F;hybrid&#x2F;mix五模式，主打增量更新与工程落地）、HippoRAG2（索引期固定边权重+Personalized PageRank多跳检索，Complex Reasoning基准ACC 53.38，静态权重限制：游走易被枢纽节点吸引）、LeanRAG（AAAI 2026，学术前沿）；③WildGraphBench（ACL 2026 Findings）实证结论——简单事实查询BM25仍具竞争力（关键词匹配是事实查找的强先验），多事实聚合任务MS GraphRAG(global)最优（ACC 47.64），图方法优势在复杂任务上显现→”查询路由而非全量上图”成为架构共识；④SemEval-2026 Task 8验证：查询重构（改写&#x2F;分解&#x2F;假想文档生成）+稠密-词面RRF融合+Cross-Encoder重排序仍是2026多轮RAG最优组合范式</td>
+</tr>
+<tr>
+<td>2026-08-19</td>
+<td>v5.4</td>
+<td>第09课联网知识更新。变更：①记忆工具生态分化为四大阵营——vector+抽取（Mem0 SDK 2.0：2026-04-16发布，两遍抽取合并为单遍~50%写延迟降低，语义+BM25+实体图混合检索，独立图模式弃用改默认实体链接；Plugin v1.0.0提供九MCP工具+session-start&#x2F;compaction&#x2F;task-complete&#x2F;session-end四生命周期钩子）、graph-first（Zep&#x2F;Graphiti v0.29.0时序知识图谱，事实带valid_from&#x2F;valid_to被反驳不删除；Cognee v1.0.4 cognify构建+memify巩固流水线）、filesystem-first（Letta Context Repositories 2026-02-12：记忆&#x3D;git仓库，commit&#x2F;branch&#x2F;merge管理记忆演化）、research-grade（MemoryOS EMNLP 2025 oral：STM&#x2F;MTM&#x2F;LTM热度晋升，LoCoMo +49.11% F1；A-MEM NeurIPS 2025：Zettelkasten记忆演化）；②检索范式前沿——MemR3（arXiv 2512.20237）反思式检索：retrieve&#x2F;reflect&#x2F;answer路由+全局证据缺口跟踪、MRAgent（ICML 2026）”记忆是重构而非检索”Cue-Tag-Content图+主动重构循环最高+23%、MemoryCPT（arXiv 2608.04843）提出QPC质量&#x2F;成本指标；③厂商基准警示——Mem0自报LoCoMo 91.6&#x2F;LongMemEval 93.4（&lt;7K token&#x2F;次检索）vs Zep自报DMR 94.8%，但Zep的LoCoMo原始宣称84%被社区复现纠正为58.44%（getzep&#x2F;zep-papers issue #5）——厂商基准须批判性阅读，选型决策前用自有评测集复现；④新增记忆污染攻击与防御内容（写入白名单Schema+检索注入消毒+审计台账），衔接第04课Prompt注入防御与第05课执行安全</td>
+</tr>
+<tr>
+<td>2026-08-20</td>
+<td>v5.5</td>
+<td>第10课联网知识更新。变更：①MinerU迭代至2.5-Pro（arXiv 2604.04771）——OmniDocBench v1.6达95.69分（基线92.98，+2.71），靠数据引擎（DDAS多样性-难度感知采样+跨模型一致性标注）而非架构改动取胜，支持MCP协议接入Agent工作流，PDF&#x2F;图片&#x2F;DOCX&#x2F;PPTX&#x2F;XLSX全格式覆盖，成为学术PDF解析事实标准；②LLM-as-a-Judge偏差研究体系化——“Judging the Judges”（arXiv 2604.23178）系统评估偏差缓解策略，JURY偏差感知面板（IJISAE：单Judge与ground truth一致率仅87.6%、位置&#x2F;冗长偏差合计发生率0.73；多Judge聚合+顺序交换+冗长度校正+偏差加权logit聚合显著优于单Judge）、PlanJudge两步法（arXiv 2601.03630：先制定评审计划再执行，抑制推理型Judge偏差）→生产纪律固化为”顺序交换+双Judge交叉+重要决策人工抽检”；③Long-Context vs RAG实证边界清晰——多文档QA基准：Long-Context精度56.3% vs RAG 49.0%但Token成本50倍（$0.60 vs $0.012&#x2F;查询），1000页知识库×1000请求&#x2F;日场景RAG便宜8-82倍，Context Rot注意力稀释是长窗口固有约束→四维决策矩阵（精度&#x2F;成本&#x2F;新鲜度&#x2F;归因）成为标准框架，”Agentic RAG融合两者”取代二选一争论；④Agentic RAG范式验证——SCMRAG（AAMAS 2025）证明零样本ReAct推理链+工具调用可实现自纠正多跳RAG（无需Self-RAG式反思token微调），Prompt化反思成为生产默认路径</td>
+</tr>
+<tr>
+<td>2026-08-21</td>
+<td>v5.6</td>
+<td>第11课联网知识更新。变更：①Python SDK v2.0稳定版已发布（pip install mcp安装2.x，单Server同时服务2025&#x2F;2026两代协议客户端）——FastMCP类更名MCPServer（from mcp.server import MCPServer，mcp.server.fastmcp.<em>移至mcp.server.mcpserver.</em>，装饰器API保留）、一等公民Client（from mcp import Client，接受server对象in-memory&#x2F;URL Streamable HTTP&#x2F;StdioServerParameters三种连接形态，自动探测server&#x2F;discover失败回退initialize握手）、Resolve(fn)参数注解+Elicit用户输入机制、低层Server重建为构造函数式handler（on_list_tools&#x3D;&#x2F;on_call_tool&#x3D;，异常为协议错误而非is_error结果）、wire类型独立为mcp-types包且Python属性全面snake_case、transport配置移至run()（stateless_http&#x2F;host&#x2F;port等）、httpx2替代httpx（truststore TLS验证）；②v2.0规范机制细化——MRTR多轮往返请求（SEP-2322：server返回resultType:”input_required”+待答请求，client携带inputResponses重试原调用，替代server发起的elicitation&#x2F;sampling&#x2F;roots请求）、Header路由（SEP-2243：Mcp-Method&#x2F;Mcp-Name必须出现在Streamable HTTP请求头，网关&#x2F;WAF免解析JSON即可路由限流授权）、列表缓存（SEP-2549：tools&#x2F;list等响应携带ttlMs+cacheScope，客户端可缓存工具目录）、授权强化（SEP-2468 RFC 9207 iss参数防授权服务器混淆、SEP-2352 client credentials绑定issuer禁止跨授权服务器复用、DCR正式弃用→CIMD客户端元数据文档）、Tasks移入io.modelcontextprotocol&#x2F;tasks官方扩展（SEP-2663：poll-based tasks&#x2F;get+新增tasks&#x2F;update，变更通知合并为subscriptions&#x2F;listen单流）、弃用清单（SEP-2577 Roots&#x2F;Sampling&#x2F;Logging弃用至少工作12个月、ping方法移除、legacy HTTP+SSE transport弃用一年过渡、正式弃用政策最少12个月窗口）、Extensions框架正式化（Tasks&#x2F;MCP Apps&#x2F;EMA企业托管授权并列）；③原”v2.0新增分布式服务注册机制”表述校准——实际机制为server&#x2F;discover能力发现RPC（server必须实现，client可选调用）+Mcp-Method&#x2F;Mcp-Name header路由（网关不持session状态），无状态核心使任何实例可响应任何请求（普通round-robin负载均衡即可），”分布式服务注册”教学定位调整为”无状态化对CAP会话一致性问题的天然规避+header路由网关架构”；④生态落地确认——无状态核心使MCP成为first-class HTTP workload，AWS Bedrock AgentCore、Cloudflare Workers&#x2F;Agents SDK（Sentry&#x2F;Linear day-zero采用）、Microsoft Foundry统一端点、Netlify、FastMCP 4.0（Horizon治理平台）原生支持；⑤状态管理迁移最佳实践——协议级session删除后，需要跨调用状态的server应从工具铸造显式handle（模型可见、可在工具间传递），优于隐藏在transport中的session状态</td>
+</tr>
+<tr>
+<td>2026-08-24</td>
+<td>v5.7</td>
+<td>第12课联网知识更新。变更：①LangChain 1.0已于2025-10正式发布（当前1.x，语义化版本承诺：弃用功能整个1.x可用、破坏性变更仅2.0）——AgentExecutor与LLMChain正式移除，create_agent(model, tools, system_prompt)成为标准Agent API（prebuilt自LangGraph并入langchain包，middleware架构承载before_model&#x2F;HITL等横切能力），LCEL&#x2F;Runnable管道（prompt|llm|parser）保留为标准范式；②LangGraph 1.2（2026-05-11发布，当前1.2.11&#x2F;2026-08-11，checkpoint包4.2.0、langgraph-cli 0.4.26）生产强化三件套——节点级超时TimeoutPolicy(run_timeout硬墙钟+idle_timeout进展感知→NodeTimeoutError并清空本步写入转交retry_policy，仅异步节点)、DeltaChannel增量检查点通道（每步只写Δ+每K步全量快照snapshot_frequency，解决全量快照模型O(N²)存储增长与Postgres TOAST膨胀&#x2F;WAL尖峰&#x2F;复制延迟，beta状态API或于1.3变化）、流式API v3（类型化内容块chunk.text&#x2F;.tool_calls&#x2F;.reasoning&#x2F;.usage+run.messages&#x2F;run.values&#x2F;run.subgraphs&#x2F;run.lifecycle四投影，取代脆弱的字符串解析，v1&#x2F;v2仍支持）；另有interrupt()恢复语义修复（部分图拓扑下resume状态损坏）、set_node_defaults()共享节点配置、进程崩溃后durable error-handler resume（从最后干净checkpoint续跑）、Python 3.10-3.14（1.1已弃3.9）；生态数据：月下载9000万、LangChain生产调查57%组织已有Agent投产（Uber&#x2F;Klarna&#x2F;LinkedIn&#x2F;Replit）；③安全重大更新——langchain-core CVE-2025-68664”LangGrinch”（&lt;1.2.5：LLM输出&#x2F;用户字典注入lc标记→langchain_core.load.loads以secrets_from_env&#x3D;True默认解析环境变量引用→API密钥等机密外泄+SSRF，1.2.5修复，CSA定性为关键漏洞）、LangGraph checkpoint层CVE-2025-64439（反序列化checkpoint数据RCE）与CVE-2025-67644（SQLite后端SQL注入CVSS 7.3），CSA 2026-06研究简报警示checkpoint存储成为Agent编排层新攻击面——“checkpoint即攻击面”纳入教学（版本下限&#x2F;checkpoint库网络隔离&#x2F;序列化secrets_from_env&#x3D;False&#x2F;最小权限），衔接第04&#x2F;05课安全线；④异步触发机制确认——LangGraph Platform原生Cron（langgraph_sdk：client.crons.create_for_thread(thread_id, assistant_id, schedule&#x3D;”0 9 * * *“, input)，支持thread内状态化定时与无状态定时两种形态，end_time&#x3D;None可清除）与Webhook端点触发run（验签+防重放），取代自建Celery Beat队列</td>
+</tr>
+<tr>
+<td>2026-08-25</td>
+<td>v5.8</td>
+<td>第13课联网知识更新（源码级核实，FoundationAgents&#x2F;OpenManus main分支2026-08-25快照，535 commits&#x2F;59贡献者，最新release仍为v0.3.0）。变更：①Browser工具架构重大演进——2026-08-15合入”Browser Use CLI 3.0作为默认MCP Server”（manus.py以stdio方式拉起<code>uvx browser-use --cli-mcp</code>子进程，server_id&#x3D;”browser_use”，tool_name_prefix&#x3D;False保留原生browser_exec&#x2F;browser_screenshot工具名；BROWSER_USE_API_KEY&#x2F;BU_CDP_URL&#x2F;BU_CDP_WS&#x2F;BU_NAME环境变量透传；OPENMANUS_DISABLE_BROWSER_USE&#x3D;1可禁用；uvx使Browser Use及其快速演进的依赖与OpenManus环境隔离）——进程内browser-use库依赖移除，MCP server instructions以system message注入agent memory，”工具即服务”路线在头部开源框架落地，验证第11课MCP架构判断；②Manus主Agent形态确认——本地工具仅PythonExecute&#x2F;StrReplaceEditor&#x2F;AskHuman&#x2F;Terminate四个+MCP动态注入（connect_mcp_server按需扩展available_tools、create()&#x2F;cleanup()生命周期、think()懒初始化MCP连接），浏览器&#x2F;检索等重能力全部外置为MCP服务；③Agent继承树与入口矩阵——BaseAgent→ReActAgent→ToolCallAgent→{Manus&#x2F;BrowserAgent&#x2F;MCPAgent&#x2F;SandboxAgent&#x2F;SWEAgent&#x2F;DataAnalysisAgent}，四个入口（main.py单Agent ReAct&#x2F;run_flow.py计划流（README标注unstable）&#x2F;run_mcp.py MCP客户端&#x2F;run_mcp_server.py将OpenManus自身暴露为MCP Server）；”AgentCoordinator”命名澄清——Python主库无此类，主路径为单Agent自循环、flow路径为PlanningFlow.get_executor()按步骤[TYPE]标签选择执行者，AgentCoordinator系Java移植版（OpenManus-Java）对该统一调度角色的命名，教学按实际机制讲解；④沙箱双轨制确认——默认路径PythonExecute为multiprocessing.Process+timeout&#x3D;5s+exec（safe_globals实际传入完整__builtins__，进程级弱隔离的典型教学案例）；DockerSandbox按需启用：cgroup资源限制（mem_limit&#x3D;1g&#x2F;cpu_quota&#x3D;100000×cpu_limit）、network_mode&#x3D;none（network_enabled&#x3D;false时）、_safe_resolve_path拒绝”..”路径穿越、volume绑定rw、超时与cleanup；config默认use_sandbox&#x3D;false——“默认关闭的深度防御”纳入教学；⑤BaseAgent状态机细节——state_context上下文管理器退出时恢复前态（IDLE），FINISHED为循环内瞬时信号，该恢复语义是PlanningFlow串行复用executor的前提（否则第二次run()会因state≠IDLE抛RuntimeError）；is_stuck卡死检测（assistant消息重复≥duplicate_threshold&#x3D;2次→向next_step_prompt注入换策略提示）；⑥LLM集成层——api_type多Provider（Anthropic&#x2F;Azure&#x2F;Bedrock&#x2F;Ollama&#x2F;Jiekou）、tenacity指数退避重试、search引擎fallback链（Google→DuckDuckGo&#x2F;Baidu&#x2F;Bing+retry_delay&#x2F;max_retries）、structlog结构化日志（2026-08新增依赖）；⑦OpenManus-RL姊妹项目确认（GRPO后训练开源，UIUC合作）——衔接第17课Agentic RL</td>
+</tr>
+<tr>
+<td>2026-08-26</td>
+<td>v5.9</td>
+<td>第14课联网知识更新。变更：①MAST失败研究纳入教学主线（Why Do Multi-Agent LLM Systems Fail?，arXiv 2503.13657）——7框架1,642真实轨迹分析：MAS生产失败率41%-87%，最大根因类别为系统设计缺陷（约44%：Agent不遵守任务规范&#x2F;重复无意义步骤&#x2F;不知终止条件&#x2F;丢失对话历史&#x2F;工具输出未验证），其余为模型对齐与Agent间对齐——“协调缺陷而非模型能力”成为多Agent可靠性教学主线，配套三类根因→三层修复层映射（机制补丁&#x2F;模型与提示词&#x2F;协议设计）；②Anthropic orchestrator-worker工程经验纳入Supervisor教学（lead agent+3~5个specialized subagents各自独立上下文窗口与工具子集、并行子Agent约90%墙钟时间缩减、token消耗约15倍于单Agent对话、任务描述微小变化导致Agent行为剧变、结果摘要优于过程转述）；③2026框架生态快照——OpenAI Agents SDK v0.17.x（Swarm生产级继任者：handoff+guardrails+tracing+sessions+hosted tools）、CrewAI v1.15.x（Flow声明式编排+JSON-first crew+MCP原生工具消费+企业版RBAC&#x2F;审计&#x2F;SOC2）、AG2 v0.13.x（autogen.beta新框架迁移路线，v0.14移除经典API，v1.0以新框架替代；AutoGen v0.4为微软官方独立主线）、Google ADK v1.34+（AgentTool”Agent即工具”+智能任务委派+原生Agent间路由+A2A集成）、langgraph-supervisor&#x2F;langgraph-swarm官方示例库（Supervisor与Swarm的参考实现）；④理论补充——“协调作为架构层”（arXiv 2605.03310：生产失败41%-87%源于协调缺陷，协调应与Agent逻辑和访问信息方式分离为独立可配置架构层——四种协作模式即该层的四种配置）与”多样性崩溃”（ACL 2026 Findings：模型对齐+层级协调+密集通信三层结构耦合推动过早共识，单纯加Agent不增加观点多样性）；⑤2026行业共识纳入决策教学——多Agent仅在三条件下有收益（子任务真可并行&#x2F;工具域知识域边界清晰&#x2F;需上下文隔离的批判性自修正）、”共享结构化工件优于自由文本handoff”、多Agent vs 单Agent五问决策框架（每问”否”即退出）；⑥失败归因研究生态（知晓即可）——TraceElephant（完整轨迹归因基准）&#x2F;BLAME（高风险MAS归因评估）&#x2F;Aegis（ICLR 2026受控故障注入9,533条轨迹）&#x2F;LumiMAS（实时监测三层架构）；⑦A2A协议下一课预研确认——Linux基金会治理、150+组织支持并进入主流云平台与企业生产、v1.x引入Signed Agent Cards等企业能力（第三方资料），与MCP分工定位”MCP连接Agent与工具、A2A连接Agent与Agent”，作为第15课教学基础</td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>v6.0</td>
+<td>第15课联网知识更新。重大变更：①A2A v1.0稳定版确认（2026年初发布，Linux基金会治理下首个生产就绪版本；2026-04-09基金会公告：150+组织（AWS&#x2F;Cisco&#x2F;Google&#x2F;IBM&#x2F;Microsoft&#x2F;Salesforce&#x2F;SAP&#x2F;ServiceNow）、22,000+ GitHub stars、SDK从单一Python扩展至五种生产语言Python&#x2F;JavaScript&#x2F;Java&#x2F;Go&#x2F;.NET）——版本演进0.1.0（2025-04 Google初始发布）→0.2.6→0.3.0（2025年末RC）→1.0.0；v0.3.0→v1.0四大主题：协议成熟度与标准化（a2a.proto从gRPC实现文件升格为普适规范唯一事实源、REST&#x2F;gRPC&#x2F;JSON-RPC三绑定形式化规范与等价保证、RFC 8785 JSON规范化与RFC 7515 JWS正式引用、google.rpc.Status错误模型、显式向后兼容版本策略）、类型安全（移除kind判别字段改JSON成员多态、枚举值从kebab-case改为SCREAMING_SNAKE_CASE以合规ProtoJSON——TASK_STATE_前缀与ROLE_前缀为breaking change、camelCase字段命名、ISO 8601毫秒精度时间戳）、开发者体验（八组操作重命名：message&#x2F;send→SendMessage、message&#x2F;stream→SendStreamingMessage、tasks&#x2F;get→GetTask、tasks&#x2F;list→ListTasks新增、tasks&#x2F;cancel→CancelTask、agent&#x2F;getAuthenticatedExtendedCard→GetExtendedAgentCard、tasks&#x2F;resubscribe→SubscribeToTask、pushNotificationConfig四操作→CreateTaskPushNotificationConfig等；复合ID tasks&#x2F;{id}简化为简单UUID；HTTP路径移除&#x2F;v1前缀；A2A-Version&#x2F;A2A-Extensions服务参数头）、企业就绪（Signed Agent Cards、多租tenant字段原生支持、mutual TLS、OAuth 2.0现代化、ListTasks游标分页）；②Part对象完全重设计——TextPart&#x2F;FilePart&#x2F;DataPart三类型与kind判别字段移除，统一Part消息以成员存在性判别内容类型（text&#x2F;raw&#x2F;url&#x2F;data四字段oneof结构），mediaType替代mimeType且适用全部part类型、filename适用所有类型而非仅文件、raw字段支持base64内联二进制；③Task生命周期语义细化——Task不可变性原则（终态completed&#x2F;canceled&#x2F;rejected&#x2F;failed不可重启，精炼&#x3D;同contextId新任务+referenceTaskIds引用原任务）、contextId逻辑分组多个Task与Message（agent内部用它管理LLM会话状态）、Agent三形态（Message-only直接包装LLM调用&#x2F;Task-generating全任务化&#x2F;Hybrid先Message协商再Task执行）、Artifact版本追踪由客户端管理（agent保持一致artifact-name、服务端不负责追踪mutation）、流事件kind与final字段移除（协议绑定特定的流关闭机制即终止指示）、TaskStatusUpdateEvent用statusUpdate包装&#x2F;TaskArtifactUpdateEvent用artifactUpdate包装+新增index字段；④Signed Agent Cards机制确认——Agent Card挂在公开URL任何客户端可读、无完整性校验则攻击者可篡改Card替换接口地址&#x2F;能力&#x2F;安全要求把请求引向错误Agent，v1.0按JWS（RFC 7515）签名+JSON规范化（RFC 8785）做非对称密钥签名与验签，实现组织边界跨域身份与元数据的加密验证；⑤安全机制现代化——OAuth 2.0对齐Security BCP（移除Implicit流与Password流、新增Device Code流RFC 8628适配CLI&#x2F;IoT&#x2F;无头环境、Authorization Code流新增pkce_required字段防授权码拦截攻击）、Agent Card的security字段声明认证方案与OpenAPI Specification对齐、凭据带外获取原则（OAuth流程&#x2F;安全密钥分发独立于A2A协议本身）；⑥生态重大进展——Microsoft Copilot Studio&#x2F;Azure AI Foundry&#x2F;Amazon Bedrock GA支持、Vertex AI Agent Engine托管式A2A部署、Google ADK原生A2A（构建的Agent自动发布Agent Card并接受A2A请求）、LangGraph部署agent自动获得hosted A2A端点（&#x2F;a2a&#x2F;{assistant_id}+自动生成Agent Card+SSE流式+LangSmith跨多Agent A2A对话分布式追踪）、CrewAI AMP生产级托管（A2AServerConfig分布式状态+OIDC&#x2F;OAuth2&#x2F;mTLS企业认证）、Agent Payments Protocol（AP2）支付协议同期发布；⑦ANP进展确认——v1.1协议族（ANP-07 Agent Description Protocol描述文档与能力发布&#x2F;ANP-08 Agent Discovery Protocol主动.well-known发现+被动注册搜索智能体&#x2F;ANP-09端到端即时消息含私聊群聊E2EE附件联邦语义）+W3C DID去中心化身份路线（did:wba方法+WNS可验证身份+人类可读Handle+跨域信任、请求方私钥对挑战字符串签名附HTTP Authorization头认证）、三层架构（身份与加密通信层&#x2F;元协议层自然语言动态协商通信格式&#x2F;领域协议层）、社区承诺开放中立永不商业化——与A2A构成”企业联盟中心化（DNS+HTTP+OAuth信任链）vs 开放网络去中心化（DID自主权身份）”两条路线；⑧能力协商理论素材确认——ACNBP（arXiv 2506.13590）能力协商与绑定协议10步流程（发现→预筛→安全协商→绑定承诺+数字签名&#x2F;能力证明）作为博弈论教学参考</td>
+</tr>
+<tr>
+<td>2026-08-28</td>
+<td>v6.1</td>
+<td>第16课联网知识更新。重大变更：①transformers v5大版本落地（当前v5.15.1，2026-08-19）——移除TensorFlow与Jax后端（torch成为唯一模型后端，第16课TF Serving部分重新定位为”通用推理服务版本管理&#x2F;灰度发布方法论”教学案例）、动态权重加载API（新WeightConverter类+ConversionOps列表，支持对checkpoint做reshape&#x2F;merge&#x2F;split层变换——QKV融合等，量化+MoE&#x2F;TP+MoE组合的必需品，from_pretrained大幅简化、张量物化调度使加载更快）、Tokenizer架构重构（放弃slow&#x2F;fast双实现，统一为四后端：TokenizersBackend（Rust首选）&#x2F;SentencePieceBackend&#x2F;PythonBackend&#x2F;MistralCommonBackend，AutoTokenizer自动选择；apply_chat_template返回BatchEncoding而非input_ids为breaking change；decode与encode对称化（批量输入返回列表）；序列化简化——special_tokens_map.json并入tokenizer_config.json、added_tokens.json并入tokenizer.json；additional_special_tokens更名extra_special_tokens）；②PyTorch 2.13（2026-07-08）——CuTeDSL”原生DSL”后端为Inductor提供第二条高性能代码路径（与Triton并行，编译速度更快）、FlexAttention落地Apple Silicon MPS（稀疏模式较SDPA速度提升约12倍+CUDA确定性反向传播）、nn.LinearCrossEntropyLoss（预测与损失计算融合，大词表LLM训练GPU峰值显存降4倍）、torchcomms全新分布式通信后端、FSDP2专用进程组通信重叠、Linux Python 3.15 wheel（含free-threaded 3.15t构建）；另torch.compiler.set_stance（2.6+Beta）——全局编译姿态旋钮（force_eager&#x2F;default等），运行时切换eager与compiled性能对比无需双模型，纳入torch.compile教学；③ONNX生态——ONNX Runtime v1.29.0（sparse tensor外部文件路径验证与路径加固、torch.load()安全切换）+onnxruntime-genai v0.15.2（2026-08-07，LLM跨平台生成式推理路径，支持Python 3.14）；④Qwen3-VL生态（VLM教学素材更新）——2025-11-27开源（2B&#x2F;4B&#x2F;8B&#x2F;32B dense+30B-A3B&#x2F;235B-A22B MoE，三模块架构：vision encoder+MLP vision-language merger+LLM，技术特性Interleaved-MRoPE&#x2F;DeepStack&#x2F;Text-Timestamp Alignment）、2026-02-03 Qwen3-VL-Flash上线Model Studio（thinking&#x2F;non-thinking模式融合+2D&#x2F;3D视觉定位）、Qwen3-VL-Embedding与Qwen3-VL-Reranker（MRL灵活嵌入维度&#x2F;32k token输入&#x2F;30+语言&#x2F;2B与8B两档）——多模态检索排序与第10课多模态RAG衔接；⑤微调生态——PEFT v0.20.0（九种新PEFT方法：HiRA低秩更新与冻结权重逐元素相乘保持LoRA参数量实现全秩更新、GLoRA层间缩放因子与rank分配学习等）、TRL v1.8.0（v1.0稳定版2026-03-31，75+后训练方法，原”TRLx”表述过时已并入TRL）；PEFT≥0.20.0上DPO&#x2F;GRPO&#x2F;KTO&#x2F;RLOO为target_parameters场景添加frozen ref adapter——衔接第17课GRPO教学</td>
+</tr>
+<tr>
+<td>2026-08-31</td>
+<td>v6.2</td>
+<td>第17课联网知识更新。变更：①TRL v1.9.0→v1.11.0密集迭代（v1.11.0于2026-08-26发布；v1.12.0系发布流程事故产生的v1.11.0位相同副本——VERSION误bump触发自动发布流水线，PyPI不允许yank后重传同版本号，故1.12被烧毁、下一真实版本为v1.13.0）——v1.10.0：DistillationTrainer从trl.experimental.distillation升为顶层稳定trainer（约30个PR重构、支持VLM与工具调用）、AsyncGRPOTrainer新增黑盒loop-owning路径（OpenEnv harness，训练opencode等自持工具循环的外部Agent：transparent_proxy模式捕获每轮token ids与logprobs→完成后重建逐轮训练行→用session的verify()给工作区打分；配套rollout_reward_fn&#x2F;train_turn_fn&#x2F;agent_turn_fn三策略钩子，可只强化想强化的轮次）、AsyncGRPO补齐top_p&#x2F;top_k&#x2F;min_p&#x2F;repetition_penalty采样控制与trackio轨迹记录；v1.11.0：<code>trl vllm-serve</code>废弃自研FastAPI服务（1218行→约130行）改为包装vLLM原生<code>vllm serve</code>+NCCL权重传输引擎（张量一次宣告打包广播，替代逐张量HTTP请求+广播），GRPO server-mode基准提速1.44~1.59倍（H100&#x2F;Qwen2.5-1.5B）、新增实验AsyncDistillationTrainer支持多教师MOPD（teacher_id列路由样本至数学&#x2F;代码等独立教师服务）、TRL skill重写为Python-API优先并移除<code>trl skills install</code>、examples重组为一例一文件夹（旧examples&#x2F;scripts与examples&#x2F;notebooks链接将404）；v1.9.x：DPPO实验trainer（散度约束替代PPO clipping的信赖域更新）、奖励函数可返回dict记录额外标量&#x2F;列级指标、GRPOTrainer内置高熵token过滤（Beyond the 80&#x2F;20 Rule: High-Entropy Minority Tokens）；②GRPO变体谱系定型为教学常识——vanilla GRPO三缺陷（熵崩溃&#x2F;奖励噪声&#x2F;长度偏差），DAPO（字节Seed 2025-03：动态采样丢弃零奖励方差组——零方差时组归一化优势恒为0、梯度信号消失但rollout成本已付+clip-higher放宽上裁剪鼓励探索）、Dr.GRPO（Sea AI Lab 2025-03：损失除以固定常数而非token数，消除”长回答梯度稀释”与长度偏差）、GSM8K复现两者精度几乎相同（DAPO 78.2% vs Dr.GRPO 77.9%，DAPO回答略短138 vs 139 token）→简单任务上变体选择不敏感的实证；③CacheRL（arXiv 2606.14179，Accenture，2026-06-12）纳入SFT vs RL定位与奖励设计核心案例——小Agent基础模型训练系统：Qwen3-4B-Thinking经迭代SFT+拒绝采样+GRPO流水线验证奖励0.43→0.78，多步工具调用过程准确率92%逼近GPT-5的94%而算力约1&#x2F;100；三级模糊缓存（exact&#x2F;fuzzy&#x2F;best-effort+token级掩码）消除live工具执行成本（纯精确匹配会导致50% rollouts失败）；缓存层级感知奖励按缓存质量动态加权outcome（LLM-as-Judge）与process（确定性校验）信号解决奖励归因问题（无缓存感知-17.2%）；关键实证结论”RL提升训练稳定性但超越强SFT的增益有限——数据质量与奖励设计比复杂优化算法更重要”；失败模式案例库（过早终止42% rollouts&#x2F;缓存不匹配级联17%&#x2F;工具过度链式调用&#x2F;元推理代替任务执行）；④Agentic RL工程生态快照——NVIDIA NeMo RL全栈（NeMo Gym环境化评估+NeMo Data Designer合成数据+Nemotron 3 Super可验证奖励训练）、OpenManus-RL（第13课v5.7已录，GRPO后训练开源、UIUC合作）</td>
+</tr>
+<tr>
+<td>2026-09-01</td>
+<td>v6.3</td>
+<td>第18课联网知识更新。变更：①INT4格式选型规则校准——AWQ成为服务端新量化默认（社区横评：PPL损失<del>3.4%最优、推理吞吐</del>95 tok&#x2F;s比FP16快~31%），GPTQ定位转向”社区已有artifact直接复用”（省量化成本、精度同档），GGUF仍是CPU&#x2F;Apple Silicon&#x2F;端侧唯一格式（GPTQ&#x2F;AWQ&#x2F;EXL2均需NVIDIA CUDA，GGUF支持CPU&#x2F;Metal&#x2F;Vulkan全后端，量化免GPU约18分钟）；②浮点量化新格局纳入教学——FP8（E4M3&#x2F;E5M2，sm_89+即H100&#x2F;H200&#x2F;L40S&#x2F;RTX 4090起，Hopper&#x2F;Blackwell上精度性能甜点位，支持动态在线量化免离线校准）、NVFP4（4-bit浮点+块级微缩放，Blackwell SM100专属，极低位宽下浮点对离群值鲁棒性优于整数——与第17课NF4逻辑同源）、MXFP4（OCP MX开放标准，sm_80+&#x2F;AMD ROCm）；NVIDIA官方部署建议（Llama 4 Scout on vLLM）：Hopper用FP8、Blackwell用NVFP4；vLLM v0.12.x量化支持矩阵（FP8&#x2F;NVFP4&#x2F;MXFP4&#x2F;GPTQ&#x2F;AWQ）与llm-compressor（NeuralMagic）+compressed-tensors统一量化工作流（oneshot API产出GPTQ&#x2F;AWQ&#x2F;FP8、分布式GPTQ、超大模型磁盘offload）替代散装AutoGPTQ&#x2F;AutoAWQ工具链；③蒸馏范式动态——On-Policy Distillation（OPD）成为2026研究热点：学生自生成轨迹+教师反馈修正（学”我的输出哪里错”而非”教师会怎么答”），基于Rubric的黑盒OPD在复杂推理蒸馏任务上被观察到精度&#x2F;耗时&#x2F;数据效率可能全面优于白盒OPD、SODA半在策略黑盒蒸馏（arXiv 2604.03873，利用师生能力差距折中）、OPD综述arXiv 2604.00626、Proxy-KD代理蒸馏（黑盒API输出→对齐proxy→分布）三层访问模型；黑盒API蒸馏合规红线纳入教学——2026年”Fable 5提取丑闻”（社区用蒸馏手段复刻闭源模型引发行业震动与法律追责）后厂商收紧批量API调用滥用检测，企业蒸馏数据来源必须过法务；DeepSeek-R1→Qwen&#x2F;Llama小模型蒸馏为产业标杆；④剪枝vs量化实证更新——QP论文（Revisiting Pruning vs Quantization for Small Language Models）系统性对比：50%压缩率下量化最大精度损失1.81% vs 剪枝16.61%、4-bit量化最大5.6% vs 75%稀疏度剪枝最高48.07%，提出”Junk DNA假设”（被剪权重非垃圾，损伤不可逆——量化降级表示、剪枝破坏结构）；非结构化剪枝反直觉增强测试时缩放TTS性能（s1.1-7B&#x2F;Qwen3-8B实证，arXiv 2604.25098，剪枝逼出更长推理链）；小模型对比（arXiv 2606.14150）：Wanda-U非结构化最准（68.1%）但商用硬件加速甚微；Minitron”剪枝+蒸馏恢复”确认为从大模型派生特定尺寸模型的产业路线；剪枝教学定位收窄为”2:4半结构化稀疏+模型工厂场景”，压缩优先级固化为量化&gt;蒸馏&gt;剪枝；⑤NF4（训练时量化，QLoRA）与AWQ&#x2F;GPTQ&#x2F;FP8（推理时量化）精度管理图谱合流，”蒸馏→量化两段式”（顺序不可换）与组合决策树成为教学主线，研究助手项目线产出部署形态决策文档（QLoRA产物→AWQ-Int4→vLLM）</td>
+</tr>
+<tr>
+<td>2026-09-02</td>
+<td>v6.4</td>
+<td>第19课联网知识更新。重大变更：①TGI确认归档——2025-12进入维护模式（HF官方Lysandre Debut宣布）、2026-03-21 GitHub仓库归档只读，最终版本v3.3.7（2025-12），Hugging Face点名推荐迁移至vLLM与SGLang两个自研引擎；第19课TGI条目改为历史视角（流式生成&#x2F;TG张量并行&#x2F;PP流水线并行的历史贡献与”单一厂商引擎的生态风险”教学案例），引擎对比主战场转为vLLM vs SGLang；②vLLM版本号校准与快照——v6.3所记”vLLM v0.12.x”有误，经多源核实（PyPI&#x2F;GitHub release notes&#x2F;第三方版本追踪），2026年7-8月实际版本线为v0.26.0（7-25）→v0.27.1（8-11）→v0.28.0（8-27，584 commits&#x2F;270 contributors）；v0.26：KV offloading成熟为对象存储二级层（workload identity+DP-replica感知分层+BlockStored事件）、per-KV-cache-group注意力后端选择；v0.28：E&#x2F;P&#x2F;D三分离（Model Runner V2，#38390）、磁盘offloading（#49644）、Mooncake store group语义与tenant ID、新默认max_num_batched_tokens 8192→16384（#51726）、Mamba默认开prefix caching（#50991）、在线MXFP4&#x2F;NVFP4量化、DSpark自适应投机token预算（TTFT改善<del>60%）、bitsandbytes移出树外插件、Transformers 5.15.0依赖、Rust前端+gRPC（protobuf schema发布至Buf）、请求优先级HTTP header解析（#51089）；③SGLang快照——当前稳定v0.5.18（2026-08-22，PyTorch 2.13、移除torchao集成）；v0.5.16（7-25）：UnifiedRadixTree成为sliding-window&#x2F;Mamba&#x2F;DSA默认缓存、GLM-5.2 cache-layer split每rank KV内存-74%（0.77→0.20GB&#x2F;rank）、ReplaySSM Ring Spec-Verify投机scratch 11.5→1.8GB（6.4x）、DSpark投机解码383.7 tok&#x2F;s（accept</del>5，DeepSeek-V4-Pro TP8 B300）；v0.5.10（4-06）：piecewise CUDA graph默认、HiSparse稀疏注意力、Elastic EP部分失败容忍、原生MLX后端（Apple Silicon）；④引擎竞争格局教学化——“2026内存层级之争”（两引擎连续两个周期同日发布对打同一瓶颈：调度器sync stall→KV Cache内存层级）：vLLM路线”下推”（冷块溢出到CPU&#x2F;磁盘&#x2F;对象存储二级层，适合大量互异长会话超VRAM场景）vs SGLang路线”缩小共享”（UnifiedRadixTree前缀去重+cache-layer split压缩，适合大量用户共享长前缀场景）——选型第一问是模型支持、第二问是流量形状；⑤PD分离架构纳入教学——Prefill计算密集vs Decode带宽密集的负载特征差异、SGLang –pd-disaggregation（Mooncake&#x2F;NIXL传输引擎，Write Mode默认实现真流水线化）与vLLM E&#x2F;P&#x2F;D分离（Model Runner V2），阿里云双机Qwen3-235B-A22B+eRDMA部署案例；⑥投机解码实证更新——EAGLE-3分布内接受率60-80%（独立draft模型40-60%、训练于目标模型自身生成数据）、DeepSeek-V3 MTP-1开箱接受率&gt;80%即~1.8x吞吐（无需额外训练）、Qwen3.6 MTP-4接受率46.52%-77.28%、多SD方法自适应组合端到端4.9x（arXiv 2601.11580）；⑦可观测性生态更新——LangSmith（Interrupt 2026：Messages View多轮trace可读化、Context Hub指令与策略版本化、LLM Gateway支出限额+PII脱敏+策略事件流入trace、OpenTelemetry摄取）、LangFuse（MIT核心开源自托管+Agent Skill遵循开放Agent Skills标准支持Claude Code&#x2F;Cursor&#x2F;Codex、typed observations+agent图可视化+生产告警）；⑧Chunked prefill确认为vLLM V1默认开启（长prompt切块与decode交错防止prefill垄断engine step，Berkeley Scalable AI课程L18理论佐证）；研究助手项目线产出推理服务层设计（vLLM引擎参数方案+三模型显存分配+prefix caching收益计算），第18课接口约定（–quantization awq_marlin –max-model-len 8192 –enable-prefix-caching）在本课展开</td>
+</tr>
+<tr>
+<td>2026-09-03</td>
+<td>v6.5</td>
+<td>第20课联网知识更新（本行为补录——上轮已更新第20课条目及快照但漏记日志行）。变更：三约束容量模型（显存&#x2F;解码带宽&#x2F;Prefill算力取最大）、GPU硬件2026-09快照（Blackwell Ultra B300&#x2F;GB300&#x2F;H200&#x2F;H20·B30中国特供&#x2F;RTX PRO 6000&#x2F;AMD MI350X、云价与”$&#x2F;GB&#x2F;s趋同”洞察）、KEDA冷启动阈值与cooldown实践、1000并发总装设计（三池容量+Planner-Worker混部+Spot混合策略）。详见第20课条目与快照</td>
+</tr>
+<tr>
+<td>2026-09-04</td>
+<td>v6.6</td>
+<td>第21课联网知识更新。变更：①自进化Agent学术谱系纳入教学——Agent Self-Evolution综述（2026-05，107篇论文&#x2F;348仓库&#x2F;97痛点，五大进化循环：反馈驱动生成&#x2F;评估&#x2F;记忆&#x2F;自我修改&#x2F;系统搜索）与Self-Improvements in Modern Agentic Systems综述（2026-07，arXiv:2607.13104，自改进&#x3D;”基础模型改进+脚手架改进”，自诱导算子&#x2F;自指导模式）作为”三类学习信号×四种更新载体”矩阵的理论框架；②Agent Skills确认为开放标准（2025-12-18 agentskills.io，2026-06约40个兼容产品），生态实证纳入治理教学——SkillsBench 47150个skills平均质量6.2&#x2F;12、精选skills+16.2pp通过率、ToxicSkills 36%提示注入（来源审计&#x2F;最小权限&#x2F;SKILL.md审查三件套）；③学习信号工程实践校准——eval-driven development（Anthropic 2026-01）与Golden Dataset+LLM-as-a-Judge+回归检测三位一体（2026-04 playbook，Opus当裁判）写入信号质量评估；④Agent自举安全案例定型——Ouroboros（2026-08，arXiv:2608.08311，161天自由进化实验，宪法核心保护&#x2F;身份档案不可删&#x2F;护栏权威性）与OWASP 2026 rogue agent路径（importlib.reload()绕过&#x2F;30+主流编码工具漏洞）写入自举边界；⑤Computer Use前沿校准——OSWorld-Verified人类基线72.4%已被5个模型超越（Fable 5 85.0%&#x2F;Opus 4.8 83.4%&#x2F;开源Holo3-35B 82.6%）、OSWorld 2.0长周期任务Opus 4.8仅20.6%（”短周期可商用、长周期仍早期”主线）、Claude Computer Use GA（2026-08-19，computer_toolset_20260801批量动作&#x2F;首错即停）；⑥VLA与CUA融合趋势（ScaleCUA ICLR 2026 Oral跨平台开源CUA、π0.5 flow matching+FAST tokenizer、GR00T N1.7 3B Apache 2.0）与语音Agent”级联主流vs端到端S2S全双工崛起”（Moshi约200ms&#x2F;GPT-Live移除turn detector，延迟vs可观测性权衡）写入前沿认知；研究助手项目线产出持续进化机制设计（badcase→学习信号→置信分流→载体路由→三道闸门→灰度→回滚的完整闭环）</td>
+</tr>
+<tr>
+<td>2026-09-07</td>
+<td>v6.7</td>
+<td>第22课联网知识更新（收官课）。变更：①Spec Coding方法论谱系定型——三次范式跃迁框架（Vibe Coding 2024 Karpathy→Spec Coding 2025→Harness Engineer 2026，层叠关系非替代，”Harness不是Agent，是管理Agent如何运行的软件系统”）与三铁律（No Spec No Code&#x2F;Spec is Truth&#x2F;Reverse Sync，经济学依据Code is Cheap Context is Expensive：模糊需求约20轮对话上下文二次增长vs Spec路径3-5轮收敛）；②渐进式复杂度管理纳入教学——人月神话本质&#x2F;偶然复杂度二分、《2026年AI编码的”渐进式Spec”实战指南》（阿里技术2026-04）三档流程深度（70%需求≤5人日：小需求Rules兜底&#x2F;中等0.5-2人日简版spec&#x2F;复杂&gt;2人日完整流程）、Rules+Spec+Skills三位一体目录结构（rules始终生效&#x2F;knowledge按需加载&#x2F;changes变更管理）；③L3 AI Coding概念定型——Software Factory成熟度模型L0-L4（L3 Spec-Driven人审规格与评估结果而非代码行，Operator Leverage 1:3-1:10；L4 Governed Autonomy 1:10-1:50）与Spec成熟度三级（Spec-First→Spec-Anchored→Spec-as-Source）、SDD四步（Spec技术无关&#x2F;Plan注入专业判断&#x2F;Tasks原子任务&#x2F;Implement自验证）及产业实践（Spec Kit &#x2F;specify→&#x2F;plan→&#x2F;tasks、OpenAI Symphony issue绑定SPEC.md、Claude Code Plan Mode、AWS Kiro）；④工具全景2026-09快照——Claude Code v2.1.261（2026-09-04，&#x2F;skill-doctor显示未用skills上下文成本）、Cursor（2026-09-02自托管机器&#x2F;team pools&#x2F;.cursor&#x2F;agents&#x2F;子代理&#x2F;SKILL.md）、Trae TraeCode v3.3.93-96（2026-09-01 Solo Agent与Agent智能体合并、&#x2F;goal &#x2F;plan &#x2F;spec内置命令、Max模式）、AutoGen进维护模式（Microsoft Agent Framework 1.0 GA 2026-04-03合并Semantic Kernel：YAML agent定义&#x2F;图工作流+checkpointing&#x2F;原生MCP+A2A；社区分支AG2 v1.0.0 2026-07-27）——“框架易变层协议稳定层”教学主线、编排层+执行层两层架构（强模型决策+编码工具执行）、透明度四底线（模型版本可见&#x2F;context可查&#x2F;输出不篡改&#x2F;token透明）、SWE-bench Verified模型vs产品落差（Claude Opus 5约96% vs Cline约59.8%&#x2F;Devin 2.0约45.8%）；⑤AI重构方法论纳入——四步法（AI通读生成理解文档→分模块方案→行为对比验证→增量合并，PDA循环实例化）、暴力拆解vs精准缝合策略边界、演进式设计从风险最低部分开始；⑥审查闭环状态机模型（IDLE→PROPOSING→HARD-GATE→APPLYING→REVIEW_SPEC→REVIEW_QUALITY→FIXING→ARCHIVED，非法转移结构性拦截）与团队三角色（Spec架构师&#x2F;AI训练师&#x2F;质量验证师）写入架构师视角；⑦项目线收官决策——研究助手代码分析模块分层方案（默认不内建&#x2F;MCP外挂按需启用&#x2F;报告态仓库元信息），课程全部22课完成，毕业答卷待下一轮生成</td>
+</tr>
+<tr>
+<td>2026-09-10</td>
+<td>v6.8</td>
+<td>毕业答卷与参考答案生成——课程全部交付物收官。变更：①毕业答卷（99-毕业答卷.md）——三部分结构（基础原理30分闭卷：Attention复杂度与KV Cache计算&#x2F;InfoNCE与RRF检索数学&#x2F;灰度样本量与载体路由&#x2F;四组概念辨析；技术选型30分开卷：模型定制与压缩组合&#x2F;知识架构&#x2F;编排框架与互操作；系统设计40分开卷：企业级智能研究助手Agent系统全生命周期架构设计，覆盖十部分——架构图&#x2F;模型栈&#x2F;推理集群&#x2F;协作互操作&#x2F;知识增强&#x2F;安全&#x2F;评估可观测&#x2F;<strong>持续进化机制</strong>&#x2F;<strong>治理与能力边界</strong>&#x2F;成本与18个月演进路线）；②毕业参考答案（99-毕业参考答案.md）——第一部分标准答案（含完整计算过程与”16”的z值来源推导）、第二部分参考方案（6维评分：5分&#x3D;量化决策+被否决方案数据支撑+风险预案）、第三部分参考架构方案（三模型栈与显存核算&#x2F;三约束容量计算&#x2F;进化闭环全链路&#x2F;审查闭环状态机与自举五级边界&#x2F;月成本~$9,900分项估算）+6维评分标准表+常见错误模式（架构6条&#x2F;选型7条&#x2F;安全7条，含”无进化机制即失去时间维度分数””评估体系必须对Agent只读”等毕业级检查点）；③相对E020月考的核心增量明确——时间维度（第21课持续进化）+治理维度（第22课能力边界）+全生命周期视角（MVP→生产化→规模化18个月路线）；④结业考核todo勾选完成</td>
+</tr>
+<tr>
+<td>2026-09-13</td>
+<td>v6.9</td>
+<td>全局”查漏补缺、删繁就简”统一审查与更新。原则：<strong>保留经时间沉淀的长期有效核心干货（数学公式&#x2F;架构决策框架&#x2F;方法论），弱化滚动式的版本号·日期·基准分数快照，修正硬错误，补高价值长期缺口</strong>。①硬错误修正——第18课”vLLM v0.12.x”版本号过时（第19课已明确版本线为v0.26→v0.28），全课改为v0.28.x；技术栈全景图工程层”vLLM&#x2F;TGI”改”vLLM&#x2F;SGLang”（TGI已于2025-12维护模式&#x2F;2026-03归档，不具长期代表地位）；②联网核实确认无重大变化点——MCP 2026-07-28无状态化（退休initialize&#x2F;initialized握手与Mcp-Session-Id头，第五个日期修订版）为当前稳定形态，第11课已覆盖无需改；vLLM分层KV Cache Offloading·Model Runner V2、SGLang v0.5.19（2026-09-05 beam search）为第19课已覆盖能力线的自然延续；③删繁就简原则确立——各课”技术栈版本快照（20XX-XX-XX）”这类滚动式信息保留为”截至某时生态状态”定位，不作为长期知识点考核；跨课重复的架构图&#x2F;演进表收敛为交叉引用；④保留白名单（审查确认不动）——第02课MHA&#x2F;GQA参数表与Llama-2教学锚点（含Llama-3对照，长期有效）、第18课τ极限与τ²系数、第19课PagedAttention&#x2F;Continuous Batching&#x2F;Speculative Decoding公式、三约束容量模型、四载体ROI、审查闭环状态机；⑤补高价值长期缺口清单（架构师级、非滚动式）——模型并行TP&#x2F;PP&#x2F;DP代价、多LoRA融合&#x2F;合并策略、量化后退化诊断三件套、GPU故障迁移容错、checkpoint生命周期管理、记忆审计接口、MCP网关可观测口径、多Agent压测四指标、Agentic RAG数据台账；见各课对应小节</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/">https://handyes.github.io/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyEs的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/13/AI-Agent/AI%20Agent/0001-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第01课：AI Agent历史演变与系统架构总览"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第01课：AI Agent历史演变与系统架构总览</div></div><div class="info-2"><div class="info-item-1">第01课：AI Agent历史演变与系统架构总览 课程信息  课程名称：AI Agent系统架构设计 本课序号：01&#x2F;22 预计学习时间：约50分钟（历史速览25min + 架构总览20min + 习题10min） 项目贡献：基础架构层——搭建Agent系统骨架认知 先修要求：Python、机器学习基础、线性代数    本课导读本课分两部分：前半节快速过一遍AI Agent的历史演变脉络（重点关注架构范式的变迁，而非编年史）；后半节深入剖析LLM驱动Agent的系统架构，建立贯穿全课程的技术框架。 本课同时引入贯穿全课程的实战项目——“企业级智能研究助手Agent系统”，后续每课都将为该项目添砖加瓦。 本课还将引入Harness工程概念作为贯穿全课程的顶层框架。Harness工程是围绕LLM模型构建的工程体系，包含上下文与工具、约束、验证、纠正、编排五个核心功能。后续每课都对应Harness的一个或多个功能模块——从本课建立的架构骨架开始，逐步搭建出完整的Harness工程。  第一部分：AI Agent历史演变（25分钟速览）1.1 三个时代的架构范式变迁AI Age...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/E020-%E6%9C%88%E8%80%83%E8%AF%95%E5%8D%B7/" title="月考试卷：AI Agent系统架构设计（第1-20课全链路）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">月考试卷：AI Agent系统架构设计（第1-20课全链路）</div></div><div class="info-2"><div class="info-item-1">月考试卷：AI Agent系统架构设计（第1-20课全链路） 考试时间：建议150分钟 | 满分：100分 | 覆盖范围：第1-20课（侧重第16-20课模型与部署层，兼顾全链路）考试形式：建议闭卷计算题 + 开卷设计题（第一部分闭卷，第二、三部分可查阅课程资料）配套文件：E020-月考参考答案.md（含评分标准与常见错误模式）   第一部分：基础原理（30分，闭卷，有标准答案）Q1. KV Cache与显存容量计算（8分）某研究助手主模型为32B参数模型（64层，8个KV头，head_dim&#x3D;128），采用GQA架构，KV Cache使用FP16精度，模型权重为AWQ-Int4量化后的18GB，部署在一张A100 80GB上（可用显存利用率按90%计，固定开销按权重的12%计）。 （1） 写出GPU显存占用的完整公式，并说明四项各自的含义。（2分） （2） 计算该模型每token的KV Cache大小，以及单个8192 token上下文请求的KV Cache总量。（3分） （3） 计算单张A100上该模型的理论并发上限（在途请求数）。（3分） Q2. LoRA与QLo...</div></div></div></a><a class="pagination-related" href="/2026/08/17/AI-Agent/AI%20Agent/S0005-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告1：第一单元阶段总结（第1-5课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-17</div><div class="info-item-2">总结报告1：第一单元阶段总结（第1-5课）</div></div><div class="info-2"><div class="info-item-1">总结报告1：第一单元阶段总结（第1-5课） 生成日期：2026-08-13覆盖范围：第一单元「Agent核心架构与Prompt工程」（第01-05课）项目线进展：基础架构层完成   一、阶段知识脉络梳理1.1 知识图谱123456789101112131415161718192021                ┌─────────────────────────────────┐                │     第一单元：基础架构层          │                │   （Agent核心架构与Prompt工程）    │                └──────────────┬──────────────────┘                               │      ┌────────────┬───────────┼───────────┬────────────┐      ▼            ▼           ▼           ▼            ▼┌──────────┐ ┌─────...</div></div></div></a><a class="pagination-related" href="/2026/08/18/AI-Agent/AI%20Agent/0006-RAG%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%B5%81%E6%B0%B4%E7%BA%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第06课：RAG基础架构与完整流水线"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-18</div><div class="info-item-2">第06课：RAG基础架构与完整流水线</div></div><div class="info-2"><div class="info-item-1">第06课：RAG基础架构与完整流水线 所属单元：第二单元 RAG检索增强与Agent记忆（第6-10课）时间分配：理论推导 20min + 工程实践 15min + 项目关联 10min + 习题 10min知识深度：InfoNCE损失函数推导 &#x2F; HNSW索引算法 &#x2F; 向量数据库选型矩阵 &#x3D; 必须掌握；Embedding模型选型 &#x2F; 向量相似度计算 &#x3D; 应当理解项目贡献：知识层——为”企业级智能研究助手Agent系统”构建RAG知识库基础设施（论文PDF的索引构建→语义检索完整流水线），第05课的 search_papers 工具从Mock数据升级为真实向量检索后端先修要求：第01课（Harness工程五功能、PDA循环）、第02课（KV Cache与上下文窗口约束）、第05课（Function Calling、JSON Schema工具描述、search_papers工具实现）   课程导入第05课我们完成了Agent的工具调用骨架——search_papers、get_paper_detail、analyze_citatio...</div></div></div></a><a class="pagination-related" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-13</div><div class="info-item-2">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</div></div><div class="info-2"><div class="info-item-1">毕业答卷：AI Agent系统架构设计（第1-22课全课程） 考试时间：建议180分钟 | 满分：100分 | 覆盖范围：全部22课（第1-5课架构与上下文层、第6-10课知识层、第11-15课协议与框架层、第16-18课模型层、第19-20课部署层、第21课进化层、第22课应用前沿层）考试形式：第一部分闭卷，第二、三部分开卷（可查阅课程资料）配套文件：99-毕业参考答案.md（含参考架构方案、6维评分标准与常见错误模式）毕业主题：完成**”企业级智能研究助手Agent系统”的完整架构设计方案**——这是你22课项目线的终点交付物   第一部分：基础原理（30分，闭卷，有标准答案）Q1. Attention复杂度与KV Cache容量计算（8分）研究助手的Worker模型为7B参数（32层，注意力头32个，GQA架构下KV头8个，head_dim&#x3D;128，hidden_size&#x3D;4096），KV Cache使用FP16精度，权重经AWQ-Int4量化后约4GB，部署在一张L40S 48GB上（可用显存利用率按90%计，固定开销按权重的12%计）。 （1） 写出...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/AI%20Agent/S0010-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告2：第二单元阶段总结（第6-10课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">总结报告2：第二单元阶段总结（第6-10课）</div></div><div class="info-2"><div class="info-item-1">总结报告2：第二单元阶段总结（第6-10课） 生成时间：2026-08-20（第10课完成触发） | 覆盖范围：RAG检索增强与Agent记忆（知识层） | 项目进度：10&#x2F;22课   一、阶段知识脉络梳理1.1 知识图谱12345678910111213141516171819                ┌─────────────────────────────────────┐                │   第10课：Agentic RAG（本单元合龙）     │                │  决策树D0-D4 + CRAG三级纠正 +         │                │  Self-RAG反思token + 评估体系全景     │                └──────────────┬──────────────────────┘         ┌─────────────────────┼─────────────────────┐         ▼                     ▼        ...</div></div></div></a><a class="pagination-related" href="/2026/08/15/AI-Agent/AI%20Agent/0003-Agent%E6%8E%A8%E7%90%86%E6%9E%B6%E6%9E%84-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-15</div><div class="info-item-2">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion</div></div><div class="info-2"><div class="info-item-1">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion 课程信息  课程名称：AI Agent系统架构设计 本课序号：03&#x2F;22 预计学习时间：约55分钟（理论推导20min + 工程实现15min + 评估方法5min + 习题15min） 项目贡献：基础架构层——为”企业级智能研究助手Agent系统”设计推理循环架构，确立PDA循环的状态机模型与终止条件 先修要求：第01课（PDA循环定义）、第02课（Attention复杂度、KV Cache、上下文窗口约束）    本课导读第02课我们分析了LLM的”单次推理”机制——Attention的 $O(n^2d)$ 复杂度、KV Cache的显存占用、上下文窗口的Token预算。但Agent不是”问一次答一次”的聊天机器人，它的核心能力是循环推理：感知任务→推理决策→执行行动→观察结果→继续推理，直到任务完成。 这个循环就是第01课定义的PDA（Perceive-Decide-Act）循环。本课要解决的核心问题是：如何设计这个循环的控制结构，使Agent在有限Token预算内高...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AI-Agent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E2%80%94-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.</span> <span class="toc-text">AI Agent系统架构设计 — 教学大纲</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">课程基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%B9%E5%85%BB%E7%9B%AE%E6%A0%87"><span class="toc-number">1.2.</span> <span class="toc-text">培养目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%EF%BC%9A%E5%8F%8C%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">课程结构设计：双线并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E6%95%99%E5%AD%A6%E5%AE%9A%E4%B9%89%EF%BC%9A%E5%BC%95%E5%AF%BC%E5%BC%8F%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.4.</span> <span class="toc-text">实战教学定义：引导式代码实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF"><span class="toc-number">1.5.</span> <span class="toc-text">技术栈全景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E6%B7%B1%E5%BA%A6%E8%BE%B9%E7%95%8C"><span class="toc-number">1.6.</span> <span class="toc-text">知识深度边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%99%E5%AD%A6%E8%BF%9B%E5%BA%A6%E8%A1%A8"><span class="toc-number">1.7.</span> <span class="toc-text">教学进度表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%EF%BC%9AAgent%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B%EF%BC%88%E7%AC%AC1-5%E8%AF%BE%EF%BC%89"><span class="toc-number">1.7.1.</span> <span class="toc-text">第一单元：Agent核心架构与Prompt工程（第1-5课）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%EF%BC%9ARAG%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E4%B8%8EAgent%E8%AE%B0%E5%BF%86%EF%BC%88%E7%AC%AC6-10%E8%AF%BE%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">第二单元：RAG检索增强与Agent记忆（第6-10课）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%EF%BC%9AMCP%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC11-15%E8%AF%BE%EF%BC%89"><span class="toc-number">1.7.3.</span> <span class="toc-text">第三单元：MCP协议与框架实战（第11-15课）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%95%E5%85%83%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E3%80%81%E7%94%9F%E4%BA%A7%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%EF%BC%88%E7%AC%AC16-21%E8%AF%BE%EF%BC%89"><span class="toc-number">1.7.4.</span> <span class="toc-text">第四单元：模型优化、生产部署与持续进化（第16-21课）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%8D%95%E5%85%83%EF%BC%9AAI-Coding%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF%EF%BC%88%E7%AC%AC22%E8%AF%BE%EF%BC%89"><span class="toc-number">1.7.5.</span> <span class="toc-text">第五单元：AI Coding与Agent应用前沿（第22课）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E4%B8%9A%E8%80%83%E6%A0%B8"><span class="toc-number">1.7.6.</span> <span class="toc-text">结业考核</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E6%A0%B8%E4%BD%93%E7%B3%BB%E8%AF%B4%E6%98%8E"><span class="toc-number">1.8.</span> <span class="toc-text">考核体系说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%88%E8%80%83-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7%E7%BB%93%E6%9E%84"><span class="toc-number">1.8.1.</span> <span class="toc-text">月考&#x2F;毕业答卷结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86%E7%BB%B4%E5%BA%A6%EF%BC%88%E7%AC%AC%E4%BA%8C%E3%80%81%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">1.8.2.</span> <span class="toc-text">评分维度（第二、三部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%E4%B8%AD%E7%9A%84%E2%80%9D%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E6%A8%A1%E5%BC%8F%E2%80%9D"><span class="toc-number">1.8.3.</span> <span class="toc-text">参考答案中的”常见错误模式”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><span class="toc-number">1.9.</span> <span class="toc-text">更新日志</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
