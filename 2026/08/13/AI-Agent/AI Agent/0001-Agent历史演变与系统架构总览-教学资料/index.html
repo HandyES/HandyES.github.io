@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第01课：AI Agent历史演变与系统架构总览 | HandyES的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第01课：AI Agent历史演变与系统架构总览 课程信息  课程名称：AI Agent系统架构设计 本课序号：01&#x2F;22 预计学习时间：约50分钟（历史速览25min + 架构总览20min + 习题10min） 项目贡献：基础架构层——搭建Agent系统骨架认知 先修要求：Python、机器学习基础、线性代数    本课导读本课分两部分：前半节快速过一遍AI Agent的历史演变脉络">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第01课：AI Agent历史演变与系统架构总览 | HandyES的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第01课：AI Agent历史演变与系统架构总览  课程信息  课程名称：AI Agent系统架构设计 本课序号：01&#x2F;22 预计学习时间：约50分钟（历史速览25min + 架构总览20min + 习题10min） 项目贡献：基础架构层——搭建Agent系统骨架认知 先修要求：Python、机器学习基础、线性代数     本课导读 本课分两部分：前半节快速过一遍AI Agent的历史演变脉络（">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第01课：AI Agent历史演变与系统架构总览">
 <meta property="og:url" content="https://handyes.github.io/2026/08/13/AI-Agent/AI%20Agent/0001-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/index.html">
 <meta property="og:site_name" content="HandyES的博客">
-<meta property="og:description" content="第01课：AI Agent历史演变与系统架构总览 课程信息  课程名称：AI Agent系统架构设计 本课序号：01&#x2F;22 预计学习时间：约50分钟（历史速览25min + 架构总览20min + 习题10min） 项目贡献：基础架构层——搭建Agent系统骨架认知 先修要求：Python、机器学习基础、线性代数    本课导读本课分两部分：前半节快速过一遍AI Agent的历史演变脉络">
+<meta property="og:description" content="第01课：AI Agent历史演变与系统架构总览  课程信息  课程名称：AI Agent系统架构设计 本课序号：01&#x2F;22 预计学习时间：约50分钟（历史速览25min + 架构总览20min + 习题10min） 项目贡献：基础架构层——搭建Agent系统骨架认知 先修要求：Python、机器学习基础、线性代数     本课导读 本课分两部分：前半节快速过一遍AI Agent的历史演变脉络（">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://handyes.github.io/img/1.png">
 <meta property="article:published_time" content="2026-08-12T16:00:00.000Z">
@@ -201,28 +201,31 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyES的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">第01课：AI Agent历史演变与系统架构总览</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第01课：AI Agent历史演变与系统架构总览</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-12T16:00:00.000Z" title="发表于 2026-08-13 00:00:00">2026-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T14:58:49.603Z" title="更新于 2026-09-13 22:58:49">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第01课：AI-Agent历史演变与系统架构总览"><a href="#第01课：AI-Agent历史演变与系统架构总览" class="headerlink" title="第01课：AI Agent历史演变与系统架构总览"></a>第01课：AI Agent历史演变与系统架构总览</h1><blockquote>
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyES的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">第01课：AI Agent历史演变与系统架构总览</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第01课：AI Agent历史演变与系统架构总览</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-12T16:00:00.000Z" title="发表于 2026-08-13 00:00:00">2026-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-13T14:58:49.603Z" title="更新于 2026-09-13 22:58:49">2026-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第01课ai-agent历史演变与系统架构总览"><a class="markdownIt-Anchor" href="#第01课ai-agent历史演变与系统架构总览"></a> 第01课：AI Agent历史演变与系统架构总览</h1>
+<blockquote>
 <p><strong>课程信息</strong></p>
 <ul>
 <li>课程名称：AI Agent系统架构设计</li>
-<li>本课序号：01&#x2F;22</li>
+<li>本课序号：01/22</li>
 <li>预计学习时间：约50分钟（历史速览25min + 架构总览20min + 习题10min）</li>
 <li>项目贡献：基础架构层——搭建Agent系统骨架认知</li>
 <li>先修要求：Python、机器学习基础、线性代数</li>
 </ul>
 </blockquote>
-<hr>
-<h2 id="本课导读"><a href="#本课导读" class="headerlink" title="本课导读"></a>本课导读</h2><p>本课分两部分：前半节快速过一遍AI Agent的历史演变脉络（重点关注<strong>架构范式的变迁</strong>，而非编年史）；后半节深入剖析LLM驱动Agent的系统架构，建立贯穿全课程的技术框架。</p>
+<hr />
+<h2 id="本课导读"><a class="markdownIt-Anchor" href="#本课导读"></a> 本课导读</h2>
+<p>本课分两部分：前半节快速过一遍AI Agent的历史演变脉络（重点关注<strong>架构范式的变迁</strong>，而非编年史）；后半节深入剖析LLM驱动Agent的系统架构，建立贯穿全课程的技术框架。</p>
 <p>本课同时引入贯穿全课程的实战项目——<strong>“企业级智能研究助手Agent系统”</strong>，后续每课都将为该项目添砖加瓦。</p>
 <p>本课还将引入<strong>Harness工程</strong>概念作为贯穿全课程的顶层框架。Harness工程是围绕LLM模型构建的工程体系，包含上下文与工具、约束、验证、纠正、编排五个核心功能。后续每课都对应Harness的一个或多个功能模块——从本课建立的架构骨架开始，逐步搭建出完整的Harness工程。</p>
-<hr>
-<h2 id="第一部分：AI-Agent历史演变（25分钟速览）"><a href="#第一部分：AI-Agent历史演变（25分钟速览）" class="headerlink" title="第一部分：AI Agent历史演变（25分钟速览）"></a>第一部分：AI Agent历史演变（25分钟速览）</h2><h3 id="1-1-三个时代的架构范式变迁"><a href="#1-1-三个时代的架构范式变迁" class="headerlink" title="1.1 三个时代的架构范式变迁"></a>1.1 三个时代的架构范式变迁</h3><p>AI Agent的发展可以划分为三个时代，每个时代的<strong>核心架构范式</strong>发生了本质变化：</p>
+<hr />
+<h2 id="第一部分ai-agent历史演变25分钟速览"><a class="markdownIt-Anchor" href="#第一部分ai-agent历史演变25分钟速览"></a> 第一部分：AI Agent历史演变（25分钟速览）</h2>
+<h3 id="11-三个时代的架构范式变迁"><a class="markdownIt-Anchor" href="#11-三个时代的架构范式变迁"></a> 1.1 三个时代的架构范式变迁</h3>
+<p>AI Agent的发展可以划分为三个时代，每个时代的<strong>核心架构范式</strong>发生了本质变化：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">时代一：规则驱动Agent（1950s-2010s）</span><br><span class="line">  架构范式：IF-THEN规则引擎</span><br><span class="line">  决策核心：人工编写的规则库</span><br><span class="line">  能力边界：封闭域，无泛化</span><br><span class="line"></span><br><span class="line">时代二：学习驱动Agent（2010s-2022）</span><br><span class="line">  架构范式：策略函数 π(a|s) → 最优动作</span><br><span class="line">  决策核心：训练得到的策略网络</span><br><span class="line">  能力边界：特定任务（游戏/控制），无通用性</span><br><span class="line"></span><br><span class="line">时代三：LLM驱动Agent（2023-至今）</span><br><span class="line">  架构范式：PDA循环 + 工具调用 + 记忆 + 反思</span><br><span class="line">  决策核心：大语言模型（通用推理能力）</span><br><span class="line">  能力边界：开放域，可泛化</span><br></pre></td></tr></table></figure>
-
 <p>下面快速过一遍每个时代的关键节点，<strong>聚焦架构决策者需要知道的</strong>。</p>
-<h3 id="1-2-规则驱动时代：符号主义与专家系统"><a href="#1-2-规则驱动时代：符号主义与专家系统" class="headerlink" title="1.2 规则驱动时代：符号主义与专家系统"></a>1.2 规则驱动时代：符号主义与专家系统</h3><p><strong>核心架构</strong>：</p>
+<h3 id="12-规则驱动时代符号主义与专家系统"><a class="markdownIt-Anchor" href="#12-规则驱动时代符号主义与专家系统"></a> 1.2 规则驱动时代：符号主义与专家系统</h3>
+<p><strong>核心架构</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入 → [模式匹配引擎] → 匹配规则 → [推理引擎] → 输出</span><br><span class="line">           ↑                           ↓</span><br><span class="line">        [知识库: IF-THEN规则集] ←──────┘</span><br></pre></td></tr></table></figure>
-
 <p><strong>代表系统</strong>：</p>
 <ul>
 <li>MYCIN（1970s）：医疗诊断，约600条规则，能诊断细菌感染并推荐抗生素</li>
@@ -234,13 +237,13 @@
 <li>致命缺陷：规则数量随问题复杂度<strong>组合爆炸</strong>，MYCIN诊断600种细菌需要600条规则，无法泛化到第601种</li>
 <li>这个教训直接影响了后来Agent架构的设计哲学：<strong>用学习替代穷举，用泛化替代枚举</strong></li>
 </ul>
-<h3 id="1-3-学习驱动时代：强化学习Agent"><a href="#1-3-学习驱动时代：强化学习Agent" class="headerlink" title="1.3 学习驱动时代：强化学习Agent"></a>1.3 学习驱动时代：强化学习Agent</h3><p><strong>核心架构</strong>：</p>
+<h3 id="13-学习驱动时代强化学习agent"><a class="markdownIt-Anchor" href="#13-学习驱动时代强化学习agent"></a> 1.3 学习驱动时代：强化学习Agent</h3>
+<p><strong>核心架构</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Agent ←─ 状态 s ── 环境</span><br><span class="line">  │                     </span><br><span class="line">  └── 动作 a ──→ 环境 → 奖励 r ──→ Agent</span><br><span class="line"></span><br><span class="line">策略函数：π(a|s) = P(动作a | 状态s)</span><br><span class="line">目标：maximize E[Σ γ^t · r_t]</span><br></pre></td></tr></table></figure>
-
 <p><strong>代表里程碑</strong>：</p>
 <ul>
 <li>DQN（2013, DeepMind）：深度神经网络近似Q函数，在49款Atari游戏中达到人类水平</li>
-<li>AlphaGo（2016）：蒙特卡洛树搜索 + 策略&#x2F;价值网络，击败李世石</li>
+<li>AlphaGo（2016）：蒙特卡洛树搜索 + 策略/价值网络，击败李世石</li>
 <li>AlphaZero（2017）：自我对弈学习，无需人类棋谱</li>
 </ul>
 <p><strong>架构设计师视角的关键教训</strong>：</p>
@@ -248,15 +251,16 @@
 <li>RL Agent的架构本质是<strong>马尔可夫决策过程（MDP）的求解器</strong></li>
 <li>核心公式——Bellman方程：</li>
 </ul>
-<p>$$Q(s, a) &#x3D; r + \gamma \cdot \max_{a’} Q(s’, a’)$$</p>
-<p>  其中 $\gamma$ 是折扣因子，控制Agent对长期收益的重视程度。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi><mo stretchy="false">(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>r</mi><mo>+</mo><mi>γ</mi><mo>⋅</mo><munder><mo><mi>max</mi><mo>⁡</mo></mo><msup><mi>a</mi><mo mathvariant="normal">′</mo></msup></munder><mi>Q</mi><mo stretchy="false">(</mo><msup><mi>s</mi><mo mathvariant="normal">′</mo></msup><mo separator="true">,</mo><msup><mi>a</mi><mo mathvariant="normal">′</mo></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Q(s, a) = r + \gamma \cdot \max_{a&#x27;} Q(s&#x27;, a&#x27;)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">Q</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.63889em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.5458720000000001em;vertical-align:-0.7439800000000001em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.43055999999999983em;"><span style="top:-2.05602em;margin-left:0em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6828285714285715em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span><span class="mop">max</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7439800000000001em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">Q</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span></span></span></span> 是折扣因子，控制Agent对长期收益的重视程度。</p>
 <ul>
-<li>致命缺陷：策略函数是<strong>任务特定的</strong>——AlphaGo的策略网络只能下围棋，不能下象棋。<strong>泛化性 &#x3D; 0</strong>。</li>
+<li>致命缺陷：策略函数是<strong>任务特定的</strong>——AlphaGo的策略网络只能下围棋，不能下象棋。<strong>泛化性 = 0</strong>。</li>
 <li>关键启示：Agent需要的是<strong>通用推理能力</strong>，而非特定任务的最优策略。</li>
 </ul>
-<h3 id="1-4-LLM驱动时代：通用智能Agent的诞生"><a href="#1-4-LLM驱动时代：通用智能Agent的诞生" class="headerlink" title="1.4 LLM驱动时代：通用智能Agent的诞生"></a>1.4 LLM驱动时代：通用智能Agent的诞生</h3><p><strong>范式转变的核心</strong>：LLM提供了第一个<strong>通用的”推理引擎”</strong>。</p>
+<h3 id="14-llm驱动时代通用智能agent的诞生"><a class="markdownIt-Anchor" href="#14-llm驱动时代通用智能agent的诞生"></a> 1.4 LLM驱动时代：通用智能Agent的诞生</h3>
+<p><strong>范式转变的核心</strong>：LLM提供了第一个<strong>通用的&quot;推理引擎&quot;</strong>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">传统Agent:  特定任务 → 训练特定策略 → 特定任务能力</span><br><span class="line">LLM Agent:  通用预训练 → 通用推理能力 → 任意任务（通过工具+记忆扩展）</span><br></pre></td></tr></table></figure>
-
 <p><strong>关键演进节点（架构视角）</strong>：</p>
 <table>
 <thead>
@@ -266,7 +270,8 @@
 <th>架构贡献</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>2023.03</td>
 <td>AutoGPT</td>
 <td>首次展示LLM自主分解任务+工具调用+迭代执行的闭环</td>
@@ -284,12 +289,12 @@
 <tr>
 <td>2024.06</td>
 <td>Reflexion模式成熟</td>
-<td>自我反思闭环成为Agent标配，”行动→评估→改进”</td>
+<td>自我反思闭环成为Agent标配，“行动→评估→改进”</td>
 </tr>
 <tr>
 <td>2024.11</td>
 <td>Anthropic推出MCP</td>
-<td>标准化Agent与工具&#x2F;数据源的连接协议</td>
+<td>标准化Agent与工具/数据源的连接协议</td>
 </tr>
 <tr>
 <td>2025.03</td>
@@ -304,29 +309,33 @@
 <tr>
 <td>2026.07</td>
 <td>MCP v2.0规范</td>
-<td>从有状态双向协议→无状态请求&#x2F;响应，支持Serverless部署</td>
+<td>从有状态双向协议→无状态请求/响应，支持Serverless部署</td>
 </tr>
 <tr>
 <td>2026</td>
 <td>多Agent协同主流化</td>
-<td>Supervisor&#x2F;Swarm&#x2F;Hierarchical&#x2F;Event-Driven模式成熟</td>
+<td>Supervisor/Swarm/Hierarchical/Event-Driven模式成熟</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>架构设计师视角的核心洞察</strong>：</p>
-<p>LLM Agent与前两个时代的本质区别不在于”更聪明”，而在于<strong>架构范式的根本变化</strong>：</p>
+<p>LLM Agent与前两个时代的本质区别不在于&quot;更聪明&quot;，而在于<strong>架构范式的根本变化</strong>：</p>
 <ol>
-<li><strong>决策核心从”特定”变为”通用”</strong>：LLM是通用推理引擎，无需为每个任务训练特定模型</li>
-<li><strong>能力扩展从”重训练”变为”加工具”</strong>：通过Function Calling和MCP协议，Agent能力可通过添加工具无限扩展</li>
-<li><strong>知识获取从”编码到参数”变为”运行时检索”</strong>：RAG让Agent能在运行时获取最新知识，无需重训练</li>
-<li><strong>协作模式从”单体”变为”集群”</strong>：多Agent系统让复杂任务可通过分工协作完成</li>
-<li><strong>应用前沿从”对话助手”扩展到”AI Coding”</strong>：2025-2026年，Agent技术最引人注目的落地场景是AI Coding——Cursor、Trae、Claude Code等工具将Agent的PDA循环应用于代码生成与审查，形成了Spec Coding范式（第21课详述）。这标志着Agent从”回答问题”进化到”自主完成工程任务”</li>
+<li><strong>决策核心从&quot;特定&quot;变为&quot;通用&quot;</strong>：LLM是通用推理引擎，无需为每个任务训练特定模型</li>
+<li><strong>能力扩展从&quot;重训练&quot;变为&quot;加工具&quot;</strong>：通过Function Calling和MCP协议，Agent能力可通过添加工具无限扩展</li>
+<li><strong>知识获取从&quot;编码到参数&quot;变为&quot;运行时检索&quot;</strong>：RAG让Agent能在运行时获取最新知识，无需重训练</li>
+<li><strong>协作模式从&quot;单体&quot;变为&quot;集群&quot;</strong>：多Agent系统让复杂任务可通过分工协作完成</li>
+<li><strong>应用前沿从&quot;对话助手&quot;扩展到&quot;AI Coding&quot;</strong>：2025-2026年，Agent技术最引人注目的落地场景是AI Coding——Cursor、Trae、Claude Code等工具将Agent的PDA循环应用于代码生成与审查，形成了Spec Coding范式（第21课详述）。这标志着Agent从&quot;回答问题&quot;进化到&quot;自主完成工程任务&quot;</li>
 </ol>
 <blockquote>
 <p><strong>半节课历史到此结束。</strong> 接下来的核心是深入LLM Agent的系统架构。</p>
 </blockquote>
-<hr>
-<h2 id="第二部分：LLM驱动Agent的系统架构总览（20分钟）"><a href="#第二部分：LLM驱动Agent的系统架构总览（20分钟）" class="headerlink" title="第二部分：LLM驱动Agent的系统架构总览（20分钟）"></a>第二部分：LLM驱动Agent的系统架构总览（20分钟）</h2><h3 id="2-1-Agent的形式化定义"><a href="#2-1-Agent的形式化定义" class="headerlink" title="2.1 Agent的形式化定义"></a>2.1 Agent的形式化定义</h3><p>从架构设计师的视角，一个LLM驱动Agent可以被形式化定义为一个<strong>六元组</strong>：</p>
-<p>$$\text{Agent} &#x3D; \langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle$$</p>
+<hr />
+<h2 id="第二部分llm驱动agent的系统架构总览20分钟"><a class="markdownIt-Anchor" href="#第二部分llm驱动agent的系统架构总览20分钟"></a> 第二部分：LLM驱动Agent的系统架构总览（20分钟）</h2>
+<h3 id="21-agent的形式化定义"><a class="markdownIt-Anchor" href="#21-agent的形式化定义"></a> 2.1 Agent的形式化定义</h3>
+<p>从架构设计师的视角，一个LLM驱动Agent可以被形式化定义为一个<strong>六元组</strong>：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>Agent</mtext><mo>=</mo><mo stretchy="false">⟨</mo><mi mathvariant="script">S</mi><mo separator="true">,</mo><mi mathvariant="script">A</mi><mo separator="true">,</mo><mi mathvariant="script">O</mi><mo separator="true">,</mo><mi mathvariant="script">M</mi><mo separator="true">,</mo><mi>π</mi><mo separator="true">,</mo><mi mathvariant="script">T</mi><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">\text{Agent} = \langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Agent</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⟨</span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal">A</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">O</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal">M</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.25417em;">T</span></span><span class="mclose">⟩</span></span></span></span></span></p>
 <table>
 <thead>
 <tr>
@@ -335,49 +344,50 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>$\mathcal{S}$</td>
+<tbody>
+<tr>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">S</mi></mrow><annotation encoding="application/x-tex">\mathcal{S}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span></span></span></span></td>
 <td>状态空间</td>
 <td>Agent的内部状态（当前任务、已完成的步骤、中间结果）</td>
 </tr>
 <tr>
-<td>$\mathcal{A}$</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">A</mi></mrow><annotation encoding="application/x-tex">\mathcal{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">A</span></span></span></span></span></td>
 <td>动作空间</td>
 <td>Agent可执行的动作集合（调用工具、生成回复、终止任务）</td>
 </tr>
 <tr>
-<td>$\mathcal{O}$</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">O</mi></mrow><annotation encoding="application/x-tex">\mathcal{O}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">O</span></span></span></span></span></td>
 <td>观察空间</td>
 <td>Agent能从环境获取的信息（工具返回值、用户输入）</td>
 </tr>
 <tr>
-<td>$\mathcal{M}$</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">M</mi></mrow><annotation encoding="application/x-tex">\mathcal{M}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">M</span></span></span></span></span></td>
 <td>记忆系统</td>
 <td>短期记忆（上下文窗口）+ 长期记忆（向量数据库）</td>
 </tr>
 <tr>
-<td>$\pi$</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span></td>
 <td>策略函数</td>
-<td>由LLM实现：$\pi: \mathcal{S} \times \mathcal{M} \rightarrow \mathcal{A}$</td>
+<td>由LLM实现：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi><mo>:</mo><mi mathvariant="script">S</mi><mo>×</mo><mi mathvariant="script">M</mi><mo>→</mo><mi mathvariant="script">A</mi></mrow><annotation encoding="application/x-tex">\pi: \mathcal{S} \times \mathcal{M} \rightarrow \mathcal{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">M</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">A</span></span></span></span></span></td>
 </tr>
 <tr>
-<td>$\mathcal{T}$</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">T</mi></mrow><annotation encoding="application/x-tex">\mathcal{T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.25417em;">T</span></span></span></span></span></td>
 <td>工具集</td>
 <td>Agent可调用的外部工具集合（搜索、代码执行、API等）</td>
 </tr>
-</tbody></table>
-<p><strong>关键理解</strong>：与RL Agent的MDP模型相比，LLM Agent的策略函数 $\pi$ 不是通过训练得到的数值函数，而是由LLM通过<strong>自然语言推理</strong>实现的。这意味着：</p>
+</tbody>
+</table>
+<p><strong>关键理解</strong>：与RL Agent的MDP模型相比，LLM Agent的策略函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span> 不是通过训练得到的数值函数，而是由LLM通过<strong>自然语言推理</strong>实现的。这意味着：</p>
 <ul>
 <li>策略不需要训练即可使用（零样本能力）</li>
 <li>策略可以通过Prompt动态调整（无需重训练）</li>
 <li>策略可以解释自己的决策（自然语言推理链）</li>
 </ul>
-<h3 id="2-2-PDA循环：Agent的核心运行机制"><a href="#2-2-PDA循环：Agent的核心运行机制" class="headerlink" title="2.2 PDA循环：Agent的核心运行机制"></a>2.2 PDA循环：Agent的核心运行机制</h3><p>PDA（Perception-Decision-Action）循环是LLM Agent的<strong>核心运行时架构</strong>。形式化描述如下：</p>
+<h3 id="22-pda循环agent的核心运行机制"><a class="markdownIt-Anchor" href="#22-pda循环agent的核心运行机制"></a> 2.2 PDA循环：Agent的核心运行机制</h3>
+<p>PDA（Perception-Decision-Action）循环是LLM Agent的<strong>核心运行时架构</strong>。形式化描述如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">初始化：s₀ = 接收用户任务</span><br><span class="line">循环 t = 0, 1, 2, ...</span><br><span class="line">  1. 感知（Perception）: oₜ = perceive(environment, aₜ₋₁)</span><br><span class="line">     - 获取上一步行动的结果（工具返回值、用户反馈）</span><br><span class="line">     - 从记忆系统中检索相关历史信息</span><br><span class="line"></span><br><span class="line">  2. 决策（Decision）: aₜ = π(sₜ, oₜ, M)</span><br><span class="line">     - LLM根据当前状态、观察和记忆进行推理</span><br><span class="line">     - 输出下一步动作（Thought → Action）</span><br><span class="line"></span><br><span class="line">  3. 行动（Action）: execute(aₜ)</span><br><span class="line">     - 调用工具、生成文本、或决定终止</span><br><span class="line"></span><br><span class="line">  4. 状态更新：sₜ₊₁ = update(sₜ, aₜ, oₜ)</span><br><span class="line">  5. 记忆更新：M = memory_update(M, sₜ, aₜ, oₜ)</span><br><span class="line"></span><br><span class="line">终止条件：aₜ = &quot;任务完成&quot; 或 达到最大步数</span><br></pre></td></tr></table></figure>
-
 <p><strong>PDA循环的状态机表示</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">        ┌──────────┐</span><br><span class="line">┌──────→│ PERCEIVE │←──────────┐</span><br><span class="line">│       └────┬─────┘           │</span><br><span class="line">│            │                 │</span><br><span class="line">│       ┌────▼─────┐           │</span><br><span class="line">│       │ DECIDE   │           │</span><br><span class="line">│       └────┬─────┘           │</span><br><span class="line">│            │                 │</span><br><span class="line">│       ┌────▼─────┐     ┌─────┴────┐</span><br><span class="line">│       │  ACT     │────→│ OBSERVE  │</span><br><span class="line">│       └──────────┘     └──────────┘</span><br><span class="line">│            │</span><br><span class="line">│       ┌────▼─────┐</span><br><span class="line">│       │ REFLECT  │─── 任务完成? ──→ 终止</span><br><span class="line">│       │(可选)    │─── 需要调整? ──→ 重新PERCEIVE</span><br><span class="line">│       └──────────┘</span><br><span class="line">└──────────┘</span><br></pre></td></tr></table></figure>
-
 <p><strong>架构决策点</strong>：作为架构设计师，你需要为PDA循环的每个阶段做设计决策：</p>
 <table>
 <thead>
@@ -387,14 +397,15 @@
 <th>影响因素</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>感知</td>
 <td>如何从工具返回中提取关键信息？是否需要预处理？</td>
 <td>Token预算、信息密度</td>
 </tr>
 <tr>
 <td>决策</td>
-<td>使用哪种推理模式？（ReAct &#x2F; Plan-Execute &#x2F; Reflexion）</td>
+<td>使用哪种推理模式？（ReAct / Plan-Execute / Reflexion）</td>
 <td>任务复杂度、错误容忍度</td>
 </tr>
 <tr>
@@ -412,53 +423,49 @@
 <td>如何判断任务完成？最大步数设多少？</td>
 <td>安全边界、成本控制</td>
 </tr>
-</tbody></table>
-<h3 id="2-3-六大核心模块"><a href="#2-3-六大核心模块" class="headerlink" title="2.3 六大核心模块"></a>2.3 六大核心模块</h3><p>一个生产级Agent系统由六大模块构成。这是本课程后续21课的<strong>技术地图</strong>：</p>
+</tbody>
+</table>
+<h3 id="23-六大核心模块"><a class="markdownIt-Anchor" href="#23-六大核心模块"></a> 2.3 六大核心模块</h3>
+<p>一个生产级Agent系统由六大模块构成。这是本课程后续21课的<strong>技术地图</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────┐</span><br><span class="line">│                     Agent系统架构                          │</span><br><span class="line">│                                                          │</span><br><span class="line">│  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐     │</span><br><span class="line">│  │  ① 感知模块   │  │  ② 决策模块    │  │  ③ 行动模块   │     │</span><br><span class="line">│  │ Perception  │─→│ Decision(LLM)│─→│   Action    │     │</span><br><span class="line">│  └─────────────┘  └──────┬───────┘  └──────┬──────┘     │</span><br><span class="line">│       ↑                  │                  │            │</span><br><span class="line">│       │           ┌──────┴───────┐          │            │</span><br><span class="line">│       │           │  ④ 记忆系统    │          │            │</span><br><span class="line">│       │           │   Memory     │          │            │</span><br><span class="line">│       │           └──────────────┘          │            │</span><br><span class="line">│       │                                    │            │</span><br><span class="line">│       │           ┌──────────────┐          │            │</span><br><span class="line">│       └───────────│  ⑤ 工具集     │←─────────┘            │</span><br><span class="line">│                   │   Tools      │                       │</span><br><span class="line">│                   └──────────────┘                       │</span><br><span class="line">│                                                          │</span><br><span class="line">│                   ┌──────────────┐                       │</span><br><span class="line">│                   │  ⑥ 评估与监控  │  ← 贯穿全链路          │</span><br><span class="line">│                   │ Evaluation   │                       │</span><br><span class="line">│                   └──────────────┘                       │</span><br><span class="line">└──────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
 <p><strong>① 感知模块（Perception）</strong></p>
 <p>将环境信息转化为LLM可处理的文本表示。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入源：</span><br><span class="line">- 用户指令（自然语言）</span><br><span class="line">- 工具返回结果（JSON/文本/结构化数据）</span><br><span class="line">- 系统状态（时间、文件列表、进程状态）</span><br><span class="line"></span><br><span class="line">核心问题：</span><br><span class="line">- 信息压缩：工具返回的原始数据可能很大，如何压缩到Token预算内？</span><br><span class="line">- 格式归一化：不同工具返回格式不同，如何统一为LLM易理解的格式？</span><br><span class="line">- 信息提取：从非结构化数据中提取关键信息</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>📌 对应课程：第02课（LLM内部机制中的Tokenizer部分）、第05课（Function Calling的返回值处理）</p>
 </blockquote>
-<p><strong>② 决策模块（Decision &#x2F; LLM Brain）</strong></p>
-<p>Agent的”大脑”，由LLM实现策略函数 $\pi$。</p>
+<p><strong>② 决策模块（Decision / LLM Brain）</strong></p>
+<p>Agent的&quot;大脑&quot;，由LLM实现策略函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">核心能力：</span><br><span class="line">- 意图理解：解析用户任务目标</span><br><span class="line">- 任务分解：将复杂任务拆分为可执行的子任务序列</span><br><span class="line">- 推理模式：ReAct / Plan-and-Execute / Reflexion（第03课详解）</span><br><span class="line">- 策略选择：决定下一步调用哪个工具、传什么参数</span><br><span class="line"></span><br><span class="line">架构决策：</span><br><span class="line">- 选择哪个LLM？（GPT-4 / Claude / 开源模型）</span><br><span class="line">- 是否需要微调？（第17课详解）</span><br><span class="line">- 如何设计System Prompt？（第04课详解）</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>📌 对应课程：第02课（LLM内部机制）、第03课（推理架构）、第04课（Prompt Engineering）</p>
 </blockquote>
 <p><strong>③ 行动模块（Action）</strong></p>
 <p>执行LLM决策输出的具体操作。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">行动类型：</span><br><span class="line">- 工具调用：调用搜索引擎、代码执行器、数据库查询等</span><br><span class="line">- 文本生成：生成给用户的回复</span><br><span class="line">- 任务终止：判断任务完成，输出最终结果</span><br><span class="line"></span><br><span class="line">工程实现：</span><br><span class="line">- 工具调用的序列化/反序列化（JSON Schema）</span><br><span class="line">- 并行调用的调度与结果聚合</span><br><span class="line">- 错误处理：重试、降级、超时（有限状态机设计）</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>📌 对应课程：第05课（Function Calling）、第11课（MCP协议）</p>
 </blockquote>
 <p><strong>④ 记忆系统（Memory）</strong></p>
 <p>存储和检索信息，使Agent具备连贯性和学习能力。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">短期记忆（工作记忆）：</span><br><span class="line">- 当前对话上下文</span><br><span class="line">- 当前任务的中间状态</span><br><span class="line">- 受限于LLM上下文窗口大小（如GPT-4的128K tokens）</span><br><span class="line"></span><br><span class="line">长期记忆：</span><br><span class="line">- Episodic Memory：过去的交互经历</span><br><span class="line">- Semantic Memory：事实知识</span><br><span class="line">- Procedural Memory：技能/流程</span><br><span class="line">- 通常基于向量数据库实现检索</span><br><span class="line"></span><br><span class="line">核心问题：</span><br><span class="line">- 记忆写入：什么信息值得记住？如何避免记忆爆炸？</span><br><span class="line">- 记忆检索：如何高效召回相关记忆？</span><br><span class="line">- 记忆遗忘：如何淘汰过时/无用的记忆？</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>📌 对应课程：第09课（Agent记忆系统设计）、第06-08课（RAG——可视为一种知识记忆）</p>
 </blockquote>
 <p><strong>⑤ 工具集（Tools）</strong></p>
-<p>Agent的能力扩展接口。LLM本身只能生成文本，工具赋予Agent”行动”能力。</p>
+<p>Agent的能力扩展接口。LLM本身只能生成文本，工具赋予Agent&quot;行动&quot;能力。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">工具类型：</span><br><span class="line">- 信息获取类：搜索引擎、数据库查询、网页抓取</span><br><span class="line">- 计算执行类：Python代码执行、Shell命令、SQL执行</span><br><span class="line">- 通信交互类：发送邮件、调用API、操作文件系统</span><br><span class="line">- 生成创建类：代码生成、文档撰写、图表制作</span><br><span class="line"></span><br><span class="line">协议演进：</span><br><span class="line">- 2023：各家私有Function Calling协议</span><br><span class="line">- 2024-2025：MCP协议标准化工具连接</span><br><span class="line">- 2026：MCP v2.0支持无状态/Serverless部署</span><br></pre></td></tr></table></figure>
-
 <blockquote>
-<p>📌 对应课程：第05课（Function Calling）、第11课（MCP协议）、第12-13课（LangGraph&#x2F;OpenManus工具系统）</p>
+<p>📌 对应课程：第05课（Function Calling）、第11课（MCP协议）、第12-13课（LangGraph/OpenManus工具系统）</p>
 </blockquote>
 <p><strong>⑥ 评估与监控（Evaluation &amp; Observability）</strong></p>
-<p>贯穿全链路的”神经系统”，确保Agent行为可评估、可追踪、可调试。</p>
+<p>贯穿全链路的&quot;神经系统&quot;，确保Agent行为可评估、可追踪、可调试。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">评估维度：</span><br><span class="line">- 任务完成率：Agent是否完成了用户的目标？</span><br><span class="line">- 推理质量：决策过程是否合理？是否有逻辑错误？</span><br><span class="line">- 工具使用效率：是否调用了不必要的工具？是否有冗余调用？</span><br><span class="line">- 成本效率：Token消耗是否合理？延迟是否可接受？</span><br><span class="line"></span><br><span class="line">监控指标：</span><br><span class="line">- 推理延迟：P50/P99响应时间</span><br><span class="line">- Token成本：每次任务的Token消耗</span><br><span class="line">- 工具调用成功率：成功/失败/重试次数</span><br><span class="line">- GPU利用率（自部署场景）：显存占用、计算利用率</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>📌 对应课程：第03课（推理质量评估）、第05课（工具调用测试）、第10课（端到端评估）、第19课（可观测性）、第20课（生产监控）</p>
 </blockquote>
-<h3 id="2-4-从单Agent到多Agent：架构演进趋势"><a href="#2-4-从单Agent到多Agent：架构演进趋势" class="headerlink" title="2.4 从单Agent到多Agent：架构演进趋势"></a>2.4 从单Agent到多Agent：架构演进趋势</h3><p>2026年，Agent架构正在从单Agent向多Agent协同演进。这是架构设计师必须理解的趋势：</p>
+<h3 id="24-从单agent到多agent架构演进趋势"><a class="markdownIt-Anchor" href="#24-从单agent到多agent架构演进趋势"></a> 2.4 从单Agent到多Agent：架构演进趋势</h3>
+<p>2026年，Agent架构正在从单Agent向多Agent协同演进。这是架构设计师必须理解的趋势：</p>
 <table>
 <thead>
 <tr>
@@ -467,7 +474,8 @@
 <th>多Agent系统</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>决策</strong></td>
 <td>一个LLM处理所有子任务</td>
 <td>多个LLM各司其职</td>
@@ -485,7 +493,7 @@
 <tr>
 <td><strong>容错</strong></td>
 <td>单点失败</td>
-<td>可重试&#x2F;替换单个Agent</td>
+<td>可重试/替换单个Agent</td>
 </tr>
 <tr>
 <td><strong>扩展</strong></td>
@@ -497,19 +505,21 @@
 <td>无需</td>
 <td>需要A2A协议或消息总线</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>四种主流多Agent架构模式</strong>（第14课详解）：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Supervisor模式:          Swarm模式:</span><br><span class="line">  ┌──────────┐           Agent1 ←→ Agent2</span><br><span class="line">  │Supervisor│              ↕         ↕</span><br><span class="line">  └────┬─────┘           Agent3 ←→ Agent4</span><br><span class="line">  ┌────┼─────┐</span><br><span class="line">  ↓    ↓    ↓          Hierarchical模式:</span><br><span class="line">Agent1 Agent2 Agent3      Manager</span><br><span class="line">                           ├── Agent A</span><br><span class="line">Event-Driven模式:          ├── Agent B</span><br><span class="line">  EventBus                 │   ├── Agent B1</span><br><span class="line">  ↑ ↓ ↑ ↓ ↑ ↓              │   └── Agent B2</span><br><span class="line"> A1 A2 A3 A4 A5 A6         └── Agent C</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>📌 对应课程：第14课（多Agent系统架构设计）、第15课（A2A协议）</p>
 </blockquote>
-<h3 id="2-5-从开发到部署：Agent系统的完整技术栈"><a href="#2-5-从开发到部署：Agent系统的完整技术栈" class="headerlink" title="2.5 从开发到部署：Agent系统的完整技术栈"></a>2.5 从开发到部署：Agent系统的完整技术栈</h3><p>将上述模块组装为生产系统，需要以下技术栈分层：</p>
+<h3 id="25-从开发到部署agent系统的完整技术栈"><a class="markdownIt-Anchor" href="#25-从开发到部署agent系统的完整技术栈"></a> 2.5 从开发到部署：Agent系统的完整技术栈</h3>
+<p>将上述模块组装为生产系统，需要以下技术栈分层：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────┐</span><br><span class="line">│ 应用前沿层  │ AI Coding范式 + 多模态Agent        │  ← 第21课</span><br><span class="line">├──────────┼─────────────────────────────────────┤</span><br><span class="line">│ 应用层    │ Prompt Engineering + RAG + 记忆系统   │  ← 第3-10课</span><br><span class="line">├──────────┼─────────────────────────────────────┤</span><br><span class="line">│ 协议层    │ Function Calling + MCP + A2A         │  ← 第5,11,15课</span><br><span class="line">├──────────┼─────────────────────────────────────┤</span><br><span class="line">│ 框架层    │ LangChain/LangGraph + OpenManus      │  ← 第12-13课</span><br><span class="line">├──────────┼─────────────────────────────────────┤</span><br><span class="line">│ 模型层    │ LLM + Fine-tuning + 蒸馏/量化        │  ← 第2,16-18课</span><br><span class="line">├──────────┼─────────────────────────────────────┤</span><br><span class="line">│ 部署层    │ vLLM + GPU集群 + K8s + 监控          │  ← 第19-20课</span><br><span class="line">└─────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
 <p>这就是本课程22节课的技术地图。每课聚焦一层的一个关键模块，最终在毕业项目中组装为完整系统。</p>
-<h3 id="2-6-Harness工程：贯穿全课程的顶层框架"><a href="#2-6-Harness工程：贯穿全课程的顶层框架" class="headerlink" title="2.6 Harness工程：贯穿全课程的顶层框架"></a>2.6 Harness工程：贯穿全课程的顶层框架</h3><p>前面2.1-2.5节从模块视角拆解了Agent系统。本节引入一个更高层的抽象——<strong>Harness工程</strong>，作为贯穿全课程的顶层框架。如果说前面的六大模块是”零件图”，那么Harness工程就是”总装图”：它告诉我们每个零件装在哪里、起什么作用。</p>
-<h4 id="2-6-1-什么是Harness工程"><a href="#2-6-1-什么是Harness工程" class="headerlink" title="2.6.1 什么是Harness工程"></a>2.6.1 什么是Harness工程</h4><p><strong>Harness工程</strong>（Harness Engineering）是指围绕LLM模型构建的工程体系。LLM本身只是一个”推理引擎”，要让它真正成为可用的Agent，需要在模型外围搭建一套工程框架——这套框架就是Harness。正如马鞍（harness）让马匹的力量得以被驾驭和利用，Agent的Harness让LLM的推理能力得以被可靠地组织和调度。</p>
+<h3 id="26-harness工程贯穿全课程的顶层框架"><a class="markdownIt-Anchor" href="#26-harness工程贯穿全课程的顶层框架"></a> 2.6 Harness工程：贯穿全课程的顶层框架</h3>
+<p>前面2.1-2.5节从模块视角拆解了Agent系统。本节引入一个更高层的抽象——<strong>Harness工程</strong>，作为贯穿全课程的顶层框架。如果说前面的六大模块是&quot;零件图&quot;，那么Harness工程就是&quot;总装图&quot;：它告诉我们每个零件装在哪里、起什么作用。</p>
+<h4 id="261-什么是harness工程"><a class="markdownIt-Anchor" href="#261-什么是harness工程"></a> 2.6.1 什么是Harness工程</h4>
+<p><strong>Harness工程</strong>（Harness Engineering）是指围绕LLM模型构建的工程体系。LLM本身只是一个&quot;推理引擎&quot;，要让它真正成为可用的Agent，需要在模型外围搭建一套工程框架——这套框架就是Harness。正如马鞍（harness）让马匹的力量得以被驾驭和利用，Agent的Harness让LLM的推理能力得以被可靠地组织和调度。</p>
 <blockquote>
 <p>概念参考：李博洁《深入理解AI Agent》中对Harness工程的定义。</p>
 </blockquote>
@@ -523,7 +533,8 @@
 <th>一句话理解</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>上下文与工具</strong></td>
 <td>Context &amp; Tools</td>
 <td>为LLM提供任务所需的背景信息和行动能力</td>
@@ -553,11 +564,12 @@
 <td>组织以上四个功能的执行顺序和循环</td>
 <td>组织以上功能的循环</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">                ┌─────────────────────────┐</span><br><span class="line">                │     LLM（推理引擎）       │</span><br><span class="line">                │  通用推理能力（模型本身）  │</span><br><span class="line">                └────────────┬────────────┘</span><br><span class="line">                             │</span><br><span class="line">      ┌──────────────────────┼──────────────────────┐</span><br><span class="line">      │                      │                      │</span><br><span class="line">┌─────┴─────┐         ┌──────┴──────┐        ┌──────┴──────┐</span><br><span class="line">│ 上下文与工具│         │    约束     │        │    验证     │</span><br><span class="line">│ Context   │         │ Constraints │        │Verification │</span><br><span class="line">│ &amp; Tools   │         │             │        │             │</span><br><span class="line">└─────┬─────┘         └─────────────┘        └──────┬──────┘</span><br><span class="line">      │                                             │</span><br><span class="line">      │              ┌───────────┐                  │</span><br><span class="line">      └─────────────→│  编排     │←─────────────────┘</span><br><span class="line">                     │Orchestrate│</span><br><span class="line">                     │ (循环)    │</span><br><span class="line">                     └─────┬─────┘</span><br><span class="line">                           │</span><br><span class="line">                     ┌─────┴─────┐</span><br><span class="line">                     │  纠正     │</span><br><span class="line">                     │Correction │</span><br><span class="line">                     └───────────┘</span><br></pre></td></tr></table></figure>
-
 <p><strong>五个功能的协作逻辑</strong>：编排功能驱动一个主循环，每轮循环中——上下文与工具功能为LLM提供当前所需的信息和行动能力；约束功能确保LLM的输出和行为不越界；验证功能判断本轮结果是否正确；如果验证不通过，纠正功能介入恢复。如此循环，直到任务完成。</p>
-<h4 id="2-6-2-Harness与PDA循环的关系"><a href="#2-6-2-Harness与PDA循环的关系" class="headerlink" title="2.6.2 Harness与PDA循环的关系"></a>2.6.2 Harness与PDA循环的关系</h4><p>本课前面介绍的PDA循环、六大核心模块，并非与Harness工程并列的另一套体系，而是<strong>Harness工程各功能的具体实现</strong>：</p>
+<h4 id="262-harness与pda循环的关系"><a class="markdownIt-Anchor" href="#262-harness与pda循环的关系"></a> 2.6.2 Harness与PDA循环的关系</h4>
+<p>本课前面介绍的PDA循环、六大核心模块，并非与Harness工程并列的另一套体系，而是<strong>Harness工程各功能的具体实现</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -566,7 +578,8 @@
 <th>实现方式</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>上下文与工具</strong></td>
 <td>记忆系统（模块④）+ 工具集（模块⑤）</td>
 <td>记忆系统提供历史上下文，工具集提供行动能力</td>
@@ -591,20 +604,21 @@
 <td>PDA循环（2.2节）</td>
 <td>感知→决策→行动→状态更新的循环流程</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>关键理解</strong>：</p>
 <ul>
-<li><strong>PDA循环是Harness”编排”功能的具体实现</strong>——它定义了上下文、工具、验证、纠正四个功能如何按顺序组合运行</li>
-<li><strong>记忆系统属于”上下文”功能</strong>——为LLM提供任务相关的背景信息</li>
-<li><strong>工具体系属于”工具”功能</strong>——赋予LLM”行动”能力（Function Calling、MCP）</li>
-<li><strong>反思机制属于”纠正”功能</strong>——出错时的恢复机制</li>
-<li><strong>评估与监控属于”验证”功能</strong>——判断结果是否正确</li>
+<li><strong>PDA循环是Harness&quot;编排&quot;功能的具体实现</strong>——它定义了上下文、工具、验证、纠正四个功能如何按顺序组合运行</li>
+<li><strong>记忆系统属于&quot;上下文&quot;功能</strong>——为LLM提供任务相关的背景信息</li>
+<li><strong>工具体系属于&quot;工具&quot;功能</strong>——赋予LLM&quot;行动&quot;能力（Function Calling、MCP）</li>
+<li><strong>反思机制属于&quot;纠正&quot;功能</strong>——出错时的恢复机制</li>
+<li><strong>评估与监控属于&quot;验证&quot;功能</strong>——判断结果是否正确</li>
 </ul>
 <p>换句话说，本课前面建立的所有架构概念，都可以归入Harness工程的某个功能。这种映射关系不仅适用于本课，后续每课也是如此。</p>
-<h4 id="2-6-3-为什么”模型之外的竞争力”越来越重要"><a href="#2-6-3-为什么”模型之外的竞争力”越来越重要" class="headerlink" title="2.6.3 为什么”模型之外的竞争力”越来越重要"></a>2.6.3 为什么”模型之外的竞争力”越来越重要</h4><p>进入2026年，一个显著趋势是<strong>主流LLM的能力日趋趋同</strong>：</p>
+<h4 id="263-为什么模型之外的竞争力越来越重要"><a class="markdownIt-Anchor" href="#263-为什么模型之外的竞争力越来越重要"></a> 2.6.3 为什么&quot;模型之外的竞争力&quot;越来越重要</h4>
+<p>进入2026年，一个显著趋势是<strong>主流LLM的能力日趋趋同</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2023-2024：模型能力差距大          2025-2026：模型能力趋同</span><br><span class="line">  顶级闭源模型 ≈ 85分                顶级闭源模型 ≈ 92分</span><br><span class="line">  中等模型     ≈ 70分                中等模型     ≈ 90分</span><br><span class="line">  开源模型     ≈ 55分                开源模型     ≈ 88分</span><br><span class="line">  差距：30分                         差距：4分</span><br></pre></td></tr></table></figure>
-
-<p>当模型本身的能力差距缩小到个位数时，<strong>差异化竞争的主战场从”模型层”上移到”Harness工程层”</strong>：</p>
+<p>当模型本身的能力差距缩小到个位数时，<strong>差异化竞争的主战场从&quot;模型层&quot;上移到&quot;Harness工程层&quot;</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -613,7 +627,8 @@
 <th>2025-2026（Harness为王）</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>核心壁垒</strong></td>
 <td>谁的模型更强</td>
 <td>谁的Harness工程更完善</td>
@@ -633,14 +648,16 @@
 <td>“这个AI更聪明”</td>
 <td>“这个Agent更可靠、更安全、更高效”</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>对架构设计师的启示</strong>：</p>
 <ol>
-<li>不要只盯着”换更强的模型”——模型升级的红利正在递减</li>
+<li>不要只盯着&quot;换更强的模型&quot;——模型升级的红利正在递减</li>
 <li>投资Harness工程的五个功能——这才是2026年及以后的竞争力所在</li>
 <li>本课程后续21课，本质上就是在教你如何系统化地构建一个高质量Harness</li>
 </ol>
-<h4 id="2-6-4-Harness五功能与课程模块映射表"><a href="#2-6-4-Harness五功能与课程模块映射表" class="headerlink" title="2.6.4 Harness五功能与课程模块映射表"></a>2.6.4 Harness五功能与课程模块映射表</h4><p>以下是Harness工程五个功能与本课程各模块的完整映射。这张表也是<strong>全课程的学习路线图</strong>：</p>
+<h4 id="264-harness五功能与课程模块映射表"><a class="markdownIt-Anchor" href="#264-harness五功能与课程模块映射表"></a> 2.6.4 Harness五功能与课程模块映射表</h4>
+<p>以下是Harness工程五个功能与本课程各模块的完整映射。这张表也是<strong>全课程的学习路线图</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -649,7 +666,8 @@
 <th>核心内容</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>上下文与工具</strong></td>
 <td>第02课 LLM内部机制</td>
 <td>理解上下文窗口的物理约束（KV Cache、Token预算）</td>
@@ -672,7 +690,7 @@
 <tr>
 <td></td>
 <td>第09课 记忆系统设计</td>
-<td>短期&#x2F;长期记忆的工程实现</td>
+<td>短期/长期记忆的工程实现</td>
 </tr>
 <tr>
 <td></td>
@@ -681,7 +699,7 @@
 </tr>
 <tr>
 <td></td>
-<td>第12-13课 LangGraph&#x2F;OpenManus</td>
+<td>第12-13课 LangGraph/OpenManus</td>
 <td>工具编排框架</td>
 </tr>
 <tr>
@@ -731,7 +749,7 @@
 </tr>
 <tr>
 <td></td>
-<td>第12-13课 LangGraph&#x2F;OpenManus</td>
+<td>第12-13课 LangGraph/OpenManus</td>
 <td>错误恢复与状态回滚</td>
 </tr>
 <tr>
@@ -747,11 +765,11 @@
 <tr>
 <td></td>
 <td>第03课 推理架构</td>
-<td>ReAct&#x2F;Plan-Execute等编排模式</td>
+<td>ReAct/Plan-Execute等编排模式</td>
 </tr>
 <tr>
 <td></td>
-<td>第12-13课 LangGraph&#x2F;OpenManus</td>
+<td>第12-13课 LangGraph/OpenManus</td>
 <td>图结构编排引擎</td>
 </tr>
 <tr>
@@ -774,12 +792,15 @@
 <td>第21-22课 应用前沿</td>
 <td>编排范式的前沿演进</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
-<p><strong>学习建议</strong>：学完每课后，回到这张表，思考”这课的内容属于Harness的哪个功能？它如何让该功能更强？”这种持续映射将帮助你建立完整的Harness工程思维。</p>
+<p><strong>学习建议</strong>：学完每课后，回到这张表，思考&quot;这课的内容属于Harness的哪个功能？它如何让该功能更强？&quot;这种持续映射将帮助你建立完整的Harness工程思维。</p>
 </blockquote>
-<hr>
-<h2 id="第三部分：课程项目引入"><a href="#第三部分：课程项目引入" class="headerlink" title="第三部分：课程项目引入"></a>第三部分：课程项目引入</h2><h3 id="“企业级智能研究助手Agent系统”"><a href="#“企业级智能研究助手Agent系统”" class="headerlink" title="“企业级智能研究助手Agent系统”"></a>“企业级智能研究助手Agent系统”</h3><p>贯穿全课程的实战项目，每课贡献一个模块：</p>
+<hr />
+<h2 id="第三部分课程项目引入"><a class="markdownIt-Anchor" href="#第三部分课程项目引入"></a> 第三部分：课程项目引入</h2>
+<h3 id="企业级智能研究助手agent系统"><a class="markdownIt-Anchor" href="#企业级智能研究助手agent系统"></a> “企业级智能研究助手Agent系统”</h3>
+<p>贯穿全课程的实战项目，每课贡献一个模块：</p>
 <p><strong>项目描述</strong>：为企业研究部门构建一个AI研究助手Agent系统，能够：</p>
 <ol>
 <li>接收研究课题，自主搜索和整理文献</li>
@@ -798,7 +819,8 @@
 <th>项目模块</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>第1-5课</td>
 <td>Agent骨架：PDA循环 + Prompt设计 + 搜索工具</td>
 </tr>
@@ -822,14 +844,17 @@
 <td>第21课</td>
 <td>应用前沿层：AI Coding范式认知 + Agent能力边界拓展</td>
 </tr>
-</tbody></table>
-<hr>
-<h2 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h2><h3 id="一、基础概念题（每题5分，共15分）"><a href="#一、基础概念题（每题5分，共15分）" class="headerlink" title="一、基础概念题（每题5分，共15分）"></a>一、基础概念题（每题5分，共15分）</h3><p><strong>题目1</strong>：写出Agent的六元组形式化定义 $\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle$ 中每个符号的含义，并解释LLM Agent的策略函数 $\pi$ 与RL Agent的策略函数有何本质区别。</p>
-<p><strong>题目2</strong>：写出PDA循环的五个步骤（含状态更新和记忆更新），并说明”反思”步骤在什么条件下触发、如何影响后续决策。</p>
-<p><strong>题目3</strong>：Agent系统的六大核心模块是什么？请说明”感知模块”和”评估与监控模块”各自解决什么问题，以及它们在PDA循环中的位置。</p>
-<h3 id="二、架构分析题（每题15分，共30分）"><a href="#二、架构分析题（每题15分，共30分）" class="headerlink" title="二、架构分析题（每题15分，共30分）"></a>二、架构分析题（每题15分，共30分）</h3><p><strong>题目4</strong>：以下是三个不同时代的Agent架构，请分析它们在<strong>决策核心、能力扩展方式、泛化性</strong>三个维度上的本质区别，并说明为什么LLM的出现是”分水岭”。</p>
+</tbody>
+</table>
+<hr />
+<h2 id="课后习题"><a class="markdownIt-Anchor" href="#课后习题"></a> 课后习题</h2>
+<h3 id="一-基础概念题每题5分共15分"><a class="markdownIt-Anchor" href="#一-基础概念题每题5分共15分"></a> 一、基础概念题（每题5分，共15分）</h3>
+<p><strong>题目1</strong>：写出Agent的六元组形式化定义 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">⟨</mo><mi mathvariant="script">S</mi><mo separator="true">,</mo><mi mathvariant="script">A</mi><mo separator="true">,</mo><mi mathvariant="script">O</mi><mo separator="true">,</mo><mi mathvariant="script">M</mi><mo separator="true">,</mo><mi>π</mi><mo separator="true">,</mo><mi mathvariant="script">T</mi><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⟨</span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal">A</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">O</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal">M</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.25417em;">T</span></span><span class="mclose">⟩</span></span></span></span> 中每个符号的含义，并解释LLM Agent的策略函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span> 与RL Agent的策略函数有何本质区别。</p>
+<p><strong>题目2</strong>：写出PDA循环的五个步骤（含状态更新和记忆更新），并说明&quot;反思&quot;步骤在什么条件下触发、如何影响后续决策。</p>
+<p><strong>题目3</strong>：Agent系统的六大核心模块是什么？请说明&quot;感知模块&quot;和&quot;评估与监控模块&quot;各自解决什么问题，以及它们在PDA循环中的位置。</p>
+<h3 id="二-架构分析题每题15分共30分"><a class="markdownIt-Anchor" href="#二-架构分析题每题15分共30分"></a> 二、架构分析题（每题15分，共30分）</h3>
+<p><strong>题目4</strong>：以下是三个不同时代的Agent架构，请分析它们在<strong>决策核心、能力扩展方式、泛化性</strong>三个维度上的本质区别，并说明为什么LLM的出现是&quot;分水岭&quot;。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(A) MYCIN专家系统：600条IF-THEN规则 → 推理引擎 → 诊断结果</span><br><span class="line">(B) AlphaGo：策略网络π(a|s) → 蒙特卡洛树搜索 → 落子决策</span><br><span class="line">(C) LLM Agent：LLM推理 → Function Calling → 工具执行 → 观察 → 再推理</span><br></pre></td></tr></table></figure>
-
 <p><strong>题目5</strong>：作为架构设计师，你需要为PDA循环的每个阶段做设计决策。请填写以下决策表，并为每个决策说明至少一个影响因素：</p>
 <table>
 <thead>
@@ -839,7 +864,8 @@
 <th>影响因素</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>感知</td>
 <td>?</td>
 <td>?</td>
@@ -864,28 +890,33 @@
 <td>?</td>
 <td>?</td>
 </tr>
-</tbody></table>
-<h3 id="三、系统设计题（20分）"><a href="#三、系统设计题（20分）" class="headerlink" title="三、系统设计题（20分）"></a>三、系统设计题（20分）</h3><p><strong>题目6</strong>：基于本课介绍的”企业级智能研究助手Agent系统”项目背景，完成以下设计：</p>
-<p>（a）列出该系统需要哪些工具（至少5个），并按”信息获取类&#x2F;计算执行类&#x2F;通信交互类&#x2F;生成创建类”分类</p>
+</tbody>
+</table>
+<h3 id="三-系统设计题20分"><a class="markdownIt-Anchor" href="#三-系统设计题20分"></a> 三、系统设计题（20分）</h3>
+<p><strong>题目6</strong>：基于本课介绍的&quot;企业级智能研究助手Agent系统&quot;项目背景，完成以下设计：</p>
+<p>（a）列出该系统需要哪些工具（至少5个），并按&quot;信息获取类/计算执行类/通信交互类/生成创建类&quot;分类</p>
 <p>（b）画出该系统单个研究任务的PDA循环流程（用文字描述每个步骤的具体内容）</p>
 <p>（c）该系统在什么情况下应该从单Agent升级为多Agent？请列出至少3个判断标准。</p>
 <p>（d）该系统的Agent需要哪些类型的记忆？分别存储什么信息？</p>
-<hr>
-<h2 id="参考答案"><a href="#参考答案" class="headerlink" title="参考答案"></a>参考答案</h2><h3 id="题目1-参考答案"><a href="#题目1-参考答案" class="headerlink" title="题目1 参考答案"></a>题目1 参考答案</h3><p>六元组定义：</p>
+<hr />
+<h2 id="参考答案"><a class="markdownIt-Anchor" href="#参考答案"></a> 参考答案</h2>
+<h3 id="题目1-参考答案"><a class="markdownIt-Anchor" href="#题目1-参考答案"></a> 题目1 参考答案</h3>
+<p>六元组定义：</p>
 <ul>
-<li>$\mathcal{S}$（状态空间）：Agent的内部状态，包括当前任务、已完成步骤、中间结果</li>
-<li>$\mathcal{A}$（动作空间）：Agent可执行的动作集合，如调用工具、生成回复、终止任务</li>
-<li>$\mathcal{O}$（观察空间）：Agent能从环境获取的信息，如工具返回值、用户输入</li>
-<li>$\mathcal{M}$（记忆系统）：短期记忆（上下文窗口）+ 长期记忆（向量数据库）</li>
-<li>$\pi$（策略函数）：$\pi: \mathcal{S} \times \mathcal{M} \rightarrow \mathcal{A}$，根据状态和记忆输出动作</li>
-<li>$\mathcal{T}$（工具集）：Agent可调用的外部工具集合</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">S</mi></mrow><annotation encoding="application/x-tex">\mathcal{S}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span></span></span></span>（状态空间）：Agent的内部状态，包括当前任务、已完成步骤、中间结果</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">A</mi></mrow><annotation encoding="application/x-tex">\mathcal{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">A</span></span></span></span></span>（动作空间）：Agent可执行的动作集合，如调用工具、生成回复、终止任务</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">O</mi></mrow><annotation encoding="application/x-tex">\mathcal{O}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">O</span></span></span></span></span>（观察空间）：Agent能从环境获取的信息，如工具返回值、用户输入</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">M</mi></mrow><annotation encoding="application/x-tex">\mathcal{M}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">M</span></span></span></span></span>（记忆系统）：短期记忆（上下文窗口）+ 长期记忆（向量数据库）</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span>（策略函数）：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi><mo>:</mo><mi mathvariant="script">S</mi><mo>×</mo><mi mathvariant="script">M</mi><mo>→</mo><mi mathvariant="script">A</mi></mrow><annotation encoding="application/x-tex">\pi: \mathcal{S} \times \mathcal{M} \rightarrow \mathcal{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.075em;">S</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">M</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal">A</span></span></span></span></span>，根据状态和记忆输出动作</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">T</mi></mrow><annotation encoding="application/x-tex">\mathcal{T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.25417em;">T</span></span></span></span></span>（工具集）：Agent可调用的外部工具集合</li>
 </ul>
 <p><strong>本质区别</strong>：</p>
 <ul>
-<li>RL Agent的 $\pi$ 是通过训练得到的<strong>数值函数</strong>（神经网络参数），策略是固定的，改变策略需要重新训练</li>
-<li>LLM Agent的 $\pi$ 是由LLM通过<strong>自然语言推理</strong>实现的，策略可以通过修改Prompt动态调整，无需重训练。LLM Agent能解释自己的决策过程（输出推理链），而RL Agent的决策是黑箱</li>
+<li>RL Agent的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span> 是通过训练得到的<strong>数值函数</strong>（神经网络参数），策略是固定的，改变策略需要重新训练</li>
+<li>LLM Agent的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span> 是由LLM通过<strong>自然语言推理</strong>实现的，策略可以通过修改Prompt动态调整，无需重训练。LLM Agent能解释自己的决策过程（输出推理链），而RL Agent的决策是黑箱</li>
 </ul>
-<h3 id="题目2-参考答案"><a href="#题目2-参考答案" class="headerlink" title="题目2 参考答案"></a>题目2 参考答案</h3><p>PDA循环五个步骤：</p>
+<h3 id="题目2-参考答案"><a class="markdownIt-Anchor" href="#题目2-参考答案"></a> 题目2 参考答案</h3>
+<p>PDA循环五个步骤：</p>
 <ol>
 <li><strong>感知</strong>：获取上一步行动的结果（工具返回值、用户反馈），从记忆系统中检索相关历史信息</li>
 <li><strong>决策</strong>：LLM根据当前状态、观察和记忆进行推理，输出下一步动作（Thought → Action）</li>
@@ -898,19 +929,22 @@
 <li>触发条件：当行动结果与预期不符时（如工具返回错误、搜索结果为空、中间结果质量低），或达到预设的检查点</li>
 <li>影响方式：反思生成对当前策略的评估，写入反思记忆。后续决策步骤会检索反思记忆，调整策略（如更换搜索关键词、选择不同工具、修改任务分解方案）</li>
 </ul>
-<h3 id="题目3-参考答案"><a href="#题目3-参考答案" class="headerlink" title="题目3 参考答案"></a>题目3 参考答案</h3><p>六大核心模块：①感知模块 ②决策模块（LLM） ③行动模块 ④记忆系统 ⑤工具集 ⑥评估与监控</p>
-<p><strong>感知模块</strong>解决的问题：将环境中的原始信息（用户输入、工具返回、系统状态）转化为LLM可处理的文本表示。核心挑战是信息压缩（控制Token预算）和格式归一化。在PDA循环中位于”感知”阶段。</p>
+<h3 id="题目3-参考答案"><a class="markdownIt-Anchor" href="#题目3-参考答案"></a> 题目3 参考答案</h3>
+<p>六大核心模块：①感知模块 ②决策模块（LLM） ③行动模块 ④记忆系统 ⑤工具集 ⑥评估与监控</p>
+<p><strong>感知模块</strong>解决的问题：将环境中的原始信息（用户输入、工具返回、系统状态）转化为LLM可处理的文本表示。核心挑战是信息压缩（控制Token预算）和格式归一化。在PDA循环中位于&quot;感知&quot;阶段。</p>
 <p><strong>评估与监控模块</strong>解决的问题：量化Agent的行为质量（任务完成率、推理正确性、工具使用效率、成本效率），追踪每次推理和工具调用的全过程，支持调试和优化。在PDA循环中<strong>贯穿全链路</strong>——对每个阶段的输入输出进行记录和评估。</p>
-<h3 id="题目4-参考答案"><a href="#题目4-参考答案" class="headerlink" title="题目4 参考答案"></a>题目4 参考答案</h3><table>
+<h3 id="题目4-参考答案"><a class="markdownIt-Anchor" href="#题目4-参考答案"></a> 题目4 参考答案</h3>
+<table>
 <thead>
 <tr>
 <th>维度</th>
 <th>(A) MYCIN</th>
 <th>(B) AlphaGo</th>
-<th>(C) LLM Agent</th>
+<th>© LLM Agent</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>决策核心</strong></td>
 <td>人工编写的IF-THEN规则库</td>
 <td>训练得到的策略神经网络</td>
@@ -920,7 +954,7 @@
 <td><strong>能力扩展方式</strong></td>
 <td>添加更多规则（人工编写）</td>
 <td>重新训练策略网络</td>
-<td>添加工具（通过Function Calling&#x2F;MCP）</td>
+<td>添加工具（通过Function Calling/MCP）</td>
 </tr>
 <tr>
 <td><strong>泛化性</strong></td>
@@ -928,15 +962,17 @@
 <td>无（只能下围棋）</td>
 <td>有（可处理开放域任意任务）</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>LLM是分水岭的原因</strong>：</p>
 <ol>
 <li>LLM提供了第一个<strong>通用推理引擎</strong>——无需为每个任务专门训练，零样本即可处理新任务</li>
-<li>能力扩展从”重训练”变为”加工具”——通过标准协议（Function Calling&#x2F;MCP）连接工具，能力可无限扩展</li>
-<li>知识获取从”编码到参数”变为”运行时检索”——RAG让Agent在运行时获取最新知识</li>
+<li>能力扩展从&quot;重训练&quot;变为&quot;加工具&quot;——通过标准协议（Function Calling/MCP）连接工具，能力可无限扩展</li>
+<li>知识获取从&quot;编码到参数&quot;变为&quot;运行时检索&quot;——RAG让Agent在运行时获取最新知识</li>
 <li>策略可解释——LLM输出推理链，而RL Agent是黑箱</li>
 </ol>
-<h3 id="题目5-参考答案"><a href="#题目5-参考答案" class="headerlink" title="题目5 参考答案"></a>题目5 参考答案</h3><table>
+<h3 id="题目5-参考答案"><a class="markdownIt-Anchor" href="#题目5-参考答案"></a> 题目5 参考答案</h3>
+<table>
 <thead>
 <tr>
 <th>阶段</th>
@@ -944,33 +980,36 @@
 <th>影响因素</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>感知</td>
-<td>如何从工具返回中提取关键信息？是否需要预处理&#x2F;截断？</td>
+<td>如何从工具返回中提取关键信息？是否需要预处理/截断？</td>
 <td>Token预算（上下文窗口大小）、信息密度（返回数据的有效信息比例）</td>
 </tr>
 <tr>
 <td>决策</td>
-<td>使用哪种推理模式？（ReAct适合简单任务&#x2F;Plan-Execute适合复杂多步任务&#x2F;Reflexion适合高容错要求场景）</td>
+<td>使用哪种推理模式？（ReAct适合简单任务/Plan-Execute适合复杂多步任务/Reflexion适合高容错要求场景）</td>
 <td>任务复杂度（步数）、错误容忍度（是否允许试错）、成本预算（Reflexion需要额外推理）</td>
 </tr>
 <tr>
 <td>行动</td>
-<td>工具调用是串行还是并行？错误如何处理（重试次数&#x2F;降级方案&#x2F;超时阈值）？</td>
+<td>工具调用是串行还是并行？错误如何处理（重试次数/降级方案/超时阈值）？</td>
 <td>延迟要求（并行降低延迟）、工具间依赖关系（有依赖只能串行）、SLA要求</td>
 </tr>
 <tr>
 <td>反思</td>
-<td>何时触发反思（每步&#x2F;每N步&#x2F;出错时）？反思结果如何存储和利用？</td>
+<td>何时触发反思（每步/每N步/出错时）？反思结果如何存储和利用？</td>
 <td>成本预算（反思消耗额外Token）、任务重要性（高重要性任务值得反思成本）、反思记忆的检索效率</td>
 </tr>
 <tr>
 <td>终止</td>
-<td>如何判断任务完成（LLM自主判断&#x2F;外部评估器&#x2F;最大步数）？最大步数设多少？</td>
+<td>如何判断任务完成（LLM自主判断/外部评估器/最大步数）？最大步数设多少？</td>
 <td>安全边界（防止无限循环）、成本控制（Token预算）、任务类型（开放式任务vs明确目标任务）</td>
 </tr>
-</tbody></table>
-<h3 id="题目6-参考答案"><a href="#题目6-参考答案" class="headerlink" title="题目6 参考答案"></a>题目6 参考答案</h3><p><strong>（a）工具列表</strong>：</p>
+</tbody>
+</table>
+<h3 id="题目6-参考答案"><a class="markdownIt-Anchor" href="#题目6-参考答案"></a> 题目6 参考答案</h3>
+<p><strong>（a）工具列表</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -979,7 +1018,8 @@
 <th>用途</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>信息获取类</td>
 <td>学术搜索API（如Semantic Scholar API）</td>
 <td>搜索相关文献</td>
@@ -1002,17 +1042,17 @@
 <tr>
 <td>生成创建类</td>
 <td>文档生成工具</td>
-<td>生成PDF&#x2F;Markdown格式的研究报告</td>
+<td>生成PDF/Markdown格式的研究报告</td>
 </tr>
 <tr>
 <td>信息获取类</td>
 <td>数据库查询工具</td>
 <td>查询企业内部知识库</td>
 </tr>
-</tbody></table>
-<p><strong>（b）PDA循环流程</strong>（以”调研Transformer架构的最新进展”为例）：</p>
+</tbody>
+</table>
+<p><strong>（b）PDA循环流程</strong>（以&quot;调研Transformer架构的最新进展&quot;为例）：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">初始化：接收任务&quot;调研Transformer架构的最新进展&quot;</span><br><span class="line"></span><br><span class="line">循环1:</span><br><span class="line">  感知：任务=调研Transformer进展，无历史信息</span><br><span class="line">  决策：Thought→需要搜索学术论文。Action→调用学术搜索API(&quot;Transformer architecture 2024 2025&quot;)</span><br><span class="line">  行动：执行搜索，返回20篇论文的元数据</span><br><span class="line">  状态更新：已获取论文列表</span><br><span class="line">  记忆更新：存储搜索结果</span><br><span class="line"></span><br><span class="line">循环2:</span><br><span class="line">  感知：上一步返回20篇论文，需要筛选和阅读</span><br><span class="line">  决策：Thought→先阅读摘要筛选相关论文。Action→调用网页抓取工具获取前5篇论文的摘要</span><br><span class="line">  行动：抓取5篇论文摘要</span><br><span class="line">  状态更新：已获取5篇论文摘要</span><br><span class="line">  记忆更新：存储论文摘要</span><br><span class="line"></span><br><span class="line">循环3:</span><br><span class="line">  感知：5篇论文摘要，需要分析归纳</span><br><span class="line">  决策：Thought→分析这些论文的核心贡献。Action→调用Python代码执行器整理对比表</span><br><span class="line">  行动：生成对比表</span><br><span class="line">  状态更新：已生成论文对比分析</span><br><span class="line">  记忆更新：存储分析结果</span><br><span class="line"></span><br><span class="line">循环4:</span><br><span class="line">  感知：已有论文对比分析，需要生成报告</span><br><span class="line">  决策：Thought→信息足够，生成研究报告。Action→调用文档生成工具创建报告</span><br><span class="line">  行动：生成研究报告</span><br><span class="line">  状态更新：报告已生成</span><br><span class="line">  记忆更新：存储最终报告</span><br><span class="line"></span><br><span class="line">循环5:</span><br><span class="line">  感知：报告已生成</span><br><span class="line">  决策：Thought→任务完成。Action→终止</span><br><span class="line">  行动：返回最终报告</span><br></pre></td></tr></table></figure>
-
 <p><strong>（c）单Agent升级为多Agent的判断标准</strong>：</p>
 <ol>
 <li><strong>上下文窗口不足</strong>：单个研究任务的文献信息量超出LLM上下文窗口（如需要同时分析50+篇论文），需要拆分为多个Agent分别处理</li>
@@ -1027,7 +1067,8 @@
 <th>存储信息</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>短期记忆（工作记忆）</td>
 <td>当前研究任务的上下文：已搜索的关键词、已阅读的论文、中间分析结果</td>
 </tr>
@@ -1047,22 +1088,40 @@
 <td>反思记忆</td>
 <td>过去的经验教训：哪些搜索策略有效、哪些工具组合效率高、哪些错误需要避免</td>
 </tr>
-</tbody></table>
-<hr>
-<h2 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h2><ul>
+</tbody>
+</table>
+<hr />
+<h2 id="延伸阅读"><a class="markdownIt-Anchor" href="#延伸阅读"></a> 延伸阅读</h2>
+<ul>
 <li><strong>ReAct论文</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2210.03629">ReAct: Synergizing Reasoning and Acting in Language Models</a> — Agent推理的奠基性论文，第03课深入讲解</li>
 <li><strong>MCP规范</strong>：<a target="_blank" rel="noopener" href="https://modelcontextprotocol.io/">Model Context Protocol 2026-07-28</a> — 第11课深入讲解</li>
 <li><strong>Agent综述</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.11432">A Survey on Large Language Model based Autonomous Agents</a> — Agent架构的学术综述</li>
 <li><strong>vLLM</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.06180">PagedAttention论文</a> — 第19课深入讲解</li>
 </ul>
-<hr>
+<hr />
 <blockquote>
 <p><strong>下一课预告</strong>：第02课《LLM内部机制——Agent架构师视角》，我们将从数学层面拆解Transformer架构，推导Attention计算公式，分析KV Cache的显存占用，为理解Agent推理成本和上下文窗口约束打下基础。</p>
 </blockquote>
-<hr>
-<p><em>本教学资料为AI Agent系统架构设计课程第01课，对应教学大纲第一单元第1课。</em><br><em>项目贡献：基础架构层——Agent系统骨架认知已建立；引入Harness工程框架作为项目架构的顶层设计原则。</em></p>
-<hr>
-<h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><ul>
-<li>2026-08-12 v2更新（grill-me D1&#x2F;D11：引入Harness工程概念）</li>
+<hr />
+<p><em>本教学资料为AI Agent系统架构设计课程第01课，对应教学大纲第一单元第1课。</em>
+<em>项目贡献：基础架构层——Agent系统骨架认知已建立；引入Harness工程框架作为项目架构的顶层设计原则。</em></p>
+<hr />
+<h2 id="更新日志"><a class="markdownIt-Anchor" href="#更新日志"></a> 更新日志</h2>
+<ul>
+<li>2026-08-12 v2更新（grill-me D1/D11：引入Harness工程概念）</li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/08/13/AI-Agent/AI%20Agent/0001-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/">https://handyes.github.io/2026/08/13/AI-Agent/AI%20Agent/0001-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyES的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/08/14/AI-Agent/AI%20Agent/0002-LLM%E5%86%85%E9%83%A8%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第02课：LLM内部机制——Agent架构师视角"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第02课：LLM内部机制——Agent架构师视角</div></div><div class="info-2"><div class="info-item-1">第02课：LLM内部机制——Agent架构师视角 课程信息  课程名称：AI Agent系统架构设计 本课序号：02&#x2F;22 预计学习时间：约55分钟（理论推导20min + 工程分析15min + 项目关联10min + 习题10min） 项目贡献：基础架构层——建立LLM决策核心的内部机制认知，具备推理成本量化分析与上下文窗口约束设计能力 先修要求：第01课（Agent架构总览）、线性代数矩阵运算、Python基础    本课导读第01课建立了Agent的六元组定义 $\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle$，其中策略函数 $\pi$ 由LLM实现。但LLM不是一个黑箱——作为架构设计师，你必须理解它的内部机制，因为三个关键工程决策直接依赖于此：  推理成本：Attention的 $O(n^2d)$ 复杂度和KV Cache的显存占用，决定了你能支撑多少并发用户 上下文窗口：LLM的Token上限，直接约束RAG的分块策略和记忆系统的设计 ...</div></div></div></a><a class="pagination-related" href="/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/" title="AI Agent系统架构设计 — 教学大纲"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">AI Agent系统架构设计 — 教学大纲</div></div><div class="info-2"><div class="info-item-1">AI Agent系统架构设计 — 教学大纲课程基本信息   项目 内容    课程名称 AI Agent系统架构设计   培养目标 AI Agent系统架构设计师   授课对象 信息与计算科学专业本科毕业生（具备数学、编程、ML基础）   课程形式 夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）   先修知识 Python、线性代数、概率统计、机器学习基础、计算机网络基础   开课日期 2026年8月   培养目标完成本课程后，学生将具备以下能力：  系统设计能力：能从零设计完整的AI Agent系统架构，包括感知-决策-行动闭环、记忆系统、工具体系 协议掌握能力：深入理解并实际开发MCP Server&#x2F;Client，掌握A2A多Agent通信协议 框架实战能力：能使用LangChain&#x2F;LangGraph、OpenManus等框架构建生产级Agent应用 模型优化决策能力：理解LoRA&#x2F;QLoRA微调、模型蒸馏与量化压缩的原理，能做出技术选型与调优决策 工程部署能力：能设计高并...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-13</div><div class="info-item-2">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</div></div><div class="info-2"><div class="info-item-1">毕业参考答案：AI Agent系统架构设计（第1-22课全课程） 配套试卷：99-毕业答卷.md结构：第一部分标准答案 → 第二部分参考方案+评分维度 → 第三部分参考架构方案+评分标准+常见错误模式使用方式：先独立完成答卷再对照。第二、三部分评分看决策依据的量化程度与全链路完整性——参考方案是”一种好的答案”，不是”唯一的答案”。   第一部分：基础原理（30分，标准答案）Q1. Attention复杂度与KV Cache容量计算（8分）（1）公式与复杂度（3分） $$Attention(Q,K,V) &#x3D; softmax\left(\frac{QK^T}{\sqrt{d}}\right)V$$ 复杂度推导：Q为n×d、K^T为d×n → QK^T为n×n矩阵，计算代价O(n²d)；softmax对n×n矩阵逐行归一化为O(n²)；结果与V（n×d）相乘为O(n²d)。总复杂度O(n²d)——序列长度平方增长是长上下文昂贵的根源（也是RAG存在的根本理由，第10课）。 除以√d的原因：点积 $q \cdot k &#x3D; \sum_{i&#x3D;1}^{d} q_...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第15课：A2A协议与Agent互操作性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">第15课：A2A协议与Agent互操作性</div></div><div class="info-2"><div class="info-item-1">第15课：A2A协议与Agent互操作性课程信息   项目 内容    课程定位 协议互操作课（第三单元收官）——从”框架内协作”到”跨组织协作”：第14课的多Agent工具（模式矩阵&#x2F;Handoff状态机&#x2F;死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻   前置依赖 第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动&#x2F;异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）   时间分配 协议原理20min（第一五节）+ 工程实现15min（第六七节）+ 习题20min（合计约55min）   知识深度 Task状态机完整转换图 &#x2F; Agent Card语义模型 &#x2F; 能力协商纳什均衡分析 &#x2F; 三协议（MCP&#x2F;A2A&#x2F;ANP）定位对比 &#x3D; 必须掌握；协议操作与安全配置 &#x2F; mini-A2A代码实...</div></div></div></a><a class="pagination-related" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-02</div><div class="info-item-2">第21课：Agent持续进化与自学习机制</div></div><div class="info-2"><div class="info-item-1">第21课：Agent持续进化与自学习机制一、课程信息   项目 内容    课号 第21课（0021），第四单元”模型优化与生产部署”第6课，进化层&#x2F;第四单元收官课   前置 第10课（评估体系全景图与LLM-as-a-Judge）、第09课（记忆系统——个体记忆与组织知识）、第17课（SFT&#x2F;Agentic RL与CacheRL实证）、第20课（1000并发静态最优架构与滚动升级）   定位 从”建成系统”到”系统自己变好”——第20课交付了静态最优架构，本课补上时间维度：系统如何从运营中学习、把学到的东西存到正确的位置、并安全地发布出去   时间分配 理论推导20min（开篇3min + 学习信号7min + 更新载体6min + 验证与灰度4min）+ 案例分析15min（Agent自举与代码生成Agent架构8min + 多模态与Computer Use前沿7min）+ 工程实践10min + 习题10min   核心知识点（大纲指定，全部必考）：  学习信号的质量评估——三类信号（环境执行结果&#x2F;过程规则&#x2F;LLM Rubric）的信...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/S0015-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告3：第三单元阶段总结（第11-15课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">总结报告3：第三单元阶段总结（第11-15课）</div></div><div class="info-2"><div class="info-item-1">总结报告3：第三单元阶段总结（第11-15课） 生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15&#x2F;22课   一、阶段知识脉络梳理1.1 知识图谱1234567891011121314151617181920                ┌─────────────────────────────────────┐                │   第15课：A2A互操作（本单元合龙）      │                │  Agent Card/Signed Card/Task状态机/  │                │  OAuth现代化/博弈论/ANP三协议对比     │                └──────────────┬──────────────────────┘         ┌─────────────────────┼───────────────────────┐         ▼                     ▼            ...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/AI%20Agent/T0010-%E7%9F%AD%E6%9C%9F%E6%8A%A5%E5%91%8A/" title="短期报告1：课程中期综合评估（第1-10课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">短期报告1：课程中期综合评估（第1-10课）</div></div><div class="info-2"><div class="info-item-1">短期报告1：课程中期综合评估（第1-10课） 生成时间：2026-08-20（第10课完成触发） | 课程进度：10&#x2F;22课（45%） | 定位：中期能力盘点 + 项目复盘 + 下半程路线   一、综合架构能力评估对照大纲六大培养目标，逐项评估当前达成度：    # 培养目标 当前达成度 证据与缺口    1 系统设计能力（PDA闭环&#x2F;记忆&#x2F;工具） ✅ 90% 第10课完整架构图合龙，全部模块可论述选型理由；缺口：仅单体架构，未涉及服务化拆分（第三单元补）   2 协议掌握（MCP&#x2F;A2A） ⬜ 15% 仅第10课触及MinerU的MCP接入（知晓级）；深度内容在第11-15课   3 框架实战（LangChain&#x2F;LangGraph） ⬜ 10% 具备框架前置知识（StateGraph&#x3D;状态机形式化已在第03课铺垫）；框架本体在第12-13课   4 模型优化决策（LoRA&#x2F;蒸馏&#x2F;量化） ⬜ 5% 仅第02课Transformer内部机制打底；第16-18课展开   5 工程部署能力（高并发&#x2...</div></div></div></a><a class="pagination-related" href="/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/" title="AI Agent系统架构设计 — 教学大纲"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-12</div><div class="info-item-2">AI Agent系统架构设计 — 教学大纲</div></div><div class="info-2"><div class="info-item-1">AI Agent系统架构设计 — 教学大纲课程基本信息   项目 内容    课程名称 AI Agent系统架构设计   培养目标 AI Agent系统架构设计师   授课对象 信息与计算科学专业本科毕业生（具备数学、编程、ML基础）   课程形式 夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）   先修知识 Python、线性代数、概率统计、机器学习基础、计算机网络基础   开课日期 2026年8月   培养目标完成本课程后，学生将具备以下能力：  系统设计能力：能从零设计完整的AI Agent系统架构，包括感知-决策-行动闭环、记忆系统、工具体系 协议掌握能力：深入理解并实际开发MCP Server&#x2F;Client，掌握A2A多Agent通信协议 框架实战能力：能使用LangChain&#x2F;LangGraph、OpenManus等框架构建生产级Agent应用 模型优化决策能力：理解LoRA&#x2F;QLoRA微调、模型蒸馏与量化压缩的原理，能做出技术选型与调优决策 工程部署能力：能设计高并...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC01%E8%AF%BE%EF%BC%9AAI-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text">第01课：AI Agent历史演变与系统架构总览</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AF%BE%E5%AF%BC%E8%AF%BB"><span class="toc-number">1.1.</span> <span class="toc-text">本课导读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9AAI-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%EF%BC%8825%E5%88%86%E9%92%9F%E9%80%9F%E8%A7%88%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">第一部分：AI Agent历史演变（25分钟速览）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%89%E4%B8%AA%E6%97%B6%E4%BB%A3%E7%9A%84%E6%9E%B6%E6%9E%84%E8%8C%83%E5%BC%8F%E5%8F%98%E8%BF%81"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 三个时代的架构范式变迁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%A7%84%E5%88%99%E9%A9%B1%E5%8A%A8%E6%97%B6%E4%BB%A3%EF%BC%9A%E7%AC%A6%E5%8F%B7%E4%B8%BB%E4%B9%89%E4%B8%8E%E4%B8%93%E5%AE%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 规则驱动时代：符号主义与专家系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%AD%A6%E4%B9%A0%E9%A9%B1%E5%8A%A8%E6%97%B6%E4%BB%A3%EF%BC%9A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0Agent"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 学习驱动时代：强化学习Agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-LLM%E9%A9%B1%E5%8A%A8%E6%97%B6%E4%BB%A3%EF%BC%9A%E9%80%9A%E7%94%A8%E6%99%BA%E8%83%BDAgent%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.4 LLM驱动时代：通用智能Agent的诞生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9ALLM%E9%A9%B1%E5%8A%A8Agent%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88%EF%BC%8820%E5%88%86%E9%92%9F%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">第二部分：LLM驱动Agent的系统架构总览（20分钟）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Agent%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 Agent的形式化定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-PDA%E5%BE%AA%E7%8E%AF%EF%BC%9AAgent%E7%9A%84%E6%A0%B8%E5%BF%83%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 PDA循环：Agent的核心运行机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%85%AD%E5%A4%A7%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 六大核心模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E4%BB%8E%E5%8D%95Agent%E5%88%B0%E5%A4%9AAgent%EF%BC%9A%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 从单Agent到多Agent：架构演进趋势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E9%83%A8%E7%BD%B2%EF%BC%9AAgent%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%8C%E6%95%B4%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="toc-number">1.3.5.</span> <span class="toc-text">2.5 从开发到部署：Agent系统的完整技术栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-Harness%E5%B7%A5%E7%A8%8B%EF%BC%9A%E8%B4%AF%E7%A9%BF%E5%85%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E9%A1%B6%E5%B1%82%E6%A1%86%E6%9E%B6"><span class="toc-number">1.3.6.</span> <span class="toc-text">2.6 Harness工程：贯穿全课程的顶层框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-1-%E4%BB%80%E4%B9%88%E6%98%AFHarness%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">2.6.1 什么是Harness工程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-2-Harness%E4%B8%8EPDA%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">2.6.2 Harness与PDA循环的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9D%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E7%AB%9E%E4%BA%89%E5%8A%9B%E2%80%9D%E8%B6%8A%E6%9D%A5%E8%B6%8A%E9%87%8D%E8%A6%81"><span class="toc-number">1.3.6.3.</span> <span class="toc-text">2.6.3 为什么”模型之外的竞争力”越来越重要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-Harness%E4%BA%94%E5%8A%9F%E8%83%BD%E4%B8%8E%E8%AF%BE%E7%A8%8B%E6%A8%A1%E5%9D%97%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="toc-number">1.3.6.4.</span> <span class="toc-text">2.6.4 Harness五功能与课程模块映射表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5"><span class="toc-number">1.4.</span> <span class="toc-text">第三部分：课程项目引入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8BAgent%E7%B3%BB%E7%BB%9F%E2%80%9D"><span class="toc-number">1.4.1.</span> <span class="toc-text">“企业级智能研究助手Agent系统”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">课后习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E9%A2%98%EF%BC%88%E6%AF%8F%E9%A2%985%E5%88%86%EF%BC%8C%E5%85%B115%E5%88%86%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">一、基础概念题（每题5分，共15分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90%E9%A2%98%EF%BC%88%E6%AF%8F%E9%A2%9815%E5%88%86%EF%BC%8C%E5%85%B130%E5%88%86%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">二、架构分析题（每题15分，共30分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%A2%98%EF%BC%8820%E5%88%86%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">三、系统设计题（20分）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.</span> <span class="toc-text">参考答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE1-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.1.</span> <span class="toc-text">题目1 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE2-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.2.</span> <span class="toc-text">题目2 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE3-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.3.</span> <span class="toc-text">题目3 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE4-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.4.</span> <span class="toc-text">题目4 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE5-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.5.</span> <span class="toc-text">题目5 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE6-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.6.</span> <span class="toc-text">题目6 参考答案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-number">1.7.</span> <span class="toc-text">延伸阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><span class="toc-number">1.8.</span> <span class="toc-text">更新日志</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/08/13/AI-Agent/AI%20Agent/0001-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/">https://handyes.github.io/2026/08/13/AI-Agent/AI%20Agent/0001-Agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyES的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/08/14/AI-Agent/AI%20Agent/0002-LLM%E5%86%85%E9%83%A8%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第02课：LLM内部机制——Agent架构师视角"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第02课：LLM内部机制——Agent架构师视角</div></div><div class="info-2"><div class="info-item-1"> 第02课：LLM内部机制——Agent架构师视角  课程信息  课程名称：AI Agent系统架构设计 本课序号：02/22 预计学习时间：约55分钟（理论推导20min + 工程分析15min + 项目关联10min + 习题10min） 项目贡献：基础架构层——建立LLM决策核心的内部机制认知，具备推理成本量化分析与上下文窗口约束设计能力 先修要求：第01课（Agent架构总览）、线性代数矩阵运算、Python基础     本课导读 第01课建立了Agent的六元组定义 ⟨S,A,O,M,π,T⟩\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle⟨S,A,O,M,π,T⟩，其中策略函数 π\piπ 由LLM实现。但LLM不是一个黑箱——作为架构设计师，你必须理解它的内部机制，因为三个关键工程决策直接依赖于此：  推理成本：Attention的 O(n2d)O(n^2d)O(n2d) 复杂度和KV Cache的显存占用，决定了你能支撑多少并发用户 上下文窗口：...</div></div></div></a><a class="pagination-related" href="/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/" title="AI Agent系统架构设计 — 教学大纲"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">AI Agent系统架构设计 — 教学大纲</div></div><div class="info-2"><div class="info-item-1"> AI Agent系统架构设计 — 教学大纲  课程基本信息    项目 内容     课程名称 AI Agent系统架构设计   培养目标 AI Agent系统架构设计师   授课对象 信息与计算科学专业本科毕业生（具备数学、编程、ML基础）   课程形式 夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）   先修知识 Python、线性代数、概率统计、机器学习基础、计算机网络基础   开课日期 2026年8月     培养目标 完成本课程后，学生将具备以下能力：  系统设计能力：能从零设计完整的AI Agent系统架构，包括感知-决策-行动闭环、记忆系统、工具体系 协议掌握能力：深入理解并实际开发MCP Server/Client，掌握A2A多Agent通信协议 框架实战能力：能使用LangChain/LangGraph、OpenManus等框架构建生产级Agent应用 模型优化决策能力：理解LoRA/QLoRA微调、模型蒸馏与量化压缩的原理，能做出技术选型与调优决策 工程部署能力：能设计高并发推理服务架构...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">第20课：GPU集群规划与Agent系统架构设计</div></div><div class="info-2"><div class="info-item-1"> 第20课：GPU集群规划与Agent系统架构设计  一、课程信息    项目 内容     课号 第20课（0020），第四单元&quot;模型优化与生产部署&quot;第5课，部署层收官课   前置 第19课（vLLM推理服务、KV Cache公式、三模型显存分配）、第18课（量化产物与接口约定）、第14课（多Agent架构模式）、第12课（LangGraph异步编排）   定位 部署层第2课 + 毕业项目架构总装：从&quot;单机怎么服务好&quot;到&quot;1000并发怎么规划集群&quot;——GPU怎么选、卡间怎么连、集群怎么编、钱怎么省   时间分配 硬件选型15min（显存公式与三约束模型7min + 硬件矩阵8min）+ 架构设计20min（集群拓扑4min + K8s部署与混部7min + 1000并发总装9min）+ 成本优化10min（冷启动4min + 弹性伸缩4min + Spot与监控2min）+ 习题10min    核心知识点（大纲指定，全部必考）：  GPU显存占用计算公式推导——模型权重+KV Cache+激活值的完整分解（必须掌握）...</div></div></div></a><a class="pagination-related" href="/2026/08/17/AI-Agent/AI%20Agent/0005-FunctionCalling%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第05课：Function Calling与工具调用机制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-17</div><div class="info-item-2">第05课：Function Calling与工具调用机制</div></div><div class="info-2"><div class="info-item-1"> 第05课：Function Calling与工具调用机制   课号：第05课 标题：Function Calling与工具调用机制 时间分配：理论15min + 实战20min + 安全设计5min + 测试方法5min + 习题10min 项目贡献：基础架构层——为&quot;企业级智能研究助手Agent系统&quot;构建工具调用骨架，包含三个自定义工具（search_papers/get_paper_detail/analyze_citation_network）的完整实现、跨厂商工具调用适配层、并行调用调度器、错误处理FSM、执行安全层（危险操作分级/审计日志）、Mock测试框架 先修要求：第01课（Harness工程五功能、PDA循环）、第03课（ReAct状态机、错误恢复策略）、第04课（System Prompt工程、Constrained Decoding、Prompt注入五层防御）     课程导入 第04课我们完成了研究助手Agent的&quot;信息管理&quot;骨架——System Prompt模板、Skills按需加载、上下文压缩、Constrain...</div></div></div></a><a class="pagination-related" href="/2026/08/30/AI-Agent/AI%20Agent/0018-%E6%A8%A1%E5%9E%8B%E8%92%B8%E9%A6%8F%E4%B8%8E%E5%8E%8B%E7%BC%A9%E9%80%89%E5%9E%8B-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第18课：模型蒸馏与压缩——选型与评估"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-30</div><div class="info-item-2">第18课：模型蒸馏与压缩——选型与评估</div></div><div class="info-2"><div class="info-item-1"> 第18课：模型蒸馏与压缩——选型与评估  一、课程信息    项目 内容     课号 第18课（0018），第四单元&quot;模型优化与生产部署&quot;第3课   前置 第16课（模型加载与调用）、第17课（SFT与Agentic RL，QLoRA产物）   定位 从&quot;训得起&quot;到&quot;部署得起&quot;——模型层收官：压缩选型决策   时间分配 原理推导20min（τ推导8min + 量化7min + 剪枝5min）+ 选型决策15min（蒸馏ROI 7min + 组合决策8min）+ 结果分析10min + 习题10min    核心知识点（大纲指定，全部必考）：  温度参数τ对softmax分布的平滑效应推导（必须掌握） GPTQ/AWQ/GGUF三种量化格式的选型决策矩阵（必须掌握） 蒸馏ROI计算方法（必须掌握）  知识深度边界：    层级 本课对应内容     必须掌握 τ的极限行为与梯度尺度推导、GPTQ/AWQ/GGUF选型矩阵、蒸馏ROI公式与盈亏平衡计算   应当理解 RTN/分组量化代码、蒸馏损失实现、FP8/NVFP4...</div></div></div></a><a class="pagination-related" href="/2026/08/17/AI-Agent/AI%20Agent/S0005-%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" title="总结报告1：第一单元阶段总结（第1-5课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-17</div><div class="info-item-2">总结报告1：第一单元阶段总结（第1-5课）</div></div><div class="info-2"><div class="info-item-1"> 总结报告1：第一单元阶段总结（第1-5课）  生成日期：2026-08-13 覆盖范围：第一单元「Agent核心架构与Prompt工程」（第01-05课） 项目线进展：基础架构层完成    一、阶段知识脉络梳理  1.1 知识图谱 123456789101112131415161718192021                ┌─────────────────────────────────┐                │     第一单元：基础架构层          │                │   （Agent核心架构与Prompt工程）    │                └──────────────┬──────────────────┘                               │      ┌────────────┬───────────┼───────────┬────────────┐      ▼            ▼           ▼           ▼            ▼┌──────────...</div></div></div></a><a class="pagination-related" href="/2026/08/12/AI-Agent/AI%20Agent/00-%E6%95%99%E5%AD%A6%E5%A4%A7%E7%BA%B2/" title="AI Agent系统架构设计 — 教学大纲"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-12</div><div class="info-item-2">AI Agent系统架构设计 — 教学大纲</div></div><div class="info-2"><div class="info-item-1"> AI Agent系统架构设计 — 教学大纲  课程基本信息    项目 内容     课程名称 AI Agent系统架构设计   培养目标 AI Agent系统架构设计师   授课对象 信息与计算科学专业本科毕业生（具备数学、编程、ML基础）   课程形式 夜大自学模式（每次约1小时，偏理论：理论推导+工程分析+习题，时间因课而异；无GPU实操环境，代码实践以分析决策为主）   先修知识 Python、线性代数、概率统计、机器学习基础、计算机网络基础   开课日期 2026年8月     培养目标 完成本课程后，学生将具备以下能力：  系统设计能力：能从零设计完整的AI Agent系统架构，包括感知-决策-行动闭环、记忆系统、工具体系 协议掌握能力：深入理解并实际开发MCP Server/Client，掌握A2A多Agent通信协议 框架实战能力：能使用LangChain/LangGraph、OpenManus等框架构建生产级Agent应用 模型优化决策能力：理解LoRA/QLoRA微调、模型蒸馏与量化压缩的原理，能做出技术选型与调优决策 工程部署能力：能设计高并发推理服务架构...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/AI%20Agent/0015-A2A%E5%8D%8F%E8%AE%AE%E4%B8%8EAgent%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第15课：A2A协议与Agent互操作性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">第15课：A2A协议与Agent互操作性</div></div><div class="info-2"><div class="info-item-1"> 第15课：A2A协议与Agent互操作性  课程信息    项目 内容     课程定位 协议互操作课（第三单元收官）——从&quot;框架内协作&quot;到&quot;跨组织协作&quot;：第14课的多Agent工具（模式矩阵/Handoff状态机/死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻   前置依赖 第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动/异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）   时间分配 协议原理20min（第一~五节）+ 工程实现15min（第六~七节）+ 习题20min（合计约55min）   知识深度 Task状态机完整转换图 / Agent Card语义模型 / 能力协商纳什均衡分析 / 三协议（MCP/A2A/ANP）定位对比 = 必须掌握；协议操作与安全配置 / mini-A2A代码实现 / Task不可变性设计权衡 = 应当理解...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人技术博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC01%E8%AF%BEai-agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%98%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text"> 第01课：AI Agent历史演变与系统架构总览</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AF%BE%E5%AF%BC%E8%AF%BB"><span class="toc-number">1.1.</span> <span class="toc-text"> 本课导读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86ai-agent%E5%8E%86%E5%8F%B2%E6%BC%94%E5%8F%9825%E5%88%86%E9%92%9F%E9%80%9F%E8%A7%88"><span class="toc-number">1.2.</span> <span class="toc-text"> 第一部分：AI Agent历史演变（25分钟速览）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E4%B8%89%E4%B8%AA%E6%97%B6%E4%BB%A3%E7%9A%84%E6%9E%B6%E6%9E%84%E8%8C%83%E5%BC%8F%E5%8F%98%E8%BF%81"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 1.1 三个时代的架构范式变迁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E8%A7%84%E5%88%99%E9%A9%B1%E5%8A%A8%E6%97%B6%E4%BB%A3%E7%AC%A6%E5%8F%B7%E4%B8%BB%E4%B9%89%E4%B8%8E%E4%B8%93%E5%AE%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 1.2 规则驱动时代：符号主义与专家系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E5%AD%A6%E4%B9%A0%E9%A9%B1%E5%8A%A8%E6%97%B6%E4%BB%A3%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0agent"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 1.3 学习驱动时代：强化学习Agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-llm%E9%A9%B1%E5%8A%A8%E6%97%B6%E4%BB%A3%E9%80%9A%E7%94%A8%E6%99%BA%E8%83%BDagent%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 1.4 LLM驱动时代：通用智能Agent的诞生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86llm%E9%A9%B1%E5%8A%A8agent%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%8820%E5%88%86%E9%92%9F"><span class="toc-number">1.3.</span> <span class="toc-text"> 第二部分：LLM驱动Agent的系统架构总览（20分钟）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-agent%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 2.1 Agent的形式化定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-pda%E5%BE%AA%E7%8E%AFagent%E7%9A%84%E6%A0%B8%E5%BF%83%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.2 PDA循环：Agent的核心运行机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#23-%E5%85%AD%E5%A4%A7%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 2.3 六大核心模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#24-%E4%BB%8E%E5%8D%95agent%E5%88%B0%E5%A4%9Aagent%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 2.4 从单Agent到多Agent：架构演进趋势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#25-%E4%BB%8E%E5%BC%80%E5%8F%91%E5%88%B0%E9%83%A8%E7%BD%B2agent%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%8C%E6%95%B4%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 2.5 从开发到部署：Agent系统的完整技术栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#26-harness%E5%B7%A5%E7%A8%8B%E8%B4%AF%E7%A9%BF%E5%85%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E9%A1%B6%E5%B1%82%E6%A1%86%E6%9E%B6"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 2.6 Harness工程：贯穿全课程的顶层框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#261-%E4%BB%80%E4%B9%88%E6%98%AFharness%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.3.6.1.</span> <span class="toc-text"> 2.6.1 什么是Harness工程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#262-harness%E4%B8%8Epda%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.6.2.</span> <span class="toc-text"> 2.6.2 Harness与PDA循环的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#263-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E7%AB%9E%E4%BA%89%E5%8A%9B%E8%B6%8A%E6%9D%A5%E8%B6%8A%E9%87%8D%E8%A6%81"><span class="toc-number">1.3.6.3.</span> <span class="toc-text"> 2.6.3 为什么&quot;模型之外的竞争力&quot;越来越重要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#264-harness%E4%BA%94%E5%8A%9F%E8%83%BD%E4%B8%8E%E8%AF%BE%E7%A8%8B%E6%A8%A1%E5%9D%97%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="toc-number">1.3.6.4.</span> <span class="toc-text"> 2.6.4 Harness五功能与课程模块映射表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5"><span class="toc-number">1.4.</span> <span class="toc-text"> 第三部分：课程项目引入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8Bagent%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.4.1.</span> <span class="toc-text"> “企业级智能研究助手Agent系统”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text"> 课后习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E9%A2%98%E6%AF%8F%E9%A2%985%E5%88%86%E5%85%B115%E5%88%86"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 一、基础概念题（每题5分，共15分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90%E9%A2%98%E6%AF%8F%E9%A2%9815%E5%88%86%E5%85%B130%E5%88%86"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 二、架构分析题（每题15分，共30分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%A2%9820%E5%88%86"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 三、系统设计题（20分）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.</span> <span class="toc-text"> 参考答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE1-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 题目1 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE2-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 题目2 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE3-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 题目3 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE4-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 题目4 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE5-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 题目5 参考答案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE6-%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.6.6.</span> <span class="toc-text"> 题目6 参考答案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-number">1.7.</span> <span class="toc-text"> 延伸阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><span class="toc-number">1.8.</span> <span class="toc-text"> 更新日志</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/" title="毕业参考答案：AI Agent系统架构设计（第1-22课全课程）">毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/AI%20Agent/99-%E6%AF%95%E4%B8%9A%E7%AD%94%E5%8D%B7/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/AI-Agent/AI%20Agent/0022-AICoding%E8%8C%83%E5%BC%8F%E4%B8%8EAgent%E5%BA%94%E7%94%A8%E5%89%8D%E6%B2%BF-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第22课：AI Coding范式与Agent应用前沿（全课程收官课）">第22课：AI Coding范式与Agent应用前沿（全课程收官课）</a><time datetime="2026-09-02T16:00:00.000Z" title="发表于 2026-09-03 00:00:00">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/02/AI-Agent/AI%20Agent/0021-Agent%E6%8C%81%E7%BB%AD%E8%BF%9B%E5%8C%96%E4%B8%8E%E8%87%AA%E5%AD%A6%E4%B9%A0%E6%9C%BA%E5%88%B6-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第21课：Agent持续进化与自学习机制">第21课：Agent持续进化与自学习机制</a><time datetime="2026-09-01T16:00:00.000Z" title="发表于 2026-09-02 00:00:00">2026-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/01/AI-Agent/AI%20Agent/0020-GPU%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92%E4%B8%8EAgent%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%99%E5%AD%A6%E8%B5%84%E6%96%99/" title="第20课：GPU集群规划与Agent系统架构设计">第20课：GPU集群规划与Agent系统架构设计</a><time datetime="2026-08-31T16:00:00.000Z" title="发表于 2026-09-01 00:00:00">2026-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
