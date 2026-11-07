@@ -1,0 +1,985 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准 | HandyES的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准 一、课程信息    项目 内容     课号 第24课（0024），校准时点增补II——第23课修&quot;引擎的账&quot;，本课修&quot;权重的账&quot;   前置 第16课（模型获取与权重量化）、第17课（后训练与Agentic RL）、第18课（量化压缩与部署形态）、第23课（校准方法论）   定位 把">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准">
+<meta property="og:url" content="https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/index.html">
+<meta property="og:site_name" content="HandyES的博客">
+<meta property="og:description" content="第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准 一、课程信息    项目 内容     课号 第24课（0024），校准时点增补II——第23课修&quot;引擎的账&quot;，本课修&quot;权重的账&quot;   前置 第16课（模型获取与权重量化）、第17课（后训练与Agentic RL）、第18课（量化压缩与部署形态）、第23课（校准方法论）   定位 把">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-07T12:52:41.176Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准",
+  "url": "https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-11-04T16:00:00.000Z",
+  "dateModified": "2026-11-07T12:52:41.176Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="HandyES的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyES的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-07T12:52:41.176Z" title="更新于 2026-11-07 20:52:41">2026-11-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第24课（0024），<strong>校准时点增补II</strong>——第23课修&quot;引擎的账&quot;，本课修&quot;权重的账&quot;</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第16课（模型获取与权重量化）、第17课（后训练与Agentic RL）、第18课（量化压缩与部署形态）、第23课（校准方法论）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>把第16-18课的模型栈事实推进到 <code>2026-11-07</code>；核心是把&quot;<strong>权重选择</strong>&quot;和&quot;<strong>量化工具链</strong>&quot;两件事的默认值变化讲清</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>基线纠错8min + 六个新基座20min + 量化默认迁移20min + TRL默认值12min + 代码实践20min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>：</p>
+<ol>
+<li><strong>「下一真实版本」这个说法本身就是错的</strong>——TRL v1.13.0 在写下&quot;下一版本&quot;的三天后就发布了（必须掌握）</li>
+<li><strong>窗口内六个新基座的约束画像</strong>——参数规模、专家结构、上下文、原生精度、许可证、引擎要求（必须掌握）</li>
+<li><strong>量化默认值迁移</strong>——<code>AutoAWQ</code> 弃用 → llm-compressor 接管；NVFP4 成为 FP8 之外的第二默认（必须掌握）</li>
+<li><strong>HIGGS 与 QAD</strong>——逐层混合精度与 block-wise 量化感知蒸馏的方法论定位（应当理解）</li>
+<li><strong>TRL 三个默认值变更</strong>——其中一个会<strong>直接 raise</strong>（必须掌握）</li>
+<li><strong>生态碎片化</strong>——verl 把 transformers pin 在 5.9.0，主线已 5.22.2（应当理解）</li>
+</ol>
+<p><strong>知识深度边界</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>本课对应内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>必须掌握</td>
+<td>§4 基线纠错、§5 六个基座的约束画像、§6 量化默认迁移、§7 TRL 默认值</td>
+</tr>
+<tr>
+<td>应当理解</td>
+<td>§6.3 HIGGS/QAD 方法论、§8 生态碎片化、§12 蒸馏新范式</td>
+</tr>
+<tr>
+<td>知晓即可</td>
+<td>各 checkpoint 的分片数与字节数、REAP 剪枝细节、X-Token 跨 tokenizer 蒸馏</td>
+</tr>
+</tbody>
+</table>
+<p><strong>技术栈版本快照（2026-11-07）</strong>：transformers v5.22.2（2026-11-06）/ TRL v1.17.1（2026-10-30）/ PEFT v0.21.2（2026-10-01）/ PyTorch 2.15.0（2026-10-28）/ ONNX Runtime 1.31.1（2026-10-26）/ llm-compressor 0.15.0（2026-10-28）/ compressed-tensors 0.20.1【联网更新v7.0】</p>
+<hr>
+<h2 id="二、本课对-企业级智能研究助手Agent系统-的贡献">二、本课对&quot;企业级智能研究助手Agent系统&quot;的贡献</h2>
+<p>第23课修完引擎，毕业答卷里的&quot;推理集群&quot;那一节可以重新签字了。但集群里跑的东西还在变——<strong>基座换了、量化工具换了、训练框架的默认值换了</strong>。这三件事任意一件变了，第18课那份&quot;部署形态决策文档&quot;就有一半要重写。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">项目线回校（校准时点：2026-11-07）：</span><br><span class="line">第16课 → 模型调用层（权重获取与版本管理）       ⚠️ 六个新基座待评估</span><br><span class="line">第17课 → 模型定制层（工具调用微调）             ⚠️ GRPO 会直接 raise</span><br><span class="line">第18课 → 模型压缩层（部署形态决策）             ⚠️ 量化默认工具已换</span><br><span class="line">第23课 → 部署层（引擎校准）                     ✅ 已完成</span><br><span class="line">本课   → 模型栈校准（权重账 + 工具链账）         ◀ 本课</span><br></pre></td></tr></table></figure>
+<p>本课产出三个项目资产：</p>
+<ol>
+<li><strong>基座候选评分卡</strong>——六个新权重按&quot;许可证 / 原生精度 / 引擎要求 / 上下文 / 激活参数&quot;五维打分，直接给研究助手做替换决策（§5.7）</li>
+<li><strong>量化工具链迁移清单</strong>——把 <code>AutoAWQ</code> 时代的脚本迁到 llm-compressor，含四个破坏性变更的替换写法（§6.5）</li>
+<li><strong>训练配置默认值 diff 表</strong>——三个 TRL 默认值变更 + 一个会 raise 的组合，进 CI 的训练前检查（§7.4）</li>
+</ol>
+<blockquote>
+<p><strong>本课最刺眼的一条</strong>：旧文写&quot;v1.12.0 是误发布的烧毁版本，下一真实版本为 v1.13.0&quot;。这句话在 <code>2026-09-13</code> 写下时看起来没问题——但 <strong>v1.13.0 实际发布于 <code>2026-09-10</code></strong>，比快照早三天。也就是说，作者查的时候 1.13.0 已经在 PyPI 上了，只是他没刷新页面。这不是知识错误，是<strong>流程错误</strong>：快照没有记录&quot;查询时刻&quot;。</p>
+</blockquote>
+<hr>
+<h2 id="三、开篇：为什么-权重账-比-引擎账-更难对">三、开篇：为什么&quot;权重账&quot;比&quot;引擎账&quot;更难对</h2>
+<p>推理引擎的账好对——两个引擎，四个 release，纯文本 diff。</p>
+<p>模型栈的账难对，原因有三个：</p>
+<ol>
+<li><strong>权重来自几十个仓库</strong>。Hugging Face 上 <code>archived: false</code> 且 <code>lastModified</code> 在窗口内的模型有上万条，没有&quot;release notes&quot;这回事。</li>
+<li><strong>&quot;最新&quot;不等于&quot;可用&quot;</strong>。一个 1T 总参 / 52B 激活的模型发出来了，但 vLLM 要 0.32+、显存要 1.06TB、许可证是 <code>other</code>——它对你的意义可能只是&quot;知道它存在&quot;。</li>
+<li><strong>工具链的默认值是隐式的</strong>。你不会去读 <code>llm-compressor</code> 的每一个 default，但那些 default 决定你产出的 artifact 能不能被引擎加载。</li>
+</ol>
+<p>所以本课的组织方式不是&quot;按仓库&quot;，而是<strong>按决策</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">决策1：基座换不换？      → §5（约束画像 + 评分卡）</span><br><span class="line">决策2：量化怎么做？      → §6（默认工具迁移 + 新方法）</span><br><span class="line">决策3：后训练怎么配？    → §7（三个默认值 + 一个 raise）</span><br><span class="line">决策4：生态割裂怎么办？  → §8（pin 冲突）</span><br></pre></td></tr></table></figure>
+<p>一个先给的判断标准：</p>
+<blockquote>
+<p><strong>权重侧的变更，只有当它改变&quot;能不能部署&quot;（许可证/精度/引擎版本）或&quot;部署成什么样&quot;（激活参数/上下文/量化路径）时，才需要改架构文档。</strong>
+单纯&quot;涨点&quot;属于评测问题，不属于架构问题。</p>
+</blockquote>
+<hr>
+<h2 id="四、先把基线修对（必须掌握，8min）">四、先把基线修对（必须掌握，8min）</h2>
+<h3 id="4-1-三条独立的基线偏差">4.1 三条独立的基线偏差</h3>
+<p>我们对 <code>2026-09-13</code> 那份快照做了反向核查：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>快照写的</th>
+<th>当日实际</th>
+<th>偏差性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRL</td>
+<td>v1.11.0，且称&quot;下一真实版本 v1.13.0&quot;</td>
+<td><strong>v1.13.0 已于 2026-09-10 发布</strong></td>
+<td>表述在写下 3 天后即失效（实为已发布）</td>
+</tr>
+<tr>
+<td>transformers</td>
+<td>v5.15.x</td>
+<td><strong>v5.17.0 已于 2026-09-09 发布</strong></td>
+<td>落后 1 个 minor，4 天</td>
+</tr>
+<tr>
+<td>量化默认工具</td>
+<td>&quot;AWQ 是 INT4 默认&quot;</td>
+<td>vLLM 文档已挂 ⚠️ <code>AutoAWQ</code> deprecated</td>
+<td>归属错误（算法 vs 工具）</td>
+</tr>
+</tbody>
+</table>
+<p>第三条值得单开一节（§6.1），因为它是<strong>概念混淆</strong>而不是版本落后：AWQ 是<strong>算法</strong>，<code>AutoAWQ</code> 是实现该算法的<strong>工具</strong>。算法没死，工具被 llm-compressor 接管了。把这两者混为一谈，会导致&quot;换工具时把算法也换掉&quot;的错误决策。</p>
+<h3 id="4-2-窗口内的版本线">4.2 窗口内的版本线</h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>窗口内最新</th>
+<th>日期</th>
+<th>旧文记录</th>
+<th>距离</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transformers</td>
+<td><strong>v5.22.2</strong></td>
+<td>2026-11-06</td>
+<td>v5.15.x</td>
+<td>7 个 minor</td>
+</tr>
+<tr>
+<td>TRL</td>
+<td><strong>v1.17.1</strong></td>
+<td>2026-10-30</td>
+<td>v1.11.0</td>
+<td>6 个 minor</td>
+</tr>
+<tr>
+<td>PEFT</td>
+<td>v0.21.2</td>
+<td>2026-10-01</td>
+<td>v0.20.0</td>
+<td>1 个 minor</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td>2.15.0</td>
+<td>2026-10-28</td>
+<td>2.13</td>
+<td>2 个 minor</td>
+</tr>
+<tr>
+<td>ONNX Runtime</td>
+<td>1.31.1</td>
+<td>2026-10-26</td>
+<td>1.29.0</td>
+<td>2 个 minor</td>
+</tr>
+<tr>
+<td>llm-compressor</td>
+<td><strong>0.15.0</strong></td>
+<td>2026-10-28</td>
+<td>未记录</td>
+<td>—</td>
+</tr>
+<tr>
+<td>compressed-tensors</td>
+<td>0.20.1</td>
+<td>窗口内</td>
+<td>未记录</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意 llm-compressor 这一行</strong>：旧文完全没提这个工具，而它现在已经是 vLLM 生态量化的默认入口。这是一个典型的&quot;<strong>生态位空缺</strong>&quot;——不是旧知识错了，是新知识没被记录。</p>
+<h3 id="4-3-一条可以用来判断-该不该跟-的经验法则">4.3 一条可以用来判断&quot;该不该跟&quot;的经验法则</h3>
+<p>把上表按 minor 数量排序，会看到一个规律：</p>
+<ul>
+<li><strong>transformers / TRL 这两个&quot;平台型&quot;组件，minor 数最多（7 和 6）</strong>——因为它们同时承载 tokenizer、权重加载、训练循环，迭代面最广。</li>
+<li><strong>PEFT / ONNX Runtime 这类&quot;窄职责&quot;组件，minor 数最少（1 和 2）</strong>——职责窄，接口稳定。</li>
+</ul>
+<p>法则：<strong>跟进成本 ≈ minor 数 × 接口暴露面</strong>。所以研究助手这种&quot;自己写业务、用框架做训练&quot;的项目，策略应该是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">跟随型：transformers（必须跟，权重加载靠它）</span><br><span class="line">审慎跟：TRL（跟，但每次跟都要看默认值 diff）</span><br><span class="line">可以松：PEFT / ONNX Runtime（跟到能跑就行，不必最新）</span><br><span class="line">必须跟：llm-compressor（新工具，版本窗口窄）</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="五、窗口内六个新基座：约束画像（必须掌握，20min）">五、窗口内六个新基座：约束画像（必须掌握，20min）</h2>
+<p>这一节不写&quot;谁更强&quot;，只写&quot;<strong>它改变了什么约束</strong>&quot;。因为对架构师来说，一个模型的价值不在榜首分数，而在&quot;它逼你改哪一行配置&quot;。</p>
+<h3 id="5-1-Mistral-Large-4（1T-A52B）">5.1 Mistral Large 4（1T-A52B）</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>事实</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>仓库</td>
+<td><code>mistralai/Mistral-Large-4-1T-A52B</code></td>
+</tr>
+<tr>
+<td>参数</td>
+<td><strong>1T 总参 / 52B 激活</strong></td>
+</tr>
+<tr>
+<td>专家结构</td>
+<td><strong>128 routed experts，每 token 激活 4 + 1 shared</strong></td>
+</tr>
+<tr>
+<td>上下文</td>
+<td><strong>1M</strong></td>
+</tr>
+<tr>
+<td>体积</td>
+<td>54 分片，约 <strong>1.06 TB</strong></td>
+</tr>
+<tr>
+<td>原生精度</td>
+<td><strong>FP8</strong></td>
+</tr>
+<tr>
+<td>引擎要求</td>
+<td><strong>vLLM 0.32+</strong></td>
+</tr>
+<tr>
+<td>许可证</td>
+<td><code>other</code>（非标准开源许可）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>约束含义</strong>：</p>
+<ul>
+<li>1.06TB 的权重<strong>单机放不下</strong>，必须多机 TP/EP；这不是&quot;选型&quot;，是&quot;部署形态被权重体积决定&quot;。</li>
+<li>128 experts 激活 5 个 → <strong>专家并行（EP）不是可选优化，是必需项</strong>。EP 的通信模式与 TP 完全不同，第20课的&quot;卡间怎么连&quot;那一节要重算。</li>
+<li>原生 FP8 → 省掉一次量化转换，但也意味着<strong>你无法用 BF16 做精度基线对比</strong>（没有 BF16 checkpoint）。</li>
+<li>许可证 <code>other</code> → 商用前必须过法务，这一条在评分卡里是一票否决项。</li>
+</ul>
+<h3 id="5-2-Muse-Spark-Open（816B-A42B）">5.2 Muse Spark Open（816B-A42B）</h3>
+<ul>
+<li>发布：<code>2026-09-15</code></li>
+<li>结构：816B 总参 / 42B 激活</li>
+<li><strong>同时提供 BF16 与 NVFP4 两份 checkpoint</strong></li>
+</ul>
+<p><strong>约束含义</strong>：这是本期唯一一个&quot;<strong>官方直接给低精度权重</strong>&quot;的案例。它的意义在于：以前&quot;BF16 → 量化&quot;是你的工作，现在厂商替你做了，你只需要验证 NVFP4 版本的质量是否可接受。<strong>分工在往上游迁移</strong>——这是第18课&quot;压缩优先级&quot;那一节需要补的一条：先看有没有官方低精度版本，再看要不要自己量化。</p>
+<h3 id="5-3-Kimi-K3-1-Pro">5.3 Kimi K3.1-Pro</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>事实</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基座</td>
+<td>K3，<strong>2.8T 总参 / 896 experts，激活 16</strong></td>
+</tr>
+<tr>
+<td>精度</td>
+<td><strong>MXFP4 权重 / MXFP8 激活</strong></td>
+</tr>
+<tr>
+<td>格式</td>
+<td>compressed-tensors 8-bit</td>
+</tr>
+<tr>
+<td>加载</td>
+<td>需 <code>trust_remote_code=True</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>约束含义</strong>：</p>
+<ul>
+<li>2.8T 总参是本期最大。<strong>896 个专家激活 16 个</strong>意味着极高的稀疏比（1.8%），EP 通信成为绝对瓶颈。</li>
+<li><code>trust_remote_code=True</code> 是<strong>供应链风险</strong>的直接体现——你必须在隔离环境里先审代码，再上生产。</li>
+<li>MXFP4/MXFP8 是 OCP 开放标准，<strong>不是 NVIDIA 专属</strong>，理论上跨硬件，但实际 kernel 支持要看引擎。</li>
+</ul>
+<h3 id="5-4-DeepSeek-V4-1-Flash-1017">5.4 DeepSeek-V4.1-Flash-1017</h3>
+<ul>
+<li>发布：<code>2026-10-17</code></li>
+<li>许可证：<strong>MIT</strong>（本期唯一真正宽松的）</li>
+<li>精度：fp8</li>
+<li>模态：多模态</li>
+</ul>
+<p><strong>约束含义</strong>：MIT + fp8 + 多模态，这三个组合让它成为<strong>研究助手最现实的替换候选</strong>——许可证不设卡、精度不用转、多模态直接接第10课的多模态 RAG。评分卡里它应该拿最高分（§5.7）。</p>
+<h3 id="5-5-Reflection-Beam-1-0-501B-A23B">5.5 Reflection Beam-1.0-501B-A23B</h3>
+<ul>
+<li>发布：<code>2026-10-07</code></li>
+<li>501B 总参 / 23B 激活</li>
+<li>许可证：<strong>Apache-2.0</strong></li>
+</ul>
+<p><strong>约束含义</strong>：Apache-2.0 + 23B 激活，是&quot;<strong>中等规模 + 完全可商用</strong>&quot;的甜点位。它比 Mistral Large 4 小一半，单机多卡（8×H200）就能跑，不需要跨机。对研究助手这种&quot;要能自己部署&quot;的项目，这个形态比 1T 更实用。</p>
+<h3 id="5-6-Step-5-Preview">5.6 Step-5-Preview</h3>
+<ul>
+<li>发布：<code>2026-09-20</code></li>
+<li>状态：<strong>Preview</strong></li>
+</ul>
+<p><strong>约束含义</strong>：Preview = 接口可能变、权重可能撤、许可证可能改。<strong>教学上它的价值是作为一个反例</strong>：不要在生产路径上依赖 preview 权重，除非你有明确的替换计划。</p>
+<h3 id="5-7-基座候选评分卡">5.7 基座候选评分卡</h3>
+<p>把五维打分（1-5 分，许可证与引擎要求为一票否决项）：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>许可证</th>
+<th>原生精度</th>
+<th>引擎要求</th>
+<th>上下文</th>
+<th>激活参数（越小越易部署）</th>
+<th>总分</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek-V4.1-Flash</td>
+<td><strong>5（MIT）</strong></td>
+<td><strong>5（fp8）</strong></td>
+<td>4</td>
+<td>4</td>
+<td><strong>5（Flash 级）</strong></td>
+<td><strong>23</strong></td>
+<td>✅ 首选</td>
+</tr>
+<tr>
+<td>Reflection Beam-1.0</td>
+<td>5（Apache-2.0）</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4（23B）</td>
+<td><strong>21</strong></td>
+<td>✅ 次选</td>
+</tr>
+<tr>
+<td>Muse Spark Open</td>
+<td>3</td>
+<td><strong>5（双checkpoint）</strong></td>
+<td>3</td>
+<td>4</td>
+<td>3（42B）</td>
+<td>18</td>
+<td>⚠️ 需评估 NVFP4 质量</td>
+</tr>
+<tr>
+<td>Kimi K3.1-Pro</td>
+<td>2</td>
+<td>3</td>
+<td>2（trust_remote_code）</td>
+<td><strong>5</strong></td>
+<td>4（2.8T/16 激活）</td>
+<td>16</td>
+<td>❌ 现阶段不适用</td>
+</tr>
+<tr>
+<td>Step-5-Preview</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>14</td>
+<td>❌ Preview 不进生产</td>
+</tr>
+<tr>
+<td>Mistral Large 4</td>
+<td>1（<code>other</code>）</td>
+<td>3</td>
+<td>2（0.32+，1.06TB）</td>
+<td><strong>5（1M）</strong></td>
+<td>2（52B）</td>
+<td>13</td>
+<td>❌ 法务一票否决</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>上表的&quot;原生精度&quot;维度规则是&quot;是否原生低精度已给&quot;：给了（<code>native_fp8=1</code>）记 5 分；没给但许可证宽松（MIT/Apache-2.0，说明可以自由转换）记 4 分；其余记 3 分。Kimi K3.1-Pro 虽然给了 MXFP4，但它同时要求 <code>trust_remote_code</code>，&quot;给了低精度&quot;这个便利被供应链风险抵消，故按 3 分计——<strong>评分卡的规则必须能表达这种抵消，否则就成了数格子</strong>。</p>
+</blockquote>
+<p><strong>读表方式</strong>：</p>
+<ul>
+<li>Mistral Large 4 的&quot;1M 上下文&quot;是全场最高分，但<strong>许可证一票否决</strong>——这正是评分卡存在的意义：防止&quot;被某个亮眼指标带走&quot;。</li>
+<li>Kimi K3.1-Pro 的 2.8T 在评测上可能最强，但&quot;激活 16/896 + trust_remote_code&quot;两项直接把它挡在生产之外。<strong>榜单第一不等于可部署第一。</strong></li>
+<li>Muse Spark 的 18 分里有 5 分来自&quot;官方双 checkpoint&quot;——这是本期新出现的一个加分维度，旧评分卡里没有。</li>
+</ul>
+<hr>
+<h2 id="六、量化：默认工具换人了（必须掌握，20min）">六、量化：默认工具换人了（必须掌握，20min）</h2>
+<h3 id="6-1-AWQ-是算法，AutoAWQ-是工具——这两件事必须分开">6.1 AWQ 是算法，AutoAWQ 是工具——这两件事必须分开</h3>
+<p>vLLM 文档现在挂着 ⚠️ <code>AutoAWQ</code> deprecated，量化入口交给 <strong>llm-compressor</strong>。正确理解是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">算法层（没变）       实现层（变了）</span><br><span class="line">AWQ  ────────────→  AutoAWQ（弃用）  →  llm-compressor（接管）</span><br><span class="line">GPTQ ────────────→  AutoGPTQ（散装） →  llm-compressor（统一）</span><br><span class="line">FP8  ────────────→  手写脚本        →  llm-compressor（oneshot）</span><br></pre></td></tr></table></figure>
+<p><strong>AWQ 仍然是 W4A16 的主力算法</strong>（它的激活感知缩放思路没有任何替代方案），但&quot;用哪个工具产出 AWQ 权重&quot;已经从 <code>AutoAWQ</code> 换成 <code>llm-compressor</code>。</p>
+<p>这个区分为什么重要：如果你的团队文档写&quot;我们用 AWQ&quot;，新人会去装 <code>autoawq</code>，然后发现它和 transformers 5.22 不兼容——而正确做法是用 <code>llm-compressor</code> 产出 <code>compressed-tensors</code> 格式的 AWQ 权重，再由 vLLM 加载。</p>
+<h3 id="6-2-格式格局：NVFP4-成为第二默认">6.2 格式格局：NVFP4 成为第二默认</h3>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>定位（2026-11）</th>
+<th>变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP8（E4M3）</td>
+<td>服务端首选，Hopper/Blackwell 甜点位</td>
+<td>未变</td>
+</tr>
+<tr>
+<td><strong>NVFP4</strong></td>
+<td><strong>FP8 之外的第二默认</strong>，Blackwell SM100 专属</td>
+<td><strong>升级</strong>（从&quot;实验&quot;到&quot;默认之一&quot;）</td>
+</tr>
+<tr>
+<td>MXFP4</td>
+<td>OCP 标准，跨硬件</td>
+<td>上升（Kimi K3.1 首发用）</td>
+</tr>
+<tr>
+<td>AWQ（W4A16）</td>
+<td>精度与吞吐的平衡点</td>
+<td>算法仍主力，工具已换</td>
+</tr>
+<tr>
+<td>GPTQ</td>
+<td>&quot;复用社区 artifact&quot;</td>
+<td>定位未变</td>
+</tr>
+<tr>
+<td>GGUF</td>
+<td>CPU / Apple Silicon / 端侧</td>
+<td>唯一选择，未变</td>
+</tr>
+</tbody>
+</table>
+<p>一个具体数据：<strong>GLM-5.3 用 MXFP4×FP8 混合，把 1507GB 压到 415GB（−72%），平均 4.5 bits/参数</strong>。这个数字是&quot;低精度不是只能救显存、还能救部署形态&quot;的最好证据——1507GB 需要跨机，415GB 单机 8 卡就够。</p>
+<p>另一条要更新的判断：<strong>AWQ 已经不再承担&quot;新模型首发格式&quot;的角色</strong>。新模型出来时，首发支持的通常是 FP8 或 NVFP4，AWQ 往往要等社区补 artifact。所以&quot;AWQ 优先&quot;这个默认策略，在追新模型时要反过来。</p>
+<h3 id="6-3-两个新方法：HIGGS-与-QAD">6.3 两个新方法：HIGGS 与 QAD</h3>
+<p>llm-compressor <code>0.15.0</code>（10-28）新增两个方法：</p>
+<p><strong>HIGGS（逐层混合精度）</strong></p>
+<ul>
+<li>思路：不同层对量化的敏感度不同，给每层分配不同的 bit 宽度，而不是全局一刀切。</li>
+<li>关键数字：<strong>标定 &lt;10 秒</strong>；6.0-bit 下 WikiText PPL <strong>11.05 / 10.99</strong>。</li>
+<li>为什么重要：以前的混合精度要跑搜索（几十分钟到几小时），HIGGS 把标定压到 10 秒内，使&quot;每个模型都做一次混合精度&quot;从奢侈变成默认。</li>
+</ul>
+<p><strong>QAD（block-wise 量化感知蒸馏）</strong></p>
+<ul>
+<li>思路：量化不是&quot;压缩完就完&quot;，而是&quot;压缩后用一个 teacher 把掉下来的精度蒸馏回来&quot;，按 block 做。</li>
+<li>与第18课的关系：第18课讲&quot;量化 → 蒸馏两段式，顺序不可换&quot;，QAD 把这个两段式<strong>合并进同一个流程</strong>，但本质上仍是&quot;先降精度、再用蒸馏补&quot;。</li>
+</ul>
+<p><strong>另两个配套能力</strong>：</p>
+<ul>
+<li><strong>REAP</strong> 可以直接剪 safetensors，并输出 per-expert saliency（对 MoE 剪枝很关键——896 个专家里哪些能删）。</li>
+<li>压缩矩阵新增 <strong>MXFP6A8 / MXFP6A16</strong>。</li>
+</ul>
+<h3 id="6-4-vLLM-侧的四个破坏性变更">6.4 vLLM 侧的四个破坏性变更</h3>
+<p>这是&quot;换了工具之后仍然会踩&quot;的部分：</p>
+<table>
+<thead>
+<tr>
+<th>变更</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fp_quant</code> 与 <strong>QuTLASS 后端移除</strong></td>
+<td>用到该后端的配置直接失效</td>
+</tr>
+<tr>
+<td>Marlin <strong>不再把激活量化到 INT8/FP8</strong>，<code>VLLM_MARLIN_INPUT_DTYPE</code> 删除</td>
+<td>之前靠这个环境变量调优的，行为会静默变化（不报错！）</td>
+</tr>
+<tr>
+<td><strong>W4A8 改走 <code>humming</code></strong> + <code>VLLM_HUMMING_INPUT_QUANT_CONFIG</code></td>
+<td>W4A8 的配置写法全变</td>
+</tr>
+<tr>
+<td>新增 <code>--linear-backend</code> / <code>linear_backend_per_quant</code></td>
+<td>新增能力，但默认值会决定你实际走哪条 kernel</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>VLLM_MARLIN_INPUT_DTYPE</code> 删除这一条最危险</strong>——因为它不报错，只是&quot;不再生效&quot;。你的服务会正常启动、正常返回，只是速度或精度和你以为的不一样。这类&quot;静默失效&quot;是升级中最难查的一类问题，也是第23课&quot;九问&quot;第 2 问（默认值 diff）的又一个实例。</p>
+<h3 id="6-5-迁移清单：AutoAWQ-脚本-→-llm-compressor">6.5 迁移清单：AutoAWQ 脚本 → llm-compressor</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ===== 旧写法（AutoAWQ，已弃用）=====</span></span><br><span class="line"><span class="keyword">from</span> awq <span class="keyword">import</span> AutoAWQForCausalLM</span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer</span><br><span class="line"></span><br><span class="line">model = AutoAWQForCausalLM.from_pretrained(<span class="string">&quot;Qwen/Qwen3-8B&quot;</span>)</span><br><span class="line">tok = AutoTokenizer.from_pretrained(<span class="string">&quot;Qwen/Qwen3-8B&quot;</span>)</span><br><span class="line">model.quantize(tok, quant_config=&#123;<span class="string">&quot;zero_point&quot;</span>: <span class="literal">True</span>, <span class="string">&quot;q_group_size&quot;</span>: <span class="number">128</span>,</span><br><span class="line">                                  <span class="string">&quot;w_bit&quot;</span>: <span class="number">4</span>, <span class="string">&quot;version&quot;</span>: <span class="string">&quot;GEMM&quot;</span>&#125;)</span><br><span class="line">model.save_quantized(<span class="string">&quot;qwen3-8b-awq&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 新写法（llm-compressor，0.15.0）=====</span></span><br><span class="line"><span class="keyword">from</span> llmcompressor <span class="keyword">import</span> oneshot</span><br><span class="line"><span class="keyword">from</span> llmcompressor.modifiers.quantization <span class="keyword">import</span> GPTQModifier</span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoModelForCausalLM, AutoTokenizer</span><br><span class="line"></span><br><span class="line">MODEL_ID = <span class="string">&quot;Qwen/Qwen3-8B&quot;</span></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=<span class="string">&quot;auto&quot;</span>)</span><br><span class="line">tok = AutoTokenizer.from_pretrained(MODEL_ID)</span><br><span class="line"></span><br><span class="line">recipe = GPTQModifier(targets=<span class="string">&quot;Linear&quot;</span>, scheme=<span class="string">&quot;W4A16&quot;</span>, ignore=[<span class="string">&quot;lm_head&quot;</span>])  <span class="comment"># 注意：W4A16 即 AWQ/GPTQ 族</span></span><br><span class="line">oneshot(model=model, recipe=recipe,</span><br><span class="line">        dataset=<span class="string">&quot;ultrachat_200k&quot;</span>, num_calibration_samples=<span class="number">512</span>,</span><br><span class="line">        output_dir=<span class="string">&quot;qwen3-8b-W4A16-compressed&quot;</span>)</span><br><span class="line">tok.save_pretrained(<span class="string">&quot;qwen3-8b-W4A16-compressed&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>四个必须记住的差异：</p>
+<ol>
+<li><strong>没有 <code>quant_config</code> 字典了</strong>，改成 <code>scheme=&quot;W4A16&quot;</code> 字符串</li>
+<li><strong>必须给标定数据集</strong>（AutoAWQ 也给了，但 llm-compressor 对样本数更敏感）</li>
+<li><strong>产出是 <code>compressed-tensors</code> 格式</strong>，不是 AutoAWQ 的私有格式——好处是 vLLM 直接认，坏处是老工具链读不了</li>
+<li><strong><code>ignore=[&quot;lm_head&quot;]</code></strong> 要显式写，否则 lm_head 也会被量化，精度掉得莫名其妙</li>
+</ol>
+<h3 id="6-6-落回项目：研究助手的量化决策树">6.6 落回项目：研究助手的量化决策树</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Q1: 官方有低精度 checkpoint 吗？</span><br><span class="line">    ├─ 有（Muse Spark / Kimi K3.1 / DeepSeek-V4.1-Flash）→ 直接用，只做质量验证</span><br><span class="line">    └─ 无 → Q2</span><br><span class="line"></span><br><span class="line">Q2: 目标卡是 SM100（Blackwell）吗？</span><br><span class="line">    ├─ 是 → NVFP4（配合 llm-compressor 0.15.0 + compressed-tensors 0.20.1）</span><br><span class="line">    └─ 否 → Q3</span><br><span class="line"></span><br><span class="line">Q3: 模型总参 &gt; 200B 吗？</span><br><span class="line">    ├─ 是 → 先考虑 FP8（原生或量化），再考虑 W4A16</span><br><span class="line">    └─ 否 → Q4</span><br><span class="line"></span><br><span class="line">Q4: 推理是延迟敏感（交互）还是吞吐敏感（批量）？</span><br><span class="line">    ├─ 延迟敏感 → W4A16（AWQ 算法）+ Marlin kernel</span><br><span class="line">    └─ 吞吐敏感 → FP8 或 NVFP4（看卡）</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>一条红线</strong>：llm-compressor 0.15.0 的上界仍是 transformers 5.21.0，而主线已到 <strong>5.22.2</strong>。所以<strong>不能说&quot;transformers 5.22 已被量化工具链验证&quot;</strong>——这是一个真实的版本缝隙，写文档时必须留白，不能想当然。</p>
+</blockquote>
+<hr>
+<h2 id="七、TRL：三个默认值，其中一个会直接-raise（必须掌握，12min）">七、TRL：三个默认值，其中一个会直接 raise（必须掌握，12min）</h2>
+<h3 id="7-1-三个默认值变更">7.1 三个默认值变更</h3>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>变更</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.17.0</td>
+<td><strong>GRPO 会直接 raise</strong>：vLLM importance sampling 默认开启时，若 <code>top_p &lt; 1.0</code> 且未设 <code>top_k &gt; 0</code></td>
+<td><strong>训练直接崩</strong>，不是降级</td>
+</tr>
+<tr>
+<td>v1.17.0</td>
+<td>AsyncGRPO 默认 <code>score_centering=True</code>、<code>importance_sampling_min/max = 0.5/5.0</code></td>
+<td>FP8 sampler 下 reward 从 0.60 掉到 0.34/0.10；改后回到 0.72，代价 15–20% 吞吐</td>
+</tr>
+<tr>
+<td>v1.15.0</td>
+<td><strong>fused LM head 默认开启</strong></td>
+<td>可训长度大幅提升，但 PEFT adapter 要改</td>
+</tr>
+</tbody>
+</table>
+<p>第一条最需要单独讲，因为它是<strong>从&quot;行为变化&quot;升级到&quot;直接失败&quot;</strong>——以前升级最多是效果变差，现在是不让你跑。这种变更的应对方式不是&quot;调参&quot;，而是&quot;<strong>先读 release notes 再写 config</strong>&quot;。</p>
+<p>第二条是个极好的教学案例：<strong>默认值 + 硬件特性（FP8 sampler）耦合</strong>。同一条默认值，在 BF16 sampler 下无害，在 FP8 sampler 下把 reward 打到 0.10。这说明&quot;默认值是否安全&quot;依赖于你的硬件/精度路径，不是全局常量。</p>
+<h3 id="7-2-fused-LM-head-的收益与代价">7.2 fused LM head 的收益与代价</h3>
+<p><code>v1.15.0</code> 让 fused LM head 默认开启，具体数字：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>可训长度（前 → 后）</th>
+<th>倍数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gemma-3-1b（262k 词表）DPO</td>
+<td>10,240 → <strong>59,392</strong></td>
+<td><strong>5.80×</strong></td>
+</tr>
+<tr>
+<td>GRPO</td>
+<td>28,672 → <strong>114,688</strong></td>
+<td><strong>4.00×</strong></td>
+</tr>
+<tr>
+<td>8192 tokens 峰值显存</td>
+<td>—</td>
+<td><strong>降 52–82%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>代价（破坏性）</strong>：如果 PEFT adapter 要挂到 <code>lm_head</code> 上，必须写 <code>modules_to_save=[&quot;lm_head&quot;]</code>，否则 adapter 不会生效——又一个&quot;不报错但错误&quot;的坑。</p>
+<p>为什么 fused LM head 这么猛：LM head 是 <code>hidden_dim × vocab_size</code> 的矩阵乘，词表 262k 时这个矩阵极大；fused 实现把&quot;算 logits&quot;和&quot;算 loss&quot;合并，避免物化完整 logits 张量。<strong>这就是为什么收益与词表大小正相关</strong>——词表越大，省的越多。这也解释了为什么小词表模型（如 32k 词表）几乎看不到收益。</p>
+<h3 id="7-3-trainer-清洗：一个可预测的规律">7.3 trainer 清洗：一个可预测的规律</h3>
+<p>窗口内被移除的 trainer：</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>被移除</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.13.0</td>
+<td>PPO</td>
+</tr>
+<tr>
+<td>1.15.0</td>
+<td>MiniLLM</td>
+</tr>
+<tr>
+<td>1.16.0</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td>1.17.0</td>
+<td>TPO</td>
+</tr>
+</tbody>
+</table>
+<p>规律很清楚：<strong>TRL 在收缩到&quot;经过验证的主流路径&quot;</strong>。PPO 被 GRPO 系替代、MiniLLM/SSD/TPO 这些偏研究的蒸馏变体被清出主线。教学含义：<strong>不要把课程锚定在某个具体 trainer 上，要锚定在方法族上</strong>（&quot;策略梯度 + 组相对基线&quot;而不是&quot;GRPOTrainer&quot;）。</p>
+<h3 id="7-4-训练前检查清单（进-CI）">7.4 训练前检查清单（进 CI）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ ] TRL 版本？impact sampling 相关参数是否与 top_p/top_k 组合兼容？</span><br><span class="line">[ ] sampler 精度？若 FP8，importance_sampling_min/max 是否显式设置？</span><br><span class="line">[ ] fused LM head 是否开启？PEFT adapter 是否挂 lm_head？</span><br><span class="line">[ ] 用了哪个 trainer？是否在已移除清单里（PPO/MiniLLM/SSD/TPO）？</span><br><span class="line">[ ] transformers 版本与 llm-compressor 上界是否冲突？</span><br></pre></td></tr></table></figure>
+<p>第 5 条就是 §6.6 那条红线的落地检查——<strong>训练环境和量化环境用不同 transformers 版本，是这个生态里最常见的隐性故障源</strong>。</p>
+<hr>
+<h2 id="八、生态碎片化：pin-冲突是常态（应当理解，5min）">八、生态碎片化：pin 冲突是常态（应当理解，5min）</h2>
+<p>最典型的一个证据：</p>
+<ul>
+<li><code>verl v0.9.1</code>（2026-09-20）把 <strong>transformers pin 到 5.9.0</strong></li>
+<li>而 transformers 主线已经是 <strong>5.22.2</strong></li>
+<li><strong>相隔 13 个 minor</strong></li>
+</ul>
+<p>为什么会出现这种事：verl 依赖 vLLM 的内部接口，而 vLLM 对 transformers 的版本有硬要求；于是 verl 只能把自己的 transformers 固定在&quot;最后一个能配合当前 vLLM 的版本&quot;。<strong>这是&quot;框架依赖引擎、引擎依赖平台库&quot;三层耦合的必然结果。</strong></p>
+<p>同一版本里也有好消息：verl 的 <code>delta_sharded</code> 权重同步从 <strong>34.26s 降到 3.34s（10.3×）</strong>。这说明框架在工程效率上仍在大步前进，只是被版本约束卡住了。</p>
+<p>架构含义：<strong>你的训练环境与推理环境很可能必须使用不同的 transformers 版本</strong>。所以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">推理镜像：transformers 5.22.2 + vLLM 0.33.0</span><br><span class="line">训练镜像：transformers 5.9.0  + verl 0.9.1 + vLLM（verl 要求版本）</span><br><span class="line">量化镜像：transformers ≤ 5.21.0 + llm-compressor 0.15.0</span><br></pre></td></tr></table></figure>
+<p>三个镜像、三个版本、互不兼容。这不是设计失误，这是<strong>当前生态的真实形态</strong>。把它写进架构文档，比假装&quot;统一版本&quot;要诚实得多。</p>
+<hr>
+<h2 id="九、引导式代码实践（三层结构）">九、引导式代码实践（三层结构）</h2>
+<h3 id="9-1-第一层：完整可运行代码">9.1 第一层：完整可运行代码</h3>
+<p><strong>脚本A：<code>model_scorecard.py</code>——基座候选评分卡（可改权重）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;model_scorecard.py — 五维评分 + 一票否决，纯标准库</span></span><br><span class="line"><span class="string">依赖: 仅标准库</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">CANDIDATES = &#123;</span><br><span class="line">    <span class="string">&quot;DeepSeek-V4.1-Flash&quot;</span>: <span class="built_in">dict</span>(license=<span class="string">&quot;MIT&quot;</span>,        native_fp8=<span class="number">1</span>, engine_ok=<span class="number">4</span>,</span><br><span class="line">                                ctx=<span class="number">4</span>, active=<span class="string">&quot;flash&quot;</span>, vito=<span class="literal">False</span>),</span><br><span class="line">    <span class="string">&quot;Reflection Beam-1.0&quot;</span>: <span class="built_in">dict</span>(license=<span class="string">&quot;Apache-2.0&quot;</span>, native_fp8=<span class="number">0</span>, engine_ok=<span class="number">4</span>,</span><br><span class="line">                                ctx=<span class="number">4</span>, active=<span class="number">23</span>,      vito=<span class="literal">False</span>),</span><br><span class="line">    <span class="string">&quot;Muse Spark Open&quot;</span>:     <span class="built_in">dict</span>(license=<span class="string">&quot;custom&quot;</span>,     native_fp8=<span class="number">1</span>, engine_ok=<span class="number">3</span>,</span><br><span class="line">                                ctx=<span class="number">4</span>, active=<span class="number">42</span>,      vito=<span class="literal">False</span>),</span><br><span class="line">    <span class="string">&quot;Kimi K3.1-Pro&quot;</span>:       <span class="built_in">dict</span>(license=<span class="string">&quot;restricted&quot;</span>, native_fp8=<span class="number">0</span>, engine_ok=<span class="number">2</span>,</span><br><span class="line">                                ctx=<span class="number">5</span>, active=<span class="number">16</span>,      vito=<span class="literal">True</span>),   <span class="comment"># trust_remote_code</span></span><br><span class="line">    <span class="string">&quot;Mistral Large 4&quot;</span>:     <span class="built_in">dict</span>(license=<span class="string">&quot;other&quot;</span>,      native_fp8=<span class="number">0</span>, engine_ok=<span class="number">2</span>,</span><br><span class="line">                                ctx=<span class="number">5</span>, active=<span class="number">52</span>,      vito=<span class="literal">True</span>),   <span class="comment"># 1.06TB + other</span></span><br><span class="line">    <span class="string">&quot;Step-5-Preview&quot;</span>:      <span class="built_in">dict</span>(license=<span class="string">&quot;preview&quot;</span>,    native_fp8=<span class="number">0</span>, engine_ok=<span class="number">3</span>,</span><br><span class="line">                                ctx=<span class="number">3</span>, active=<span class="string">&quot;?&quot;</span>,     vito=<span class="literal">True</span>),   <span class="comment"># preview 不进生产</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LICENSE_SCORE = &#123;<span class="string">&quot;MIT&quot;</span>: <span class="number">5</span>, <span class="string">&quot;Apache-2.0&quot;</span>: <span class="number">5</span>, <span class="string">&quot;custom&quot;</span>: <span class="number">3</span>,</span><br><span class="line">                 <span class="string">&quot;restricted&quot;</span>: <span class="number">2</span>, <span class="string">&quot;other&quot;</span>: <span class="number">1</span>, <span class="string">&quot;preview&quot;</span>: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">active_score</span>(<span class="params">a</span>):</span><br><span class="line">    <span class="keyword">if</span> a == <span class="string">&quot;flash&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(a, <span class="built_in">int</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> a &lt;= <span class="number">24</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">4</span></span><br><span class="line">    <span class="keyword">if</span> a &lt;= <span class="number">42</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> a &lt;= <span class="number">60</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">score</span>(<span class="params">c</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;返回 (总分, 各维明细, 是否被否决)&quot;&quot;&quot;</span></span><br><span class="line">    parts = &#123;</span><br><span class="line">        <span class="string">&quot;license&quot;</span>: LICENSE_SCORE.get(c[<span class="string">&quot;license&quot;</span>], <span class="number">2</span>),</span><br><span class="line">        <span class="string">&quot;precision&quot;</span>: <span class="number">5</span> <span class="keyword">if</span> c[<span class="string">&quot;native_fp8&quot;</span>] <span class="keyword">else</span> (<span class="number">4</span> <span class="keyword">if</span> c[<span class="string">&quot;license&quot;</span>] <span class="keyword">in</span> (<span class="string">&quot;MIT&quot;</span>, <span class="string">&quot;Apache-2.0&quot;</span>) <span class="keyword">else</span> <span class="number">3</span>),</span><br><span class="line">        <span class="string">&quot;engine&quot;</span>: c[<span class="string">&quot;engine_ok&quot;</span>],</span><br><span class="line">        <span class="string">&quot;ctx&quot;</span>: c[<span class="string">&quot;ctx&quot;</span>],</span><br><span class="line">        <span class="string">&quot;active&quot;</span>: active_score(c[<span class="string">&quot;active&quot;</span>]),</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(parts.values()), parts, c[<span class="string">&quot;vito&quot;</span>]</span><br><span class="line"></span><br><span class="line">rows = []</span><br><span class="line"><span class="keyword">for</span> name, c <span class="keyword">in</span> CANDIDATES.items():</span><br><span class="line">    total, parts, vito = score(c)</span><br><span class="line">    rows.append((name, total, parts, vito))</span><br><span class="line"></span><br><span class="line">rows.sort(key=<span class="keyword">lambda</span> r: (-r[<span class="number">1</span>], r[<span class="number">0</span>]))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;<span class="string">&#x27;model&#x27;</span>:&lt;<span class="number">22</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;lic&#x27;</span>:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;prec&#x27;</span>:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;eng&#x27;</span>:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;ctx&#x27;</span>:&gt;<span class="number">7</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;act&#x27;</span>:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;tot&#x27;</span>:&gt;<span class="number">6</span>&#125;</span>  verdict&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * <span class="number">76</span>)</span><br><span class="line"><span class="keyword">for</span> name, total, p, vito <span class="keyword">in</span> rows:</span><br><span class="line">    verdict = <span class="string">&quot;VETO&quot;</span> <span class="keyword">if</span> vito <span class="keyword">else</span> (<span class="string">&quot;OK&quot;</span> <span class="keyword">if</span> total &gt;= <span class="number">18</span> <span class="keyword">else</span> <span class="string">&quot;ALT&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name:&lt;<span class="number">22</span>&#125;</span><span class="subst">&#123;p[<span class="string">&#x27;license&#x27;</span>]:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;p[<span class="string">&#x27;precision&#x27;</span>]:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;p[<span class="string">&#x27;engine&#x27;</span>]:&gt;<span class="number">5</span>&#125;</span>&quot;</span></span><br><span class="line">          <span class="string">f&quot;<span class="subst">&#123;p[<span class="string">&#x27;ctx&#x27;</span>]:&gt;<span class="number">7</span>&#125;</span><span class="subst">&#123;p[<span class="string">&#x27;active&#x27;</span>]:&gt;<span class="number">5</span>&#125;</span><span class="subst">&#123;total:&gt;<span class="number">6</span>&#125;</span>  <span class="subst">&#123;verdict&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>预期输出</strong>（ASCII 表头是为了让宽度可预测，中文表头在等宽字体下会错位）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model                   lic prec  eng    ctx  act   tot  verdict</span><br><span class="line">----------------------------------------------------------------------------</span><br><span class="line">DeepSeek-V4.1-Flash       5    5    4      4    5    23  OK</span><br><span class="line">Reflection Beam-1.0       5    4    4      4    4    21  OK</span><br><span class="line">Muse Spark Open           3    5    3      4    3    18  OK</span><br><span class="line">Kimi K3.1-Pro             2    3    2      5    4    16  VETO</span><br><span class="line">Step-5-Preview            2    3    3      3    3    14  VETO</span><br><span class="line">Mistral Large 4            1    3    2      5    2    13  VETO</span><br></pre></td></tr></table></figure>
+<p><strong>读数</strong>：三行 18 分以上全部 <code>OK</code>，三行 16 分以下全部 <code>VETO</code>——而且<strong>三条 VETO 与总分高低无关</strong>：Kimi 16 分高于 Mistral 13 分，但否决理由完全不同（供应链风险 vs 许可证）。这正是评分卡的设计意图：<strong>分数只用来排序&quot;值得投入多少评估精力&quot;，用不用是 <code>vito</code> 一个布尔位决定的</strong>。</p>
+<p>再注意 Mistral Large 4 的 <code>prec</code> 是 3 而不是 4：它的许可证 <code>other</code> 不在&quot;宽松可自由转换&quot;名单里，所以拿不到那 1 分。<strong>一个 <code>other</code> 许可证会同时打掉&quot;许可证&quot;和&quot;精度&quot;两个维度</strong>——这是全表最贵的一个约束。</p>
+<p><strong>脚本B：<code>quant_decision.py</code>——量化决策树（可运行版）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;quant_decision.py — 把 §6.6 的决策树变成可执行函数</span></span><br><span class="line"><span class="string">依赖: 仅标准库</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decide</span>(<span class="params">official_lowprec, is_sm100, total_params_b, latency_sensitive</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;返回 (格式, 工具, 理由)&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> official_lowprec:</span><br><span class="line">        <span class="keyword">return</span> (<span class="string">&quot;官方 checkpoint&quot;</span>, <span class="string">&quot;无需量化&quot;</span>,</span><br><span class="line">                <span class="string">&quot;厂商已提供低精度权重，只做质量验证&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> is_sm100:</span><br><span class="line">        <span class="keyword">return</span> (<span class="string">&quot;NVFP4&quot;</span>, <span class="string">&quot;llm-compressor 0.15.0&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Blackwell 原生支持，4bit 浮点对离群值鲁棒&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> total_params_b &gt; <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="string">&quot;FP8&quot;</span>, <span class="string">&quot;llm-compressor（或原生 fp8）&quot;</span>,</span><br><span class="line">                <span class="string">&quot;大模型优先保精度与显存，FP8 是甜点位&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> latency_sensitive:</span><br><span class="line">        <span class="keyword">return</span> (<span class="string">&quot;W4A16 (AWQ)&quot;</span>, <span class="string">&quot;llm-compressor + Marlin&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Marlin kernel 低延迟，注意 Marlin 不再量化激活&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> (<span class="string">&quot;FP8 / NVFP4&quot;</span>, <span class="string">&quot;llm-compressor&quot;</span>,</span><br><span class="line">            <span class="string">&quot;吞吐敏感，按卡选择低精度浮点&quot;</span>)</span><br><span class="line"></span><br><span class="line">CASES = [</span><br><span class="line">    (<span class="string">&quot;研究助手-8B工具调用&quot;</span>, <span class="built_in">dict</span>(official_lowprec=<span class="literal">False</span>, is_sm100=<span class="literal">False</span>,</span><br><span class="line">                             total_params_b=<span class="number">8</span>, latency_sensitive=<span class="literal">True</span>)),</span><br><span class="line">    (<span class="string">&quot;研究助手-32B综述&quot;</span>,   <span class="built_in">dict</span>(official_lowprec=<span class="literal">False</span>, is_sm100=<span class="literal">True</span>,</span><br><span class="line">                             total_params_b=<span class="number">32</span>, latency_sensitive=<span class="literal">False</span>)),</span><br><span class="line">    (<span class="string">&quot;替换候选-DeepSeek&quot;</span>,  <span class="built_in">dict</span>(official_lowprec=<span class="literal">True</span>, is_sm100=<span class="literal">False</span>,</span><br><span class="line">                             total_params_b=<span class="number">100</span>, latency_sensitive=<span class="literal">True</span>)),</span><br><span class="line">    (<span class="string">&quot;MoE-501B探索&quot;</span>,       <span class="built_in">dict</span>(official_lowprec=<span class="literal">False</span>, is_sm100=<span class="literal">False</span>,</span><br><span class="line">                             total_params_b=<span class="number">501</span>, latency_sensitive=<span class="literal">False</span>)),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;<span class="string">&#x27;场景&#x27;</span>:&lt;<span class="number">20</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;格式&#x27;</span>:&lt;<span class="number">18</span>&#125;</span><span class="subst">&#123;<span class="string">&#x27;工具&#x27;</span>:&lt;<span class="number">28</span>&#125;</span>理由&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * <span class="number">100</span>)</span><br><span class="line"><span class="keyword">for</span> name, kw <span class="keyword">in</span> CASES:</span><br><span class="line">    fmt, tool, why = decide(**kw)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name:&lt;<span class="number">20</span>&#125;</span><span class="subst">&#123;fmt:&lt;<span class="number">18</span>&#125;</span><span class="subst">&#123;tool:&lt;<span class="number">28</span>&#125;</span><span class="subst">&#123;why&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>预期输出</strong>（中文列宽不可控，所以实际脚本改成逐块打印，读起来更稳）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> name, kw <span class="keyword">in</span> CASES:</span><br><span class="line">    fmt, tool, why = decide(**kw)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span> | <span class="subst">&#123;fmt&#125;</span> | <span class="subst">&#123;tool&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;    reason: <span class="subst">&#123;why&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n注意: llm-compressor 0.15.0 上界 transformers 5.21.0，&quot;</span></span><br><span class="line">      <span class="string">&quot;而主线已 5.22.2 —— 量化镜像需单独 pin 版本。&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">研究助手-8B工具调用 | W4A16 (AWQ) | llm-compressor + Marlin</span><br><span class="line">    reason: Marlin kernel 低延迟，注意 Marlin 不再量化激活</span><br><span class="line">研究助手-32B综述 | NVFP4 | llm-compressor 0.15.0</span><br><span class="line">    reason: Blackwell 原生支持，4bit 浮点对离群值鲁棒</span><br><span class="line">替换候选-DeepSeek | 官方 checkpoint | 无需量化</span><br><span class="line">    reason: 厂商已提供低精度权重，只做质量验证</span><br><span class="line">MoE-501B探索 | FP8 | llm-compressor（或原生 fp8）</span><br><span class="line">    reason: 大模型优先保精度与显存，FP8 是甜点位</span><br><span class="line"></span><br><span class="line">注意: llm-compressor 0.15.0 上界 transformers 5.21.0，而主线已 5.22.2 —— 量化镜像需单独 pin 版本。</span><br></pre></td></tr></table></figure>
+<p><strong>读数</strong>：四条路径各不相同，说明&quot;量化&quot;不是一个决策，而是<strong>四类决策的组合</strong>。特别关注第 3 行——&quot;不用量化&quot;也是量化决策树的一个合法出口，这一点在旧教程里几乎总被忽略。</p>
+<p><strong>脚本C：<code>trl_guard.py</code>——训练配置的默认值守卫</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;trl_guard.py — 把 §7.4 检查清单做成断言，纯标准库</span></span><br><span class="line"><span class="string">依赖: 仅标准库</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">REMOVED_TRAINERS = &#123;<span class="string">&quot;PPOTrainer&quot;</span>: <span class="string">&quot;1.13.0&quot;</span>, <span class="string">&quot;MiniLLMTrainer&quot;</span>: <span class="string">&quot;1.15.0&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;SSDTrainer&quot;</span>: <span class="string">&quot;1.16.0&quot;</span>, <span class="string">&quot;TPOTrainer&quot;</span>: <span class="string">&quot;1.17.0&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">cfg</span>):</span><br><span class="line">    errs, warns = [], []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. TRL 会直接 raise 的组合</span></span><br><span class="line">    <span class="keyword">if</span> (cfg.get(<span class="string">&quot;trainer&quot;</span>) <span class="keyword">in</span> (<span class="string">&quot;GRPOTrainer&quot;</span>, <span class="string">&quot;AsyncGRPOTrainer&quot;</span>)</span><br><span class="line">            <span class="keyword">and</span> cfg.get(<span class="string">&quot;use_vllm_importance_sampling&quot;</span>, <span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">and</span> cfg.get(<span class="string">&quot;top_p&quot;</span>, <span class="number">1.0</span>) &lt; <span class="number">1.0</span></span><br><span class="line">            <span class="keyword">and</span> cfg.get(<span class="string">&quot;top_k&quot;</span>, <span class="number">0</span>) &lt;= <span class="number">0</span>):</span><br><span class="line">        errs.append(<span class="string">&quot;GRPO 会在启动时 raise：top_p&lt;1.0 且 top_k&lt;=0 且启用 importance sampling&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 已移除 trainer</span></span><br><span class="line">    <span class="keyword">if</span> cfg.get(<span class="string">&quot;trainer&quot;</span>) <span class="keyword">in</span> REMOVED_TRAINERS:</span><br><span class="line">        errs.append(<span class="string">f&quot;<span class="subst">&#123;cfg[<span class="string">&#x27;trainer&#x27;</span>]&#125;</span> 已在 TRL <span class="subst">&#123;REMOVED_TRAINERS[cfg[<span class="string">&#x27;trainer&#x27;</span>]]&#125;</span> 移除&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. FP8 sampler 下的默认值风险</span></span><br><span class="line">    <span class="keyword">if</span> cfg.get(<span class="string">&quot;sampler_dtype&quot;</span>) == <span class="string">&quot;fp8&quot;</span> <span class="keyword">and</span> cfg.get(<span class="string">&quot;score_centering&quot;</span>) <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        warns.append(<span class="string">&quot;FP8 sampler + 默认 score_centering=True，reward 可能掉到 0.1 量级&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. fused lm head 与 PEFT adapter</span></span><br><span class="line">    <span class="keyword">if</span> cfg.get(<span class="string">&quot;fused_lm_head&quot;</span>, <span class="literal">True</span>) <span class="keyword">and</span> cfg.get(<span class="string">&quot;peft_target&quot;</span>) == <span class="string">&quot;lm_head&quot;</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;lm_head&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> cfg.get(<span class="string">&quot;modules_to_save&quot;</span>, []):</span><br><span class="line">            errs.append(<span class="string">&quot;fused LM head 开启时，PEFT adapter 挂 lm_head 必须 modules_to_save=[&#x27;lm_head&#x27;]&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 版本缝隙</span></span><br><span class="line">    <span class="keyword">if</span> cfg.get(<span class="string">&quot;transformers&quot;</span>, <span class="string">&quot;0&quot;</span>) &gt; <span class="string">&quot;5.21.0&quot;</span> <span class="keyword">and</span> cfg.get(<span class="string">&quot;use_llm_compressor&quot;</span>):</span><br><span class="line">        warns.append(<span class="string">&quot;llm-compressor 0.15.0 上界为 transformers 5.21.0，当前版本超出&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> errs, warns</span><br><span class="line"></span><br><span class="line">CASES = [</span><br><span class="line">    <span class="built_in">dict</span>(name=<span class="string">&quot;危险组合-GRPO&quot;</span>, trainer=<span class="string">&quot;GRPOTrainer&quot;</span>, top_p=<span class="number">0.9</span>, top_k=<span class="number">0</span>),</span><br><span class="line">    <span class="built_in">dict</span>(name=<span class="string">&quot;已移除-PPO&quot;</span>,    trainer=<span class="string">&quot;PPOTrainer&quot;</span>),</span><br><span class="line">    <span class="built_in">dict</span>(name=<span class="string">&quot;FP8采样&quot;</span>,       trainer=<span class="string">&quot;AsyncGRPOTrainer&quot;</span>, top_p=<span class="number">1.0</span>,</span><br><span class="line">         sampler_dtype=<span class="string">&quot;fp8&quot;</span>, score_centering=<span class="literal">None</span>),</span><br><span class="line">    <span class="built_in">dict</span>(name=<span class="string">&quot;PEFT挂lm_head&quot;</span>,  trainer=<span class="string">&quot;DPOTrainer&quot;</span>, peft_target=<span class="string">&quot;lm_head&quot;</span>,</span><br><span class="line">         modules_to_save=[]),</span><br><span class="line">    <span class="built_in">dict</span>(name=<span class="string">&quot;版本缝隙&quot;</span>,       trainer=<span class="string">&quot;DPOTrainer&quot;</span>, transformers=<span class="string">&quot;5.22.2&quot;</span>,</span><br><span class="line">         use_llm_compressor=<span class="literal">True</span>),</span><br><span class="line">    <span class="built_in">dict</span>(name=<span class="string">&quot;安全配置&quot;</span>,       trainer=<span class="string">&quot;GRPOTrainer&quot;</span>, top_p=<span class="number">0.9</span>, top_k=<span class="number">20</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> CASES:</span><br><span class="line">    name = c.pop(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">    errs, warns = check(c)</span><br><span class="line">    status = <span class="string">&quot;❌&quot;</span> <span class="keyword">if</span> errs <span class="keyword">else</span> (<span class="string">&quot;⚠️&quot;</span> <span class="keyword">if</span> warns <span class="keyword">else</span> <span class="string">&quot;✅&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;status&#125;</span> <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> errs:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;     ERROR: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> warns:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;     WARN : <span class="subst">&#123;w&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>预期输出</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">❌ 危险组合-GRPO</span><br><span class="line">     ERROR: GRPO 会在启动时 raise：top_p&lt;1.0 且 top_k&lt;=0 且启用 importance sampling</span><br><span class="line">❌ 已移除-PPO</span><br><span class="line">     ERROR: PPOTrainer 已在 TRL 1.13.0 移除</span><br><span class="line">⚠️ FP8采样</span><br><span class="line">     WARN : FP8 sampler + 默认 score_centering=True，reward 可能掉到 0.1 量级</span><br><span class="line">❌ PEFT挂lm_head</span><br><span class="line">     ERROR: fused LM head 开启时，PEFT adapter 挂 lm_head 必须 modules_to_save=[&#x27;lm_head&#x27;]</span><br><span class="line">⚠️ 版本缝隙</span><br><span class="line">     WARN : llm-compressor 0.15.0 上界为 transformers 5.21.0，当前版本超出</span><br><span class="line">✅ 安全配置</span><br></pre></td></tr></table></figure>
+<p><strong>读数</strong>：六个用例覆盖了&quot;崩、已删、静默降级、静默失效、版本冲突、正确&quot;六种状态。注意&quot;危险组合-GRPO&quot;是 <strong>ERROR 而不是 WARN</strong>——因为它不是效果问题，是启动失败。这类检查必须放在 CI 的 fail-fast 位置。</p>
+<h3 id="9-2-第二层：改一个参数看结论怎么变">9.2 第二层：改一个参数看结论怎么变</h3>
+<p>把脚本A 的&quot;许可证&quot;权重乘 2（w=1 → w=2，模拟法务特别严格的团队），实测结果：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>w=1 总分</th>
+<th>w=2 总分</th>
+<th>增量</th>
+<th>排名变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek-V4.1-Flash</td>
+<td>23</td>
+<td><strong>28</strong></td>
+<td>+5</td>
+<td>1 → 1</td>
+</tr>
+<tr>
+<td>Reflection Beam-1.0</td>
+<td>21</td>
+<td><strong>26</strong></td>
+<td>+5</td>
+<td>2 → 2</td>
+</tr>
+<tr>
+<td>Muse Spark Open</td>
+<td>18</td>
+<td><strong>21</strong></td>
+<td>+3</td>
+<td>3 → 3</td>
+</tr>
+<tr>
+<td>Kimi K3.1-Pro</td>
+<td>16</td>
+<td><strong>18</strong></td>
+<td>+2</td>
+<td>4 → 4</td>
+</tr>
+<tr>
+<td>Step-5-Preview</td>
+<td>14</td>
+<td><strong>16</strong></td>
+<td>+2</td>
+<td>5 → 5</td>
+</tr>
+<tr>
+<td>Mistral Large 4</td>
+<td>13</td>
+<td><strong>14</strong></td>
+<td>+1</td>
+<td>6 → 6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>这个结果比&quot;排名会变&quot;更有教学价值</strong>：调权重<strong>并没有改变排名</strong>。原因很直接——许可证分已经被算进总分了，乘 2 只是等比放大差距，而<strong>排名的相邻间距足以吸收这个放大</strong>。DeepSeek 与 Beam 之间差 2 分，两者许可证都是 5，同增 5 分，差距不变。</p>
+<p>真正会改变排名的不是&quot;调权重&quot;，而是<strong>改维度集合</strong>：比如把&quot;是否有官方低精度 checkpoint&quot;从加分项升为独立维度，Muse Spark 会从 18 跳到 23 附近，与 DeepSeek 持平。所以：</p>
+<blockquote>
+<p><strong>评分卡的&quot;权重&quot;往往是伪参数，&quot;维度&quot;才是真参数。</strong> 想让结论变，先问&quot;我漏了哪个维度&quot;，而不是&quot;该给许可证打几分&quot;。</p>
+</blockquote>
+<p>这条也解释了为什么 §5.7 的表里 Muse Spark 明明双 checkpoint 却是 18 分——它拿的那 5 分（precision）只比默认的 3 分高 2，而&quot;双 checkpoint&quot;这件事的真实价值远不止 2 分。<strong>评分卡永远会低估它没有建模的维度。</strong></p>
+<h3 id="9-3-第三层：可选拓展（非教学必需）">9.3 第三层：可选拓展（非教学必需）</h3>
+<ul>
+<li>用真实 <code>llm-compressor</code> 在 8B 模型上跑一次 HIGGS（标定 &lt;10 秒），对比全局 4bit 与逐层混合精度的 PPL；</li>
+<li>把脚本C 接进训练启动脚本，作为 pre-flight check；</li>
+<li>用 <code>huggingface_hub</code> 的 <code>HfApi().model_info()</code> 拉窗口内 <code>lastModified</code> 的模型列表，做一次自动候选扫描（注意本机 TLS 环境，见第12节）。</li>
+</ul>
+<hr>
+<h2 id="十、课后习题">十、课后习题</h2>
+<h3 id="A-基础概念题">A. 基础概念题</h3>
+<ol>
+<li>说明 AWQ（算法）与 AutoAWQ（工具）的区别，并解释&quot;AutoAWQ 弃用&quot;为什么不等于&quot;AWQ 不能用了&quot;。</li>
+<li>写出 fused LM head 的收益与词表大小的关系，并解释为什么 32k 词表模型几乎看不到收益。</li>
+<li>TRL v1.17.0 的哪个默认值变更会导致&quot;启动即崩&quot;，触发条件是什么？</li>
+</ol>
+<h3 id="B-分析思考题">B. 分析思考题</h3>
+<ol start="4">
+<li>某团队把&quot;榜单第一&quot;的 Kimi K3.1-Pro 定为基座，两周后放弃。请从本课评分卡的角度列出至少四条否决理由。</li>
+<li>为什么&quot;官方提供低精度 checkpoint&quot;会改变你的量化工作流？举本期一个具体例子。</li>
+<li>解释 <code>VLLM_MARLIN_INPUT_DTYPE</code> 删除为什么比&quot;直接报错&quot;更难排查。</li>
+</ol>
+<h3 id="C-系统-代码设计题">C. 系统/代码设计题</h3>
+<ol start="7">
+<li>为研究助手设计<strong>三镜像隔离方案</strong>：推理镜像、训练镜像、量化镜像各自 pin 哪些版本？如何保证三者的 artifact 能互相流转？给出至少两个会断裂的接口点与检测方法。</li>
+</ol>
+<h3 id="D-自检对照（不做题也回答一遍）">D. 自检对照（不做题也回答一遍）</h3>
+<ul>
+<li>你知道 llm-compressor 是什么、为什么它现在重要吗？</li>
+<li>verl 为什么要把 transformers pin 在 5.9.0？</li>
+<li>NVFP4 与 MXFP4 的定位差异是什么？</li>
+</ul>
+<hr>
+<h2 id="十一、参考答案">十一、参考答案</h2>
+<h3 id="A1（基础-算法vs工具）">A1（基础-算法vs工具）</h3>
+<p>AWQ 是&quot;激活感知的权重量化&quot;算法（保护显著通道），<code>AutoAWQ</code> 是实现它的一个库。vLLM 文档标记 <code>AutoAWQ</code> deprecated，是指&quot;不再推荐用这个库产出权重&quot;，量化入口交给 llm-compressor。算法本身仍是 W4A16 的主流，只是产出格式从 AutoAWQ 私有格式变为 <code>compressed-tensors</code>。<strong>常见错误</strong>：以为要换成 GPTQ 或 NVFP4——不必要，AWQ 权重仍可产出，只是换工具。</p>
+<h3 id="A2（基础-fused-LM-head）">A2（基础-fused LM head）</h3>
+<p>LM head 是 <code>hidden × vocab</code> 的矩阵乘，fused 实现避免物化完整 logits。收益与词表大小近似线性：gemma-3-1b 的 262k 词表带来 5.80× 可训长度提升；32k 词表的 logits 张量小 8 倍，省下的绝对显存有限，所以相对收益不显著。</p>
+<h3 id="A3（基础-TRL-raise）">A3（基础-TRL raise）</h3>
+<p>v1.17.0：vLLM importance sampling 默认开启时，若 <code>top_p &lt; 1.0</code> 且未设 <code>top_k &gt; 0</code>，GRPO 直接 raise。原因大概是采样分布与重要性权重估计在该组合下不自洽（这是行为层面的解释，具体实现细节需读源码）。修复：设 <code>top_k &gt; 0</code>（如 20），或关闭 importance sampling。</p>
+<h3 id="B4（分析-四条否决）">B4（分析-四条否决）</h3>
+<p>①<strong>许可证受限</strong>（restricted）；②<strong>引擎要求 <code>trust_remote_code=True</code></strong>（供应链风险，需代码审计）；③<strong>2.8T 总参 / 896 experts 激活 16</strong>，EP 通信成为绝对瓶颈，单机放不下、跨机带宽要求极高；④<strong>MXFP4 权重 / MXFP8 激活</strong>的 kernel 支持面窄，vLLM 侧要 <code>compressed-tensors</code> 8-bit 且版本匹配。<strong>加分项</strong>：指出&quot;榜单分数高&quot;恰恰是陷阱——它通常来自最大规模的配置，而那正是最难部署的配置。</p>
+<h3 id="B5（分析-官方低精度）">B5（分析-官方低精度）</h3>
+<p>它把&quot;量化&quot;从你的工作流里删掉了，只留&quot;质量验证&quot;。例子：Muse Spark Open 同时给 BF16 与 NVFP4 两份 checkpoint；DeepSeek-V4.1-Flash 原生 fp8；Kimi K3.1-Pro 直接 MXFP4/MXFP8。<strong>影响</strong>：第18课的&quot;压缩优先级&quot;要补一条前置判断——&quot;先问有没有官方低精度版本&quot;。</p>
+<h3 id="B6（分析-静默失效）">B6（分析-静默失效）</h3>
+<p>因为它不产生任何错误：服务正常启动、正常返回、监控指标正常，只是内部 kernel 路径变了，速度和精度与你以为的不同。排查只能靠<strong>基线对比</strong>（升级前后的 tok/s 与评测分数）。这也解释了为什么第23课把&quot;默认值 diff&quot;排在九问第 2 位——<strong>静默失效只能靠流程发现，不能靠报错发现</strong>。</p>
+<h3 id="C7（设计题-三镜像）">C7（设计题-三镜像）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">推理镜像：python 3.12 / vLLM 0.33.0 / transformers 5.22.2 / compressed-tensors 0.20.1</span><br><span class="line">训练镜像：python 3.11 / verl 0.9.1 / transformers 5.9.0 / TRL 1.17.1</span><br><span class="line">量化镜像：python 3.12 / llm-compressor 0.15.0 / transformers 5.21.0</span><br></pre></td></tr></table></figure>
+<p><strong>流转接口点与检测</strong>：</p>
+<ol>
+<li><strong>量化产物 → 推理加载</strong>：<code>compressed-tensors</code> 格式版本必须匹配（0.20.1 双向）。检测：加载时读 <code>config.json</code> 的 <code>quantization_config</code>，与推理镜像的 <code>compressed_tensors.__version__</code> 对比，不匹配就 fail-fast。</li>
+<li><strong>训练产物 → 量化输入</strong>：TRL 保存的 PEFT adapter 若挂了 <code>lm_head</code>（fused LM head 默认开启），量化工具可能不认。检测：量化前跑一次 <code>peft</code> 加载 + 前向，验证 adapter 生效。</li>
+<li><strong>tokenizer 一致性</strong>：transformers 5.x 重构了 tokenizer（四后端），不同 minor 间 <code>chat_template</code> 渲染可能有差异。检测：三个镜像各跑一遍同一组 prompt 的 <code>apply_chat_template</code>，输出必须逐字节相同。</li>
+</ol>
+<hr>
+<h2 id="十二、延伸阅读">十二、延伸阅读</h2>
+<ol>
+<li>transformers Releases（口径：<code>published_at</code>）——<code>https://github.com/huggingface/transformers/releases</code></li>
+<li>TRL Releases——<code>https://github.com/huggingface/trl/releases</code></li>
+<li>llm-compressor 0.15.0（HIGGS / QAD / REAP）——<code>https://github.com/vllm-project/llm-compressor/releases</code></li>
+<li>vLLM 量化文档（<code>AutoAWQ</code> deprecated 标记的原始出处）——<code>https://docs.vllm.ai/en/latest/features/quantization/</code></li>
+<li>verl v0.9.1（transformers pin 与 <code>delta_sharded</code>）——<code>https://github.com/volcengine/verl/releases</code></li>
+</ol>
+<p><strong>本课引用的两篇蒸馏新论文</strong>（知晓即可）：</p>
+<ul>
+<li><strong>GVPO++</strong>（arXiv 2609.21432，2026-09-18）：把 KL 约束奖励最大化的解析解塞进梯度加权，因此<strong>不需要 importance sampling</strong>。这条正好与 §7.1 的&quot;importance sampling 导致 raise&quot;形成对照——学术界在想办法绕开它。</li>
+<li><strong>CV-OPD</strong>（arXiv 2610.13264，2026-10-09）：实证指出学生学的是&quot;答案捷径&quot;而非视觉证据。对多模态蒸馏是重要警告。</li>
+</ul>
+<p>另一条工具侧更新：TRL 的 <code>GOLDTrainer</code> 新增 <strong>X-Token 跨 tokenizer 离线蒸馏</strong>（<code>lmbda=0.0</code> + <code>xtoken_loss_type=&quot;p_kl&quot;/&quot;h_kl&quot;</code>），解决&quot;师生 tokenizer 不同无法对齐&quot;的老问题。</p>
+<hr>
+<h2 id="十三、下一课预告">十三、下一课预告</h2>
+<p>引擎的账修完了（第23课），权重的账修完了（本课）。但研究助手的<strong>协作层</strong>还没修——第11-15课讲的 MCP、A2A、LangGraph、多 Agent，是本期变化最&quot;碎&quot;的一块：版本号没大动，但语义变了；协议没升版，但 SDK 有破坏性变更；框架没发大版本，但 A2A 的治理结构加了一层（而二手摘要把它写成了&quot;换东家&quot;）。</p>
+<p>第25课处理：</p>
+<ul>
+<li><strong>A2A 的治理表述要补一层</strong>——<code>2026-08-27</code> 被 <strong>Agentic AI Foundation（AAIF）</strong> 接纳为 Growth Stage；但 AAIF 本身由 <strong>Linux 基金会托管</strong>，所以旧文&quot;Linux 基金会治理&quot;并没错，缺的是中间这层（第25课 §4.1 详述，旧文四处待补）</li>
+<li><strong>MCP 的&quot;协议没变但 SDK 变了&quot;</strong>——current 仍是 <code>2026-07-28</code>，但 Python SDK v2.3.0 让非法 header 注解<strong>注册即抛</strong></li>
+<li><strong>OpenAI Agents SDK 的 alpha 大改</strong>——<code>0.24.0-alpha.6</code> 的 API 全改名</li>
+<li><strong>研究前沿</strong>：14 篇改变架构决策的论文，包括&quot;context 只用了窗口 5.75%&quot;那个让人坐不住的数字</li>
+</ul>
+<p>一句话预告：<strong>第23课是引擎，第24课是权重，第25课是&quot;它们怎么互相说话&quot;。</strong></p>
+<hr>
+<p><em>本教学资料为AI Agent系统架构设计课程第24课（校准增补II，模型栈与量化压缩生态重校课）。</em>
+<em>技术栈版本快照（2026-11-07）：transformers v5.22.2（2026-11-06）/ TRL v1.17.1（2026-10-30）/ PEFT v0.21.2（2026-10-01）/ PyTorch 2.15.0（2026-10-28）/ llm-compressor 0.15.0（2026-10-28）/ compressed-tensors 0.20.1【联网更新v7.0】</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/">https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyES的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/11/06/AI-Agent/c875d8c3/" title="第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</div></div><div class="info-2"><div class="info-item-1">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准 一、课程信息    项目 内容     课号 第25课（0025），校准时点增补III——第23课修引擎、第24课修权重，本课修&quot;协作层&quot;与&quot;研究判断&quot;   前置 第11-15课（MCP/A2A/多Agent/LangGraph/AI Coding）、第23课与第24课（校准方法论）   定位 把第11-15课的事实推进到 2026-11-07；核心是**&quot;版本号没大动但语义变了&quot;**这一类最容易被漏掉的过时   时间分配 三处纠错10min + 协议层15min + 框架层15min + 研究前沿25min + 代码实践20min    核心知识点：  三处旧文纠错——A2A 的治理表述该补 AAIF 这一层（不是&quot;换了东家&quot;）、MCP 协议没升版但 SDK 破坏了、langgraph 大版本是传闻（必须掌握） &quot;协议没变但 SDK 变了&quot;——MCP Python SDK v2.3.0 让非法 h...</div></div></div></a><a class="pagination-related" href="/2026/11/05/AI-Agent/334372e9/" title="第23课（校准增补I）：推理服务与部署层的2026-11生态校准"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第23课（校准增补I）：推理服务与部署层的2026-11生态校准</div></div><div class="info-2"><div class="info-item-1">第23课（校准增补I）：推理服务与部署层的2026-11生态校准 一、课程信息    项目 内容     课号 第23课（0023），校准时点增补I——不属于原五单元22课主线，是毕业答卷交付后的&quot;生态重校课&quot;   前置 第19课（高并发推理服务架构）、第20课（GPU集群与千并发总装）、第18课（量化压缩与部署形态）   定位 把第19/20课的引擎事实从 2026-09-13 快照推进到 2026-11-07；更重要的是把&quot;版本校准&quot;当成一项可复用的工程能力来教，而不是当成查资料   时间分配 基线纠错10min + KV与PD 30min + 升级风险15min + 代码实践15min + 习题10min    核心知识点：  基线纠错方法论——为什么&quot;上次快照&quot;往往在写下当天就已经落后；三种核查口径（Releases API 的 published_at／PyPI upload_time／官方 changelog）各自的盲区（必须掌握） KV Cache 的三次位移——主机层、低精度、默认值翻转；KV 精度从&q...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/02/AI-Agent/7579804/" title="第21课：Agent持续进化与自学习机制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-02</div><div class="info-item-2">第21课：Agent持续进化与自学习机制</div></div><div class="info-2"><div class="info-item-1">第21课：Agent持续进化与自学习机制 一、课程信息    项目 内容     课号 第21课（0021），第四单元&quot;模型优化与生产部署&quot;第6课，进化层/第四单元收官课   前置 第10课（评估体系全景图与LLM-as-a-Judge）、第09课（记忆系统——个体记忆与组织知识）、第17课（SFT/Agentic RL与CacheRL实证）、第20课（1000并发静态最优架构与滚动升级）   定位 从&quot;建成系统&quot;到&quot;系统自己变好&quot;——第20课交付了静态最优架构，本课补上时间维度：系统如何从运营中学习、把学到的东西存到正确的位置、并安全地发布出去   时间分配 理论推导20min（开篇3min + 学习信号7min + 更新载体6min + 验证与灰度4min）+ 案例分析15min（Agent自举与代码生成Agent架构8min + 多模态与Computer Use前沿7min）+ 工程实践10min + 习题10min    核心知识点（大纲指定，全部必考）：  学习信号的质量评估——三类信号（环境执行结果/过程规则...</div></div></div></a><a class="pagination-related" href="/2026/08/15/AI-Agent/d531a0/" title="第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-15</div><div class="info-item-2">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion</div></div><div class="info-2"><div class="info-item-1">第03课：Agent推理架构——ReAct、Plan-and-Execute、Reflexion  课程信息  课程名称：AI Agent系统架构设计 本课序号：03/22 预计学习时间：约55分钟（理论推导20min + 工程实现15min + 评估方法5min + 习题15min） 项目贡献：基础架构层——为&quot;企业级智能研究助手Agent系统&quot;设计推理循环架构，确立PDA循环的状态机模型与终止条件 先修要求：第01课（PDA循环定义）、第02课（Attention复杂度、KV Cache、上下文窗口约束）    本课导读 第02课我们分析了LLM的&quot;单次推理&quot;机制——Attention的 $O(n^2d)$ 复杂度、KV Cache的显存占用、上下文窗口的Token预算。但Agent不是&quot;问一次答一次&quot;的聊天机器人，它的核心能力是循环推理：感知任务→推理决策→执行行动→观察结果→继续推理，直到任务完成。 这个循环就是第01课定义的PDA（Perceive-Decide-Act）循环。本课要解决的核心问题是：如何设计这...</div></div></div></a><a class="pagination-related" href="/2026/09/13/AI-Agent/28157aa2/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-13</div><div class="info-item-2">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</div></div><div class="info-2"><div class="info-item-1">毕业答卷：AI Agent系统架构设计（第1-22课全课程）  考试时间：建议180分钟 | 满分：100分 | 覆盖范围：全部22课（第1-5课架构与上下文层、第6-10课知识层、第11-15课协议与框架层、第16-18课模型层、第19-20课部署层、第21课进化层、第22课应用前沿层） 考试形式：第一部分闭卷，第二、三部分开卷（可查阅课程资料） 配套文件：99-毕业参考答案.md（含参考架构方案、6维评分标准与常见错误模式） 毕业主题：完成**&quot;企业级智能研究助手Agent系统&quot;的完整架构设计方案**——这是你22课项目线的终点交付物   第一部分：基础原理（30分，闭卷，有标准答案） Q1. Attention复杂度与KV Cache容量计算（8分） 研究助手的Worker模型为7B参数（32层，注意力头32个，GQA架构下KV头8个，head_dim=128，hidden_size=4096），KV Cache使用FP16精度，权重经AWQ-Int4量化后约4GB，部署在一张L40S 48GB上（可用显存利用率按90%计，固定开销按权重的12%计）。 ...</div></div></div></a><a class="pagination-related" href="/2026/08/30/AI-Agent/d562a4f2/" title="第18课：模型蒸馏与压缩——选型与评估"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-30</div><div class="info-item-2">第18课：模型蒸馏与压缩——选型与评估</div></div><div class="info-2"><div class="info-item-1">第18课：模型蒸馏与压缩——选型与评估 一、课程信息    项目 内容     课号 第18课（0018），第四单元&quot;模型优化与生产部署&quot;第3课   前置 第16课（模型加载与调用）、第17课（SFT与Agentic RL，QLoRA产物）   定位 从&quot;训得起&quot;到&quot;部署得起&quot;——模型层收官：压缩选型决策   时间分配 原理推导20min（τ推导8min + 量化7min + 剪枝5min）+ 选型决策15min（蒸馏ROI 7min + 组合决策8min）+ 结果分析10min + 习题10min    核心知识点（大纲指定，全部必考）：  温度参数τ对softmax分布的平滑效应推导（必须掌握） GPTQ/AWQ/GGUF三种量化格式的选型决策矩阵（必须掌握） 蒸馏ROI计算方法（必须掌握）  知识深度边界：    层级 本课对应内容     必须掌握 τ的极限行为与梯度尺度推导、GPTQ/AWQ/GGUF选型矩阵、蒸馏ROI公式与盈亏平衡计算   应当理解 RTN/分组量化代码、蒸馏损失实现、FP8/NVFP4/M...</div></div></div></a><a class="pagination-related" href="/2026/08/19/AI-Agent/a0a92d0e/" title="第07课：RAG进阶——分块、检索与重排序"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-19</div><div class="info-item-2">第07课：RAG进阶——分块、检索与重排序</div></div><div class="info-2"><div class="info-item-1">第07课：RAG进阶——分块、检索与重排序  单元：第二单元 RAG检索增强与Agent记忆（第6-10课） 前置：第06课（RAG基础架构与完整流水线——InfoNCE、HNSW、向量数据库选型） 时间分配：理论推导15min + 工程实践20min + 评估方法10min + 习题10min（共55min核心内容，代码实践建议额外30-60min自习）  课程信息    项目 内容     课号 0007   课程标题 RAG进阶——分块、检索与重排序   核心主题 分块策略、混合检索（BM25+RRF）、Cross-Encoder重排序、RAGAS评估   深度边界 必须掌握：RRF公式推导与分数归一化、Cross-Encoder的O(n×L²)复杂度分析、RAGAS三维度计算方法应当理解：四种分块策略的工程实现、Reranker集成调用、混合检索代码知晓即可：Late Chunking、ColBERT late-interaction、RAGAS合成测试集生成   前置知识 第06课（InfoNCE、向量相似度、HNSW）；第02课（Attention复杂度O(n²d)）...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/570987d6/" title="总结报告4：第四单元阶段总结（第16-20课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">总结报告4：第四单元阶段总结（第16-20课）</div></div><div class="info-2"><div class="info-item-1">总结报告4：第四单元阶段总结（第16-20课）  生成时间：2026-09-03（第20课完成触发） | 覆盖范围：模型优化与生产部署（模型层） | 项目进度：20/22课（91%）   一、阶段知识脉络梳理 1.1 知识图谱 12345678910111213                ┌─────────────────────────────────────────┐                │  第20课：GPU集群规划与系统架构设计（本单元合龙）│                │  显存完整公式/三约束容量模型/K8s部署栈/      │                │  KEDA阈值/冷启动/Spot/1000并发总装         │                └────────────────────┬────────────────────┘         ┌──────────────┬───────────┴──────────┬──────────────┐         ▼              ▼             ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AF%BE%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">一、课程信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9C%AC%E8%AF%BE%E5%AF%B9-%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8BAgent%E7%B3%BB%E7%BB%9F-%E7%9A%84%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.2.</span> <span class="toc-text">二、本课对&quot;企业级智能研究助手Agent系统&quot;的贡献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BC%80%E7%AF%87%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-%E6%9D%83%E9%87%8D%E8%B4%A6-%E6%AF%94-%E5%BC%95%E6%93%8E%E8%B4%A6-%E6%9B%B4%E9%9A%BE%E5%AF%B9"><span class="toc-number">1.3.</span> <span class="toc-text">三、开篇：为什么&quot;权重账&quot;比&quot;引擎账&quot;更难对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%88%E6%8A%8A%E5%9F%BA%E7%BA%BF%E4%BF%AE%E5%AF%B9%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C8min%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、先把基线修对（必须掌握，8min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%B8%89%E6%9D%A1%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%9F%BA%E7%BA%BF%E5%81%8F%E5%B7%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 三条独立的基线偏差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%AA%97%E5%8F%A3%E5%86%85%E7%9A%84%E7%89%88%E6%9C%AC%E7%BA%BF"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 窗口内的版本线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%B8%80%E6%9D%A1%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%88%A4%E6%96%AD-%E8%AF%A5%E4%B8%8D%E8%AF%A5%E8%B7%9F-%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%B3%95%E5%88%99"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 一条可以用来判断&quot;该不该跟&quot;的经验法则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AA%97%E5%8F%A3%E5%86%85%E5%85%AD%E4%B8%AA%E6%96%B0%E5%9F%BA%E5%BA%A7%EF%BC%9A%E7%BA%A6%E6%9D%9F%E7%94%BB%E5%83%8F%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C20min%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">五、窗口内六个新基座：约束画像（必须掌握，20min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Mistral-Large-4%EF%BC%881T-A52B%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 Mistral Large 4（1T-A52B）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Muse-Spark-Open%EF%BC%88816B-A42B%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 Muse Spark Open（816B-A42B）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Kimi-K3-1-Pro"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 Kimi K3.1-Pro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-DeepSeek-V4-1-Flash-1017"><span class="toc-number">1.5.4.</span> <span class="toc-text">5.4 DeepSeek-V4.1-Flash-1017</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-Reflection-Beam-1-0-501B-A23B"><span class="toc-number">1.5.5.</span> <span class="toc-text">5.5 Reflection Beam-1.0-501B-A23B</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-Step-5-Preview"><span class="toc-number">1.5.6.</span> <span class="toc-text">5.6 Step-5-Preview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-%E5%9F%BA%E5%BA%A7%E5%80%99%E9%80%89%E8%AF%84%E5%88%86%E5%8D%A1"><span class="toc-number">1.5.7.</span> <span class="toc-text">5.7 基座候选评分卡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%87%8F%E5%8C%96%EF%BC%9A%E9%BB%98%E8%AE%A4%E5%B7%A5%E5%85%B7%E6%8D%A2%E4%BA%BA%E4%BA%86%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C20min%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">六、量化：默认工具换人了（必须掌握，20min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-AWQ-%E6%98%AF%E7%AE%97%E6%B3%95%EF%BC%8CAutoAWQ-%E6%98%AF%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94%E8%BF%99%E4%B8%A4%E4%BB%B6%E4%BA%8B%E5%BF%85%E9%A1%BB%E5%88%86%E5%BC%80"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 AWQ 是算法，AutoAWQ 是工具——这两件事必须分开</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%A0%BC%E5%BC%8F%E6%A0%BC%E5%B1%80%EF%BC%9ANVFP4-%E6%88%90%E4%B8%BA%E7%AC%AC%E4%BA%8C%E9%BB%98%E8%AE%A4"><span class="toc-number">1.6.2.</span> <span class="toc-text">6.2 格式格局：NVFP4 成为第二默认</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%B8%A4%E4%B8%AA%E6%96%B0%E6%96%B9%E6%B3%95%EF%BC%9AHIGGS-%E4%B8%8E-QAD"><span class="toc-number">1.6.3.</span> <span class="toc-text">6.3 两个新方法：HIGGS 与 QAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-vLLM-%E4%BE%A7%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%A0%B4%E5%9D%8F%E6%80%A7%E5%8F%98%E6%9B%B4"><span class="toc-number">1.6.4.</span> <span class="toc-text">6.4 vLLM 侧的四个破坏性变更</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E8%BF%81%E7%A7%BB%E6%B8%85%E5%8D%95%EF%BC%9AAutoAWQ-%E8%84%9A%E6%9C%AC-%E2%86%92-llm-compressor"><span class="toc-number">1.6.5.</span> <span class="toc-text">6.5 迁移清单：AutoAWQ 脚本 → llm-compressor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E8%90%BD%E5%9B%9E%E9%A1%B9%E7%9B%AE%EF%BC%9A%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8B%E7%9A%84%E9%87%8F%E5%8C%96%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">1.6.6.</span> <span class="toc-text">6.6 落回项目：研究助手的量化决策树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81TRL%EF%BC%9A%E4%B8%89%E4%B8%AA%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%8C%E5%85%B6%E4%B8%AD%E4%B8%80%E4%B8%AA%E4%BC%9A%E7%9B%B4%E6%8E%A5-raise%EF%BC%88%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%EF%BC%8C12min%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">七、TRL：三个默认值，其中一个会直接 raise（必须掌握，12min）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E4%B8%89%E4%B8%AA%E9%BB%98%E8%AE%A4%E5%80%BC%E5%8F%98%E6%9B%B4"><span class="toc-number">1.7.1.</span> <span class="toc-text">7.1 三个默认值变更</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-fused-LM-head-%E7%9A%84%E6%94%B6%E7%9B%8A%E4%B8%8E%E4%BB%A3%E4%BB%B7"><span class="toc-number">1.7.2.</span> <span class="toc-text">7.2 fused LM head 的收益与代价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-trainer-%E6%B8%85%E6%B4%97%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%8F%AF%E9%A2%84%E6%B5%8B%E7%9A%84%E8%A7%84%E5%BE%8B"><span class="toc-number">1.7.3.</span> <span class="toc-text">7.3 trainer 清洗：一个可预测的规律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E8%AE%AD%E7%BB%83%E5%89%8D%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95%EF%BC%88%E8%BF%9B-CI%EF%BC%89"><span class="toc-number">1.7.4.</span> <span class="toc-text">7.4 训练前检查清单（进 CI）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%94%9F%E6%80%81%E7%A2%8E%E7%89%87%E5%8C%96%EF%BC%9Apin-%E5%86%B2%E7%AA%81%E6%98%AF%E5%B8%B8%E6%80%81%EF%BC%88%E5%BA%94%E5%BD%93%E7%90%86%E8%A7%A3%EF%BC%8C5min%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">八、生态碎片化：pin 冲突是常态（应当理解，5min）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%BC%95%E5%AF%BC%E5%BC%8F%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">九、引导式代码实践（三层结构）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%AE%8C%E6%95%B4%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">1.9.1.</span> <span class="toc-text">9.1 第一层：完整可运行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%94%B9%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9C%8B%E7%BB%93%E8%AE%BA%E6%80%8E%E4%B9%88%E5%8F%98"><span class="toc-number">1.9.2.</span> <span class="toc-text">9.2 第二层：改一个参数看结论怎么变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%8F%AF%E9%80%89%E6%8B%93%E5%B1%95%EF%BC%88%E9%9D%9E%E6%95%99%E5%AD%A6%E5%BF%85%E9%9C%80%EF%BC%89"><span class="toc-number">1.9.3.</span> <span class="toc-text">9.3 第三层：可选拓展（非教学必需）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">十、课后习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E9%A2%98"><span class="toc-number">1.10.1.</span> <span class="toc-text">A. 基础概念题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-%E5%88%86%E6%9E%90%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.10.2.</span> <span class="toc-text">B. 分析思考题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%B3%BB%E7%BB%9F-%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E9%A2%98"><span class="toc-number">1.10.3.</span> <span class="toc-text">C. 系统&#x2F;代码设计题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-%E8%87%AA%E6%A3%80%E5%AF%B9%E7%85%A7%EF%BC%88%E4%B8%8D%E5%81%9A%E9%A2%98%E4%B9%9F%E5%9B%9E%E7%AD%94%E4%B8%80%E9%81%8D%EF%BC%89"><span class="toc-number">1.10.4.</span> <span class="toc-text">D. 自检对照（不做题也回答一遍）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-number">1.11.</span> <span class="toc-text">十一、参考答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A1%EF%BC%88%E5%9F%BA%E7%A1%80-%E7%AE%97%E6%B3%95vs%E5%B7%A5%E5%85%B7%EF%BC%89"><span class="toc-number">1.11.1.</span> <span class="toc-text">A1（基础-算法vs工具）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A2%EF%BC%88%E5%9F%BA%E7%A1%80-fused-LM-head%EF%BC%89"><span class="toc-number">1.11.2.</span> <span class="toc-text">A2（基础-fused LM head）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A3%EF%BC%88%E5%9F%BA%E7%A1%80-TRL-raise%EF%BC%89"><span class="toc-number">1.11.3.</span> <span class="toc-text">A3（基础-TRL raise）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B4%EF%BC%88%E5%88%86%E6%9E%90-%E5%9B%9B%E6%9D%A1%E5%90%A6%E5%86%B3%EF%BC%89"><span class="toc-number">1.11.4.</span> <span class="toc-text">B4（分析-四条否决）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B5%EF%BC%88%E5%88%86%E6%9E%90-%E5%AE%98%E6%96%B9%E4%BD%8E%E7%B2%BE%E5%BA%A6%EF%BC%89"><span class="toc-number">1.11.5.</span> <span class="toc-text">B5（分析-官方低精度）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B6%EF%BC%88%E5%88%86%E6%9E%90-%E9%9D%99%E9%BB%98%E5%A4%B1%E6%95%88%EF%BC%89"><span class="toc-number">1.11.6.</span> <span class="toc-text">B6（分析-静默失效）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C7%EF%BC%88%E8%AE%BE%E8%AE%A1%E9%A2%98-%E4%B8%89%E9%95%9C%E5%83%8F%EF%BC%89"><span class="toc-number">1.11.7.</span> <span class="toc-text">C7（设计题-三镜像）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-number">1.12.</span> <span class="toc-text">十二、延伸阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E4%B8%8B%E4%B8%80%E8%AF%BE%E9%A2%84%E5%91%8A"><span class="toc-number">1.13.</span> <span class="toc-text">十三、下一课预告</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/07/AI-Agent/be75a1a8/" title="校准报告：v6.9→v7.0 全局校准（2026-11-07）">校准报告：v6.9→v7.0 全局校准（2026-11-07）</a><time datetime="2026-11-06T16:00:00.000Z" title="发表于 2026-11-07 00:00:00">2026-11-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/AI-Agent/c875d8c3/" title="第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</a><time datetime="2026-11-05T16:00:00.000Z" title="发表于 2026-11-06 00:00:00">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/AI-Agent/334372e9/" title="第23课（校准增补I）：推理服务与部署层的2026-11生态校准">第23课（校准增补I）：推理服务与部署层的2026-11生态校准</a><time datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/AI-Agent/8a41e58d/" title="第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准">第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</a><time datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/28157aa2/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text"><a href="/atom.xml">RSS 订阅</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script><script defer>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false,strict:false});});</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

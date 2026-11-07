@@ -1,0 +1,968 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>校准报告：v6.9→v7.0 全局校准（2026-11-07） | HandyES的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="校准报告：v6.9→v7.0 全局校准（2026-11-07）  生成时间：2026-11-07（生态快照落后触发） | 覆盖范围：全 22 课 + 大纲 + 报告&#x2F;试卷&#x2F;答卷 | 项目进度：22&#x2F;22 课已收官，本轮为收官后增补校准 校准窗口：2026-09-13（v6.9 快照）→ 2026-11-07（v7.0 快照），共 55 天 | 基线版本：v6.9 | 目标版本：v7.0   一、本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="校准报告：v6.9→v7.0 全局校准（2026-11-07）">
+<meta property="og:url" content="https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/index.html">
+<meta property="og:site_name" content="HandyES的博客">
+<meta property="og:description" content="校准报告：v6.9→v7.0 全局校准（2026-11-07）  生成时间：2026-11-07（生态快照落后触发） | 覆盖范围：全 22 课 + 大纲 + 报告&#x2F;试卷&#x2F;答卷 | 项目进度：22&#x2F;22 课已收官，本轮为收官后增补校准 校准窗口：2026-09-13（v6.9 快照）→ 2026-11-07（v7.0 快照），共 55 天 | 基线版本：v6.9 | 目标版本：v7.0   一、本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-11-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-07T13:09:41.841Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "校准报告：v6.9→v7.0 全局校准（2026-11-07）",
+  "url": "https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-11-06T16:00:00.000Z",
+  "dateModified": "2026-11-07T13:09:41.841Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '校准报告：v6.9→v7.0 全局校准（2026-11-07）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="HandyES的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyES的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">校准报告：v6.9→v7.0 全局校准（2026-11-07）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">校准报告：v6.9→v7.0 全局校准（2026-11-07）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-06T16:00:00.000Z" title="发表于 2026-11-07 00:00:00">2026-11-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-07T13:09:41.841Z" title="更新于 2026-11-07 21:09:41">2026-11-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>校准报告：v6.9→v7.0 全局校准（2026-11-07）</h1>
+<blockquote>
+<p>生成时间：2026-11-07（生态快照落后触发） | 覆盖范围：全 22 课 + 大纲 + 报告/试卷/答卷 | 项目进度：22/22 课已收官，本轮为<strong>收官后增补校准</strong></p>
+<p>校准窗口：<code>2026-09-13</code>（v6.9 快照）→ <code>2026-11-07</code>（v7.0 快照），共 <strong>55 天</strong> | 基线版本：v6.9 | 目标版本：v7.0</p>
+</blockquote>
+<hr>
+<h2 id="一、本轮校准总览">一、本轮校准总览</h2>
+<h3 id="1-1-为什么触发">1.1 为什么触发</h3>
+<p>v6.9 的最后一条更新日志停在 <code>2026-09-13</code>。到 <code>2026-11-07</code>，生态快照已落后 <strong>55 天</strong>。按大纲 v6.9 自订的原则——&quot;<strong>保留长期有效的公式/决策框架/方法论，弱化滚动式版本号快照，修硬错误，补高价值长期缺口</strong>&quot;——本轮不重写全课程，而是分两步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一步（增补）：新建 3 篇&quot;校准时点增补课&quot;，把新事实写成独立讲义</span><br><span class="line">                 0023 推理服务与部署层 / 0024 模型栈与量化 / 0025 协议·框架·研究前沿</span><br><span class="line">第二步（回填）：只修旧文里的&quot;硬错误&quot;与&quot;已失效的事实陈述&quot;</span><br><span class="line">                 大纲 TRL 表述 / A2A 治理补 AAIF 层 / 0014·0015 / 更新日志</span><br></pre></td></tr></table></figure>
+<p><strong>关键取舍</strong>：不把 55 天里的所有版本号灌回 22 课讲义（那会把长期有效的公式淹没在滚动快照里），而是<strong>把&quot;会改变架构决策&quot;的变化写成三篇新课，把&quot;写错的事实&quot;就地订正</strong>。这与 v6.9 的原则一致，只是这次变化量太大，单靠&quot;内联联网更新&quot;标记已经装不下。</p>
+<h3 id="1-2-校准知识图谱">1.2 校准知识图谱</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">                    ┌──────────────────────────────────────────────┐</span><br><span class="line">                    │   v6.9 → v7.0 全局校准（2026-11-07）           │</span><br><span class="line">                    │   22课已收官 + 3篇增补课 + 旧文订正回填        │</span><br><span class="line">                    └───────────────────┬──────────────────────────┘</span><br><span class="line">       ┌──────────────────┬─────────────┴────────────┬──────────────────┐</span><br><span class="line">       ▼                  ▼                          ▼                  ▼</span><br><span class="line">┌─────────────┐   ┌─────────────┐            ┌─────────────┐   ┌─────────────┐</span><br><span class="line">│ 第23课 引擎  │   │ 第24课 权重  │            │ 第25课 协作  │   │ 本报告 验收  │</span><br><span class="line">│ vLLM .28→.33│   │ TRL 1.11→   │            │ A2A→AAIF 层  │   │ 台账/纠错/  │</span><br><span class="line">│ SGLang .18→ │   │   1.17.1    │            │ MCP SDK 2.3  │   │ 改课建议/  │</span><br><span class="line">│   .5.23     │   │ AutoAWQ→    │            │ langgraph    │   │ 更新日志   │</span><br><span class="line">│ PD 分离成   │   │ llm-compres │            │ 1.2.20      │   │ v7.0       │</span><br><span class="line">│ 调度原语    │   │ NVFP4 第二  │            │ Context 管道 │   │            │</span><br><span class="line">│ KV 低精度   │   │ 默认        │            │ κ=0.22      │   │            │</span><br><span class="line">└─────────────┘   └─────────────┘            └─────────────┘   └─────────────┘</span><br><span class="line">       │                  │                          │                  │</span><br><span class="line">       └──────────────────┴────────────┬─────────────┴──────────────────┘</span><br><span class="line">                                      ▼</span><br><span class="line">                       ┌──────────────────────────────┐</span><br><span class="line">                       │  回填到 22 课长期资产           │</span><br><span class="line">                       │  · 三约束容量模型（第20课）     │</span><br><span class="line">                       │  · 评估体系（第17/20课）        │</span><br><span class="line">                       │  · Context 指标（第4课）        │</span><br><span class="line">                       │  · 多Agent 回路（第13课）       │</span><br><span class="line">                       └──────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-三层-过时-分类（本轮方法论沉淀）">1.3 三层&quot;过时&quot;分类（本轮方法论沉淀）</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>定义</th>
+<th>本轮实例</th>
+<th>发现手段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①版本落后</td>
+<td>主/次版本号推进，release notes 可查</td>
+<td>vLLM 0.28→0.33、TRL 1.11→1.17.1</td>
+<td>版本 diff</td>
+</tr>
+<tr>
+<td>②默认值/工具迁移</td>
+<td>版本没大动，但默认行为或默认工具换了</td>
+<td>AutoAWQ→llm-compressor、<code>DeltaChannel</code> 1000→100</td>
+<td>文档 + 实测</td>
+</tr>
+<tr>
+<td>③<strong>语义漂移</strong></td>
+<td>无 release、版本不动，但事实被改写</td>
+<td>A2A 治理结构加 AAIF 层、MCP SDK 注解收紧、TRL &quot;下一版本&quot;表述</td>
+<td><strong>组织层/实现层/默认值层清单</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>本轮最重要的方法论增量</strong>：v6.9 的更新日志只覆盖第①层（&quot;联网更新 v6.x&quot;标记 71 处几乎全是版本号）。第②③层无法靠&quot;跟版本&quot;发现，必须新增三个检查项。这条已写进 §6 的下一轮触发条件。</p>
+</blockquote>
+<hr>
+<h2 id="二、全局校准台账（v6-9-→-v7-0）">二、全局校准台账（v6.9 → v7.0）</h2>
+<h3 id="2-1-新增文件（3-篇讲义-1-篇报告）">2.1 新增文件（3 篇讲义 + 1 篇报告）</h3>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>abbrlink</th>
+<th>date</th>
+<th>体量</th>
+<th>主线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0023-校准增补I-推理服务与部署层2026-11生态校准-教学资料.md</code></td>
+<td><code>334372e9</code></td>
+<td>2026-11-05</td>
+<td>十三节完整讲义</td>
+<td>引擎账</td>
+</tr>
+<tr>
+<td><code>0024-校准增补II-模型栈后训练与量化压缩2026-11生态校准-教学资料.md</code></td>
+<td><code>8a41e58d</code></td>
+<td>2026-11-05</td>
+<td>十三节完整讲义</td>
+<td>权重账</td>
+</tr>
+<tr>
+<td><code>0025-校准增补III-Agent协议框架与研究前沿2026-11生态校准-教学资料.md</code></td>
+<td><code>c875d8c3</code></td>
+<td>2026-11-06</td>
+<td>十三节完整讲义</td>
+<td>协作层 + 研究判断</td>
+</tr>
+<tr>
+<td><code>校准报告：v6.9→v7.0 全局校准（2026-11-07）.md</code>（本文件）</td>
+<td><code>be75a1a8</code></td>
+<td>2026-11-07</td>
+<td>报告类</td>
+<td>验收台账</td>
+</tr>
+</tbody>
+</table>
+<p>四篇的 <code>abbrlink</code> 均为 <code>crc32(title)</code> 手工写死（hex），与 <code>_config.yml:158-164</code> 的 <code>abbrlink: alg: crc32 / rep: hex</code> 一致；已实测与既有文章（<code>f5803e6b</code> / <code>570987d6</code> / <code>dff1bb39</code>）算法吻合。</p>
+<h3 id="2-2-事实校准矩阵（按组件）">2.2 事实校准矩阵（按组件）</h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>v6.9（09-13）</th>
+<th>v7.0（11-07）</th>
+<th>变化性质</th>
+<th>落在</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vLLM</td>
+<td>v0.28.0（<strong>当日实际已 0.29.0</strong>）</td>
+<td><strong>v0.33.0</strong>（11-01）</td>
+<td>① + 基线本身落后</td>
+<td>0023</td>
+</tr>
+<tr>
+<td>SGLang</td>
+<td>v0.5.18（<strong>当日实际已 0.5.19</strong>）</td>
+<td><strong>v0.5.23</strong>（11-02）</td>
+<td>① + 基线本身落后</td>
+<td>0023</td>
+</tr>
+<tr>
+<td>TGI</td>
+<td>未标注状态</td>
+<td>v3.3.7，<code>archived: true</code>（<strong>归档在基线前半年</strong>）</td>
+<td>③ 零变化（记为&quot;无事件&quot;）</td>
+<td>0023</td>
+</tr>
+<tr>
+<td>KV 精度</td>
+<td>fp16/fp8 为主</td>
+<td><strong>NVFP4 KV 铺开</strong>、GLM-5.x 在 SM100 默认 FP8 KV、ROCm <code>ROCM_OCTAVE</code> 3-4bit</td>
+<td>② 默认翻转</td>
+<td>0023</td>
+</tr>
+<tr>
+<td>PD 分离</td>
+<td>静态拓扑</td>
+<td><strong>运行时切换</strong>、延迟释放默认 30s、llm-d <code>DisaggregatedSet</code></td>
+<td>② 成调度原语</td>
+<td>0023</td>
+</tr>
+<tr>
+<td>transformers</td>
+<td>v5.15.x（<strong>当日实际已 5.17.0</strong>）</td>
+<td><strong>v5.22.2</strong>（11-06）</td>
+<td>① + 基线落后</td>
+<td>0024</td>
+</tr>
+<tr>
+<td>TRL</td>
+<td>v1.11.0，且称&quot;下一真实版本 v1.13.0&quot;</td>
+<td><strong>v1.17.1</strong>（10-30）；<strong>v1.13.0 实为 09-10 已发</strong></td>
+<td>③ 表述硬错误</td>
+<td>0024 + 大纲回填</td>
+</tr>
+<tr>
+<td>量化默认工具</td>
+<td>&quot;AWQ 是 INT4 默认&quot;</td>
+<td><strong><code>AutoAWQ</code> deprecated → llm-compressor 0.15.0</strong>；NVFP4 成第二默认</td>
+<td>② 概念混淆 + 迁移</td>
+<td>0024</td>
+</tr>
+<tr>
+<td>PEFT / PyTorch / ONNX Runtime</td>
+<td>0.20 / 2.13 / 1.29</td>
+<td>0.21.2 / 2.15.0 / 1.31.1</td>
+<td>①</td>
+<td>0024</td>
+</tr>
+<tr>
+<td>新基座</td>
+<td>未覆盖</td>
+<td>Mistral Large 4 / Muse Spark Open / Kimi K3.1-Pro / DeepSeek-V4.1-Flash / Reflection Beam-1.0 / Step-5-Preview</td>
+<td>③ 生态位空缺</td>
+<td>0024</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>记为&quot;协议修订版推进&quot;</td>
+<td><strong>协议未升版</strong>（current <code>2026-07-28</code>），破坏性在 <strong>Python SDK v2.3.0</strong></td>
+<td>③ 语义漂移</td>
+<td>0025 + 0015 回填</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td>&quot;Linux 基金会治理&quot;（<strong>伞层表述仍成立</strong>）</td>
+<td>补中间层：<strong>LF 旗下 AAIF 的 Growth Stage</strong>（08-27）；<code>v1.1.0-rc</code> 未 GA，新发 A2A CLI</td>
+<td>③ 治理层<strong>加层</strong>（非脱离）</td>
+<td>0025 §4.1 + 大纲/0014/0015 补写</td>
+</tr>
+<tr>
+<td>langgraph</td>
+<td>记 1.2.x，社区传 1.3/2.0</td>
+<td><strong>1.2.20</strong>（1.3/2.0 为传闻）；1.2.19 快照间隔 1000→100</td>
+<td>③ 传闻 + 默认值</td>
+<td>0025</td>
+</tr>
+<tr>
+<td>langchain-core</td>
+<td>—</td>
+<td><strong>1.7.6</strong>；1.8.0 将弃 Py3.10</td>
+<td>① + 硬约束</td>
+<td>0025</td>
+</tr>
+<tr>
+<td>OpenAI Agents SDK</td>
+<td>0.24.0 系</td>
+<td><code>0.24.0-alpha.6</code> <strong>API 全改名</strong>（仅 GitHub Releases）</td>
+<td>② 模型变更</td>
+<td>0025</td>
+</tr>
+<tr>
+<td>Google ADK</td>
+<td>—</td>
+<td><strong>2.14.0</strong>：拒 <code>command</code>、限脚本后缀、A2A 转正</td>
+<td>② 安全加固</td>
+<td>0025</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>v2.1.261</td>
+<td><strong>v2.1.319</strong>（11-06，MCP tasks）</td>
+<td>①</td>
+<td>0025</td>
+</tr>
+<tr>
+<td>Python 3.10</td>
+<td>可用</td>
+<td><strong>生态级退场</strong>（vLLM/MAF/AG2/langchain 同步弃用）</td>
+<td>③ 跨组件共识</td>
+<td>0025</td>
+</tr>
+<tr>
+<td>研究前沿</td>
+<td>未系统覆盖</td>
+<td>14+ 篇 10/11 月 arXiv，三处改变架构决策</td>
+<td>③ 判断层</td>
+<td>0025</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-3-旧文硬错误回填清单">2.3 旧文硬错误回填清单</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>文件与位置</th>
+<th>修订前（v6.9）</th>
+<th>修订后（v7.0）</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>00-教学大纲.md:420</code> 附近</td>
+<td>&quot;TRL v1.13.0 为下一真实版本&quot;</td>
+<td>标注&quot;v1.13.0 实际发布于 2026-09-10，表述作废；主线已 v1.17.1，见 0024 课 §4.1&quot;</td>
+<td>PyPI <code>published_at</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>00-教学大纲.md:356</code> 附近</td>
+<td>&quot;A2A v1.0（2026年初，Linux基金会治理下）&quot;</td>
+<td>&quot;v1.0（2026-03，Linux基金会治理下；2026-08-27 起为 <strong>LF 旗下 AAIF</strong> 的 Growth Stage 项目）&quot;</td>
+<td><a target="_blank" rel="noopener" href="http://a2a-protocol.org">a2a-protocol.org</a> 博客 08-27 / <a target="_blank" rel="noopener" href="http://aaif.io">aaif.io</a> 博客 08-17</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>00-教学大纲.md:597</code>/<code>:598</code>/<code>:600</code> 附近</td>
+<td>&quot;Linux基金会治理&quot; / &quot;下一真实版本 v1.13.0&quot;</td>
+<td>补&quot;LF 旗下 AAIF Growth Stage&quot;；TRL 处标注 v1.13.0 已发布、判断失效</td>
+<td>同上 + PyPI</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>0014-多Agent系统架构设计-教学资料.md:1045</code>、<code>:1056</code></td>
+<td>&quot;A2A：Linux基金会项目&quot;</td>
+<td>&quot;Linux基金会项目（2026-08-27 起为 LF 旗下 AAIF Growth Stage）&quot;</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>0015-A2A协议与Agent互操作性-教学资料.md:21</code>、<code>:79</code>、<code>:109</code>、<code>:111</code>、<code>:489</code>、<code>:905</code>、<code>:928</code></td>
+<td>&quot;Linux 基金会&quot; / 旧治理表述 / v1.0&quot;2026年初&quot;</td>
+<td>补&quot;LF 旗下 AAIF（08-27 起）&quot;；v1.0 发布月细化为 <strong>2026-03</strong>；治理行区分 MCP（Anthropic 捐赠）与 A2A（Google 发起）并标注 AAIF 托管；版本处补&quot;v1.1.0-rc 未 GA，生产锁 1.0.x&quot;</td>
+<td>同上 + 0025 §5.3</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>00-教学大纲.md</code> 末尾更新日志表</td>
+<td>末行 `</td>
+<td>2026-09-13</td>
+<td>v6.9</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>第 2-5 条的改法纪律（本轮最重要的教训）</strong>：A2A 的旧表述<strong>不是硬错误</strong>，而是<strong>缺一层</strong>。二手摘要普遍写成&quot;A2A 退出 Linux 基金会 / 换了东家&quot;，这是<strong>二阶结论过度 claim</strong>——一手页面（AAIF 官方博客原文 <code>The Agentic AI Foundation, hosted by the Linux Foundation</code>；A2A 官方博客 <code>Linux Foundation-directed AAIF</code>）直接否定了它。所以这里做的是<strong>补充</strong>，不是替换；如果把&quot;Linux 基金会&quot;批量抹掉，反而会引入一批新错误。</p>
+</blockquote>
+<blockquote>
+<p>回填纪律：<strong>只改&quot;写错的事实&quot;和&quot;已失效的事实陈述&quot;，不改公式、不改决策框架、不改方法论</strong>。例如第18课的 τ 温度推导、第19课的 PagedAttention/Continuous Batching/Speculative Decoding 公式、第20课的三约束容量模型、第02课 GQA 参数表，全部保留——它们属于 v6.9 白名单里的&quot;长期有效资产&quot;。</p>
+</blockquote>
+<hr>
+<h2 id="三、三处改课建议的落地状态">三、三处改课建议的落地状态</h2>
+<p>0025 课 §7.6 提出三条&quot;会改变架构决策&quot;的建议。本报告逐条标状态：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>建议</th>
+<th>已落进增补课</th>
+<th>待回填进原课</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td>第4课 Context Engineering 增&quot;harness 损耗率 / 字段到达率 / 有效利用率&quot;，扩窗口降为末选</td>
+<td>0025 §7.1 + §9.1 脚本C 已给出指标定义与实测（5.75% / 34.2% / 21.1×）</td>
+<td>第4课讲义正文与习题</td>
+<td><strong>指标已定义，原文待回填</strong></td>
+</tr>
+<tr>
+<td>②</td>
+<td>第13课多 Agent：角色分工降为可选表达层，反馈/恢复回路升为核心</td>
+<td>0025 §7.3 + §7.6 已给证据（+0.009 CI 跨 0、恢复率 0.198→0.613）</td>
+<td>第13课讲义、第20课评估体系</td>
+<td><strong>结论已定义，原文待回填</strong></td>
+</tr>
+<tr>
+<td>③</td>
+<td>第17/20课评估体系增&quot;harness 增益归因&quot;</td>
+<td>0025 §8 已给体检表（κ&lt;0.4 / 改写鲁棒 / 54% 过拟合 + 14% test-time）</td>
+<td>第17课 RL 章节、第20课评估章节</td>
+<td><strong>体检表已定义，原文待回填</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么标&quot;待回填&quot;而不是&quot;已完成&quot;</strong>：本轮定位是&quot;收官后增补校准&quot;，改 22 课正文会牵动讲义里的习题编号、参考答案、项目线进展代码块，属于新一轮&quot;查漏补缺&quot;。按 v6.9 原则，<strong>结构稳定的原课不因滚动快照而重写</strong>，只在下一轮统一审查（见 §7 触发条件）时一并回填。三条建议在 0025 课里已经&quot;可执行、可引用、可考核&quot;，不会因未回填而丢失。</p>
+<hr>
+<h2 id="四、项目模块进展（企业级智能研究助手-Agent-系统）">四、项目模块进展（企业级智能研究助手 Agent 系统）</h2>
+<h3 id="4-1-全景">4.1 全景</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">收官态（v6.9, 2026-09-13）：</span><br><span class="line">  第1-5课  架构与上下文 ██████████ 稳定</span><br><span class="line">  第6-10课 RAG 与记忆   ██████████ 稳定</span><br><span class="line">  第11-15课 协议与框架  ██████████ ⚠️ 语义漂移（A2A/MCP/langgraph）</span><br><span class="line">  第16-21课 优化与部署  ██████████ ⚠️ 版本/默认值大幅前移</span><br><span class="line">  第22课   AI Coding    ██████████ ⚠️ 工具链 patch 密集</span><br><span class="line"></span><br><span class="line">校准态（v7.0, 2026-11-07）：</span><br><span class="line">  + 0023 引擎升级检查表 v1 / KV 预算重算器 v2 / 容量模型修订件</span><br><span class="line">  + 0024 基座候选评分卡 / 量化工具链迁移清单 / 训练配置默认值 diff 表</span><br><span class="line">  + 0025 协议升级守卫脚本 / 评测可信度体检表 / Context 管道指标定义</span><br><span class="line">  + 本报告 全局台账 / 订正清单 / 改课建议状态 / 更新日志</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-本轮新增资产清单（9-项）">4.2 本轮新增资产清单（9 项）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>资产</th>
+<th>出处</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>引擎升级九问 + 破坏性变更清单</td>
+<td>0023 §8</td>
+<td>检查表</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>kv_budget_v2.py</code>（KV 预算重算器 v2）</td>
+<td>0023 §9.1 脚本A</td>
+<td>可运行脚本</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>C' = min(C_mem,C_bw,C_flops) × η_switch</code> 修订件</td>
+<td>0023 §6.5</td>
+<td>公式</td>
+</tr>
+<tr>
+<td>4</td>
+<td>基座候选五维评分卡 + 一票否决</td>
+<td>0024 §5.7 + 脚本A</td>
+<td>决策矩阵</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AutoAWQ → llm-compressor 迁移清单</td>
+<td>0024 §6.5</td>
+<td>迁移对照</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>trl_guard.py</code>（训练默认值守卫）</td>
+<td>0024 §9.1 脚本C</td>
+<td>可运行脚本</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>mcp_schema_guard.py</code>（注解静态扫描）</td>
+<td>0025 §9.1 脚本A</td>
+<td>可运行脚本</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Context 管道三指标（损耗率/到达率/有效利用率）</td>
+<td>0025 §7.1 + 脚本C</td>
+<td>指标定义</td>
+</tr>
+<tr>
+<td>9</td>
+<td>评测可信度体检表（κ/改写/归因/粒度）</td>
+<td>0025 §8 + 脚本B</td>
+<td>评估表</td>
+</tr>
+</tbody>
+</table>
+<p>九个脚本/矩阵全部<strong>纯标准库、可在本机直接运行</strong>，且&quot;预期输出&quot;均为实测值（0023 的三个脚本、0024 的三个脚本、0025 的三个脚本均已跑通校对）。</p>
+<h3 id="4-3-五级演进定位">4.3 五级演进定位</h3>
+<p>沿用 S0020 的五级模型，本轮属于<strong>第 5 级之后的&quot;维护态&quot;</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>级</th>
+<th>名称</th>
+<th>对应</th>
+<th>本轮</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>能调用</td>
+<td>第16课</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td>能定制</td>
+<td>第17课</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3</td>
+<td>能瘦身</td>
+<td>第18课</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td>能服务化</td>
+<td>第19课</td>
+<td>—</td>
+</tr>
+<tr>
+<td>5</td>
+<td>能规模化</td>
+<td>第20课</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>维</strong></td>
+<td><strong>能校准（新增）</strong></td>
+<td><strong>0023/0024/0025 + 本报告</strong></td>
+<td><strong>◀ 本轮</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>&quot;能校准&quot;作为第六种能力写进项目复盘：一个已收官的系统，真正的工程成熟度不看它上线时的版本多新，而看<strong>它能不能在 55 天后用可复现的流程把事实重新对齐</strong>，且不动摇长期有效的公式。</p>
+</blockquote>
+<hr>
+<h2 id="五、评估体系阶段性更新">五、评估体系阶段性更新</h2>
+<p>承接 S0020 §4、T0020 §4，本轮给评估体系补两层：</p>
+<h3 id="5-1-第-1-层：评测结论的可信度前置检查">5.1 第 1 层：评测结论的可信度前置检查</h3>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>阈值/动作</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Judge 一致性</td>
+<td>报 <strong>κ</strong> 而非原始一致率；κ&lt;0.4 的结论不进决策</td>
+<td>2611.04090（中位 κ=0.22）</td>
+</tr>
+<tr>
+<td>改写鲁棒性</td>
+<td>≥3 组语义等价改写，排序不反转才采信</td>
+<td>2610.38076（退化 6–9×）</td>
+</tr>
+<tr>
+<td>增益归因</td>
+<td>拆 harness / test-time / 方法；harness 占比 &gt;30% 需复跑</td>
+<td>2610.22466（54% / 14%）</td>
+</tr>
+<tr>
+<td>打分粒度</td>
+<td>优先连续打分；跨论文比 κ 必须对齐档位</td>
+<td>2611.00491（MAE −26.8%）</td>
+</tr>
+<tr>
+<td>榜单口径</td>
+<td>必须带 来源 / 是否独立复跑 / 是否饱和</td>
+<td><a target="_blank" rel="noopener" href="http://benchlm.ai">benchlm.ai</a>（112/118 自报、0 复跑）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-2-第-2-层：系统运行时的-Context-管道指标">5.2 第 2 层：系统运行时的 Context 管道指标</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>本轮基线（来自 2610.36114）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>损耗率 <code>L</code></td>
+<td>被切断的工具结果 / 工具结果总数</td>
+<td>34.2%（3827/11189）</td>
+</tr>
+<tr>
+<td>字段到达率 <code>A_f</code></td>
+<td>字段 f 正确抵达次数 / 应抵达次数</td>
+<td>4.7% ~ 99.3%（相差 21.1×）</td>
+</tr>
+<tr>
+<td>有效利用率 <code>U_eff</code></td>
+<td>窗口利用率 × <code>A_f</code></td>
+<td>0.27% ~ 5.71%（窗口仅用 5.75%）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-3-掌握度自评（对齐三篇增补课的知识点）">5.3 掌握度自评（对齐三篇增补课的知识点）</h3>
+<table>
+<thead>
+<tr>
+<th>知识点</th>
+<th>深度要求</th>
+<th>自评要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>三层&quot;过时&quot;分类</td>
+<td>必须掌握</td>
+<td>能各举一例，并说出③为什么无 release 可查</td>
+</tr>
+<tr>
+<td><code>x-mcp-header</code> 注解约束</td>
+<td>必须掌握</td>
+<td>能列三种合法类型、四种被拒写法与替代</td>
+</tr>
+<tr>
+<td>三处旧文纠错</td>
+<td>必须掌握</td>
+<td>A2A 补 AAIF 层（非脱离 LF）/ MCP 协议未升版但 SDK 变 / langgraph 传闻</td>
+</tr>
+<tr>
+<td>量化工具链迁移</td>
+<td>必须掌握</td>
+<td>能说清 AWQ 算法 ≠ AutoAWQ 工具</td>
+</tr>
+<tr>
+<td>TRL 会 raise 的组合</td>
+<td>必须掌握</td>
+<td><code>top_p&lt;1.0</code> + 未设 <code>top_k&gt;0</code> + importance sampling</td>
+</tr>
+<tr>
+<td>Context 管道三指标</td>
+<td>必须掌握</td>
+<td>能解释为什么扩窗口不是第一优化项</td>
+</tr>
+<tr>
+<td>κ 与增益归因</td>
+<td>应当理解</td>
+<td>能反驳&quot;一致率 81.8% 故可信&quot;</td>
+</tr>
+<tr>
+<td>角色分工降级</td>
+<td>应当理解</td>
+<td>能解释&quot;要回路不要角色&quot;与多 agent 校验不矛盾</td>
+</tr>
+<tr>
+<td>Python 3.10 退场</td>
+<td>应当理解</td>
+<td>能列出 ≥4 个同步弃用 3.10 的组件</td>
+</tr>
+<tr>
+<td>各 arXiv 编号与 CI 数值</td>
+<td>知晓即可</td>
+<td>需要时能查回 0025 §7/§12</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="六、教学反思">六、教学反思</h2>
+<h3 id="6-1-效果：为什么用-增补课-而不是-改全文">6.1 效果：为什么用&quot;增补课&quot;而不是&quot;改全文&quot;</h3>
+<ul>
+<li><strong>保住长期资产</strong>：22 课里的公式与决策框架没有被 55 天的滚动版本号冲散；v6.9 白名单（τ 推导、PagedAttention 公式、三约束容量模型、GQA 参数表、四载体 ROI、审查闭环状态机）全部原样保留。</li>
+<li><strong>可独立引用</strong>：三篇增补课各有完整十三节骨架（课程信息 / 项目贡献 / 正文 / 三层代码实践 / 习题 / 答案 / 延伸阅读 / 预告），单独拿一篇出来也能教学，不必先读 22 课。</li>
+<li><strong>可验证</strong>：9 个脚本全部实测，&quot;预期输出&quot;不是估算而是本机跑出来的数字。这比在旧文里改一个版本号更经得起复核。</li>
+</ul>
+<h3 id="6-2-达成度：六大培养目标（对齐-T0020-§1）">6.2 达成度：六大培养目标（对齐 T0020 §1）</h3>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>v6.9 达成</th>
+<th>v7.0 增量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统架构设计</td>
+<td>✅</td>
+<td>三约束容量模型加 <code>η_switch</code> 修订件</td>
+</tr>
+<tr>
+<td>工程实现</td>
+<td>✅</td>
+<td>9 个可运行脚本 / 迁移清单 / 守卫脚本</td>
+</tr>
+<tr>
+<td>技术选型</td>
+<td>✅</td>
+<td>基座五维评分卡 + 一票否决 + 量化决策树</td>
+</tr>
+<tr>
+<td>评估与验证</td>
+<td>✅</td>
+<td>评测可信度体检表 + Context 管道指标</td>
+</tr>
+<tr>
+<td>前沿跟踪</td>
+<td>⚠️ 停在 09-13</td>
+<td>✅ 推到 11-07，含 14+ 篇 arXiv</td>
+</tr>
+<tr>
+<td><strong>流程纪律（本轮新增）</strong></td>
+<td>—</td>
+<td>✅ 三层过时分类 + 引用口径纪律 + 核实不到就写&quot;核实不到&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-3-下阶段重点-下一轮触发条件">6.3 下阶段重点 / 下一轮触发条件</h3>
+<p>不再按固定日历触发，改为<strong>事件触发</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">触发 A：生态快照再次落后 ≥ 30 天</span><br><span class="line">触发 B：某个 rc 版本 GA（如 A2A v1.1.0、OpenAI Agents SDK 0.24.0 正式版）</span><br><span class="line">触发 C：某个&quot;③语义漂移&quot;层发生变化（治理方 / SDK 破坏性 / 默认值）</span><br><span class="line">触发 D：三条&quot;改课建议&quot;需要正式回填进 22 课正文时</span><br><span class="line"></span><br><span class="line">下一轮动作：</span><br><span class="line">  1. 按 A/B/C/D 收集事实</span><br><span class="line">  2. 先判&quot;是否改变架构决策&quot;——不改则只记台账，不改正文</span><br><span class="line">  3. 回填三条改课建议（若触发 D）</span><br><span class="line">  4. 更新日志追加下一行，版本号 v7.1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>一条留给下一轮的纪律</strong>：TGI 归档、Trae 版本号无法核实、GPU 新品规格未证实——这三条本轮都写成了&quot;明确记录没有信息&quot;，而不是留白或猜一个版本。<strong>&quot;核实不到&quot;是一个结论，必须被写下来</strong>；否则下一轮会把它当成&quot;忘了查&quot;而重复劳动。</p>
+<p><strong>第二条纪律（本轮踩到的）</strong>：<strong>一手事实成立，不等于二手推论的二阶命题成立</strong>。A2A 加入 AAIF 是一阶事实（官方博客亲口说）；&quot;因此它不再属于 Linux 基金会&quot;是二手转述加上的二阶命题，而一手页面（<code>The Agentic AI Foundation, hosted by the Linux Foundation</code>）恰好否定了它。凡是&quot;某组织脱离 / 改换东家 / 失去背书&quot;这类<strong>否定式结论</strong>，都必须回到一手来源确认一次——它们比&quot;加入了什么&quot;更容易被说反，而一旦说反，整条论证链（例如&quot;中立性不再有保障&quot;）都会跟着错。</p>
+</blockquote>
+<hr>
+<h2 id="七、技术栈版本快照与更新日志">七、技术栈版本快照与更新日志</h2>
+<h3 id="7-1-技术栈版本快照（2026-11-07）【联网更新v7-0】">7.1 技术栈版本快照（2026-11-07）【联网更新v7.0】</h3>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>组件</th>
+<th>版本</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>引擎</td>
+<td>vLLM / SGLang / llm-d / Dynamo / TGI</td>
+<td>0.33.0 / 0.5.23 / 1.0.0 / 1.6.2 / 3.3.7（归档）</td>
+<td>11-01 / 11-02 / 10-20 / 11-05 / —</td>
+</tr>
+<tr>
+<td>模型栈</td>
+<td>transformers / TRL / PEFT / PyTorch / ONNX Runtime</td>
+<td>5.22.2 / 1.17.1 / 0.21.2 / 2.15.0 / 1.31.1</td>
+<td>11-06 / 10-30 / 10-01 / 10-28 / 10-26</td>
+</tr>
+<tr>
+<td>压缩</td>
+<td>llm-compressor / compressed-tensors</td>
+<td>0.15.0 / 0.20.1</td>
+<td>10-28 / —</td>
+</tr>
+<tr>
+<td>协议</td>
+<td>MCP spec / mcp-python-sdk / A2A / a2a-python-sdk</td>
+<td><code>2026-07-28</code> / v2.3.0 / v1.1.0-rc / 1.3.0</td>
+<td>— / 10-02 / 10-29 / 10-27</td>
+</tr>
+<tr>
+<td>框架</td>
+<td>langgraph / langgraph-sdk / langchain / langchain-core</td>
+<td>1.2.20 / 0.4.14 / 1.4.9 / 1.7.6</td>
+<td>11-05 / 11-06 / 11-04 / 11-05</td>
+</tr>
+<tr>
+<td>Agent SDK</td>
+<td>OpenAI Agents / Google ADK</td>
+<td>0.24.0 + <code>0.24.0-alpha.6</code> / 2.14.0</td>
+<td>10-15 / 11-03 / 11-04</td>
+</tr>
+<tr>
+<td>AI Coding</td>
+<td>Claude Code / Cursor / Gemini CLI</td>
+<td>v2.1.319 / Agent SDK GA / v0.67.0</td>
+<td>11-06 / 10-20 / 11-04</td>
+</tr>
+<tr>
+<td>运行时</td>
+<td>Python</td>
+<td><strong>3.11+（推荐 3.12）</strong>，3.10 生态级退场</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-2-更新日志（追加-v7-0-行）">7.2 更新日志（追加 v7.0 行）</h3>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>（v5.1 → v6.8 共 20 条，见原表）</td>
+</tr>
+<tr>
+<td>2026-09-13</td>
+<td>v6.9</td>
+<td>全局&quot;查漏补缺、删繁就简&quot;统一审查与更新：保留长期有效公式/决策框架/方法论，弱化滚动式版本号快照，修硬错误，补高价值长期缺口</td>
+</tr>
+<tr>
+<td><strong>2026-11-07</strong></td>
+<td><strong>v7.0</strong></td>
+<td><strong>收官后生态校准（55 天窗口）：新增 0023/0024/0025 三篇校准时点增补课与本篇校准报告；回填旧文硬错误（TRL &quot;下一真实版本 v1.13.0&quot; 表述作废、A2A 治理表述补 AAIF 一层（AAIF 由 Linux 基金会托管，故非&quot;脱离&quot;）、A2A v1.0 发布月细化为 2026-03，涉及大纲/0014/0015 共十余处）；建立&quot;三层过时分类&quot;方法论（版本落后 / 默认值·工具迁移 / 语义漂移）与引用口径纪律；补 Context 管道三指标、评测可信度体检表、harness 增益归因三处改课建议（指标已定义、原文待下一轮回填）；技术栈快照推进至 2026-11-07。长期有效公式与 v6.9 白名单一律保留。</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="八、验收清单">八、验收清单</h2>
+<p>本报告作为 v6.9 → v7.0 的交付验收，逐条可核对：</p>
+<ul>
+<li>[x] 生态快照从 <code>2026-09-13</code> 推进到 <code>2026-11-07</code></li>
+<li>[x] 新增 3 篇讲义 + 1 篇报告，全部对齐既有 front-matter / 十三节骨架 / 尾部署名风格</li>
+<li>[x] <code>abbrlink</code> 全部用 <code>crc32(title)</code> 手工写死，与 <code>_config.yml</code> 一致</li>
+<li>[x] 9 个教学脚本纯标准库、本机实测、&quot;预期输出&quot;为实测值</li>
+<li>[x] 旧文订正点逐条定位，并区分&quot;硬错误&quot;与&quot;缺一层&quot;（大纲 4 处 + 0014 两处 + 0015 七处 + 日志 1 处）</li>
+<li>[x] 三处改课建议标状态（已定义 / 待回填），未丢失</li>
+<li>[x] 长期有效公式与 v6.9 白名单未被滚动版本号覆盖</li>
+<li>[x] &quot;核实不到&quot;的结论（TGI 归档 / Trae / GPU 规格）被明确记录</li>
+<li>[x] 更新日志追加 v7.0 行，给出下一轮事件触发条件</li>
+<li>[ ] 旧文回填文本实际写入磁盘（见 §2.3，由发布前统一处理）</li>
+<li>[ ] <code>hexo generate</code> 生成静态站点并校验新文章可见</li>
+<li>[ ] 部署到 <code>https://github.com/HandyES/HandyES.github.io.git</code> 的 <code>main</code> 分支并验证</li>
+</ul>
+<blockquote>
+<p>最后三项属于&quot;落盘与发布&quot;，不在报告正文范围内，由发布流程闭单。</p>
+</blockquote>
+<hr>
+<p><em>本报告为 AI Agent 系统架构设计课程 v6.9 → v7.0 全局校准的验收台账，校准窗口 2026-09-13 → 2026-11-07（55 天）。</em>
+<em>技术栈版本快照（2026-11-07）：vLLM 0.33.0 / SGLang 0.5.23 / transformers 5.22.2 / TRL 1.17.1 / llm-compressor 0.15.0 / MCP spec 2026-07-28 + mcp-python-sdk v2.3.0 / A2A v1.1.0-rc（LF 旗下 AAIF Growth Stage）/ langgraph 1.2.20 / langchain-core 1.7.6 / Python 3.11+【联网更新v7.0】</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/">https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyES的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/06/AI-Agent/c875d8c3/" title="第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</div></div><div class="info-2"><div class="info-item-1">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准 一、课程信息    项目 内容     课号 第25课（0025），校准时点增补III——第23课修引擎、第24课修权重，本课修&quot;协作层&quot;与&quot;研究判断&quot;   前置 第11-15课（MCP/A2A/多Agent/LangGraph/AI Coding）、第23课与第24课（校准方法论）   定位 把第11-15课的事实推进到 2026-11-07；核心是**&quot;版本号没大动但语义变了&quot;**这一类最容易被漏掉的过时   时间分配 三处纠错10min + 协议层15min + 框架层15min + 研究前沿25min + 代码实践20min    核心知识点：  三处旧文纠错——A2A 的治理表述该补 AAIF 这一层（不是&quot;换了东家&quot;）、MCP 协议没升版但 SDK 破坏了、langgraph 大版本是传闻（必须掌握） &quot;协议没变但 SDK 变了&quot;——MCP Python SDK v2.3.0 让非法 h...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/14/AI-Agent/6b2235d0/" title="第02课：LLM内部机制——Agent架构师视角"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-14</div><div class="info-item-2">第02课：LLM内部机制——Agent架构师视角</div></div><div class="info-2"><div class="info-item-1">第02课：LLM内部机制——Agent架构师视角  课程信息  课程名称：AI Agent系统架构设计 本课序号：02/22 预计学习时间：约55分钟（理论推导20min + 工程分析15min + 项目关联10min + 习题10min） 项目贡献：基础架构层——建立LLM决策核心的内部机制认知，具备推理成本量化分析与上下文窗口约束设计能力 先修要求：第01课（Agent架构总览）、线性代数矩阵运算、Python基础    本课导读 第01课建立了Agent的六元组定义 $\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{M}, \pi, \mathcal{T} \rangle$，其中策略函数 $\pi$ 由LLM实现。但LLM不是一个黑箱——作为架构设计师，你必须理解它的内部机制，因为三个关键工程决策直接依赖于此：  推理成本：Attention的 $O(n^2d)$ 复杂度和KV Cache的显存占用，决定了你能支撑多少并发用户 上下文窗口：LLM的Token上限，直接约束RAG的分块策略和记忆系统的设计 Tok...</div></div></div></a><a class="pagination-related" href="/2026/08/29/AI-Agent/3a21b6ca/" title="第17课：模型后训练——从SFT到Agentic RL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-29</div><div class="info-item-2">第17课：模型后训练——从SFT到Agentic RL</div></div><div class="info-2"><div class="info-item-1">第17课：模型后训练——从SFT到Agentic RL 一、课程信息    项目 内容     课号 第17课（第四单元：模型优化、生产部署与持续进化）   课程标题 模型后训练——从SFT到Agentic RL   前置课程 第16课（PyTorch模型操作 / transformers / PEFT与TRL生态认知）、第05课（Function Calling工具调用格式）、第10课（评估闭环与LLM-as-a-Judge）   课程定位 从&quot;模型操作者&quot;到&quot;模型训练者&quot;：掌握后训练的数学原理、工程配置与选型决策   时间分配 原理推导20min + Agentic RL 10min + 决策分析10min + 脚本调优10min + 习题10min（合计60min）    知识深度边界（本课三级分类）：    层级 本课对应知识点     必须掌握 LoRA的 W=W₀+BA 推导与rank选择、全参微调vs PEFT显存决策矩阵、SFT记忆与RL泛化的定位区分、GRPO组相对优势计算与算法流程、&quot;SFT/RL/API+Pr...</div></div></div></a><a class="pagination-related" href="/2026/09/13/AI-Agent/28157aa2/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-13</div><div class="info-item-2">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</div></div><div class="info-2"><div class="info-item-1">毕业答卷：AI Agent系统架构设计（第1-22课全课程）  考试时间：建议180分钟 | 满分：100分 | 覆盖范围：全部22课（第1-5课架构与上下文层、第6-10课知识层、第11-15课协议与框架层、第16-18课模型层、第19-20课部署层、第21课进化层、第22课应用前沿层） 考试形式：第一部分闭卷，第二、三部分开卷（可查阅课程资料） 配套文件：99-毕业参考答案.md（含参考架构方案、6维评分标准与常见错误模式） 毕业主题：完成**&quot;企业级智能研究助手Agent系统&quot;的完整架构设计方案**——这是你22课项目线的终点交付物   第一部分：基础原理（30分，闭卷，有标准答案） Q1. Attention复杂度与KV Cache容量计算（8分） 研究助手的Worker模型为7B参数（32层，注意力头32个，GQA架构下KV头8个，head_dim=128，hidden_size=4096），KV Cache使用FP16精度，权重经AWQ-Int4量化后约4GB，部署在一张L40S 48GB上（可用显存利用率按90%计，固定开销按权重的12%计）。 ...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/6d1bbfc4/" title="第10课：RAG与Agent深度集成实战（项目线贯通点）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">第10课：RAG与Agent深度集成实战（项目线贯通点）</div></div><div class="info-2"><div class="info-item-1">第10课：RAG与Agent深度集成实战（项目线贯通点） 课程信息    项目 内容     课程定位 项目线贯通点——串联第1-9课全部模块，产出研究助手完整架构图   前置依赖 第06-08课（RAG三课）、第09课（记忆系统）、第03课（推理架构）、第05课（工具调用）   时间分配 理论推导15min + 项目实战20min + 架构决策5min + 评估方法5min + 习题10min（合计约55min）   知识深度 CRAG三级评估/Self-RAG反思token/Agentic RAG决策树/四维决策矩阵/LLM-as-a-Judge闭环 = 必须掌握；评估环境设计/统计显著性 = 应当理解；MinerU 2.5-Pro/LLM Wiki编译器模式/JURY面板 = 知晓即可     本课对项目的贡献：「企业级智能研究助手Agent系统」 本课是全课程的第一个合龙点。前9课各自贡献了一个模块，本课做三件事： 123456789第1-9课状态：九个独立模块，各自能跑，互不连通  ✅PDA循环骨架(01/03) ✅LLM选型依据(02) ✅上下文工程(04)  ✅工具...</div></div></div></a><a class="pagination-related" href="/2026/08/25/AI-Agent/dfb712e7/" title="第13课：OpenManus实战与架构分析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-25</div><div class="info-item-2">第13课：OpenManus实战与架构分析</div></div><div class="info-2"><div class="info-item-1">第13课：OpenManus实战与架构分析 课程信息    项目 内容     课程定位 开源框架解剖课——用架构师视角逐层解剖OpenManus，检验第12课自建编排引擎的设计判断，为第14课多Agent协作架构做准备   前置依赖 第01课（Harness五功能）、第03课（ReAct状态机）、第05课（工具调用与执行安全）、第11课（MCP协议）、第12课（StateGraph编排）   时间分配 架构分析20min + 二次开发20min + 习题15min（合计约55min）   知识深度 四层架构内聚耦合矩阵 / ReAct状态转移图（含恢复语义）/ 沙箱双轨制 = 必须掌握；Agent继承树 / 工具全景 / LLM集成层 / Browser MCP化细节 = 应当理解；OpenManus-RL / Java移植版 / 社区生态 = 知晓即可   框架版本 OpenManus main分支（FoundationAgents，535 commits，2026-08-25源码级核实）/ 最新release v0.3.0 / Browser Use CLI 3.0（202...</div></div></div></a><a class="pagination-related" href="/2026/08/19/AI-Agent/a0a92d0e/" title="第07课：RAG进阶——分块、检索与重排序"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-19</div><div class="info-item-2">第07课：RAG进阶——分块、检索与重排序</div></div><div class="info-2"><div class="info-item-1">第07课：RAG进阶——分块、检索与重排序  单元：第二单元 RAG检索增强与Agent记忆（第6-10课） 前置：第06课（RAG基础架构与完整流水线——InfoNCE、HNSW、向量数据库选型） 时间分配：理论推导15min + 工程实践20min + 评估方法10min + 习题10min（共55min核心内容，代码实践建议额外30-60min自习）  课程信息    项目 内容     课号 0007   课程标题 RAG进阶——分块、检索与重排序   核心主题 分块策略、混合检索（BM25+RRF）、Cross-Encoder重排序、RAGAS评估   深度边界 必须掌握：RRF公式推导与分数归一化、Cross-Encoder的O(n×L²)复杂度分析、RAGAS三维度计算方法应当理解：四种分块策略的工程实现、Reranker集成调用、混合检索代码知晓即可：Late Chunking、ColBERT late-interaction、RAGAS合成测试集生成   前置知识 第06课（InfoNCE、向量相似度、HNSW）；第02课（Attention复杂度O(n²d)）...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">校准报告：v6.9→v7.0 全局校准（2026-11-07）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9C%AC%E8%BD%AE%E6%A0%A1%E5%87%86%E6%80%BB%E8%A7%88"><span class="toc-number">1.1.</span> <span class="toc-text">一、本轮校准总览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A7%A6%E5%8F%91"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 为什么触发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A0%A1%E5%87%86%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 校准知识图谱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%89%E5%B1%82-%E8%BF%87%E6%97%B6-%E5%88%86%E7%B1%BB%EF%BC%88%E6%9C%AC%E8%BD%AE%E6%96%B9%E6%B3%95%E8%AE%BA%E6%B2%89%E6%B7%80%EF%BC%89"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 三层&quot;过时&quot;分类（本轮方法论沉淀）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%A8%E5%B1%80%E6%A0%A1%E5%87%86%E5%8F%B0%E8%B4%A6%EF%BC%88v6-9-%E2%86%92-v7-0%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、全局校准台账（v6.9 → v7.0）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%96%B0%E5%A2%9E%E6%96%87%E4%BB%B6%EF%BC%883-%E7%AF%87%E8%AE%B2%E4%B9%89-1-%E7%AF%87%E6%8A%A5%E5%91%8A%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 新增文件（3 篇讲义 + 1 篇报告）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BA%8B%E5%AE%9E%E6%A0%A1%E5%87%86%E7%9F%A9%E9%98%B5%EF%BC%88%E6%8C%89%E7%BB%84%E4%BB%B6%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 事实校准矩阵（按组件）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%97%A7%E6%96%87%E7%A1%AC%E9%94%99%E8%AF%AF%E5%9B%9E%E5%A1%AB%E6%B8%85%E5%8D%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 旧文硬错误回填清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%89%E5%A4%84%E6%94%B9%E8%AF%BE%E5%BB%BA%E8%AE%AE%E7%9A%84%E8%90%BD%E5%9C%B0%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.</span> <span class="toc-text">三、三处改课建议的落地状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E8%BF%9B%E5%B1%95%EF%BC%88%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8B-Agent-%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、项目模块进展（企业级智能研究助手 Agent 系统）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%85%A8%E6%99%AF"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 全景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%9C%AC%E8%BD%AE%E6%96%B0%E5%A2%9E%E8%B5%84%E4%BA%A7%E6%B8%85%E5%8D%95%EF%BC%889-%E9%A1%B9%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 本轮新增资产清单（9 项）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BA%94%E7%BA%A7%E6%BC%94%E8%BF%9B%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 五级演进定位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB%E9%98%B6%E6%AE%B5%E6%80%A7%E6%9B%B4%E6%96%B0"><span class="toc-number">1.5.</span> <span class="toc-text">五、评估体系阶段性更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%AC%AC-1-%E5%B1%82%EF%BC%9A%E8%AF%84%E6%B5%8B%E7%BB%93%E8%AE%BA%E7%9A%84%E5%8F%AF%E4%BF%A1%E5%BA%A6%E5%89%8D%E7%BD%AE%E6%A3%80%E6%9F%A5"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 第 1 层：评测结论的可信度前置检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%AC%AC-2-%E5%B1%82%EF%BC%9A%E7%B3%BB%E7%BB%9F%E8%BF%90%E8%A1%8C%E6%97%B6%E7%9A%84-Context-%E7%AE%A1%E9%81%93%E6%8C%87%E6%A0%87"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 第 2 层：系统运行时的 Context 管道指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%8E%8C%E6%8F%A1%E5%BA%A6%E8%87%AA%E8%AF%84%EF%BC%88%E5%AF%B9%E9%BD%90%E4%B8%89%E7%AF%87%E5%A2%9E%E8%A1%A5%E8%AF%BE%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 掌握度自评（对齐三篇增补课的知识点）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%95%99%E5%AD%A6%E5%8F%8D%E6%80%9D"><span class="toc-number">1.6.</span> <span class="toc-text">六、教学反思</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%95%88%E6%9E%9C%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-%E5%A2%9E%E8%A1%A5%E8%AF%BE-%E8%80%8C%E4%B8%8D%E6%98%AF-%E6%94%B9%E5%85%A8%E6%96%87"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 效果：为什么用&quot;增补课&quot;而不是&quot;改全文&quot;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%BE%BE%E6%88%90%E5%BA%A6%EF%BC%9A%E5%85%AD%E5%A4%A7%E5%9F%B9%E5%85%BB%E7%9B%AE%E6%A0%87%EF%BC%88%E5%AF%B9%E9%BD%90-T0020-%C2%A71%EF%BC%89"><span class="toc-number">1.6.2.</span> <span class="toc-text">6.2 达成度：六大培养目标（对齐 T0020 §1）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%B8%8B%E9%98%B6%E6%AE%B5%E9%87%8D%E7%82%B9-%E4%B8%8B%E4%B8%80%E8%BD%AE%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.6.3.</span> <span class="toc-text">6.3 下阶段重点 &#x2F; 下一轮触发条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%8A%80%E6%9C%AF%E6%A0%88%E7%89%88%E6%9C%AC%E5%BF%AB%E7%85%A7%E4%B8%8E%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><span class="toc-number">1.7.</span> <span class="toc-text">七、技术栈版本快照与更新日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%8A%80%E6%9C%AF%E6%A0%88%E7%89%88%E6%9C%AC%E5%BF%AB%E7%85%A7%EF%BC%882026-11-07%EF%BC%89%E3%80%90%E8%81%94%E7%BD%91%E6%9B%B4%E6%96%B0v7-0%E3%80%91"><span class="toc-number">1.7.1.</span> <span class="toc-text">7.1 技术栈版本快照（2026-11-07）【联网更新v7.0】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%EF%BC%88%E8%BF%BD%E5%8A%A0-v7-0-%E8%A1%8C%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">7.2 更新日志（追加 v7.0 行）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E9%AA%8C%E6%94%B6%E6%B8%85%E5%8D%95"><span class="toc-number">1.8.</span> <span class="toc-text">八、验收清单</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/07/AI-Agent/be75a1a8/" title="校准报告：v6.9→v7.0 全局校准（2026-11-07）">校准报告：v6.9→v7.0 全局校准（2026-11-07）</a><time datetime="2026-11-06T16:00:00.000Z" title="发表于 2026-11-07 00:00:00">2026-11-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/AI-Agent/c875d8c3/" title="第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</a><time datetime="2026-11-05T16:00:00.000Z" title="发表于 2026-11-06 00:00:00">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/AI-Agent/334372e9/" title="第23课（校准增补I）：推理服务与部署层的2026-11生态校准">第23课（校准增补I）：推理服务与部署层的2026-11生态校准</a><time datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/AI-Agent/8a41e58d/" title="第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准">第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</a><time datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/28157aa2/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text"><a href="/atom.xml">RSS 订阅</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script><script defer>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false,strict:false});});</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

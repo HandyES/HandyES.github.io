@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>HandyES</name>
+  </author>
+  <generator uri="https://hexo.io/">Hexo</generator>
+  <id>https://handyes.github.io/</id>
+  <link href="https://handyes.github.io/" rel="alternate"/>
+  <link href="https://handyes.github.io/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, HandyES</rights>
+  <subtitle>记录学习与生活</subtitle>
+  <title>HandyES的博客</title>
+  <updated>2026-11-07T13:09:41.841Z</updated>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/</id>
+    <link href="https://handyes.github.io/2026/11/07/AI-Agent/be75a1a8/"/>
+    <published>2026-11-06T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>校准报告：v6.9→v7.0 全局校准（2026-11-07）</h1>
+<blockquote>
+<p>生成时间：2026-11-07（生态快照落后触发） | 覆盖范围：全 22 课 + 大纲 + 报告/试卷/答卷 | 项目进度：22/22 课已收官，本轮为<strong>收官后增补校准</strong></p>
+<p>校准窗口：<code>2026-09-13</code>（v6.9 快照）→ <code>2026-11-07</code>（v7.0 快照），共 <strong>55 天</strong> | 基线版本：v6.9 | 目标版本：v7.0</p>
+</blockquote>
+<hr>
+<h2 id="一、本轮校准总览">一、本轮校准总览</h2>
+<h3 id="1-1-为什么触发">1.1 为什么触发</h3>]]>
+    </summary>
+    <title>校准报告：v6.9→v7.0 全局校准（2026-11-07）</title>
+    <updated>2026-11-07T13:09:41.841Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/11/06/AI-Agent/c875d8c3/</id>
+    <link href="https://handyes.github.io/2026/11/06/AI-Agent/c875d8c3/"/>
+    <published>2026-11-05T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第25课（0025），<strong>校准时点增补III</strong>——第23课修引擎、第24课修权重，本课修&quot;协作层&quot;与&quot;研究判断&quot;</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第11-15课（MCP/A2A/多Agent/LangGraph/AI Coding）、第23课与第24课（校准方法论）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>把第11-15课的事实推进到 <code>2026-11-07</code>；核心是**&quot;版本号没大动但语义变了&quot;**这一类最容易被漏掉的过时</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>三处纠错10min + 协议层15min + 框架层15min + 研究前沿25min + 代码实践20min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>：</p>
+<ol>
+<li><strong>三处旧文纠错</strong>——A2A 的治理表述该补 AAIF 这一层（不是&quot;换了东家&quot;）、MCP 协议没升版但 SDK 破坏了、langgraph 大版本是传闻（必须掌握）</li>
+<li><strong>&quot;协议没变但 SDK 变了&quot;</strong>——MCP Python SDK v2.3.0 让非法 header 注解<strong>注册即抛</strong>（必须掌握）</li>
+<li><strong>框架层的破坏性改名</strong>——OpenAI Agents SDK <code>0.24.0-alpha.6</code> 的 API 全改名（应当理解）</li>
+<li><strong>Context 是管道不是窗口</strong>——窗口利用率 5.75%、字段到达率 4.7% vs 99.3%（必须掌握）</li>
+<li><strong>三处改变架构决策的研究结论</strong>——harness 损耗率指标 / 角色分工降级为反馈回路 / 增益归因（必须掌握）</li>
+<li><strong>评测方法学的信任危机</strong>——κ=0.22、54% 的增益来自过拟合（应当理解）</li>
+</ol>]]>
+    </summary>
+    <title>第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</title>
+    <updated>2026-11-07T13:06:42.739Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/11/05/AI-Agent/334372e9/</id>
+    <link href="https://handyes.github.io/2026/11/05/AI-Agent/334372e9/"/>
+    <published>2026-11-04T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第23课（校准增补I）：推理服务与部署层的2026-11生态校准</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第23课（0023），<strong>校准时点增补I</strong>——不属于原五单元22课主线，是毕业答卷交付后的&quot;生态重校课&quot;</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第19课（高并发推理服务架构）、第20课（GPU集群与千并发总装）、第18课（量化压缩与部署形态）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>把第19/20课的引擎事实从 <code>2026-09-13</code> 快照推进到 <code>2026-11-07</code>；更重要的是把&quot;<strong>版本校准</strong>&quot;当成一项可复用的工程能力来教，而不是当成查资料</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>基线纠错10min + KV与PD 30min + 升级风险15min + 代码实践15min + 习题10min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>：</p>
+<ol>
+<li><strong>基线纠错方法论</strong>——为什么&quot;上次快照&quot;往往在写下当天就已经落后；三种核查口径（Releases API 的 <code>published_at</code>／PyPI <code>upload_time</code>／官方 changelog）各自的盲区（必须掌握）</li>
+<li><strong>KV Cache 的三次位移</strong>——主机层、低精度、默认值翻转；KV 精度从&quot;实现细节&quot;变成&quot;容量模型的一个可调轴&quot;（必须掌握）</li>
+<li><strong>PD 分离从部署拓扑变成调度原语</strong>——运行时切换、延迟释放默认值、<code>DisaggregatedSet</code> 与硬性版本下限（必须掌握）</li>
+<li><strong>升级风险清单</strong>——两个 minor 内的破坏性变更、退役 lane、被移除的投机解码方案与三个 GHSA（必须掌握）</li>
+<li><strong>API 层收敛</strong>——<code>/v1/systemone</code>、<code>/v1/decisions</code>、<code>/v1/score</code> 意味着什么（应当理解）</li>
+<li><strong>硬件侧的&quot;只有引擎证据&quot;</strong>——Rubin／MI400／TPU7x 在本次核查中无法证实，只写引擎适配动作（知晓即可）</li>
+</ol>]]>
+    </summary>
+    <title>第23课（校准增补I）：推理服务与部署层的2026-11生态校准</title>
+    <updated>2026-11-07T12:45:23.141Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/</id>
+    <link href="https://handyes.github.io/2026/11/05/AI-Agent/8a41e58d/"/>
+    <published>2026-11-04T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第24课（0024），<strong>校准时点增补II</strong>——第23课修&quot;引擎的账&quot;，本课修&quot;权重的账&quot;</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第16课（模型获取与权重量化）、第17课（后训练与Agentic RL）、第18课（量化压缩与部署形态）、第23课（校准方法论）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>把第16-18课的模型栈事实推进到 <code>2026-11-07</code>；核心是把&quot;<strong>权重选择</strong>&quot;和&quot;<strong>量化工具链</strong>&quot;两件事的默认值变化讲清</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>基线纠错8min + 六个新基座20min + 量化默认迁移20min + TRL默认值12min + 代码实践20min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>：</p>
+<ol>
+<li><strong>「下一真实版本」这个说法本身就是错的</strong>——TRL v1.13.0 在写下&quot;下一版本&quot;的三天后就发布了（必须掌握）</li>
+<li><strong>窗口内六个新基座的约束画像</strong>——参数规模、专家结构、上下文、原生精度、许可证、引擎要求（必须掌握）</li>
+<li><strong>量化默认值迁移</strong>——<code>AutoAWQ</code> 弃用 → llm-compressor 接管；NVFP4 成为 FP8 之外的第二默认（必须掌握）</li>
+<li><strong>HIGGS 与 QAD</strong>——逐层混合精度与 block-wise 量化感知蒸馏的方法论定位（应当理解）</li>
+<li><strong>TRL 三个默认值变更</strong>——其中一个会<strong>直接 raise</strong>（必须掌握）</li>
+<li><strong>生态碎片化</strong>——verl 把 transformers pin 在 5.9.0，主线已 5.22.2（应当理解）</li>
+</ol>]]>
+    </summary>
+    <title>第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</title>
+    <updated>2026-11-07T12:52:41.176Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/13/AI-Agent/28157aa2/</id>
+    <link href="https://handyes.github.io/2026/09/13/AI-Agent/28157aa2/"/>
+    <published>2026-09-12T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>毕业答卷：AI Agent系统架构设计（第1-22课全课程）</h1>
+<blockquote>
+<p>考试时间：建议180分钟 | 满分：100分 | 覆盖范围：全部22课（第1-5课架构与上下文层、第6-10课知识层、第11-15课协议与框架层、第16-18课模型层、第19-20课部署层、第21课进化层、第22课应用前沿层）
+考试形式：第一部分闭卷，第二、三部分开卷（可查阅课程资料）
+配套文件：<a href="http://xn--99--r48dq2xyj7azgf2w8ak2i.md">99-毕业参考答案.md</a>（含参考架构方案、6维评分标准与常见错误模式）
+毕业主题：完成**&quot;企业级智能研究助手Agent系统&quot;的完整架构设计方案**——这是你22课项目线的终点交付物</p>
+</blockquote>
+<hr>
+<h2 id="第一部分：基础原理（30分，闭卷，有标准答案）">第一部分：基础原理（30分，闭卷，有标准答案）</h2>
+<h3 id="Q1-Attention复杂度与KV-Cache容量计算（8分）">Q1. Attention复杂度与KV Cache容量计算（8分）</h3>]]>
+    </summary>
+    <title>毕业答卷：AI Agent系统架构设计（第1-22课全课程）</title>
+    <updated>2026-10-11T11:34:45.269Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/13/AI-Agent/561db752/</id>
+    <link href="https://handyes.github.io/2026/09/13/AI-Agent/561db752/"/>
+    <published>2026-09-12T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</h1>
+<blockquote>
+<p>配套试卷：<a href="http://xn--99--r48d78vlq3bpxw.md">99-毕业答卷.md</a>
+结构：第一部分标准答案 → 第二部分参考方案+评分维度 → 第三部分参考架构方案+评分标准+常见错误模式
+使用方式：先独立完成答卷再对照。第二、三部分评分看<strong>决策依据的量化程度</strong>与<strong>全链路完整性</strong>——参考方案是&quot;一种好的答案&quot;，不是&quot;唯一的答案&quot;。</p>
+</blockquote>
+<hr>
+<h2 id="第一部分：基础原理（30分，标准答案）">第一部分：基础原理（30分，标准答案）</h2>
+<h3 id="Q1-Attention复杂度与KV-Cache容量计算（8分）">Q1. Attention复杂度与KV Cache容量计算（8分）</h3>]]>
+    </summary>
+    <title>毕业参考答案：AI Agent系统架构设计（第1-22课全课程）</title>
+    <updated>2026-10-11T11:34:45.269Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/03/AI-Agent/f5803e6b/</id>
+    <link href="https://handyes.github.io/2026/09/03/AI-Agent/f5803e6b/"/>
+    <published>2026-09-02T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第22课：AI Coding范式与Agent应用前沿（全课程收官课）</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第22课（0022），第五单元&quot;AI Coding与Agent应用前沿&quot;，<strong>全课程收官课</strong></td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第01课（Harness工程框架）、第04课（Agent Skills与上下文工程）、第09课（记忆系统分层）、第14课（Planner-Worker多Agent）、第21课（代码生成Agent架构与自举边界）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>应用前沿认知课——不教工具操作，讲<strong>范式演进、能力边界与选型维度</strong>；把前21课的知识线放进真实产业语境做最后一次全景校准</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>范式概述15min + 工具全景10min + 架构师视角15min + 习题10min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>（大纲指定）：</p>
+<ol>
+<li>Spec Coding范式的核心原则——三铁律、SDD四步工作流、渐进式复杂度管理（知晓即可）</li>
+<li>AI Coding工具的能力边界与选型维度——Cursor/Trae/Claude Code/AutoGen能力边界、编排层+执行层架构、透明度底线（知晓即可）</li>
+<li>代码生成Agent的架构设计启示——工具体系设计原则、审查闭环的状态机模型（知晓即可）</li>
+</ol>]]>
+    </summary>
+    <title>第22课：AI Coding范式与Agent应用前沿（全课程收官课）</title>
+    <updated>2026-10-11T11:34:45.269Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/02/AI-Agent/7579804/</id>
+    <link href="https://handyes.github.io/2026/09/02/AI-Agent/7579804/"/>
+    <published>2026-09-01T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第21课：Agent持续进化与自学习机制</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第21课（0021），第四单元&quot;模型优化与生产部署&quot;第6课，<strong>进化层/第四单元收官课</strong></td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第10课（评估体系全景图与LLM-as-a-Judge）、第09课（记忆系统——个体记忆与组织知识）、第17课（SFT/Agentic RL与CacheRL实证）、第20课（1000并发静态最优架构与滚动升级）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>从&quot;建成系统&quot;到&quot;系统自己变好&quot;——第20课交付了<strong>静态最优</strong>架构，本课补上<strong>时间维度</strong>：系统如何从运营中学习、把学到的东西存到正确的位置、并安全地发布出去</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>理论推导20min（开篇3min + 学习信号7min + 更新载体6min + 验证与灰度4min）+ 案例分析15min（Agent自举与代码生成Agent架构8min + 多模态与Computer Use前沿7min）+ 工程实践10min + 习题10min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>（大纲指定，全部必考）：</p>
+<ol>
+<li>学习信号的质量评估——三类信号（环境执行结果/过程规则/LLM Rubric）的信噪特性与置信分流（必须掌握）</li>
+<li>四种更新载体的ROI对比——知识文档/Prompt与Skills/程序与Harness/模型参数的选择策略（必须掌握）</li>
+<li>灰度发布策略设计——三道闸门、阶梯数学、守护指标与回滚机制（必须掌握）</li>
+<li>Agent自举的实现边界——自举能力阶梯、限制与安全边界（必须掌握）</li>
+<li>代码生成Agent架构——文件系统作为外部记忆、生成-验证-修正循环、自举路径（应当理解）</li>
+<li>多模态Agent与Computer Use前沿认知——语音Agent架构演变、CUA架构、VLA模型（知晓即可）</li>
+</ol>]]>
+    </summary>
+    <title>第21课：Agent持续进化与自学习机制</title>
+    <updated>2026-10-11T11:34:45.269Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/01/AI-Agent/bac05505/</id>
+    <link href="https://handyes.github.io/2026/09/01/AI-Agent/bac05505/"/>
+    <published>2026-08-31T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第20课：GPU集群规划与Agent系统架构设计</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第20课（0020），第四单元&quot;模型优化与生产部署&quot;第5课，<strong>部署层收官课</strong></td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第19课（vLLM推理服务、KV Cache公式、三模型显存分配）、第18课（量化产物与接口约定）、第14课（多Agent架构模式）、第12课（LangGraph异步编排）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>部署层第2课 + <strong>毕业项目架构总装</strong>：从&quot;单机怎么服务好&quot;到&quot;1000并发怎么规划集群&quot;——GPU怎么选、卡间怎么连、集群怎么编、钱怎么省</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>硬件选型15min（显存公式与三约束模型7min + 硬件矩阵8min）+ 架构设计20min（集群拓扑4min + K8s部署与混部7min + 1000并发总装9min）+ 成本优化10min（冷启动4min + 弹性伸缩4min + Spot与监控2min）+ 习题10min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>（大纲指定，全部必考）：</p>
+<ol>
+<li>GPU显存占用计算公式推导——模型权重+KV Cache+激活值的完整分解（必须掌握）</li>
+<li>多模型混部的GPU分配策略（必须掌握）</li>
+<li>弹性伸缩的冷启动优化与阈值计算（必须掌握）</li>
+</ol>]]>
+    </summary>
+    <title>第20课：GPU集群规划与Agent系统架构设计</title>
+    <updated>2026-10-11T11:34:45.269Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/01/AI-Agent/8355fe4d/</id>
+    <link href="https://handyes.github.io/2026/09/01/AI-Agent/8355fe4d/"/>
+    <published>2026-08-31T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</h1>
+<blockquote>
+<p>配套试卷：<a href="http://xn--E020--eb8hw28iz05beiw.md">E020-月考试卷.md</a> | 生成时间：2026-09-03（第20课完成触发）
+第一部分为标准答案（含完整计算过程）；第二部分为参考方案+评分维度；第三部分为参考架构+设计要点+常见错误模式
+自评原则：第二、三部分无唯一答案，对照本答案检查&quot;决策是否有量化依据、全链路是否有遗漏&quot;，而非字句一致</p>
+</blockquote>
+<hr>
+<h2 id="第一部分：基础原理（30分，标准答案）">第一部分：基础原理（30分，标准答案）</h2>
+<h3 id="Q1-参考答案（8分）">Q1 参考答案（8分）</h3>]]>
+    </summary>
+    <title>E020月考参考答案：AI Agent系统架构设计（第1-20课全链路）</title>
+    <updated>2026-10-11T11:34:45.285Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/01/AI-Agent/6b0bcda4/</id>
+    <link href="https://handyes.github.io/2026/09/01/AI-Agent/6b0bcda4/"/>
+    <published>2026-08-31T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>月考试卷：AI Agent系统架构设计（第1-20课全链路）</h1>
+<blockquote>
+<p>考试时间：建议150分钟 | 满分：100分 | 覆盖范围：第1-20课（侧重第16-20课模型与部署层，兼顾全链路）
+考试形式：建议闭卷计算题 + 开卷设计题（第一部分闭卷，第二、三部分可查阅课程资料）
+配套文件：<a href="http://xn--E020--8n8hh56igdc232es1jba.md">E020-月考参考答案.md</a>（含评分标准与常见错误模式）</p>
+</blockquote>
+<hr>
+<h2 id="第一部分：基础原理（30分，闭卷，有标准答案）">第一部分：基础原理（30分，闭卷，有标准答案）</h2>
+<h3 id="Q1-KV-Cache与显存容量计算（8分）">Q1. KV Cache与显存容量计算（8分）</h3>]]>
+    </summary>
+    <title>月考试卷：AI Agent系统架构设计（第1-20课全链路）</title>
+    <updated>2026-10-11T11:34:45.285Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/01/AI-Agent/570987d6/</id>
+    <link href="https://handyes.github.io/2026/09/01/AI-Agent/570987d6/"/>
+    <published>2026-08-31T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>总结报告4：第四单元阶段总结（第16-20课）</h1>
+<blockquote>
+<p>生成时间：2026-09-03（第20课完成触发） | 覆盖范围：模型优化与生产部署（模型层） | 项目进度：20/22课（91%）</p>
+</blockquote>
+<hr>
+<h2 id="一、阶段知识脉络梳理">一、阶段知识脉络梳理</h2>
+<h3 id="1-1-知识图谱">1.1 知识图谱</h3>]]>
+    </summary>
+    <title>总结报告4：第四单元阶段总结（第16-20课）</title>
+    <updated>2026-10-11T11:34:45.285Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/09/01/AI-Agent/dff1bb39/</id>
+    <link href="https://handyes.github.io/2026/09/01/AI-Agent/dff1bb39/"/>
+    <published>2026-08-31T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>短期报告2：课程后期综合评估（第1-20课）</h1>
+<blockquote>
+<p>生成时间：2026-09-03（第20课完成触发） | 课程进度：20/22课（91%） | 定位：六大培养目标终检 + 项目全栈复盘 + 毕业冲刺路线</p>
+</blockquote>
+<hr>
+<h2 id="一、综合架构能力评估">一、综合架构能力评估</h2>
+<p>对照大纲六大培养目标，逐项评估当前达成度（对比T0010中期评估）：</p>]]>
+    </summary>
+    <title>短期报告2：课程后期综合评估（第1-20课）</title>
+    <updated>2026-10-11T11:34:45.285Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/31/AI-Agent/3f400700/</id>
+    <link href="https://handyes.github.io/2026/08/31/AI-Agent/3f400700/"/>
+    <published>2026-08-30T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第19课：高并发推理服务架构</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第19课（0019），第四单元&quot;模型优化与生产部署&quot;第4课</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第16课（模型加载与调用）、第18课（量化产物AWQ-Int4、接口约定）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>部署层第1课：从&quot;部署什么模型&quot;到&quot;怎么把模型服务化&quot;——高并发推理</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>原理分析20min（PagedAttention 8min + Continuous Batching 6min + 投机解码6min）+ 引擎对比5min + 配置调优10min + 可观测性10min + 习题10min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>（大纲指定，全部必考）：</p>
+<ol>
+<li>PagedAttention的虚拟内存映射原理与内存节省计算（必须掌握）</li>
+<li>Continuous Batching调度复杂度分析（必须掌握）</li>
+<li>Speculative Decoding的接受概率α公式与加速比计算（必须掌握）</li>
+<li>RadixAttention与PagedAttention的KV Cache管理对比（必须掌握）</li>
+</ol>]]>
+    </summary>
+    <title>第19课：高并发推理服务架构</title>
+    <updated>2026-10-11T11:34:45.269Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/30/AI-Agent/d562a4f2/</id>
+    <link href="https://handyes.github.io/2026/08/30/AI-Agent/d562a4f2/"/>
+    <published>2026-08-29T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第18课：模型蒸馏与压缩——选型与评估</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第18课（0018），第四单元&quot;模型优化与生产部署&quot;第3课</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>第16课（模型加载与调用）、第17课（SFT与Agentic RL，QLoRA产物）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>从&quot;训得起&quot;到&quot;部署得起&quot;——模型层收官：压缩选型决策</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>原理推导20min（τ推导8min + 量化7min + 剪枝5min）+ 选型决策15min（蒸馏ROI 7min + 组合决策8min）+ 结果分析10min + 习题10min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心知识点</strong>（大纲指定，全部必考）：</p>
+<ol>
+<li>温度参数τ对softmax分布的平滑效应推导（必须掌握）</li>
+<li>GPTQ/AWQ/GGUF三种量化格式的选型决策矩阵（必须掌握）</li>
+<li>蒸馏ROI计算方法（必须掌握）</li>
+</ol>]]>
+    </summary>
+    <title>第18课：模型蒸馏与压缩——选型与评估</title>
+    <updated>2026-10-11T11:34:45.254Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/29/AI-Agent/3a21b6ca/</id>
+    <link href="https://handyes.github.io/2026/08/29/AI-Agent/3a21b6ca/"/>
+    <published>2026-08-28T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第17课：模型后训练——从SFT到Agentic RL</h1>
+<h2 id="一、课程信息">一、课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课号</td>
+<td>第17课（第四单元：模型优化、生产部署与持续进化）</td>
+</tr>
+<tr>
+<td>课程标题</td>
+<td>模型后训练——从SFT到Agentic RL</td>
+</tr>
+<tr>
+<td>前置课程</td>
+<td>第16课（PyTorch模型操作 / transformers / PEFT与TRL生态认知）、第05课（Function Calling工具调用格式）、第10课（评估闭环与LLM-as-a-Judge）</td>
+</tr>
+<tr>
+<td>课程定位</td>
+<td>从&quot;模型操作者&quot;到&quot;模型训练者&quot;：掌握后训练的数学原理、工程配置与选型决策</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>原理推导20min + Agentic RL 10min + 决策分析10min + 脚本调优10min + 习题10min（合计60min）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>知识深度边界</strong>（本课三级分类）：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>本课对应知识点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>必须掌握</strong></td>
+<td>LoRA的 W=W₀+BA 推导与rank选择、全参微调vs PEFT显存决策矩阵、SFT记忆与RL泛化的定位区分、GRPO组相对优势计算与算法流程、&quot;SFT/RL/API+Prompt&quot;三路选型矩阵</td>
+</tr>
+<tr>
+<td><strong>应当理解</strong></td>
+<td>NF4量化的信息论最优性概要、SFT工具调用数据构造原则、奖励信号设计谱系（二元→PRM→混合）、QLoRA训练脚本调参</td>
+</tr>
+<tr>
+<td><strong>知晓即可</strong></td>
+<td>GRPO变体（DAPO/Dr.GRPO）、TRL AsyncGRPO黑盒训练路径、PEFT新方法（HiRA等）、NVIDIA NeMo RL生态</td>
+</tr>
+</tbody>
+</table>]]>
+    </summary>
+    <title>第17课：模型后训练——从SFT到Agentic RL</title>
+    <updated>2026-10-11T11:34:45.254Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/28/AI-Agent/c78f8310/</id>
+    <link href="https://handyes.github.io/2026/08/28/AI-Agent/c78f8310/"/>
+    <published>2026-08-27T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力</h1>
+<h2 id="课程信息">课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课程定位</td>
+<td><strong>模型层入门课（第四单元第一课）</strong>——前15课研究助手的所有&quot;智能&quot;都来自外部API模型（LangChain的LLM抽象把模型藏成了黑盒）。本课把黑盒打开：你会亲手加载模型、调用推理、读懂训练脚本。这是模型层的&quot;入场券&quot;——不是从零造轮子，而是掌握<strong>加载、调用、配置、调优</strong>四项工程能力</td>
+</tr>
+<tr>
+<td>前置依赖</td>
+<td>第02课（Transformer架构、Attention、KV Cache）、第06课（Embedding、向量相似度）、第07课（Cross-Encoder重排序）、第10课（Agentic RAG、多模态RAG）</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>原理理解15min（第一~二节）+ 模型操作实战15min（第三节+第七节）+ 生态认知5min（3.4节与第四节VLM）+ 配置调优5min（第五~六节）+ 习题10min（合计约50min）</td>
+</tr>
+<tr>
+<td>知识深度</td>
+<td>torch.compile配置与模式选择 / ONNX算子兼容性检查清单 / 推理模式三件套 = <strong>必须掌握</strong>；Autograd链式法则概念理解（非实现）/ nn.Module加载推理 / transformers v5变更 / 动态图vs静态图选择 = <strong>应当理解</strong>；VLM调用细节 / TF Serving / PEFT与TRL = <strong>知晓即可</strong></td>
+</tr>
+<tr>
+<td>版本快照</td>
+<td>PyTorch 2.13（2026-07-08）/ transformers v5.15.1（v5大版本）/ ONNX Runtime v1.29.0 / onnxruntime-genai v0.15.2 / PEFT v0.20.0 / TRL v1.8.0【截至2026-08，联网更新v6.1】</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="本课对项目的贡献：「企业级智能研究助手Agent系统」">本课对项目的贡献：「企业级智能研究助手Agent系统」</h2>]]>
+    </summary>
+    <title>第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力</title>
+    <updated>2026-10-11T11:34:45.254Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/27/AI-Agent/8ff2a6c2/</id>
+    <link href="https://handyes.github.io/2026/08/27/AI-Agent/8ff2a6c2/"/>
+    <published>2026-08-26T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第15课：A2A协议与Agent互操作性</h1>
+<h2 id="课程信息">课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课程定位</td>
+<td><strong>协议互操作课（第三单元收官）</strong>——从&quot;框架内协作&quot;到&quot;跨组织协作&quot;：第14课的多Agent工具（模式矩阵/Handoff状态机/死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻</td>
+</tr>
+<tr>
+<td>前置依赖</td>
+<td>第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动/异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>协议原理20min（第一~五节）+ 工程实现15min（第六~七节）+ 习题20min（合计约55min）</td>
+</tr>
+<tr>
+<td>知识深度</td>
+<td>Task状态机完整转换图 / Agent Card语义模型 / 能力协商纳什均衡分析 / 三协议（MCP/A2A/ANP）定位对比 = <strong>必须掌握</strong>；协议操作与安全配置 / mini-A2A代码实现 / Task不可变性设计权衡 = <strong>应当理解</strong>；ANP技术细节 / AP2支付协议 / 各框架A2A集成差异 = <strong>知晓即可</strong></td>
+</tr>
+<tr>
+<td>协议版本快照</td>
+<td>A2A v1.0（2026-03 稳定版，Linux基金会治理；2026-08-27 起为 LF 旗下 AAIF Growth Stage；<code>v1.1.0-rc</code> 未 GA，生产锁 1.0.x）/ MCP v2.0（第11课）/ ANP v1.1协议族 / AP2（Agent Payments Protocol）【截至2026-11，v6.0 基线 + v7.0 治理层补注】</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="本课对项目的贡献：「企业级智能研究助手Agent系统」">本课对项目的贡献：「企业级智能研究助手Agent系统」</h2>]]>
+    </summary>
+    <title>第15课：A2A协议与Agent互操作性</title>
+    <updated>2026-10-11T11:34:45.254Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/27/AI-Agent/b622d742/</id>
+    <link href="https://handyes.github.io/2026/08/27/AI-Agent/b622d742/"/>
+    <published>2026-08-26T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>总结报告3：第三单元阶段总结（第11-15课）</h1>
+<blockquote>
+<p>生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15/22课</p>
+</blockquote>
+<hr>
+<h2 id="一、阶段知识脉络梳理">一、阶段知识脉络梳理</h2>
+<h3 id="1-1-知识图谱">1.1 知识图谱</h3>]]>
+    </summary>
+    <title>总结报告3：第三单元阶段总结（第11-15课）</title>
+    <updated>2026-10-11T11:34:45.285Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>HandyES</name>
+    </author>
+    <category term="AI Agent" scheme="https://handyes.github.io/categories/AI-Agent/"/>
+    <category term="学习资料" scheme="https://handyes.github.io/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    <id>https://handyes.github.io/2026/08/26/AI-Agent/334f6bf4/</id>
+    <link href="https://handyes.github.io/2026/08/26/AI-Agent/334f6bf4/"/>
+    <published>2026-08-25T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1>第14课：多Agent系统架构设计</h1>
+<h2 id="课程信息">课程信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课程定位</td>
+<td><strong>协作架构设计课</strong>——从&quot;一个大脑&quot;到&quot;一个团队&quot;的架构跃迁：建立多Agent的形式化对比框架、协议设计与可靠性工程，回答研究助手项目的最后一个架构悬案</td>
+</tr>
+<tr>
+<td>前置依赖</td>
+<td>第01课（PDA循环）、第03课（ReAct/Reflexion状态机）、第05课（工具调用FSM）、第12课（StateGraph/Send/事件总线/TimeoutPolicy）、第13课（OpenManus时间维调度伏笔）</td>
+</tr>
+<tr>
+<td>时间分配</td>
+<td>模式对比15min（第一、二节）+ 工程实现20min（第三、四、五节）+ 习题20min（合计约55min）</td>
+</tr>
+<tr>
+<td>知识深度</td>
+<td>四种模式形式化对比矩阵 / Handoff协议状态机 / 资源分配图死锁检测 / Proposer-Reviewer vs Reflexion时机对比 = <strong>必须掌握</strong>；消息协议设计 / 预防策略 / 多Agent vs 单Agent决策框架 / mini代码实现 = <strong>应当理解</strong>；MAST研究细节 / 框架生态（OpenAI Agents SDK/CrewAI/AG2/ADK）/ 多样性崩溃 / 失败归因研究 = <strong>知晓即可</strong></td>
+</tr>
+<tr>
+<td>框架版本快照</td>
+<td>LangGraph 1.2.x（第12课）+ langgraph-supervisor/langgraph-swarm官方示例库 / OpenAI Agents SDK v0.17.x / CrewAI v1.15.x（Flow+MCP）/ AG2 v0.13.x / Google ADK v1.34+【截至2026-08，联网更新v5.9】</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="本课对项目的贡献：「企业级智能研究助手Agent系统」">本课对项目的贡献：「企业级智能研究助手Agent系统」</h2>]]>
+    </summary>
+    <title>第14课：多Agent系统架构设计</title>
+    <updated>2026-10-11T11:34:45.254Z</updated>
+  </entry>
+</feed>

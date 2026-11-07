@@ -1,0 +1,663 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>总结报告3：第三单元阶段总结（第11-15课） | HandyES的博客</title><meta name="author" content="HandyES"><meta name="copyright" content="HandyES"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="总结报告3：第三单元阶段总结（第11-15课）  生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15&#x2F;22课   一、阶段知识脉络梳理 1.1 知识图谱">
+<meta property="og:type" content="article">
+<meta property="og:title" content="总结报告3：第三单元阶段总结（第11-15课）">
+<meta property="og:url" content="https://handyes.github.io/2026/08/27/AI-Agent/b622d742/index.html">
+<meta property="og:site_name" content="HandyES的博客">
+<meta property="og:description" content="总结报告3：第三单元阶段总结（第11-15课）  生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15&#x2F;22课   一、阶段知识脉络梳理 1.1 知识图谱">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://handyes.github.io/img/1.png">
+<meta property="article:published_time" content="2026-08-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-11T11:34:45.285Z">
+<meta property="article:author" content="HandyES">
+<meta property="article:tag" content="学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handyes.github.io/img/1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "总结报告3：第三单元阶段总结（第11-15课）",
+  "url": "https://handyes.github.io/2026/08/27/AI-Agent/b622d742/",
+  "image": "https://handyes.github.io/img/1.png",
+  "datePublished": "2026-08-26T16:00:00.000Z",
+  "dateModified": "2026-10-11T11:34:45.285Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "HandyES",
+      "url": "https://handyes.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://handyes.github.io/2026/08/27/AI-Agent/b622d742/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '总结报告3：第三单元阶段总结（第11-15课）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="HandyES的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">HandyES的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">总结报告3：第三单元阶段总结（第11-15课）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">总结报告3：第三单元阶段总结（第11-15课）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-26T16:00:00.000Z" title="发表于 2026-08-27 00:00:00">2026-08-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-11T11:34:45.285Z" title="更新于 2026-10-11 19:34:45">2026-10-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>总结报告3：第三单元阶段总结（第11-15课）</h1>
+<blockquote>
+<p>生成时间：2026-08-27（第15课完成触发） | 覆盖范围：MCP协议与框架实战（协议层） | 项目进度：15/22课</p>
+</blockquote>
+<hr>
+<h2 id="一、阶段知识脉络梳理">一、阶段知识脉络梳理</h2>
+<h3 id="1-1-知识图谱">1.1 知识图谱</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">                ┌─────────────────────────────────────┐</span><br><span class="line">                │   第15课：A2A互操作（本单元合龙）      │</span><br><span class="line">                │  Agent Card/Signed Card/Task状态机/  │</span><br><span class="line">                │  OAuth现代化/博弈论/ANP三协议对比     │</span><br><span class="line">                └──────────────┬──────────────────────┘</span><br><span class="line">         ┌─────────────────────┼───────────────────────┐</span><br><span class="line">         ▼                     ▼                       ▼</span><br><span class="line">┌────────────────┐   ┌─────────────────┐   ┌────────────────┐</span><br><span class="line">│ 第11课 MCP协议   │   │ 第13课 OpenManus │   │ 第14课 多Agent  │</span><br><span class="line">│ v2.0无状态/三原语│   │ 四层架构/ReAct/  │   │ 判据/MAST/四模式│</span><br><span class="line">│ MRTR/header路由 │   │ 沙箱双轨/MCP化   │   │ Handoff/死锁   │</span><br><span class="line">└───────┬────────┘   └────────┬────────┘   └───────┬────────┘</span><br><span class="line">        │                     │                     │</span><br><span class="line">        └──────────┬──────────┘                     │</span><br><span class="line">                   ▼                                │</span><br><span class="line">        ┌────────────────┐                          │</span><br><span class="line">        │ 第12课 LangGraph │──────────────────────────┘</span><br><span class="line">        │ StateGraph/检查点│</span><br><span class="line">        │ 异步事件驱动/HITL│</span><br><span class="line">        └────────────────┘</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-知识递进关系">1.2 知识递进关系</h3>
+<p>本单元五课构成一条&quot;<strong>协作范围持续扩大</strong>&quot;的主线——每一课把协作边界向外推一圈：</p>
+<table>
+<thead>
+<tr>
+<th>课次</th>
+<th>协作边界</th>
+<th>解决的瓶颈</th>
+<th>遗留给下一课的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第11课</td>
+<td>Agent↔工具</td>
+<td>工具接入无标准——每个工具写一套胶水代码</td>
+<td>工具调用散落在业务代码里，无编排</td>
+</tr>
+<tr>
+<td>第12课</td>
+<td>图内节点</td>
+<td>编排无框架——流程状态、断点恢复手工实现</td>
+<td>单图单进程，无法承载多角色协作</td>
+</tr>
+<tr>
+<td>第13课</td>
+<td>参考实现</td>
+<td>缺生产级范本——纸上架构未经工程检验</td>
+<td>时间维调度的局限暴露（单Agent天花板）</td>
+</tr>
+<tr>
+<td>第14课</td>
+<td>进程内多Agent</td>
+<td>单Agent天花板——并行/隔离/自修正需求</td>
+<td>协作假设共享内存+统一时钟+天然信任</td>
+</tr>
+<tr>
+<td>第15课</td>
+<td>跨组织Agent</td>
+<td>组织边界——外部Agent是黑盒，无共享信任域</td>
+<td>协议层收官，下探模型本体（第四单元）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>本单元的质变</strong>：第11-12课完成&quot;<strong>基础设施标准化</strong>&quot;（工具插座MCP+编排框架LangGraph），第13课以生产级开源实现做&quot;<strong>工程验证</strong>&quot;（Browser Use CLI 3.0 MCP化验证&quot;工具即服务&quot;路线），第14-15课完成&quot;<strong>协作的两级跳</strong>&quot;——先在进程内建立多Agent的形式化体系（判据/模式/协议/死锁），再用A2A把整套体系推过组织边界（发现/委派/信任）。课程至此，Agent系统的&quot;外圈&quot;（编排、协作、互操作）全部闭合，第四单元转入&quot;内圈&quot;（模型本体优化与生产部署）。</p>
+<h3 id="1-3-核心知识点掌握度评估">1.3 核心知识点掌握度评估</h3>
+<table>
+<thead>
+<tr>
+<th>知识点</th>
+<th>深度要求</th>
+<th>自评要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP v2.0无状态核心与显式handle</td>
+<td>必须掌握</td>
+<td>能解释session退役后的状态管理迁移方案与CAP规避</td>
+</tr>
+<tr>
+<td>StateGraph状态机形式化/Checkpoint</td>
+<td>必须掌握</td>
+<td>能定义图三元组、解释DeltaChannel的O(N²)写放大解法</td>
+</tr>
+<tr>
+<td>四种多Agent模式形式化对比</td>
+<td>必须掌握</td>
+<td>能从拓扑/通信复杂度/容错三维度推演模式选择</td>
+</tr>
+<tr>
+<td>Handoff协议状态机/死锁检测</td>
+<td>必须掌握</td>
+<td>能画wait-for图并执行三色DFS环检测</td>
+</tr>
+<tr>
+<td>Task状态机完整转换图</td>
+<td>必须掌握</td>
+<td>能画A2A八状态图并标注中断态恢复路径与终态不可逆性</td>
+</tr>
+<tr>
+<td>Agent Card JSON-LD语义模型</td>
+<td>必须掌握</td>
+<td>能解释@context锚定词汇表与skill级tags匹配机制</td>
+</tr>
+<tr>
+<td>能力协商纳什均衡分析</td>
+<td>必须掌握</td>
+<td>能求解一次性声明博弈、推导δ≥1/3声誉临界值</td>
+</tr>
+<tr>
+<td>MCP/A2A/ANP三协议定位</td>
+<td>必须掌握</td>
+<td>能按&quot;连接对象/信任模型/发现机制/状态模型&quot;选型</td>
+</tr>
+<tr>
+<td>ReAct循环/OpenManus架构细节</td>
+<td>应当理解</td>
+<td>能阅读源码、追踪state_context恢复语义</td>
+</tr>
+<tr>
+<td>Signed Cards验签流程/OAuth现代化</td>
+<td>应当理解</td>
+<td>能描述RFC 8785规范化+JWS验签步骤、PKCE价值</td>
+</tr>
+<tr>
+<td>框架生态（ADK/CrewAI/AG2/ANP）</td>
+<td>知晓即可</td>
+<td>知道何时调用、选型维度</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="二、技术选型决策矩阵">二、技术选型决策矩阵</h2>
+<h3 id="2-1-协议栈选型（第11-15课沉淀）">2.1 协议栈选型（第11/15课沉淀）</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方案</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>受信边界内接工具/数据</td>
+<td>MCP v2.0</td>
+<td>无状态核心+header路由网关，first-class HTTP workload</td>
+</tr>
+<tr>
+<td>跨组织委派复杂任务</td>
+<td>A2A v1.0</td>
+<td>Task生命周期+Signed Card+OAuth，企业联盟信任链</td>
+</tr>
+<tr>
+<td>开放网络自组织协作</td>
+<td>ANP v1.1（观察）</td>
+<td>DID自主身份+Linked Data发现，去中心化路线</td>
+</tr>
+<tr>
+<td>无头Agent环境认证</td>
+<td>OAuth Device Code流</td>
+<td>RFC 8628，人机分离认证</td>
+</tr>
+<tr>
+<td>元数据防篡改</td>
+<td>Signed Agent Cards</td>
+<td>JWS+RFC 8785，交互前信任建立</td>
+</tr>
+</tbody>
+</table>
+<p><strong>协议组合口诀</strong>：MCP连接Agent与工具，A2A连接Agent与Agent——不互斥，研究助手同时用MCP接内网工具、A2A接供应商。</p>
+<h3 id="2-2-多Agent架构模式对比矩阵（第14-15课沉淀，本报告核心交付物）">2.2 多Agent架构模式对比矩阵（第14/15课沉淀，本报告核心交付物）</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Supervisor</th>
+<th>Swarm</th>
+<th>Hierarchical</th>
+<th>Event-Driven</th>
+<th>A2A跨组织</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>拓扑</strong></td>
+<td>星型（中心调度）</td>
+<td>网状（去中心）</td>
+<td>树型（层级委派）</td>
+<td>总线（发布订阅）</td>
+<td>任意（协议契约）</td>
+</tr>
+<tr>
+<td><strong>通信模式</strong></td>
+<td>请求-响应，中心聚合</td>
+<td>Handoff链，状态传递</td>
+<td>逐级上报/委派</td>
+<td>事件广播，异步解耦</td>
+<td>SendMessage/流/推送三通道</td>
+</tr>
+<tr>
+<td><strong>通信复杂度</strong></td>
+<td>O(N)集中</td>
+<td>O(hop)链式</td>
+<td>O(depth)层级</td>
+<td>O(N×订阅数)</td>
+<td>O(网络RTT)，跨信任域</td>
+</tr>
+<tr>
+<td><strong>死锁风险</strong></td>
+<td>低（wait-for星型无环）</td>
+<td>中（循环交接→hop_count保险丝）</td>
+<td>中（跨层等待环）</td>
+<td>低（无直接等待）</td>
+<td>高（无全局视图，链上自检）</td>
+</tr>
+<tr>
+<td><strong>容错性</strong></td>
+<td>中心单点+Worker可替换</td>
+<td>无单点，但行为漂移难控</td>
+<td>局部失效影响子树</td>
+<td>天然隔离，事件可重放</td>
+<td>部分失败+网络分区，需超时/降级</td>
+</tr>
+<tr>
+<td><strong>信任域</strong></td>
+<td>单进程，全信任</td>
+<td>单进程，全信任</td>
+<td>单进程，全信任</td>
+<td>单进程，全信任</td>
+<td><strong>跨组织，零信任</strong>→签名+OAuth+租户</td>
+</tr>
+<tr>
+<td><strong>典型场景</strong></td>
+<td>并行检索+聚合（研究助手）</td>
+<td>领域专长路由（客服转接）</td>
+<td>大规模任务树（Deep Research）</td>
+<td>长流程异步协作</td>
+<td>供应商Agent委派（专利调研）</td>
+</tr>
+<tr>
+<td><strong>反面案例</strong></td>
+<td>中心过载、任务描述敏感</td>
+<td>多样性崩溃（过早共识）</td>
+<td>层级延迟累积</td>
+<td>事件风暴、调试困难</td>
+<td>INPUT_REQUIRED无人应答挂起</td>
+</tr>
+</tbody>
+</table>
+<p><strong>模式选择决策序</strong>（第14课五问框架的协议层扩展版）：能单Agent图编排解决→LangGraph（第12课）；需多角色→时间维调度（PlanningFlow）；需真并行/上下文隔离→进程内多Agent（第14课四模式）；跨组织边界→A2A（第15课）。<strong>每一级都是成本跃升，按需上升，不跳级。</strong></p>
+<h3 id="2-3-框架选型（第12-14课沉淀）">2.3 框架选型（第12-14课沉淀）</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方案</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图编排+断点恢复+HITL</td>
+<td>LangGraph 1.2.x</td>
+<td>TimeoutPolicy/DeltaChannel/流式v3生产三件套</td>
+</tr>
+<tr>
+<td>快速标准Agent构建</td>
+<td>LangChain 1.x create_agent</td>
+<td>标准API+middleware横切能力</td>
+</tr>
+<tr>
+<td>生产级参考实现解剖</td>
+<td>OpenManus</td>
+<td>&quot;工具即服务&quot;路线落地范本</td>
+</tr>
+<tr>
+<td>Agent即工具+任务委派</td>
+<td>Google ADK v1.34+</td>
+<td>原生A2A集成，Agent Card自动发布</td>
+</tr>
+<tr>
+<td>生产A2A托管</td>
+<td>LangGraph hosted A2A / CrewAI AMP</td>
+<td>自动端点+企业认证+分布式追踪</td>
+</tr>
+</tbody>
+</table>
+<p><strong>安全版本红线</strong>（第12课教训）：langchain-core ≥1.2.5（CVE-2025-68664 LangGrinch）、checkpoint存储网络隔离（CVE-2025-64439/67644）——&quot;checkpoint即攻击面&quot;。</p>
+<hr>
+<h2 id="三、项目模块进展">三、项目模块进展</h2>
+<h3 id="3-1-项目全景更新：企业级智能研究助手Agent系统">3.1 项目全景更新：企业级智能研究助手Agent系统</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    研究助手Agent系统（15/22课形态）            │</span><br><span class="line">├────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 互操作层（第15课✅）: A2A客户端适配器 + 外部检索源接入          │</span><br><span class="line">│   └─ Agent Card发现/验签 → SendMessage委派 → Task跟踪        │</span><br><span class="line">│   └─ INPUT_REQUIRED→HITL转发 → 超时/降级/熔断               │</span><br><span class="line">├────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 协作层（第14课✅）: 混合架构定案 + Handoff协议 + 死锁检测      │</span><br><span class="line">│   └─ Supervisor瞬态形态：并行多源检索（arXiv/专利/内网）       │</span><br><span class="line">│   └─ Proposer-Reviewer：提交前独立审核                       │</span><br><span class="line">├────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 编排层（第12课✅）: LangGraph StateGraph + Checkpoint        │</span><br><span class="line">│   └─ HITL interrupt/Command(resume) + Cron定时 + Webhook    │</span><br><span class="line">├────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 工具层（第11/13课✅）: MCP动态注入 + 文献检索MCP Server        │</span><br><span class="line">│ 知识层（第6-10课✅）: RAG流水线 + CRAG决策器 + Agentic RAG     │</span><br><span class="line">│ 记忆层（第09课✅）: 分层记忆 + 遗忘曲线 + 冲突解决             │</span><br><span class="line">│ 安全线（第04/05/13课✅）: 输入消毒 + 执行分级 + 容器轨道       │</span><br><span class="line">├────────────────────────────────────────────────────────────┤</span><br><span class="line">│ 待建（第四/五单元）: 模型调用层(16) → 后训练决策(17) →        │</span><br><span class="line">│   蒸馏压缩(18) → 推理服务(19) → GPU集群+毕业架构(20) →        │</span><br><span class="line">│   持续进化(21) → AI Coding前沿(22)                           │</span><br><span class="line">└────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-本单元新增模块清单（5个）">3.2 本单元新增模块清单（5个）</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>课程</th>
+<th>产出物</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP工具服务</td>
+<td>第11课</td>
+<td>文献检索MCP Server（Python SDK v2）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>图编排核心</td>
+<td>第12课</td>
+<td>LangGraph多步骤研究Agent（断点恢复）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>工作流定制参考</td>
+<td>第13课</td>
+<td>OpenManus二次开发方案分析</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>协作基础设施</td>
+<td>第14课</td>
+<td>mini-MultiAgent（Supervisor+Handoff+死锁检测）+ 多Agent终局决策矩阵</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>A2A互操作层</td>
+<td>第15课</td>
+<td>mini-A2A（发现/委派/状态机/中断恢复）+ 外部源接入决策矩阵</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-3-检索层的三级形态演进（本单元项目主线）">3.3 检索层的三级形态演进（本单元项目主线）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第10课形态：单Agent + RAG工具调用（串行单源）</span><br><span class="line">    ↓ 第14课：Supervisor瞬态形态（并行多源，进程内）</span><br><span class="line">    ↓ 第15课：A2A互操作（专利源外置为供应商服务）</span><br><span class="line">最终形态：进程内并行（文献/内网） + 跨组织委派（专利）+ 统一容错</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="四、Agent评估体系阶段性更新">四、Agent评估体系阶段性更新</h2>
+<h3 id="4-1-本单元新增评估能力（相比S0010-v2）">4.1 本单元新增评估能力（相比S0010 v2）</h3>
+<table>
+<thead>
+<tr>
+<th>来源</th>
+<th>新增能力</th>
+<th>评估用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第12课</td>
+<td>LangSmith分布式追踪（跨多Agent A2A对话）</td>
+<td>跨组织调用链归因</td>
+</tr>
+<tr>
+<td>第14课</td>
+<td>MAST失败分类法（14类失败/三大根因类）</td>
+<td>多Agent系统debug checklist</td>
+</tr>
+<tr>
+<td>第14课</td>
+<td>TraceElephant/BLAME/Aegis归因研究</td>
+<td>失败轨迹归因方法（知晓即可）</td>
+</tr>
+<tr>
+<td>第15课</td>
+<td>A2A任务级可验证性（Task状态机+artifacts）</td>
+<td>外部Agent交付质量的事后验证</td>
+</tr>
+<tr>
+<td>第15课</td>
+<td>博弈论声誉框架（发现概率p+惩罚C）</td>
+<td>外部Agent信任决策的形式化依据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-2-评估体系全景图（当前版本v3，协议层增量）">4.2 评估体系全景图（当前版本v3，协议层增量）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">                  ┌──────────────────────────────┐</span><br><span class="line">                  │      研究助手评估体系 v3        │</span><br><span class="line">                  ├──────────────────────────────┤</span><br><span class="line">组件级（v1，第5课）│ 工具调用回归测试 / Mock工具框架   │</span><br><span class="line">流水线级（v2，第7-10课）│ RAGAS三维度 / CRAG评估器 /   │</span><br><span class="line">                  │ LLM-as-a-Judge偏差校正 / 统计显著性│</span><br><span class="line">系统级（v3，本单元）│ 多Agent轨迹评估（MAST清单） /    │</span><br><span class="line">                  │ 跨组织调用链追踪（LangSmith） /   │</span><br><span class="line">                  │ 外部Agent交付验证（三源交叉） /    │</span><br><span class="line">                  │ 信任决策（签名验证+声誉博弈）      │</span><br><span class="line">                  ├──────────────────────────────┤</span><br><span class="line">待建（第四单元）   │ 模型层评估：微调效果/压缩精度损失/  │</span><br><span class="line">                  │ 推理服务SLO（P99延迟/吞吐/成本）  │</span><br><span class="line">                  └──────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<p><strong>本单元评估理念的关键扩展</strong>：评估对象从&quot;自己的系统&quot;扩展到&quot;别人的Agent&quot;——外部协作引入了<strong>不可控变量</strong>（供应商质量波动），评估体系必须新增信任与验证维度：①交互前验签（元数据层）；②交付后交叉验证（内容层，Proposer-Reviewer）；③历史任务审计（ListTasks+声誉）。这正是第15课博弈论结论的工程落地：<strong>可验证性是声誉的前提，声誉是跨组织协作的前提</strong>。</p>
+<hr>
+<h2 id="五、第三单元教学反思">五、第三单元教学反思</h2>
+<h3 id="5-1-教学效果评估">5.1 教学效果评估</h3>
+<ul>
+<li><strong>协议课的抽象度管理</strong>：MCP/A2A两次&quot;协议深潜&quot;（第11/15课）都以&quot;伏笔回收+分层图定位&quot;开篇，学生反馈框架（协议解决什么失效）先于细节（字段怎么定义）有效降低了认知负荷</li>
+<li><strong>源码级教学的取舍</strong>：第13课OpenManus源码分析投入较大，但&quot;沙箱双轨制&quot;&quot;Browser Use MCP化&quot;两个案例成为后续课程（第14课判据、第15课工具vs Agent边界）的引用锚点，值得</li>
+<li><strong>博弈论模块的定位成功</strong>：第15课纳什均衡分析把&quot;协议字段设计=设计支付矩阵&quot;立为课程理论顶点，与第10课评估闭环形成呼应（都可归结为&quot;让好行为成为均衡&quot;）</li>
+</ul>
+<h3 id="5-2-学生能力达成度">5.2 学生能力达成度</h3>
+<p>完成本单元后，学生应能：</p>
+<ul>
+<li>✅ 独立设计MCP Server与A2A客户端适配器（协议层全栈）</li>
+<li>✅ 用四模式矩阵+五问框架做多Agent架构决策并给出容错设计</li>
+<li>✅ 对外部Agent协作设计信任方案（签名/OAuth/租户/验证）</li>
+<li>✅ 用MAST清单审计多Agent系统的协调缺陷</li>
+<li>⚠️ 弱项预警：分布式调试经验仍停留在单机模拟（无真实多机环境）——第四单元推理服务课（第19课）将以&quot;架构设计+容量规划&quot;路径补足</li>
+</ul>
+<h3 id="5-3-下阶段教学重点（第四单元：模型层）">5.3 下阶段教学重点（第四单元：模型层）</h3>
+<ol>
+<li><strong>定位转换</strong>：从&quot;用模型&quot;到&quot;懂模型&quot;——第16课PyTorch操作能力是入场券，重点在加载/调用/读懂训练脚本而非从零实现</li>
+<li><strong>决策为主实操为辅</strong>：第17-18课（后训练/蒸馏压缩）以选型矩阵+脚本调参分析为主（大纲v4.0 D1决策：默认最小版路径）</li>
+<li><strong>毕业架构蓄力</strong>：第20课GPU集群+1000并发架构设计是毕业答卷的核心演练，第16-19课的每个知识点都应关联到最终架构</li>
+</ol>
+<hr>
+<h2 id="六、技术栈版本快照（2026-08-27）">六、技术栈版本快照（2026-08-27）</h2>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP</td>
+<td>v2.0规范 / Python SDK v2稳定版</td>
+<td>无状态核心+MRTR+header路由</td>
+</tr>
+<tr>
+<td>LangChain</td>
+<td>1.x</td>
+<td>create_agent标准API</td>
+</tr>
+<tr>
+<td>LangGraph</td>
+<td>1.2.x（checkpoint 4.2.0）</td>
+<td>TimeoutPolicy/DeltaChannel/流式v3</td>
+</tr>
+<tr>
+<td>OpenManus</td>
+<td>main分支（535 commits）</td>
+<td>Browser Use CLI 3.0 MCP化</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td><strong>v1.0稳定版</strong></td>
+<td>150+组织/5语言SDK/22k stars</td>
+</tr>
+<tr>
+<td>ANP</td>
+<td>v1.1协议族</td>
+<td>ANP-07/08/09 + did:wba</td>
+</tr>
+<tr>
+<td>OpenAI Agents SDK</td>
+<td>v0.17.x</td>
+<td>Swarm生产级继任者</td>
+</tr>
+<tr>
+<td>CrewAI</td>
+<td>v1.15.x</td>
+<td>Flow+MCP+AMP托管</td>
+</tr>
+<tr>
+<td>Google ADK</td>
+<td>v1.34+</td>
+<td>原生A2A集成</td>
+</tr>
+<tr>
+<td>AG2</td>
+<td>v0.13.x</td>
+<td>autogen.beta迁移期</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>本报告为AI Agent系统架构设计课程第三单元（第11-15课，协议层）阶段总结，第15课完成触发自动生成。</em>
+<em>下一里程碑：第20课完成 → 总结报告4 + 短期报告2 + 月考试卷与参考答案。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://handyes.github.io">HandyES</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://handyes.github.io/2026/08/27/AI-Agent/b622d742/">https://handyes.github.io/2026/08/27/AI-Agent/b622d742/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://handyes.github.io" target="_blank">HandyES的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">学习资料</a></div><div class="post-share"><div class="social-share" data-image="/img/1.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/08/28/AI-Agent/c78f8310/" title="第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力</div></div><div class="info-2"><div class="info-item-1">第16课：PyTorch/TF速通——Agent架构师必需的模型操作能力 课程信息    项目 内容     课程定位 模型层入门课（第四单元第一课）——前15课研究助手的所有&quot;智能&quot;都来自外部API模型（LangChain的LLM抽象把模型藏成了黑盒）。本课把黑盒打开：你会亲手加载模型、调用推理、读懂训练脚本。这是模型层的&quot;入场券&quot;——不是从零造轮子，而是掌握加载、调用、配置、调优四项工程能力   前置依赖 第02课（Transformer架构、Attention、KV Cache）、第06课（Embedding、向量相似度）、第07课（Cross-Encoder重排序）、第10课（Agentic RAG、多模态RAG）   时间分配 原理理解15min（第一~二节）+ 模型操作实战15min（第三节+第七节）+ 生态认知5min（3.4节与第四节VLM）+ 配置调优5min（第五~六节）+ 习题10min（合计约50min）   知识深度 torch.compile配置与模式选择 / ONNX算子兼容性检查清单 / 推理模式三件套 = ...</div></div></div></a><a class="pagination-related" href="/2026/08/27/AI-Agent/8ff2a6c2/" title="第15课：A2A协议与Agent互操作性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第15课：A2A协议与Agent互操作性</div></div><div class="info-2"><div class="info-item-1">第15课：A2A协议与Agent互操作性 课程信息    项目 内容     课程定位 协议互操作课（第三单元收官）——从&quot;框架内协作&quot;到&quot;跨组织协作&quot;：第14课的多Agent工具（模式矩阵/Handoff状态机/死锁检测）全部假设参与者活在同一进程、同一框架、同一信任域。本课把它们推到开放网络——那里没有共享内存、没有统一时钟、没有天然信任，只有协议。A2A是Agent互操作的HTTP时刻   前置依赖 第11课（MCP协议、JSON-RPC、header路由）、第12课（事件驱动/异步任务）、第14课（多Agent模式矩阵、Handoff状态机、MAST失败研究）   时间分配 协议原理20min（第一~五节）+ 工程实现15min（第六~七节）+ 习题20min（合计约55min）   知识深度 Task状态机完整转换图 / Agent Card语义模型 / 能力协商纳什均衡分析 / 三协议（MCP/A2A/ANP）定位对比 = 必须掌握；协议操作与安全配置 / mini-A2A代码实现 / Task不可变性设计权衡 = 应当理解；A...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/29/AI-Agent/3a21b6ca/" title="第17课：模型后训练——从SFT到Agentic RL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-29</div><div class="info-item-2">第17课：模型后训练——从SFT到Agentic RL</div></div><div class="info-2"><div class="info-item-1">第17课：模型后训练——从SFT到Agentic RL 一、课程信息    项目 内容     课号 第17课（第四单元：模型优化、生产部署与持续进化）   课程标题 模型后训练——从SFT到Agentic RL   前置课程 第16课（PyTorch模型操作 / transformers / PEFT与TRL生态认知）、第05课（Function Calling工具调用格式）、第10课（评估闭环与LLM-as-a-Judge）   课程定位 从&quot;模型操作者&quot;到&quot;模型训练者&quot;：掌握后训练的数学原理、工程配置与选型决策   时间分配 原理推导20min + Agentic RL 10min + 决策分析10min + 脚本调优10min + 习题10min（合计60min）    知识深度边界（本课三级分类）：    层级 本课对应知识点     必须掌握 LoRA的 W=W₀+BA 推导与rank选择、全参微调vs PEFT显存决策矩阵、SFT记忆与RL泛化的定位区分、GRPO组相对优势计算与算法流程、&quot;SFT/RL/API+Pr...</div></div></div></a><a class="pagination-related" href="/2026/08/16/AI-Agent/4660d3d9/" title="第04课：上下文工程与Prompt设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-16</div><div class="info-item-2">第04课：上下文工程与Prompt设计</div></div><div class="info-2"><div class="info-item-1">第04课：上下文工程与Prompt设计  课程信息  课号：第04课 标题：上下文工程与Prompt设计 时间分配：理论推导15min + 工程实践20min + 安全设计10min + 习题10min 项目贡献：基础架构层——为&quot;企业级智能研究助手Agent系统&quot;设计System Prompt工程方案、上下文管理策略（Skills按需加载 + 压缩 + 状态栏）、结构化输出控制机制与输入安全防护层 先修要求：第01课（Harness工程五功能、PDA循环）、第02课（KV Cache显存占用、上下文窗口约束）、第03课（ReAct状态机、Reflexion反思记忆）    本课导读 第03课我们设计了Agent的推理循环架构——ReAct的Thought-Action-Observation三元组、Plan-and-Execute的DAG分解、Reflexion的反思闭环，并为研究助手Agent选定了Reflexion+Plan-Execute嵌套架构。但一个关键问题悬而未决：Agent的推理质量，很大程度上取决于它&quot;看到&quot;的上下文内容。...</div></div></div></a><a class="pagination-related" href="/2026/08/18/AI-Agent/cc081d39/" title="第06课：RAG基础架构与完整流水线"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-18</div><div class="info-item-2">第06课：RAG基础架构与完整流水线</div></div><div class="info-2"><div class="info-item-1">第06课：RAG基础架构与完整流水线  所属单元：第二单元 RAG检索增强与Agent记忆（第6-10课） 时间分配：理论推导 20min + 工程实践 15min + 项目关联 10min + 习题 10min 知识深度：InfoNCE损失函数推导 / HNSW索引算法 / 向量数据库选型矩阵 = 必须掌握；Embedding模型选型 / 向量相似度计算 = 应当理解 项目贡献：知识层——为&quot;企业级智能研究助手Agent系统&quot;构建RAG知识库基础设施（论文PDF的索引构建→语义检索完整流水线），第05课的 search_papers 工具从Mock数据升级为真实向量检索后端 先修要求：第01课（Harness工程五功能、PDA循环）、第02课（KV Cache与上下文窗口约束）、第05课（Function Calling、JSON Schema工具描述、search_papers工具实现）   课程导入 第05课我们完成了Agent的工具调用骨架——search_papers、get_paper_detail、analyze_citation_network...</div></div></div></a><a class="pagination-related" href="/2026/09/01/AI-Agent/bac05505/" title="第20课：GPU集群规划与Agent系统架构设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-01</div><div class="info-item-2">第20课：GPU集群规划与Agent系统架构设计</div></div><div class="info-2"><div class="info-item-1">第20课：GPU集群规划与Agent系统架构设计 一、课程信息    项目 内容     课号 第20课（0020），第四单元&quot;模型优化与生产部署&quot;第5课，部署层收官课   前置 第19课（vLLM推理服务、KV Cache公式、三模型显存分配）、第18课（量化产物与接口约定）、第14课（多Agent架构模式）、第12课（LangGraph异步编排）   定位 部署层第2课 + 毕业项目架构总装：从&quot;单机怎么服务好&quot;到&quot;1000并发怎么规划集群&quot;——GPU怎么选、卡间怎么连、集群怎么编、钱怎么省   时间分配 硬件选型15min（显存公式与三约束模型7min + 硬件矩阵8min）+ 架构设计20min（集群拓扑4min + K8s部署与混部7min + 1000并发总装9min）+ 成本优化10min（冷启动4min + 弹性伸缩4min + Spot与监控2min）+ 习题10min    核心知识点（大纲指定，全部必考）：  GPU显存占用计算公式推导——模型权重+KV Cache+激活值的完整分解（必须掌握） 多...</div></div></div></a><a class="pagination-related" href="/2026/08/23/AI-Agent/de731527/" title="第11课：MCP协议深度解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-23</div><div class="info-item-2">第11课：MCP协议深度解析</div></div><div class="info-2"><div class="info-item-1">第11课：MCP协议深度解析 课程信息    项目 内容     课程定位 协议层第一课——工具服务化，单体Agent走向服务化架构的第一步   前置依赖 第05课（Function Calling与工具调用）、第10课（完整架构图与Agentic RAG）   时间分配 协议原理20min + Server开发20min + 项目关联5min + 习题10min（合计约55min）   知识深度 无状态核心与状态管理迁移/三大原语JSON-RPC契约 = 必须掌握；MRTR/Header路由/CAP分析/SDK开发流程 = 应当理解；Tasks扩展/EMA授权/CIMD/Serverless生态 = 知晓即可   规范版本 MCP 2026-07-28（v2.0）+ Python SDK v2稳定版【联网更新v5.6】     本课对项目的贡献：「企业级智能研究助手Agent系统」 第10课的架构图已经把九个模块串成了完整蓝图，但其中有一个角落我们一直没动：工具调用层。search_papers、web_search、memory_store.retrieve——它们全是进程内...</div></div></div></a><a class="pagination-related" href="/2026/08/22/AI-Agent/fc2bf0db/" title="短期报告1：课程中期综合评估（第1-10课）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-22</div><div class="info-item-2">短期报告1：课程中期综合评估（第1-10课）</div></div><div class="info-2"><div class="info-item-1">短期报告1：课程中期综合评估（第1-10课）  生成时间：2026-08-20（第10课完成触发） | 课程进度：10/22课（45%） | 定位：中期能力盘点 + 项目复盘 + 下半程路线   一、综合架构能力评估 对照大纲六大培养目标，逐项评估当前达成度：    # 培养目标 当前达成度 证据与缺口     1 系统设计能力（PDA闭环/记忆/工具） ✅ 90% 第10课完整架构图合龙，全部模块可论述选型理由；缺口：仅单体架构，未涉及服务化拆分（第三单元补）   2 协议掌握（MCP/A2A） ⬜ 15% 仅第10课触及MinerU的MCP接入（知晓级）；深度内容在第11-15课   3 框架实战（LangChain/LangGraph） ⬜ 10% 具备框架前置知识（StateGraph=状态机形式化已在第03课铺垫）；框架本体在第12-13课   4 模型优化决策（LoRA/蒸馏/量化） ⬜ 5% 仅第02课Transformer内部机制打底；第16-18课展开   5 工程部署能力（高并发/GPU集群） ⬜ 5% 第02课KV Cache显存公式是唯一铺垫；第19-20...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">HandyES</div><div class="author-info-description">记录学习与生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HandyES"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/HandyES" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:handyES@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人博客，欢迎关注！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">总结报告3：第三单元阶段总结（第11-15课）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%98%B6%E6%AE%B5%E7%9F%A5%E8%AF%86%E8%84%89%E7%BB%9C%E6%A2%B3%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">一、阶段知识脉络梳理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 知识图谱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%9F%A5%E8%AF%86%E9%80%92%E8%BF%9B%E5%85%B3%E7%B3%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 知识递进关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%8E%8C%E6%8F%A1%E5%BA%A6%E8%AF%84%E4%BC%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 核心知识点掌握度评估</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E5%86%B3%E7%AD%96%E7%9F%A9%E9%98%B5"><span class="toc-number">1.2.</span> <span class="toc-text">二、技术选型决策矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%8D%8F%E8%AE%AE%E6%A0%88%E9%80%89%E5%9E%8B%EF%BC%88%E7%AC%AC11-15%E8%AF%BE%E6%B2%89%E6%B7%80%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 协议栈选型（第11&#x2F;15课沉淀）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%A4%9AAgent%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F%E5%AF%B9%E6%AF%94%E7%9F%A9%E9%98%B5%EF%BC%88%E7%AC%AC14-15%E8%AF%BE%E6%B2%89%E6%B7%80%EF%BC%8C%E6%9C%AC%E6%8A%A5%E5%91%8A%E6%A0%B8%E5%BF%83%E4%BA%A4%E4%BB%98%E7%89%A9%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 多Agent架构模式对比矩阵（第14&#x2F;15课沉淀，本报告核心交付物）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B%EF%BC%88%E7%AC%AC12-14%E8%AF%BE%E6%B2%89%E6%B7%80%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 框架选型（第12-14课沉淀）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E8%BF%9B%E5%B1%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、项目模块进展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E6%9B%B4%E6%96%B0%EF%BC%9A%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E5%8A%A9%E6%89%8BAgent%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 项目全景更新：企业级智能研究助手Agent系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%9C%AC%E5%8D%95%E5%85%83%E6%96%B0%E5%A2%9E%E6%A8%A1%E5%9D%97%E6%B8%85%E5%8D%95%EF%BC%885%E4%B8%AA%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 本单元新增模块清单（5个）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%A3%80%E7%B4%A2%E5%B1%82%E7%9A%84%E4%B8%89%E7%BA%A7%E5%BD%A2%E6%80%81%E6%BC%94%E8%BF%9B%EF%BC%88%E6%9C%AC%E5%8D%95%E5%85%83%E9%A1%B9%E7%9B%AE%E4%B8%BB%E7%BA%BF%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 检索层的三级形态演进（本单元项目主线）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Agent%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB%E9%98%B6%E6%AE%B5%E6%80%A7%E6%9B%B4%E6%96%B0"><span class="toc-number">1.4.</span> <span class="toc-text">四、Agent评估体系阶段性更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%9C%AC%E5%8D%95%E5%85%83%E6%96%B0%E5%A2%9E%E8%AF%84%E4%BC%B0%E8%83%BD%E5%8A%9B%EF%BC%88%E7%9B%B8%E6%AF%94S0010-v2%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 本单元新增评估能力（相比S0010 v2）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB%E5%85%A8%E6%99%AF%E5%9B%BE%EF%BC%88%E5%BD%93%E5%89%8D%E7%89%88%E6%9C%ACv3%EF%BC%8C%E5%8D%8F%E8%AE%AE%E5%B1%82%E5%A2%9E%E9%87%8F%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 评估体系全景图（当前版本v3，协议层增量）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%E6%95%99%E5%AD%A6%E5%8F%8D%E6%80%9D"><span class="toc-number">1.5.</span> <span class="toc-text">五、第三单元教学反思</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%95%99%E5%AD%A6%E6%95%88%E6%9E%9C%E8%AF%84%E4%BC%B0"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 教学效果评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%AD%A6%E7%94%9F%E8%83%BD%E5%8A%9B%E8%BE%BE%E6%88%90%E5%BA%A6"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 学生能力达成度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E4%B8%8B%E9%98%B6%E6%AE%B5%E6%95%99%E5%AD%A6%E9%87%8D%E7%82%B9%EF%BC%88%E7%AC%AC%E5%9B%9B%E5%8D%95%E5%85%83%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%B1%82%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 下阶段教学重点（第四单元：模型层）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%8A%80%E6%9C%AF%E6%A0%88%E7%89%88%E6%9C%AC%E5%BF%AB%E7%85%A7%EF%BC%882026-08-27%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">六、技术栈版本快照（2026-08-27）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/07/AI-Agent/be75a1a8/" title="校准报告：v6.9→v7.0 全局校准（2026-11-07）">校准报告：v6.9→v7.0 全局校准（2026-11-07）</a><time datetime="2026-11-06T16:00:00.000Z" title="发表于 2026-11-07 00:00:00">2026-11-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/AI-Agent/c875d8c3/" title="第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准">第25课（校准增补III）：Agent协议、框架与研究前沿的2026-11生态校准</a><time datetime="2026-11-05T16:00:00.000Z" title="发表于 2026-11-06 00:00:00">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/AI-Agent/334372e9/" title="第23课（校准增补I）：推理服务与部署层的2026-11生态校准">第23课（校准增补I）：推理服务与部署层的2026-11生态校准</a><time datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/AI-Agent/8a41e58d/" title="第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准">第24课（校准增补II）：模型栈、后训练与量化压缩的2026-11生态校准</a><time datetime="2026-11-04T16:00:00.000Z" title="发表于 2026-11-05 00:00:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/13/AI-Agent/28157aa2/" title="毕业答卷：AI Agent系统架构设计（第1-22课全课程）">毕业答卷：AI Agent系统架构设计（第1-22课全课程）</a><time datetime="2026-09-12T16:00:00.000Z" title="发表于 2026-09-13 00:00:00">2026-09-13</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By HandyES</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text"><a href="/atom.xml">RSS 订阅</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script><script defer>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false,strict:false});});</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
